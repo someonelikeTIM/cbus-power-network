@@ -18,7 +18,7 @@ export function validateView(value, entityIds) {
   const size = value.dimensions || {};
   const dimensions = {width: finite(size.width) && size.width > 0 ? size.width : 800, height: finite(size.height) && size.height > 0 ? size.height : 570};
   const details = value.details || {};
-  return {query: value.query, positions: value.positions.map(row => [...row]), camera: {x:camera.x,y:camera.y,z:camera.z}, dimensions, scale:finite(value.scale)&&value.scale>=.3&&value.scale<=1?value.scale:1, details: {open: details.open !== false, docked: details.docked === true, width: finite(details.width) ? Math.max(180, Math.min(900, details.width)) : 420},...(value.research?{research:validateResearch(value.research,entityIds,relationshipIds)}:{})};
+  return {query: value.query, ...(value.mapLayout==='bubble-cloud-v1'?{mapLayout:value.mapLayout}:{}), positions: value.positions.map(row => [...row]), camera: {x:camera.x,y:camera.y,z:camera.z}, dimensions, scale:finite(value.scale)&&value.scale>=.3&&value.scale<=1?value.scale:1, details: {open: details.open !== false, docked: details.docked === true, width: finite(details.width) ? Math.max(180, Math.min(900, details.width)) : 420},...(value.research?{research:validateResearch(value.research,entityIds,relationshipIds)}:{})};
 }
 
 export function parseWorkspace(value, entityIds) {

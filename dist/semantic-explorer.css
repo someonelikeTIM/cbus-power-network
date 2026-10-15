@@ -2,7 +2,9 @@
 #graph .node-pin-control{display:none!important}
 #graph .graph-node{transition:opacity .22s ease;cursor:pointer}
 #graph .node-label{stroke-width:5px;paint-order:stroke;stroke:var(--white);stroke-linejoin:round}
-#graph[data-zoom-layer=overview] .node-label{fill:var(--color);stroke-width:3px}
+#graph .graph-node[data-bubble=true] .node-core{fill:color-mix(in srgb,var(--color) 16%,var(--white));stroke:color-mix(in srgb,var(--color) 65%,var(--white))}
+#graph .graph-node[data-bubble=true] .node-label{fill:var(--ink);stroke:none}
+#graph .graph-node[data-bubble=true]:hover .node-core,#graph .graph-node[data-bubble=true]:focus-within .node-core{fill:color-mix(in srgb,var(--color) 28%,var(--white));stroke:var(--color)}
 #graph .node-core{stroke-width:1.5px!important}
 #graph .graph-node:focus-within .node-label,#graph .graph-node:hover .node-label{text-decoration:underline;text-underline-offset:4px}
 #graph .edge-label{display:none!important}
@@ -46,6 +48,20 @@ body[data-view=network] #research-panel{left:16px;bottom:90px;top:auto}
 .research-actions #research-save{color:var(--white);background:var(--ink)}#research-library{margin:16px 0 0}#research-library>summary{cursor:pointer;font-weight:600}#research-saved{display:grid;gap:7px;margin-top:10px}#research-saved button{text-align:left}#research-status{font-size:11px;color:var(--rust)}
 body[data-view=network] #connection-legend{width:220px;max-height:220px}
 body[data-empty-start=true] #research-open{display:none}
+#connection-tooltip{position:absolute;z-index:30;pointer-events:none;background:var(--ink);color:var(--white);border-radius:4px;padding:6px 9px;font:600 11px/1.3 var(--sans);box-shadow:0 2px 7px #252b2920;max-width:240px}
+body[data-view=network] #connection-legend{height:auto;width:255px;max-height:calc(100% - 120px);padding:8px 10px;overflow:auto}
+body[data-view=network] #connection-legend .floating-panel-header{padding-bottom:3px;margin-bottom:4px;gap:5px}
+body[data-view=network] #connection-legend .floating-panel-header h2{font-size:11px}
+body[data-view=network] #connection-legend .floating-panel-header button{min-height:24px;min-width:24px;font-size:19px}
+body[data-view=network] #connection-legend #legend-types{display:grid!important;grid-template-columns:1fr!important;gap:1px}
+body[data-view=network] #connection-legend li[data-legend-type]{display:flex;align-items:center;gap:6px;min-height:23px;margin:0;font-size:11px;line-height:1.25}
+body[data-view=network] #connection-legend .legend-line{width:18px;flex:none;margin:0}
+body[data-view=network] #connection-legend .legend-type-label{flex:1}
+body[data-view=network] #connection-legend small{font-size:9px}
+body[data-view=network] #connection-legend p{font-size:9px;line-height:1.35;margin:5px 0 0}
+body[data-view=network] #connection-legend #legend-context{display:none}
+body[data-view=network] #connection-legend .legend-show{opacity:1;min-height:24px;padding:2px 5px}
 @media(max-width:720px){body[data-view=network] #graph-stage[data-compact=true] #search-window{width:calc(100% - 20px)}body[data-view=network] #guided-panel{top:180px;right:10px;max-height:calc(100% - 200px)}body[data-view=network] #research-panel{bottom:60px;left:10px;max-height:calc(100% - 100px)}body[data-view=network] #connection-legend{max-height:160px;width:190px}body[data-view=network] .exploration-tools>.explore-button{padding:7px 7px;font-size:10px}body[data-view=network] #map-status{max-width:210px}#semantic-summary{font-size:9px}.anchor-chip button:first-child{max-width:110px}}
 @media(prefers-reduced-motion:reduce){#graph .graph-node{transition:none}}
 @media(max-width:650px){#entity-popover{width:136px;min-width:136px}.record-popover-actions button{min-height:46px}#guided-open{font-size:10px}body[data-view=network] #guided-panel,body[data-view=network] #research-panel{top:auto;bottom:10px;max-height:45%}body[data-view=network] #map-status #map-small{display:none}body[data-view=network] #map-status .map-exploration-controls{display:none}}
+@media(max-width:720px){body[data-view=network] #connection-legend{max-height:calc(100% - 180px)}}

@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import {mkdir,writeFile} from 'node:fs/promises';
 import {nodes,edges} from '../dist/data.js';
-import {visibleEntities,semanticStyle,overlaps,connectionRoute} from '../dist/semantic-map.js';
+import {visibleEntities,semanticStyle,overlaps,connectionRoute,packBubbleCloud,footprintsOverlap,bubbleLabel} from '../dist/semantic-map.js';
 import {arrangeCanvas} from '../dist/canvas-layout.js';
 import {researchConnections,validateResearch,researchFile,researchSnapshot} from '../dist/research-paths.js';
 import {validateView,workspaceFile,parseWorkspace} from '../dist/saved-views.js';
@@ -19,6 +19,18 @@ assert.ok(semanticStyle(1,2).opacity>semanticStyle(1,1.2).opacity);
 assert.equal(semanticStyle(1,.3,{protectedNode:true}).opacity,1,'Research anchors survive the degree threshold');
 assert.ok(semanticStyle(40,.72).font>semanticStyle(4,.72).font);
 assert.ok(semanticStyle(1,.72).threshold>semanticStyle(1,2).threshold);
+const cloudItems=nodes.map(node=>{const degree=edges.filter(edge=>edge.source===node.id||edge.target===node.id).length;return {id:node.id,degree,radius:semanticStyle(degree,.72).radius};});
+for(const [width,height]of [[1240,540],[1080,700],[350,650]]){
+  const obstacles=[{left:0,top:0,right:Math.min(320,width-20),bottom:90},{left:0,top:height-105,right:Math.min(260,width*.5),bottom:height}];
+  const cloud=packBubbleCloud(cloudItems,{width,height,obstacles});
+  assert.ok(cloud.visible.size>=12&&cloud.fillers>=3,'Small bubbles fill the spaces in a compact cluster, including on phones');
+  assert.ok(cloud.visible.size<=36,'The overview stays selective rather than showing every record');
+  const candidates=cloudItems.filter(item=>cloud.visible.has(item.id)).map(item=>{const p=cloud.positions.get(item.id),r=item.radius+2;return {...item,opacity:1,circle:{...p,r},box:{left:p.x-r,right:p.x+r,top:p.y-r,bottom:p.y+r}};});
+  assert.equal(visibleEntities(candidates,{width,height,obstacles,gap:3}).ids.size,cloud.visible.size,'Packed circles remain visible without rectangle-based false collisions');
+  for(const item of candidates){assert.ok(item.radius>0,'Overview entities retain visible bubbles');for(const other of candidates)if(item.id!==other.id)assert.ok(!footprintsOverlap(item,other,3),'Packed bubbles and their hit areas never overlap');}
+  const small=candidates.filter(item=>item.degree<=4);assert.ok(small.some(item=>candidates.filter(other=>other.id!==item.id&&Math.hypot(item.circle.x-other.circle.x,item.circle.y-other.circle.y)<item.circle.r+other.circle.r+3.1).length>=2),'A small bubble nests between at least two neighboring bubbles');
+}
+assert.ok(bubbleLabel('Columbus Partnership',65,16).join(' ').includes('Columbus'));
 const compact={nodes:[{id:'a',name:'American Electric Power'},{id:'b',name:'City of Columbus'},{id:'c',name:'Bill Byers'}],edges:[]};
 const compactSizes=new Map([['a',{left:-70,right:70,top:-34,bottom:74}],['b',{left:-63,right:63,top:-35,bottom:60}],['c',{left:-43,right:43,top:-32,bottom:55}]]);
 const compactObstacles=[{left:0,top:0,right:340,bottom:200},{left:140,top:390,right:340,bottom:530},{left:0,top:520,right:220,bottom:608},{left:200,top:560,right:340,bottom:608}];
@@ -43,7 +55,8 @@ assert.equal(new URLSearchParams(loaded.query).get('focus'),'0');assert.equal(ne
 assert.throws(()=>researchSnapshot({...file,version:99},{nodeIds,edgeIds,validateSnapshot:validateView}));
 const restored=parseWorkspace(workspaceFile([{id:'one',name:'Research',snapshot}],'one',null,'test-edition'),nodeIds);
 assert.deepEqual(restored.views[0].snapshot.research,research,'Notes and the step order survive workspace export/import');
+assert.equal(validateView({...snapshot,mapLayout:'bubble-cloud-v1'},nodeIds).mapLayout,'bubble-cloud-v1','Saved packed views retain their layout instead of migrating again');
 const defaults={categories:new Set(),relationships:new Set(),connectionDistance:1,pinnedIds:new Set(['city']),research};
 const query=encodeState('https://example.test/',defaults,'test-edition');assert.deepEqual(decodeState(query,defaults).requestedResearch,research.steps.map(step=>({...step,note:''})), 'Shared research URLs retain record IDs while notes stay in saved artifacts');
-const result={presentation:'Eight zoom levels: collision-free visible footprints, bounds and floating-window clearance',layers:'Degree threshold, size priority, gradual opacity and persistent research anchors',research:'Ordered entity/connection pins, sourced connecting routes, honest gaps and notes',artifacts:'Research and workspace round trips; embedded facts never imported'};
+const result={presentation:'Eight zoom levels: collision-free visible footprints, bounds and floating-window clearance',overview:'Packed degree-sized bubbles with small gap fillers; exact circular clearance at desktop and phone sizes',layers:'Degree threshold, size priority, gradual opacity and persistent research anchors',research:'Ordered entity/connection pins, sourced connecting routes, honest gaps and notes',artifacts:'Research and workspace round trips; embedded facts never imported'};
 await mkdir('artifacts',{recursive:true});await writeFile('artifacts/semantic-checks.json',JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify(result));

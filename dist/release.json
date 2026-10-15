@@ -1,7 +1,7 @@
 {
   "release": {
     "schemaVersion": "1.0.0",
-    "releaseId": "2026-10-15-ui2",
+    "releaseId": "2026-10-15-ui3",
     "status": "local-candidate",
     "preparedOn": "2026-10-15",
     "publishedAt": null,
@@ -10,6 +10,6 @@
     "dataLicense": "CC-BY-4.0",
     "sourceCheckIds": []
   },
-  "inputFingerprint": "c63fc15c711f238e755f06667de11abcd895ecdd0a7de3047b475eabbe464bd2",
-  "manifest": "downloads/2026-10-15-ui2/manifest.json"
+  "inputFingerprint": "add49441635b442dc2001e7ac4d7a7f37b00663aeb10ed15152df101e05dacc0",
+  "manifest": "downloads/2026-10-15-ui3/manifest.json"
 }

@@ -35,7 +35,7 @@ $('source-total').textContent = String(sources.length);
 $('review-date').textContent = 'Updated ' + new Intl.DateTimeFormat('en-US', {month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC'}).format(new Date(meta.reviewed + 'T12:00:00Z'));
 $('release-label').textContent = (release.status === 'published' ? 'Edition · ' : 'Local preview · ') + release.releaseId;
 if (repositoryURL) {
-  $('github-contribute').href = repositoryURL + '/issues/new/choose'; $('github-contribute').hidden = false;
+  $('github-contribute').href = repositoryURL + '/blob/main/docs/CONTRIBUTING.md';
   $('github-contact').href = repositoryURL + '/issues'; $('github-contact').hidden = false;
 }
 const status = message => { document.querySelector('.workspace-status').textContent = message; };
