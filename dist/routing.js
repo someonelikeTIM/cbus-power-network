@@ -21,6 +21,7 @@ export function encodeState(base,state,releaseId) {
   if(state.startingIds?.size)values.starts=[...state.startingIds].join(',');
   if(state.customStart)values.startOnly='1';
   if(state.connectionDistance!=null)values.distance=normalizeConnectionDistance(state.connectionDistance);
+  if(state.pinnedIds?.size)values.pins=[...state.pinnedIds].sort().join(',');
   if(state.focus&&state.selected?.kind!=='node'&&state.focusEntity)values.center=state.focusEntity;
   const tags=normalizeTags(state.tags??state.tag);if(state.view==='network'&&tags.length){if(tags.length===1)values.tag=tags[0];else values.tags=tags.join(',');}
   if(state.selected)values.record=`${recordKind(state.selected.kind)}:${state.selected.id}`;
@@ -34,6 +35,7 @@ export function decodeState(base,defaults) {
   const list=(key,allowed,original)=>p.has(key)?new Set(p.get(key).split(',').filter(v=>Object.hasOwn(allowed,v))):new Set(original);
   const state={...defaults,categories:list('categories',categories,defaults.categories),relationships:list('relationships',relationships,defaults.relationships)};
   state.connectionDistance=normalizeConnectionDistance(p.has('distance')?p.get('distance'):defaults.connectionDistance);
+  state.pinnedIds=new Set((p.get('pins')||'').split(',').filter(Boolean));
   state.focusEntity=p.get('center')||'';
   state.tags=new Set(normalizeTags(p.has('tags')?p.get('tags'):p.get('tag')));
   if(['explore','full'].includes(p.get('map')))state.mapMode=p.get('map');
@@ -55,7 +57,7 @@ export function decodeState(base,defaults) {
   const raw=p.get('record'),split=raw?.indexOf(':');
   if(split>0&&kinds[raw.slice(0,split)])state.selected={kind:kinds[raw.slice(0,split)],id:raw.slice(split+1)};
   state.requestedRelease=p.get('release');state.requestedPath=p.has('path')?p.get('path').split(',').filter(Boolean):null;
-  const hasMapContext=['case','map','record','path','starts','seeded','expanded','explored','anchor','q','categories','relationships','mode','from','to','history','focus','startOnly'].some(key=>p.has(key));
+  const hasMapContext=['case','map','record','path','starts','seeded','expanded','explored','anchor','q','categories','relationships','mode','from','to','history','focus','startOnly','pins'].some(key=>p.has(key));
   if(!hasMapContext){state.mapMode='explore';state.exploreRoot='';state.startingIds=new Set();state.explorationSeeds=new Set();state.exploredIds=new Set();state.openNodes=new Set();state.customStart=true;state.selected=null;state.path=null;state.query='';state.focus=false;}
   try{validateRange(state.from,state.to);}catch{state.from='';state.to='';state.routeWarning='Invalid historical date range was cleared.';}
   return state;

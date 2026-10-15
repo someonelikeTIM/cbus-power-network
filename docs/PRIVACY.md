@@ -1,6 +1,8 @@
 # Privacy
 
-The explorer has no account system, analytics, advertising or submission backend. Its JavaScript keeps display preferences in your browser and puts selected records/filters in the page URL so views can be shared. Current-view downloads are created in your browser.
+The explorer has no account system, analytics, advertising or submission backend. Its JavaScript keeps display preferences and named saved views in local browser storage. Open tabs are retained in the browser's session storage for reloads. Selected records, filters and pins appear in the page URL so views can be shared. Current-view downloads and exported workspace files are created in your browser.
+
+Saved views and exported files can reveal the people, organizations and topics you are exploring. Imported view files are read locally and validated as presentation settings. They are not uploaded to a project server. Removing a named view removes it from this browser's saved-view list; copies you exported remain wherever you saved them.
 
 GitHub Pages hosts the site and processes requests under [GitHub's privacy statement](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement). Opening source links takes you to the source publisher or the Internet Archive, with their own policies.
 

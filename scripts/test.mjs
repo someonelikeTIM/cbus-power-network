@@ -11,6 +11,7 @@ const checks = [
   'check-explorer-ui',
   'check-tags-path-focus',
   'check-correction-workflow',
+  'check-workspaces',
   'check-public-files',
 ];
 

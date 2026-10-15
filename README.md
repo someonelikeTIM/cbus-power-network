@@ -14,6 +14,16 @@ Evidence labels distinguish reporting, allegations, findings, registrations and 
 
 The explorer provides record links, current-view downloads and evidence packets. [Versioned JSON/CSV tables, schemas and checksums](https://someoneliketim.github.io/cbus-power-network/downloads/2026-10-15/manifest.json) are in `dist/downloads/`. Join records using stable IDs and cite the edition. See the [data dictionary](docs/DATA-DICTIONARY.md).
 
+## Explorer views
+
+New tab opens another independent exploration. Side by side keeps two views visible; Single view returns to one canvas. Each tab keeps its own search, tags, filters, pins, camera and entity positions. On narrow screens, two views stack vertically.
+
+Pin as anchor in entity details, or use a node's pin button, to keep reference points visible while exploring. Several entities can be pinned. Their bubbles are larger and their names remain prominent. Other bubble sizes reflect the number of recorded connections in the dataset. Arrange redistributes entities around the visible map windows; zoom and manual dragging remain available.
+
+Visible distance sits beside search. A fresh view starts with direct connections (one step). Increasing it reveals more recorded steps from the selected entity and pinned anchors; reducing it narrows the displayed neighborhood. Pins remain visible. Filters group related connection types with whole-group checkboxes and Select all / Deselect all. Excluded types stay muted in the legend, where Show adds a type back.
+
+Views → Save this view stores a named copy in this browser. Load a saved view opens that copy in a new tab. Export this view or Export all tabs creates a portable JSON file, including pins, filters, positions and zoom. Import views opens valid files as additional tabs, keeping existing work. These files store presentation choices; Download data separately exports the sourced records. Browser reloads retain the current tab session, while a fresh site visit still begins with search.
+
 ## Contributing
 
 Evidence, corrections, code, design and accessibility improvements are welcome. [Open an issue](https://github.com/someonelikeTIM/cbus-power-network/issues/new/choose) or submit a pull request. Include the relevant record ID and a source with a page or paragraph reference. [Contribution guide](docs/CONTRIBUTING.md) · [Questions and contact](https://github.com/someonelikeTIM/cbus-power-network/issues)

@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased — explorer workspaces
+
+Canvas-aware entity placement, connection-based bubble sizes and lighter linework make focused neighborhoods easier to read. Multiple pinned anchors retain reference points while exploring. Visible distance moves beside search and reveals real connected neighborhoods, beginning with direct connections.
+
+Explorer tabs support independent views, side-by-side comparison, named browser saves and versioned JSON export/import. Grouped filters offer bulk selection, and the legend retains muted excluded connection types with Show controls. Factual records and stable IDs are unchanged.
+
 ## 2026-10-15 — first public edition
 
 The source-linked explorer opens with search and offers tag combinations, expandable nodes, continuous camera movement, paths, a connection legend, record details and animated Undo. The initial collection contains 316 entities, 462 relationships, 160 sources and 202 timeline events.

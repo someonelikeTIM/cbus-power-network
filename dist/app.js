@@ -1,8 +1,8 @@
 import { meta, nodes, edges, sources, categories, relationships, cases, evidenceStatuses } from './data.js';
 import { filterGraph, shortestPath, matches, normalize } from './core.js';
-import { seedExploration,exploredGraph,branchExploration,toggleExploration,connectedNeighbors,connectionLegend,nodeNeighborhood,neighborhoodPositions,neighborhoodCamera,transitionCamera,fanOutPositions,connectionNeighborhood,normalizeConnectionDistance } from './exploration.js';
+import { seedExploration,exploredGraph,branchExploration,toggleExploration,connectedNeighbors,nodeNeighborhood,transitionCamera,fanOutPositions,normalizeConnectionDistance } from './exploration.js';
 import { repositoryURL } from './project-links.js';
-import { startingConnections,pathForeground,revealedPathPositions,pathCamera } from './exploration-paths.js';
+import { startingConnections,pathForeground,revealedPathPositions } from './exploration-paths.js';
 import { buildTimelineEvents, filterTimelineEvents, formatEventDate, timelineYear, timelineLanes, moneyKinds } from './timeline.js';
 import { mediaProfiles,mediaLeads } from './media.js';
 import { readerField,profileCopy,leadStories,overlapLabel } from './reader-copy.js';
@@ -13,6 +13,8 @@ import { encodeState, decodeState, recordURL, recordKind } from './routing.js';
 import {detailsWidth,pairedRelationships,relationshipIcons} from './explorer-ui.js';
 import {tagDefinitions,recordTags,tagForeground,taggedGraph,tagSelection} from './tags.js';
 import {explorerSearch} from './explorer-search.js';
+import {arrangeCanvas,entityRadius,scopedConnections,connectionGroups} from './canvas-layout.js';
+import {validateView} from './saved-views.js';
 
 const $ = id => document.getElementById(id);
 const nodeById = new Map(nodes.map(n => [n.id, n]));
@@ -30,14 +32,16 @@ const caseNodes = new Set(edges.filter(e => e.caseId).flatMap(e => [e.source, e.
 const svgNS = 'http://www.w3.org/2000/svg';
 const timelineEvents=buildTimelineEvents(edges,sources);
 const state = { view: 'network', caseId: 'all', categories: new Set(Object.keys(categories)), relationships: new Set(Object.keys(relationships)), history: true, query: '', selected: null, focus: false, path: null, labels: 'auto', timelineEntity:'jobsohio',timelineScope:'nearby',timelineMoney:'all',timelineUndated:true };
-const distancePreferenceKey='columbus-network:connection-distance';
-let preferredConnectionDistance=6;
-try{preferredConnectionDistance=normalizeConnectionDistance(localStorage.getItem(distancePreferenceKey));}catch{}
+const distancePreferenceKey='columbus-network:reveal-distance-v2';
+let preferredConnectionDistance=1;
+try{preferredConnectionDistance=normalizeConnectionDistance(localStorage.getItem(distancePreferenceKey),1);}catch{}
 Object.assign(state,{connectionMode:'all',from:'',to:'',includeUncertain:true,mapMode:'explore',exploreRoot:'',exploredIds:new Set(),explorationSeeds:new Set(),openNodes:new Set(),startingIds:new Set(),customStart:true,detailsOpen:true,connectionDistance:preferredConnectionDistance});
+state.pinnedIds=new Set();
+let workspaceTimer=null,entityScale=1;
 const defaults={...state};
 state.tags=new Set();defaults.tags=new Set();
 let restoringURL=true,selectionOpener=null;
-function syncURL(){if(!restoringURL)history.replaceState(null,'',encodeState(location.href,state,release.releaseId));}
+function syncURL(){if(!restoringURL){history.replaceState(null,'',encodeState(location.href,state,release.releaseId));if(state.requestedRelease&&state.requestedRelease!==release.releaseId){state.requestedRelease=release.releaseId;$('route-warning').hidden=true;}scheduleWorkspaceState();}}
 function downloadJSON(output,name){const url=URL.createObjectURL(new Blob([JSON.stringify(output,null,2)],{type:'application/json'}));const anchor=document.createElement('a');anchor.href=url;anchor.download=name;anchor.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
 function rememberOpener(){const element=document.activeElement;selectionOpener=element?.dataset?.edge?`[data-edge="${CSS.escape(element.dataset.edge)}"]`:element?.dataset?.source?`[data-source="${CSS.escape(element.dataset.source)}"]`:element?.dataset?.timelineEvent?`[data-timeline-event="${CSS.escape(element.dataset.timelineEvent)}"]`:element?.dataset?.nodeDetail?`[data-node-detail="${CSS.escape(element.dataset.nodeDetail)}"]`:element?.dataset?.node?`.node-core[data-node="${CSS.escape(element.dataset.node)}"]`:'#search';}
 function restoreFocus(){const target=[...document.querySelectorAll(selectionOpener||'#search')].find(el=>!el.closest('[hidden]')&&el.getClientRects().length);(target||$('search')).focus({preventScroll:true});}
@@ -61,10 +65,10 @@ try{const saved=JSON.parse(localStorage.getItem(detailsPreferenceKey));if(saved)
 let floatingDetailsPosition=null,mobileDetailsPosition=null,detailsResize=null,mobileDetailsWidth=null;
 function focusEntityId(){return state.focus?(state.selected?.kind==='node'?state.selected.id:state.focusEntity||null):null;}
 const explorationHistory=[];
-function copyViewState(value){return {...value,tags:new Set(value.tags),categories:new Set(value.categories),relationships:new Set(value.relationships),startingIds:new Set(value.startingIds),exploredIds:new Set(value.exploredIds),explorationSeeds:new Set(value.explorationSeeds),openNodes:new Set(value.openNodes),selected:value.selected?{...value.selected}:null,path:value.path?{...value.path,nodes:[...value.path.nodes],edges:[...value.path.edges]}:null};}
+function copyViewState(value){return {...value,pinnedIds:new Set(value.pinnedIds),tags:new Set(value.tags),categories:new Set(value.categories),relationships:new Set(value.relationships),startingIds:new Set(value.startingIds),exploredIds:new Set(value.exploredIds),explorationSeeds:new Set(value.explorationSeeds),openNodes:new Set(value.openNodes),selected:value.selected?{...value.selected}:null,path:value.path?{...value.path,nodes:[...value.path.nodes],edges:[...value.path.edges]}:null};}
 function rememberView(){
   if(state.view!=='network'||restoringURL)return;
-  explorationHistory.push({state:copyViewState(state),graph:{...graph,nodes:[...graph.nodes],edges:[...graph.edges]},positions:new Map([...positions].map(([id,p])=>[id,{...p}])),camera:{...camera},dimensions:{...dimensions}});
+  explorationHistory.push({state:copyViewState(state),graph:{...graph,nodes:[...graph.nodes],edges:[...graph.edges]},positions:new Map([...positions].map(([id,p])=>[id,{...p}])),camera:{...camera},dimensions:{...dimensions},entityScale});
   if(explorationHistory.length>30)explorationHistory.shift();$('undo-map').disabled=false;document.body.dataset.canUndo='true';
 }
 function undoExploration(){
@@ -81,6 +85,7 @@ function undoExploration(){
   $('graph').dataset.undoMotion='true';$('graph').setAttribute('aria-busy','true');$('undo-map').setAttribute('aria-busy','true');$('graph').classList.toggle('animating',expansionAnimation.sharedScale);positionGraph();expansionAnimation.frame=requestAnimationFrame(animateExpansion);
 }
 function applyUndoSnapshot(previous,keepFrame=false){
+  entityScale=previous.entityScale||1;$('graph').style.setProperty('--entity-label-size',Math.max(11,13*entityScale)+'px');
   const currentPositions=keepFrame?new Map(positions):null,currentCamera={...camera};Object.assign(state,copyViewState(previous.state));positions.clear();previous.positions.forEach((p,id)=>positions.set(id,{...(currentPositions?.get(id)||p)}));hoveredNode=null;hoveredEdge=null;edgeEls.forEach(({group})=>group.classList.remove('hovered'));connectionIcons.forEach(({group})=>group.classList.remove('hovered'));
   $('search').value=state.query;$('topic-select').value=state.caseId;syncReportingControls();$('history').checked=state.history;
   defaults.connectionDistance=state.connectionDistance;try{localStorage.setItem(distancePreferenceKey,String(state.connectionDistance));}catch{}
@@ -120,17 +125,19 @@ const topicRoots={all:'city',money:'city',cityhall:'city',jobsohio:'jobsohio',me
 function seedMap(preferred=state.exploreRoot){const seed=seedExploration(baseGraph(),preferred);state.exploreRoot=seed.root;state.explorationSeeds=new Set(seed.ids);state.openNodes=new Set();state.exploredIds=seed.ids;state.startingIds=new Set(seed.root?[seed.root]:[]);state.customStart=false;}
 function networkGraph(){
   const available=filterGraph(state);
-  if(state.tags.size){hiddenByDistance=0;return taggedGraph(available,state.tags);}
+  const keepPins=result=>({...result,nodes:[...new Map([...result.nodes,...nodes.filter(node=>state.pinnedIds.has(node.id))].map(node=>[node.id,node])).values()]});
+  if(state.tags.size){hiddenByDistance=0;return keepPins(taggedGraph(available,state.tags));}
   let explored=available;
   if(state.mapMode!=='full'&&!state.query.trim()){
     if(!state.exploredIds.size&&!state.customStart)seedMap();
     state.path?.nodes.forEach(id=>state.explorationSeeds.add(id));
-    state.exploredIds=branchExploration(available,state.explorationSeeds,state.openNodes);
+    state.exploredIds=branchExploration(available,new Set([...state.explorationSeeds,...state.pinnedIds]),state.openNodes);
     explored=exploredGraph(available,state.exploredIds);
   }
-  const center=focusEntityId(),visible=center?connectionNeighborhood(explored,center,state.connectionDistance):explored;
-  hiddenByDistance=explored.nodes.length-visible.nodes.length;
-  return visible;
+  const center=focusEntityId(),anchors=new Set([center,...state.pinnedIds].filter(Boolean));
+  const visible=center&&state.openNodes.has(center)?scopedConnections(available,anchors,state.connectionDistance):center?scopedConnections(explored,anchors,state.connectionDistance):explored;
+  hiddenByDistance=Math.max(0,explored.nodes.length-visible.nodes.length);
+  return keepPins(visible);
 }
 function refreshMapScope(){state.selected=null;state.path=null;state.focus=false;hoveredNode=null;if(state.mapMode==='explore'&&!state.customStart)seedMap(topicRoots[state.caseId]||state.exploreRoot);applyCaseLayout();}
 function toggleNode(id){
@@ -140,6 +147,7 @@ function toggleNode(id){
   rememberOpener();
   if(state.view!=='network'){state.explorationSeeds.add(id);setView('network');}
   const startCamera={...camera},beforePositions=new Map([...positions].map(([id,point])=>[id,{...point}]));
+  const visibleBefore=new Set(graph.nodes.map(node=>node.id));
   const displayed=[...new Set([...(leavingTag&&state.mapMode==='full'?baseGraph().nodes:graph.nodes).map(n=>n.id),...(state.mapMode==='explore'?state.exploredIds:[])])];
   if(state.mapMode==='full')state.explorationSeeds=new Set(displayed);
   else if(state.query.trim())graph.nodes.forEach(node=>{if(!state.exploredIds.has(node.id))state.explorationSeeds.add(node.id);});
@@ -147,16 +155,18 @@ function toggleNode(id){
   state.query='';$('search').value='';state.focus=true;state.path=null;state.detailsOpen=true;
   const result=toggleExploration(baseGraph(),state.explorationSeeds,state.openNodes,id);
   state.explorationSeeds=result.seeds;state.openNodes=result.opened;state.exploredIds=result.ids;state.selected={kind:'node',id};
-  const anchor={...(positions.get(id)||{x:0,y:0})},targets=neighborhoodPositions(positions,id,nodeNeighborhood(exploredGraph(baseGraph(),result.ids),id).nodes),revealing=new Set(result.added);
+  const anchor={...(positions.get(id)||{x:0,y:0})},revealing=new Set(result.added);
   state.exploreRoot=id;
-  targets.forEach((point,id)=>positions.set(id,point));
   render();
   $('inspector').style.zIndex=++windowOrder;
   const bounds=$('canvas-area').getBoundingClientRect();dimensions={width:bounds.width,height:bounds.height};
   const endCamera=fittedCamera();
+  const targets=new Map(graph.nodes.map(node=>[node.id,{...positions.get(node.id)}]));
+  graph.nodes.forEach(node=>{if(!visibleBefore.has(node.id))revealing.add(node.id);});
   if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
     const starts=new Map();targets.forEach((_,id)=>{const point=revealing.has(id)?anchor:beforePositions.get(id)||anchor;starts.set(id,{...point});positions.set(id,{...point});if(revealing.has(id)){nodeEls.get(id).group.classList.add('revealing');nodeEls.get(id).core.setAttribute('tabindex','-1');}});
-    camera=startCamera;expansionAnimation={targets,starts,revealing,anchor,startCamera,endCamera,sharedScale:graph.nodes.length>80,start:null,frame:null};
+    const pinnedScreens=new Map([...state.pinnedIds].filter(id=>beforePositions.has(id)).map(id=>{const point=beforePositions.get(id);return [id,{x:startCamera.x+point.x*startCamera.z,y:startCamera.y+point.y*startCamera.z}];}));
+    camera=startCamera;expansionAnimation={targets,starts,revealing,anchor,startCamera,endCamera,pinnedScreens,sharedScale:false,start:null,frame:null};
     $('graph').setAttribute('aria-busy','true');$('graph').classList.toggle('animating',expansionAnimation.sharedScale);positionGraph();
     expansionAnimation.frame=requestAnimationFrame(animateExpansion);
   }else{camera=endCamera;positionGraph();}
@@ -185,6 +195,7 @@ function animateExpansion(time){
     connectionIcons.forEach(({group,peerIds})=>{if(peerIds.length&&peerIds.every(id=>animation.outgoingEdges.has(id)))group.style.opacity=1-eased;else if(peerIds.length&&peerIds.every(id=>animation.incomingEdges.has(id)))group.style.opacity=eased;});
   }
   camera=transitionCamera(animation.startCamera,animation.endCamera,animation.anchor,eased);
+  animation.pinnedScreens?.forEach((point,id)=>positions.set(id,{x:(point.x-camera.x)/camera.z,y:(point.y-camera.y)/camera.z}));
   positionGraph();
   if(progress>=1)settleExpansion();else animation.frame=requestAnimationFrame(animateExpansion);
 }
@@ -193,6 +204,26 @@ function branchAction(id){
   const available=baseGraph(),count=connectedNeighbors(available,id,new Set(graph.nodes.map(node=>node.id))).length,opened=state.openNodes.has(id);
   return {opened,count,disabled:!available.edges.some(edge=>edge.source===id||edge.target===id),label:opened?'Collapse unused nodes':count?'Expand connections ('+count+' more)':'Expand connections'};
 }
+function togglePin(id){
+  if(!nodeById.has(id))return;settleExpansion();rememberView();
+  state.pinnedIds=new Set(state.pinnedIds);state.pinnedIds.has(id)?state.pinnedIds.delete(id):state.pinnedIds.add(id);
+  render(true);toast(state.pinnedIds.has(id)?nodeById.get(id).name+' pinned as an anchor':nodeById.get(id).name+' unpinned');
+}
+function pinnedScreenPositions(beforePositions,startCamera){return new Map([...state.pinnedIds].filter(id=>beforePositions.has(id)).map(id=>{const point=beforePositions.get(id);return [id,{x:startCamera.x+point.x*startCamera.z,y:startCamera.y+point.y*startCamera.z}];}));}
+function renderPins(){
+  const tray=$('pinned-anchors');tray.hidden=!state.pinnedIds.size;
+  tray.innerHTML=state.pinnedIds.size?'<span class="anchor-label">Pinned anchors</span>'+[...state.pinnedIds].map(id=>'<span class="anchor-chip"><button data-anchor-focus="'+id+'" title="Explore this anchor">'+escape(nodeById.get(id)?.name||id)+'</button><button data-toggle-pin="'+id+'" aria-label="Unpin '+escape(nodeById.get(id)?.name||id)+'">×</button></span>').join(''):'';
+}
+function renderConnectionLegend(){
+  const unfiltered=filterGraph({...state,query:'',relationships:new Set(Object.keys(relationships)),connectionMode:'all'}),center=focusEntityId(),shown=new Set(graph.nodes.map(node=>node.id));
+  const relevant=unfiltered.edges.filter(edge=>center?edge.source===center||edge.target===center||state.pinnedIds.has(edge.source)||state.pinnedIds.has(edge.target):state.mapMode==='full'&&!state.tags.size||shown.has(edge.source)||shown.has(edge.target));
+  const modeTypes=connectionModesForLegend();
+  $('legend-types').innerHTML=connectionGroups.map(group=>{
+    const entries=group.types.map(id=>{const count=graph.edges.filter(edge=>edge.type===id).length,available=relevant.filter(edge=>edge.type===id).length,enabled=state.relationships.has(id)&&(!modeTypes||modeTypes.includes(id));if(!count&&!available&&enabled)return '';return '<li data-legend-type="'+id+'" class="'+(!enabled?'legend-filtered':'')+'"><span class="legend-line" style="--color:'+relationships[id].color+'" aria-hidden="true"></span><span class="legend-type-label">'+escape(relationships[id].label)+'</span><small>'+(!enabled?available+' hidden':count)+'</small>'+(!enabled?'<button class="legend-show" data-show-type="'+id+'" aria-label="Show '+escape(relationships[id].label)+'">Show</button>':'')+'</li>';}).join('');
+    return entries?'<li class="legend-group"><details open><summary>'+escape(group.label)+'</summary><ul>'+entries+'</ul></details></li>':'';
+  }).join('');
+}
+function connectionModesForLegend(){return {ownership:['ownership','voting'],governance:['board','control'],leadership:['leadership'],money:['money','funding','contract','influence'],content:['content','affiliation','editorial']}[state.connectionMode]||null;}
 function renderMapScope(){
   const available=baseGraph(),isSmall=state.mapMode==='explore'&&!state.query.trim(),anchor=expansionAnchor();
   $('map-scope').hidden=!!state.tags.size||!nodeById.has(anchor);$('map-scope').textContent=nodeById.has(anchor)?nodeById.get(anchor).name+' · Details':'';
@@ -200,12 +231,12 @@ function renderMapScope(){
   $('map-full').hidden=!isSmall||graph.nodes.length===available.nodes.length;
   $('map-full').textContent=state.caseId==='all'?'Show whole network':'Show whole topic';
   $('map-small').hidden=false;
-  const center=focusEntityId(),focused=!!center,legendGraph=focused?{edges:graph.edges.filter(edge=>edge.source===center||edge.target===center)}:graph;
-  $('distance-summary').textContent=focused?(state.connectionDistance==='all'?'All explored entities are shown.':`Within ${state.connectionDistance} connection${state.connectionDistance===1?'':'s'} of ${nodeById.get(center).name}.`)+(hiddenByDistance?` ${hiddenByDistance} explored ${hiddenByDistance===1?'entity is':'entities are'} hidden.`:''):'Connection steps from the selected entity.';
+  const center=focusEntityId(),focused=!!center;
+  $('distance-summary').textContent=focused?(state.connectionDistance==='all'?'All connected entities':'Connections up to '+state.connectionDistance+' step'+(state.connectionDistance===1?'':'s'))+' from '+nodeById.get(center).name+(state.pinnedIds.size?' and your pinned anchors.':'.'):'Choose an entity, then adjust the distance to reveal its neighborhood. Pins stay visible.';
   $('legend-context').textContent=focused&&state.connectionDistance!=='all'?`Within ${state.connectionDistance} connection${state.connectionDistance===1?'':'s'} of the selected entity. Other visible nodes stay clickable at 50% opacity.`:'Other visible nodes stay clickable at 50% opacity.';
-  $('connection-legend').querySelector('h2').textContent=focused?'Direct connections':'Connections shown';
+  $('connection-legend').querySelector('h2').textContent='Connection types';
   $('fit').title=focused?'Fit direct connections':'Fit all visible nodes';$('fit').setAttribute('aria-label',focused?'Fit direct connections':'Fit the network');
-  $('legend-types').innerHTML=connectionLegend(legendGraph,relationships).map(type=>`<li data-legend-type="${type.id}"><span class="legend-line ${type.allHistorical?'past':''}" style="--color:${type.color}" aria-hidden="true"></span><svg class="legend-type-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="${relationshipIcons[type.id]||relationshipIcons.affiliation}"/></svg><span class="legend-type-label">${escape(type.label)}</span> <small>${type.count}</small></li>`).join('');
+  renderConnectionLegend();renderPins();syncFilterGroups();
   $('legend-key').textContent=graph.edges.length?[graph.edges.some(e=>e.directional)?'Arrowheads show recorded direction':'',graph.edges.some(e=>e.historical)?'Dashed lines are past records':''].filter(Boolean).join(' · '):indirectRoutes.length?'No direct links between these starting entities.':'Open an entity to see its recorded connections.';
   $('indirect-key').hidden=!indirectRoutes.length;
   const chosen=[...state.startingIds].filter(id=>nodeById.has(id)).map(id=>nodeById.get(id).name);
@@ -229,14 +260,14 @@ function renderIndirectRoutes(){
 }
 function showExplorationPath(route,startingIds=null){
   if(!route)return;
-  settleExpansion(false);rememberView();const shown=new Set(graph.nodes.map(node=>node.id)),startCamera={...camera},targets=revealedPathPositions(route,positions,shown),revealing=new Set(targets.keys());
+  settleExpansion(false);rememberView();const shown=new Set(graph.nodes.map(node=>node.id)),startCamera={...camera},beforePositions=new Map([...positions].map(([id,point])=>[id,{...point}])),newPositions=revealedPathPositions(route,positions,shown),revealing=new Set(newPositions.keys());
   if(startingIds){state.startingIds=new Set(startingIds);state.customStart=true;}
-  targets.forEach((point,id)=>positions.set(id,point));const anchor={...positions.get(route.nodes[0])};
+  newPositions.forEach((point,id)=>positions.set(id,point));const anchor={...positions.get(route.nodes[0])};
   route.nodes.forEach(id=>state.explorationSeeds.add(id));
   state.query='';$('search').value='';state.selected=null;state.focus=false;state.path=route;state.tags=new Set();hideTagPreview();render();
-  const bounds=$('canvas-area').getBoundingClientRect();dimensions={width:bounds.width,height:bounds.height};const endCamera=pathCamera(positions,route.nodes,focusViewport());
+  const bounds=$('canvas-area').getBoundingClientRect();dimensions={width:bounds.width,height:bounds.height};const endCamera=fittedCamera(),targets=new Map([...new Set([...route.nodes,...state.pinnedIds])].filter(id=>positions.has(id)).map(id=>[id,{...positions.get(id)}]));
   if(matchMedia('(prefers-reduced-motion: reduce)').matches){camera=endCamera;positionGraph();}
-  else{const starts=new Map();targets.forEach((_,id)=>{starts.set(id,{...anchor});positions.set(id,{...anchor});nodeEls.get(id).group.classList.add('revealing');});camera=startCamera;expansionAnimation={targets,starts,revealing,anchor,startCamera,endCamera,sharedScale:graph.nodes.length>80,start:null,frame:null};$('graph').setAttribute('aria-busy','true');$('graph').classList.toggle('animating',expansionAnimation.sharedScale);positionGraph();expansionAnimation.frame=requestAnimationFrame(animateExpansion);}
+  else{const starts=new Map();targets.forEach((_,id)=>{const point=revealing.has(id)?anchor:beforePositions.get(id)||anchor;starts.set(id,{...point});positions.set(id,{...point});if(revealing.has(id))nodeEls.get(id).group.classList.add('revealing');});const pinnedScreens=pinnedScreenPositions(beforePositions,startCamera);camera=startCamera;expansionAnimation={targets,starts,revealing,anchor,startCamera,endCamera,pinnedScreens,sharedScale:false,start:null,frame:null};$('graph').setAttribute('aria-busy','true');positionGraph();expansionAnimation.frame=requestAnimationFrame(animateExpansion);}
   toast(route.edges.length+' recorded links revealed');
 }
 
@@ -262,15 +293,15 @@ function openStartingEntities(){
 function addStartingEntity(id){
   if(!nodeById.has(id))return;settleExpansion(false);rememberView();
   state.tags=new Set();hideTagPreview();
-  const startCamera={...camera},shown=new Set(graph.nodes.map(node=>node.id)),anchorId=focusEntityId()||state.exploreRoot||graph.nodes[0]?.id;
+  const startCamera={...camera},beforePositions=new Map([...positions].map(([id,point])=>[id,{...point}])),shown=new Set(graph.nodes.map(node=>node.id)),anchorId=focusEntityId()||state.exploreRoot||graph.nodes[0]?.id;
   if(!shown.has(id)){const point=shown.size?fanOutPositions(positions,shown,[id],anchorId).get(id):{x:0,y:0};positions.set(id,point);}
   if(state.mapMode==='full')graph.nodes.forEach(node=>state.explorationSeeds.add(node.id));
   state.startingIds.add(id);state.explorationSeeds.add(id);state.exploredIds.add(id);state.exploreRoot=id;state.customStart=true;
   state.mapMode='explore';state.selected={kind:'node',id};state.detailsOpen=true;state.path=null;state.focus=false;state.query='';$('search').value='';
   renderEntitySearch();render();const bounds=$('canvas-area').getBoundingClientRect();dimensions={width:bounds.width,height:bounds.height};
-  const endCamera=neighborhoodCamera(positions,id,nodeNeighborhood(graph,id).nodes,focusViewport()),anchor={...positions.get(id)};
+  const anchor={...(beforePositions.get(anchorId)||{x:0,y:0})},endCamera=fittedCamera(),targets=new Map(graph.nodes.map(node=>[node.id,{...positions.get(node.id)}]));
   if(matchMedia('(prefers-reduced-motion: reduce)').matches){camera=endCamera;positionGraph();}
-  else{camera=startCamera;expansionAnimation={targets:new Map(),starts:new Map(),revealing:new Set(),anchor,startCamera,endCamera,sharedScale:graph.nodes.length>80,start:null,frame:null};$('graph').setAttribute('aria-busy','true');$('graph').classList.toggle('animating',expansionAnimation.sharedScale);positionGraph();expansionAnimation.frame=requestAnimationFrame(animateExpansion);}
+  else{const starts=new Map();targets.forEach((_,id)=>{const point=shown.has(id)?beforePositions.get(id):anchor;starts.set(id,{...(point||anchor)});positions.set(id,{...(point||anchor)});});const pinnedScreens=pinnedScreenPositions(beforePositions,startCamera);camera=startCamera;expansionAnimation={targets,starts,revealing:new Set(),anchor,startCamera,endCamera,pinnedScreens,sharedScale:false,start:null,frame:null};$('graph').setAttribute('aria-busy','true');positionGraph();expansionAnimation.frame=requestAnimationFrame(animateExpansion);}
   $('search').focus({preventScroll:true});
 }
 
@@ -297,6 +328,7 @@ function mountCanvasWindows(){
   const stage=$('graph-stage'),workspace=document.querySelector('.workspace'),explorer=$('explorer');
   document.body.dataset.view=state.view;document.documentElement.style.setProperty('--masthead-height',document.querySelector('.masthead').getBoundingClientRect().height+'px');
   document.querySelector('.secondary-actions>div').append($('map-full'));explorer.append($('media-overview'));
+  $('search-window').append(document.querySelector('.distance-control'),$('pinned-anchors'));
   if(state.view==='network'){
     [ $('search-window'),document.querySelector('.exploration-tools'),$('filters'),$('connection-legend'),$('map-status'),$('active-filters'),$('path-dialog') ].forEach(element=>$('canvas-area').append(element));stage.append($('inspector'));
   }else{
@@ -374,19 +406,18 @@ function setCase(id) {
 
 function toast(message) { $('toast').textContent = message; $('toast').classList.add('visible'); clearTimeout(toastTimer); toastTimer = setTimeout(() => $('toast').classList.remove('visible'), 2800); }
 
-function buildFilters() {
-  $('category-filters').innerHTML = Object.entries(categories).map(([id, c]) => `<label class="filter-row"><input type="checkbox" data-category="${id}" checked>${dot(id)}<span>${escape(c.label)}</span><span class="filter-count">${nodes.filter(n => n.category === id).length}</span></label>`).join('');
-  $('relationship-filters').innerHTML = Object.entries(relationships).map(([id, r]) => `<label class="filter-row"><input type="checkbox" data-relationship="${id}" checked><span class="relationship-swatch ${id === 'history' ? 'history' : ''}" style="--color:${r.color}"></span><span>${escape(r.label)}</span></label>`).join('');
-  $('filters').addEventListener('change', event => {
-    const input = event.target;
-    if(!input.dataset.category&&!input.dataset.relationship&&input.id!=='history')return;
-    if (input.dataset.category) input.checked ? state.categories.add(input.dataset.category) : state.categories.delete(input.dataset.category);
-    if (input.dataset.relationship) input.checked ? state.relationships.add(input.dataset.relationship) : state.relationships.delete(input.dataset.relationship);
-    if (input.id === 'history') state.history = input.checked;
-    state.path = null; state.focus = false; refreshMapScope();render(true);
-  });
+function syncFilterGroups(){
+  $('filters').querySelectorAll('[data-category]').forEach(input=>input.checked=state.categories.has(input.dataset.category));
+  $('filters').querySelectorAll('[data-relationship]').forEach(input=>input.checked=state.relationships.has(input.dataset.relationship));
+  for(const group of connectionGroups){const input=$('filters').querySelector('[data-type-group="'+group.id+'"]');if(!input)continue;const count=group.types.filter(id=>state.relationships.has(id)).length;input.checked=count===group.types.length;input.indeterminate=count>0&&count<group.types.length;input.closest('summary').querySelector('small').textContent=count+'/'+group.types.length;}
 }
-
+function buildFilters() {
+  $('category-filters').innerHTML='<div class="filter-bulk"><button data-filter-bulk="entities-all">All</button><button data-filter-bulk="entities-none">None</button></div>'+Object.entries(categories).map(([id,c])=>'<label class="filter-row"><input type="checkbox" data-category="'+id+'" checked>'+dot(id)+'<span>'+escape(c.label)+'</span></label>').join('');
+  $('relationship-filters').innerHTML='<div class="filter-bulk"><button data-filter-bulk="all">Select all</button><button data-filter-bulk="none">Deselect all</button></div>'+connectionGroups.map(group=>'<details class="filter-type-group"><summary><input type="checkbox" data-type-group="'+group.id+'" aria-label="Include '+escape(group.label)+'" checked><span>'+escape(group.label)+'</span><small></small></summary><div>'+group.types.map(id=>'<label class="filter-row"><input type="checkbox" data-relationship="'+id+'" checked><span class="relationship-swatch" style="--color:'+relationships[id].color+'"></span><span>'+escape(relationships[id].label)+'</span></label>').join('')+'</div></details>').join('');
+  $('filters').addEventListener('click',event=>{const input=event.target.closest('[data-type-group]');if(input)event.stopPropagation();const button=event.target.closest('[data-filter-bulk]');if(!button)return;rememberView();const kind=button.dataset.filterBulk;if(kind.startsWith('entities'))state.categories=new Set(kind==='entities-all'?Object.keys(categories):[]);else{state.relationships=new Set(kind==='all'?Object.keys(relationships):[]);state.connectionMode='all';}syncReportingControls();render(true);});
+  $('filters').addEventListener('change',event=>{const input=event.target;if(!input.dataset.category&&!input.dataset.relationship&&!input.dataset.typeGroup&&input.id!=='history')return;rememberView();if(input.dataset.category)input.checked?state.categories.add(input.dataset.category):state.categories.delete(input.dataset.category);if(input.dataset.relationship)input.checked?state.relationships.add(input.dataset.relationship):state.relationships.delete(input.dataset.relationship);if(input.dataset.typeGroup){for(const id of connectionGroups.find(group=>group.id===input.dataset.typeGroup).types)input.checked?state.relationships.add(id):state.relationships.delete(id);state.connectionMode='all';}if(input.id==='history')state.history=input.checked;state.path=null;syncReportingControls();render(true);});
+  syncFilterGroups();
+}
 
 function renderFilterChips(){
   const chips=[];
@@ -405,7 +436,7 @@ function renderFilterChips(){
 }
 function updateTagWindowSpace(){
   const active=state.view==='network'&&state.tags.size;document.body.dataset.hasTags=String(!!active);
-  const height=$('search-window').querySelector('.search-wrap').offsetHeight+(active?$('active-tags').offsetHeight:0),canvas=$('canvas-area');
+  const height=$('search-window').offsetHeight,canvas=$('canvas-area');
   canvas.style.setProperty('--tag-search-height',height+'px');canvas.style.setProperty('--tag-controls-bottom',(height+document.querySelector('.exploration-tools').offsetHeight+28)+'px');
 }
 $('active-filters').addEventListener('click',event=>{
@@ -478,7 +509,9 @@ function buildGraph() {
     const words = n.name.split(' '); const lines = [];
     if (n.name.length > 21 && words.length > 2) { let current = ''; for (const word of words) { if ((current + ' ' + word).trim().length > 20 && current) { lines.push(current); current = word; } else current = (current + ' ' + word).trim(); } if (current) lines.push(current); } else lines.push(n.name);
     lines.forEach((line, index) => { const span = svgEl('tspan', { x: '0', dy: index ? '13' : '0' }); span.textContent = line; label.append(span); });
-    group.append(title, hit,halo, core, letter, label); $('node-layer').append(group); nodeEls.set(n.id, { group, hit,halo, core, letter, label });
+    const pin=svgEl('g',{class:'node-pin-control',role:'button',tabindex:'0','data-pin':n.id,'aria-label':`Pin ${n.name} as anchor`});
+    pin.append(svgEl('circle',{r:22,fill:'transparent'}),svgEl('circle',{r:10,class:'node-pin-disc'}),svgEl('path',{d:'M-3 -6h6l-1 5 3 3H-5l3-3zM0 2v6',class:'node-pin-glyph'}));
+    group.append(title, hit,halo, core, letter, label,pin); $('node-layer').append(group); nodeEls.set(n.id, { group, hit,halo, core, letter, label,pin });
     group.addEventListener('pointerenter',()=>{hoveredNode=n.id;renderGraph();});
     group.addEventListener('pointerleave',()=>{hoveredNode=null;renderGraph();});
     group.addEventListener('focus',()=>{hoveredNode=n.id;renderGraph();});
@@ -486,6 +519,7 @@ function buildGraph() {
   });
   $('graph').addEventListener('click', event => {
     if (suppressClick) { suppressClick = false; return; }
+    const pin=event.target.closest('[data-pin]');if(pin){togglePin(pin.dataset.pin);return;}
     const target = event.target.closest('[data-node],[data-edge],[data-route]');
     if(target?.dataset.route!==undefined)showExplorationPath(indirectRoutes[Number(target.dataset.route)]);
     else if (target?.dataset.node) toggleNode(target.dataset.node);
@@ -493,6 +527,7 @@ function buildGraph() {
     else if (!target) { settleExpansion(false);state.selected = null; state.focus = false; state.path = null; render(); }
   });
   $('graph').addEventListener('keydown', event => {
+    const pin=event.target.closest('[data-pin]');if(pin&&(event.key==='Enter'||event.key===' ')){event.preventDefault();if(!event.repeat)togglePin(pin.dataset.pin);return;}
     const target = event.target.closest('[data-node],[data-edge],[data-route]');
     if ((event.key === 'Enter' || event.key === ' ') && target) { event.preventDefault(); if(!event.repeat){if(target.dataset.route!==undefined)showExplorationPath(indirectRoutes[Number(target.dataset.route)]);else target.dataset.node ? toggleNode(target.dataset.node) : selectEdge(target.dataset.edge);} }
     if (event.target === $('graph')) {
@@ -505,6 +540,7 @@ function buildGraph() {
   });
   $('graph').addEventListener('pointerdown', event => {
     if (event.button !== 0) return;
+    if(event.target.closest('[data-pin]'))return;
     const target = event.target.closest('[data-node],[data-edge],[data-route]');
     drag = { route:target?.dataset.route,id: target?.dataset.node, edge: target?.dataset.edge, pointer: event.pointerId, startX: event.clientX, startY: event.clientY, lastX: event.clientX, lastY: event.clientY, moved: false };
     $('graph').setPointerCapture(event.pointerId);
@@ -540,37 +576,22 @@ function buildGraph() {
   new ResizeObserver(entries => {
     const rect = entries[0].contentRect;
     if (!rect.width || !rect.height) return;
-    if(Math.abs(rect.width-dimensions.width)<1&&Math.abs(rect.height-dimensions.height)<1)return;
+    if(rect.width<1||rect.height<1||Math.abs(rect.width-dimensions.width)<1&&Math.abs(rect.height-dimensions.height)<1)return;
     settleExpansion();dimensions = { width: rect.width, height: rect.height };
     $('graph-stage').dataset.compact=String(rect.width<650);$('graph-stage').dataset.tiny=String(rect.width<350);updateTagWindowSpace();fitGraph();if(graph)renderMapScope();positionInspector();
   }).observe($('canvas-area'));
 }
 
-function focusViewport(){
-  const stage=$('canvas-area').getBoundingClientRect();
-  const base={left:12,top:dimensions.width<350?240:dimensions.width<650?170:110,right:dimensions.width-12,bottom:dimensions.height-16};let areas=[base];
-  for(const panel of $('graph-stage').querySelectorAll('.floating-panel:not([hidden]),#inspector:not([hidden]),#map-status,.graph-controls')){
-    if(!panel.getClientRects().length||panel.dataset.motion==='closing')continue;
-    const parent=panel.parentElement.getBoundingClientRect(),bounds={left:parent.left+panel.offsetLeft,top:parent.top+panel.offsetTop,right:parent.left+panel.offsetLeft+panel.offsetWidth,bottom:parent.top+panel.offsetTop+panel.offsetHeight},r={left:bounds.left-stage.left-12,top:bounds.top-stage.top-12,right:bounds.right-stage.left+12,bottom:bounds.bottom-stage.top+12},next=[];
-    for(const area of areas){
-      if(r.right<=area.left||r.left>=area.right||r.bottom<=area.top||r.top>=area.bottom){next.push(area);continue;}
-      next.push({...area,right:Math.min(area.right,r.left)},{...area,left:Math.max(area.left,r.right)},{...area,bottom:Math.min(area.bottom,r.top)},{...area,top:Math.max(area.top,r.bottom)});
-    }
-    areas=next.filter(area=>area.right-area.left>=160&&area.bottom-area.top>=160).sort((a,b)=>(b.right-b.left)*(b.bottom-b.top)-(a.right-a.left)*(a.bottom-a.top)).slice(0,16);
-  }
-  const area=areas[0]||base;return {left:area.left,top:area.top,width:area.right-area.left,height:area.bottom-area.top};
-}
 function fittedCamera() {
   if (!graph?.nodes.length) return {...camera};
-  if(state.tags.size)return pathCamera(positions,tagForeground(graph,state.tags).nodes,focusViewport())||{...camera};
-  if(state.path?.nodes.length)return pathCamera(positions,state.path.nodes,focusViewport())||{...camera};
-  const center=focusEntityId();if(center){const neighborhood=nodeNeighborhood(graph,center);neighborhoodPositions(positions,center,neighborhood.nodes).forEach((point,id)=>positions.set(id,point));return neighborhoodCamera(positions,center,neighborhood.nodes,focusViewport())||{...camera};}
-  const pts = graph.nodes.map(n => positions.get(n.id));
-  const minX = Math.min(...pts.map(p => p.x)), maxX = Math.max(...pts.map(p => p.x));
-  const minY = Math.min(...pts.map(p => p.y)), maxY = Math.max(...pts.map(p => p.y));
-  const padding = dimensions.width < 450 ? 90 : 150;
-  const z = Math.min(graph.nodes.length<=5?1.8:1.4, Math.max(.1, Math.min((dimensions.width - padding) / Math.max(200, maxX - minX), (dimensions.height - 135) / Math.max(200, maxY - minY))));
-  return {z,x:dimensions.width / 2 - (minX + maxX) / 2 * z,y:(dimensions.height - 35) / 2 - (minY + maxY) / 2 * z};
+  const surface=$('canvas-area').getBoundingClientRect();
+  const current=new Map([...positions].map(([id,p])=>[id,{x:camera.x+p.x*camera.z,y:camera.y+p.y*camera.z}]));
+  const obstacles=[...$('graph-stage').querySelectorAll('#search-window,.exploration-tools,.floating-panel:not([hidden]),#inspector:not([hidden]),#map-status,.graph-controls')].filter(panel=>panel.getClientRects().length&&panel.dataset.motion!=='closing').map(panel=>{const r=panel.getBoundingClientRect();return {left:r.left-surface.left-10,top:r.top-surface.top-10,right:r.right-surface.left+10,bottom:r.bottom-surface.top+10};});
+  const layoutGraph=state.path?{nodes:graph.nodes.filter(node=>state.path.nodes.includes(node.id)||state.pinnedIds.has(node.id)),edges:graph.edges.filter(edge=>state.path.edges.includes(edge.id))}:graph;
+  const arranged=arrangeCanvas(layoutGraph,{...dimensions,obstacles,current,pins:state.pinnedIds,center:focusEntityId()||state.exploreRoot,degrees});
+  arranged.positions.forEach((point,id)=>positions.set(id,point));entityScale=arranged.scale;
+  $('graph').style.setProperty('--entity-label-size',Math.max(11,13*entityScale)+'px');
+  return {x:0,y:0,z:1};
 }
 function fitGraph() {
   settleExpansion();camera=fittedCamera();
@@ -585,21 +606,22 @@ function positionGraph() {
   $('graph-world').setAttribute('transform', `translate(${camera.x} ${camera.y}) scale(${camera.z})`);
   const z = camera.z;
   if(expansionAnimation?.sharedScale){$('graph').style.setProperty('--camera-inverse',1/z);$('graph').style.setProperty('--radius-factor',Math.min(1,Math.max(.45,z/.45)));}
-  markerEls.forEach(marker => { marker.setAttribute('markerWidth',8/z); marker.setAttribute('markerHeight',8/z); });
-  const radiusFor = id => (8 + Math.min(9, degrees.get(id) * .85)) * Math.min(1, Math.max(.45, z / .45));
-  nodeEls.forEach(({ group,hit, halo, core, letter, label }, id) => {
+  markerEls.forEach(marker => { marker.setAttribute('markerWidth',5/z); marker.setAttribute('markerHeight',5/z); });
+  const radiusFor = id => entityRadius(degrees.get(id),state.pinnedIds.has(id),entityScale)*Math.min(1,Math.max(.5,z/.5));
+  nodeEls.forEach(({ group,hit, halo, core, letter, label,pin }, id) => {
     if(group.style.display==='none')return;
-    const p = positions.get(id), radius = (8 + Math.min(9, degrees.get(id) * .85)) * Math.min(1, Math.max(.45, z / .45));
+    const p = positions.get(id), radius = radiusFor(id);
     if(expansionAnimation?.sharedScale){
       if(expansionAnimation.targets.has(id))group.setAttribute('transform',`translate(${p.x} ${p.y})`);
       const display=radius<6?'none':'';if(letter.style.display!==display)letter.style.display=display;
       return;
     }
     group.setAttribute('transform', `translate(${p.x} ${p.y})`);
-    hit.setAttribute('r',22/z);
+    hit.setAttribute('r',Math.max(22,radius+4)/z);
     halo.setAttribute('r', (radius + 5) / z); core.setAttribute('r', radius / z); core.style.strokeWidth = `${1.6 / z}px`;
     letter.setAttribute('transform', `scale(${1 / z})`); letter.style.display = radius < 6 ? 'none' : '';
     label.setAttribute('transform', `translate(0 ${(radius + 17) / z}) scale(${1 / z})`);
+    pin?.setAttribute('transform',`translate(${(radius+10)/z} ${(-radius-3)/z}) scale(${1/z})`);
   });
   edges.forEach(e => {
     if(edgeEls.get(e.id).group.style.display==='none')return;
@@ -637,7 +659,7 @@ function placeLabels() {
   for(const [id,{group,label}]of sorted){
     label.style.display=state.labels==='off'||group.style.display==='none'?'none':'';
     if(label.style.display==='none')continue;
-    const radius=(8+Math.min(9,degrees.get(id)*.85))*Math.min(1,Math.max(.45,z/.45));
+    const radius=entityRadius(degrees.get(id),state.pinnedIds.has(id),entityScale)*Math.min(1,Math.max(.5,z/.5));
     label.setAttribute('transform',`translate(0 ${(radius+17)/z}) scale(${1/z})`);labels.push({id,label,radius});
   }
   for(const {group,label}of edgeEls.values()){
@@ -690,16 +712,18 @@ function renderGraph() {
     adjacent(id).forEach(e => { highlightedEdges.add(e.id); highlightedNodes.add(other(e, id)); });
   } else if (state.selected?.kind === 'edge') { const e = edgeById.get(state.selected.id);pairedRelationships(graph.edges,e).forEach(edge=>highlightedEdges.add(edge.id));highlightedNodes.add(e.source);highlightedNodes.add(e.target); }
   else if (state.query) graph.matches.forEach(id => highlightedNodes.add(id));
-  nodeEls.forEach(({ group, core,label }, id) => {
+  nodeEls.forEach(({ group, core,label,pin }, id) => {
     const visible = shownNodes.has(id);
     group.style.display = visible ? '' : 'none';
-    group.classList.toggle('context-node',!foreground.nodes.has(id));
+    group.classList.toggle('context-node',!foreground.nodes.has(id)&&!state.pinnedIds.has(id));
+    group.classList.toggle('pinned-node',state.pinnedIds.has(id));
+    pin.setAttribute('aria-label',(state.pinnedIds.has(id)?'Unpin ':'Pin ')+nodeById.get(id).name+(state.pinnedIds.has(id)?'':' as anchor'));pin.setAttribute('aria-pressed',String(state.pinnedIds.has(id)));pin.setAttribute('tabindex',visible?'0':'-1');
     group.classList.toggle('path-node',!!state.path?.nodes.includes(id));
     group.classList.toggle('highlight', highlightedNodes.has(id)); group.classList.toggle('selected', state.selected?.kind === 'node' && state.selected.id === id);
     group.classList.toggle('expanded',state.openNodes.has(id));
     core.setAttribute('aria-pressed', state.selected?.kind === 'node' && state.selected.id === id ? 'true' : 'false');
     core.setAttribute('aria-expanded',String(state.openNodes.has(id)));
-    core.setAttribute('aria-description',state.openNodes.has(id)?'Click again to collapse unused nodes':'Click to expand connections');
+    core.setAttribute('aria-description',degrees.get(id)+' recorded connections. '+(state.pinnedIds.has(id)?'Pinned anchor. ':'')+(state.openNodes.has(id)?'Click again to collapse unused nodes':'Click to expand connections'));
     label.style.display = state.labels === 'off' ? 'none' : '';
   });
   edgeEls.forEach(({ group, line, label }, id) => {
@@ -769,6 +793,7 @@ function renderInspector() {
     const edge=edgeById.get(state.selected.id),others=pairedRelationships(baseGraph().edges,edge).filter(other=>other.id!==edge.id);
     if(others.length)panel.insertAdjacentHTML('beforeend','<div class="subheading">'+(others.length+1)+' CONNECTIONS BETWEEN THESE ENTITIES</div>'+others.map(other=>'<article class="paired-connection-card" data-paired-record="'+other.id+'"><button data-edge="'+other.id+'">'+escape(readerField(other,'label'))+' ↗</button><small>'+escape(relationships[other.type].label)+' · '+escape(other.period)+'</small>'+tagButtons('connection',other.id)+statusBadge(other)+'<p>'+escape(readerField(other,'evidence'))+'</p>'+sourceLinks(other.sourceIds)+'</article>').join(''));
   }
+  if(state.selected.kind==='node')panel.querySelector('h2').insertAdjacentHTML('afterend','<button class="pin-entity-button" data-toggle-pin="'+state.selected.id+'" aria-pressed="'+state.pinnedIds.has(state.selected.id)+'">'+(state.pinnedIds.has(state.selected.id)?'◆ Pinned anchor · Unpin':'◇ Pin as anchor')+'</button>');
 }
 
 function renderDirectory() {
@@ -979,6 +1004,7 @@ function openPathFinder() {
 $('undo-map').addEventListener('click',undoExploration);
 buildFilters(); buildGraph();
 new ResizeObserver(updateTagWindowSpace).observe($('active-tags'));
+new ResizeObserver(updateTagWindowSpace).observe($('search-window'));
 $('source-total').textContent = sources.length;
 $('dataset-counts').innerHTML = `<span><b>${nodes.length}</b> entities</span><span><b>${edges.length}</b> links</span><span><b>${sources.length}</b> sources</span>`;
 $('review-date').textContent = `Updated ${friendlyDate(meta.reviewed)}`;
@@ -997,9 +1023,12 @@ $('empty-reset').addEventListener('click', () => resetFilters());
 $('mobile-filters').addEventListener('click',()=>{floatingPanelOpen('filters')?closeFloatingPanel('filters'):openFloatingPanel('filters');});
 $('legend-open').addEventListener('click',()=>{floatingPanelOpen('connection-legend')?closeFloatingPanel('connection-legend'):openFloatingPanel('connection-legend');});
 $('zoom-in').addEventListener('click', () => zoom(1.25)); $('zoom-out').addEventListener('click', () => zoom(.8)); $('fit').addEventListener('click', () => fitGraph());
-$('reset-layout').addEventListener('click', () => { applyCaseLayout(); fitGraph(); toast('Layout reset'); });
+$('reset-layout').addEventListener('click', () => { rememberView();fitGraph();toast('Entities arranged in the available canvas'); });
 $('label-toggle').addEventListener('click', () => { state.labels = state.labels === 'auto' ? 'all' : state.labels === 'all' ? 'off' : 'auto'; $('label-toggle').textContent = state.labels === 'auto' ? 'Labels auto' : state.labels === 'all' ? 'All labels' : 'Labels off'; renderGraph(); });
 document.addEventListener('click', event => {
+  const pinButton=event.target.closest('[data-toggle-pin]');if(pinButton){togglePin(pinButton.dataset.togglePin);return;}
+  const anchorButton=event.target.closest('[data-anchor-focus]');if(anchorButton){toggleNode(anchorButton.dataset.anchorFocus);return;}
+  const showType=event.target.closest('[data-show-type]');if(showType){rememberView();state.relationships.add(showType.dataset.showType);if(connectionModesForLegend()&&!connectionModesForLegend().includes(showType.dataset.showType))state.connectionMode='all';syncReportingControls();render(true);return;}
   const projectLink=event.target.closest('[data-project-dialog]');
   if(projectLink){event.preventDefault();document.querySelector('dialog[open]')?.close();$(projectLink.dataset.projectDialog).showModal();return;}
   const btn = event.target.closest('button'); if (!btn) return;
@@ -1070,7 +1099,7 @@ function exportCurrent(asJSON=false) {
   const output = { meta, view:state.view,case:state.caseId, filters:{categories:[...state.categories],relationships:[...state.relationships],includeHistory:state.history,query:state.query,...(state.view==='timeline'?{timelineEntity:state.timelineEntity,timelineScope:state.timelineScope,moneyStatus:state.timelineMoney,includeUndated:state.timelineUndated}:{})},...(state.view==='timeline'?{events:shownTimelineEvents}:{}),...(state.caseId==='media'?{outletProfiles:mediaProfiles.filter(p=>[p.outlet,...p.authority,...p.affiliations].every(id=>exported.nodes.some(n=>n.id===id))),researchLeads:mediaLeads}:{}),nodes:exported.nodes,edges:exported.edges,sources:sources.filter(s=>sourceIds.has(s.id)).map(({url,archiveUrl,archiveBrowseUrl,...record})=>({...record,url:archiveUrl||url})) };
   Object.assign(output,datasetFor(exported,state.view==='timeline'?shownTimelineEvents:null));
   if(state.view==='network'&&state.tags.size){const selection=tagSelection(exported,state.tags),single=state.tags.size===1;output.tagSelection={...(single?{id:[...state.tags][0],label:tagDefinitions[[...state.tags][0]].label}:{}),tags:selection.byTag,mode:selection.mode,connectionLimit:selection.connectionLimit,entityIds:[...selection.matches.nodes],relationshipIds:[...selection.matches.edges],connectorRelationshipIds:[...selection.connectors]};}
-  output.nodes=output.entities;output.edges=output.relationships;output.filters={...output.filters,connectionMode:state.connectionMode,from:state.from,to:state.to,includeUncertain:state.includeUncertain,...(state.view==='network'?{connectionDistance:state.connectionDistance,centerEntity:focusEntityId(),tag:state.tags.size===1?[...state.tags][0]:null,tags:[...state.tags]}:{})};output.viewURL=encodeState(location.href,state,release.releaseId);
+  output.nodes=output.entities;output.edges=output.relationships;output.filters={...output.filters,connectionMode:state.connectionMode,from:state.from,to:state.to,includeUncertain:state.includeUncertain,...(state.view==='network'?{pinnedIds:[...state.pinnedIds],connectionDistance:state.connectionDistance,centerEntity:focusEntityId(),tag:state.tags.size===1?[...state.tags][0]:null,tags:[...state.tags]}:{})};output.viewURL=encodeState(location.href,state,release.releaseId);
   const url = URL.createObjectURL(new Blob([JSON.stringify(output, null, 2)], { type: 'application/json' }));
   const anchor = document.createElement('a'); anchor.href = url; anchor.download = state.view==='timeline'?'columbus-timeline.json':'columbus-network.json'; anchor.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); if(asJSON)toast('View data saved');
 }
@@ -1078,14 +1107,16 @@ $('export').addEventListener('click',()=>exportCurrent(true));
 for (const dialog of document.querySelectorAll('dialog')) dialog.addEventListener('click', event => { if (event.target === dialog) { const r = dialog.getBoundingClientRect(); if (event.clientX < r.left || event.clientX > r.right || event.clientY < r.top || event.clientY > r.bottom) dialog.close(); } });
 function syncReportingControls(){$('connection-mode').value=state.connectionMode;$('valid-from').value=state.from;$('valid-to').value=state.to;$('include-uncertain').checked=state.includeUncertain;$('connection-distance').value=String(state.connectionDistance);}
 $('connection-distance').addEventListener('change',()=>{
-  settleExpansion(false);state.connectionDistance=normalizeConnectionDistance($('connection-distance').value);defaults.connectionDistance=state.connectionDistance;
+  settleExpansion();rememberView();state.connectionDistance=normalizeConnectionDistance($('connection-distance').value);defaults.connectionDistance=state.connectionDistance;
+  const id=focusEntityId()||(state.selected?.kind==='node'?state.selected.id:state.exploreRoot)||[...state.pinnedIds][0];
+  if(nodeById.has(id)){state.focusEntity=id;state.focus=true;state.openNodes.add(id);state.explorationSeeds.add(id);}
   try{localStorage.setItem(distancePreferenceKey,String(state.connectionDistance));}catch{}
   render(true);
 });
 for(const id of ['connection-mode','valid-from','valid-to','include-uncertain'])$(id).addEventListener('change',()=>{
   const from=$('valid-from').value,to=$('valid-to').value;
   try{validateRange(from,to);$('query-error').hidden=true;}catch(error){$('query-error').textContent=error.message;$('query-error').hidden=false;return;}
-  Object.assign(state,{connectionMode:$('connection-mode').value,from,to,includeUncertain:$('include-uncertain').checked,selected:null,path:null,focus:false});refreshMapScope();render(true);
+  rememberView();Object.assign(state,{connectionMode:$('connection-mode').value,from,to,includeUncertain:$('include-uncertain').checked,path:null});render(true);
 });
 function restoreURL(){
   restoringURL=true;const requested=decodeState(location.href,defaults);
@@ -1103,6 +1134,7 @@ function restoreURL(){
   state.explorationSeeds=new Set([...state.explorationSeeds].filter(id=>nodeById.has(id)));
   state.openNodes=new Set([...state.openNodes].filter(id=>nodeById.has(id)));
   state.startingIds=new Set([...state.startingIds].filter(id=>nodeById.has(id)));
+  state.pinnedIds=new Set([...state.pinnedIds].filter(id=>nodeById.has(id)));
   if(state.customStart&&!state.explorationSeeds.size)state.explorationSeeds=new Set(state.startingIds);
   if(state.mapMode==='explore'&&!state.exploredIds.size&&!state.customStart)seedMap(state.selected?.kind==='node'?state.selected.id:state.exploreRoot);
   if(state.mapMode==='explore'&&state.selected?.kind==='node')state.explorationSeeds.add(state.selected.id);
@@ -1112,7 +1144,7 @@ function restoreURL(){
   applyCaseLayout();render(true);restoringURL=false;
   // Preserve mismatched release citation in the incoming URL until the reader changes the view.
   if(!state.requestedRelease||state.requestedRelease===release.releaseId)syncURL();
-  if(state.selected&&!$('inspector').hidden)requestAnimationFrame(revealInspector);
+  if(window.parent===window&&state.selected&&!$('inspector').hidden)requestAnimationFrame(revealInspector);
 }
 $('release-label').textContent=`Edition · ${release.releaseId}`;
 window.addEventListener('popstate',restoreURL);restoreURL();
@@ -1158,3 +1190,29 @@ if(repositoryURL){
   $('github-contribute').href=repositoryURL+'/issues/new/choose';$('github-contribute').hidden=false;
   $('github-contact').href=repositoryURL+'/issues';$('github-contact').hidden=false;
 }
+
+// Same-origin workspace bridge. Each tab owns an independent explorer instance.
+function workspaceSnapshot(){
+  const finalPositions=new Map(positions);expansionAnimation?.targets.forEach((p,id)=>finalPositions.set(id,p));
+  return {query:location.search,positions:[...finalPositions].map(([id,p])=>[id,p.x,p.y]),camera:{...(expansionAnimation?.endCamera||camera)},dimensions:{...dimensions},scale:entityScale,details:{open:state.detailsOpen,docked:detailsLayout.docked,width:detailsLayout.docked?detailsLayout.dockedWidth:detailsLayout.floatingWidth}};
+}
+function publishWorkspaceState(requestId=null){
+  if(window.parent===window)return;
+  window.parent.postMessage({channel:'columbus-explorer',type:'state',snapshot:workspaceSnapshot(),requestId},location.origin);
+}
+function scheduleWorkspaceState(){clearTimeout(workspaceTimer);workspaceTimer=setTimeout(publishWorkspaceState,180);}
+function measureWorkspace(){if(window.parent!==window)window.parent.postMessage({channel:'columbus-explorer',type:'height',height:state.view==='network'?innerHeight:document.documentElement.scrollHeight},location.origin);}
+function restoreWorkspaceView(input){
+  const saved=validateView(input,new Set(nodeById.keys()));settleExpansion();history.replaceState(null,'',location.pathname+saved.query);state.detailsOpen=saved.details.open;detailsLayout={docked:saved.details.docked,floatingWidth:saved.details.width,dockedWidth:saved.details.width};restoreURL();state.detailsOpen=saved.details.open;render();
+  if(saved.positions.length){saved.positions.forEach(([id,x,y])=>positions.set(id,{x,y}));const r=$('canvas-area').getBoundingClientRect();entityScale=saved.scale;$('graph').style.setProperty('--entity-label-size',Math.max(11,13*entityScale)+'px');if(r.width<1||r.height<1){dimensions={...saved.dimensions};camera={...saved.camera};}else{dimensions={width:r.width,height:r.height};if(Math.abs(r.width-saved.dimensions.width)<3&&Math.abs(r.height-saved.dimensions.height)<3)camera={...saved.camera};else camera=fittedCamera();}positionGraph();}
+  explorationHistory.length=0;$('undo-map').disabled=true;publishWorkspaceState();measureWorkspace();
+}
+window.addEventListener('message',event=>{
+  if(event.origin!==location.origin||event.source!==window.parent||event.data?.channel!=='columbus-explorer')return;
+  if(event.data.type==='restore'){try{restoreWorkspaceView(event.data.snapshot);}catch{toast('This view could not be restored.');}}
+  if(event.data.type==='navigate'&&['network','timeline','relations','directory','sources'].includes(event.data.view)){setView(event.data.view);measureWorkspace();publishWorkspaceState();}
+  if(event.data.type==='capture')publishWorkspaceState(event.data.requestId);if(event.data.type==='measure')requestAnimationFrame(measureWorkspace);
+});
+for(const type of ['pointerdown','focusin'])document.addEventListener(type,()=>{if(window.parent!==window)window.parent.postMessage({channel:'columbus-explorer',type:'focus'},location.origin);},true);
+document.addEventListener('pointerup',scheduleWorkspaceState);document.addEventListener('change',scheduleWorkspaceState);new ResizeObserver(()=>requestAnimationFrame(measureWorkspace)).observe(document.body);
+if(window.parent!==window)window.parent.postMessage({channel:'columbus-explorer',type:'ready'},location.origin);
