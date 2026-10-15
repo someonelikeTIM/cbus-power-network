@@ -1,0 +1,40 @@
+name: Evidence correction
+description: Help correct an existing record using public evidence.
+title: "[Correction] "
+body:
+  - type: markdown
+    attributes:
+      value: "This issue is public. A record link and a source with a page or paragraph reference help others review the correction."
+  - type: input
+    id: record
+    attributes:
+      label: Record link or ID
+      placeholder: relationship:m63
+    validations:
+      required: true
+  - type: input
+    id: release
+    attributes:
+      label: Edition shown on the record
+    validations:
+      required: true
+  - type: textarea
+    id: change
+    attributes:
+      label: Proposed change and reason
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Sources and relevant dates
+      description: Add source links and page or paragraph references. Explain what they establish and any uncertainty.
+    validations:
+      required: true
+  - type: input
+    id: attribution
+    attributes:
+      label: Public attribution
+      description: The public name or pseudonym you would like credited.
+    validations:
+      required: true

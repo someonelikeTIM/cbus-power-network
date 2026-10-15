@@ -1,0 +1,20 @@
+{
+  "name": "cbus-power-network",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "build": "node scripts/build-release.mjs",
+    "check": "node scripts/check.mjs",
+    "test": "node scripts/test.mjs",
+    "check:release": "node scripts/check-release.mjs",
+    "check:privacy": "node scripts/check-public-files.mjs",
+    "check:donations": "node scripts/check-donation-enrichment.mjs",
+    "check:civic": "node scripts/check-civic-enrichment.mjs",
+    "check:tags": "node scripts/check-tags-path-focus.mjs"
+  }
+}

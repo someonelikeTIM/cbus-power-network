@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore sourced connections among Columbus and Ohio people, organizations, campaign money, contracts and public decisions.">
+  <meta name="theme-color" content="#f5f3ec">
+  <title>Columbus power network</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#explorer">Skip to the explorer</a>
+  <header class="masthead">
+    <a class="brand" href="./" aria-label="Columbus power network home"><svg viewBox="0 0 36 36" aria-hidden="true"><path d="M8 9L27 7L18 26L8 9L29 26L27 7M18 26L29 26"/><circle cx="8" cy="9" r="4"/><circle cx="27" cy="7" r="3"/><circle cx="18" cy="26" r="4"/><circle cx="29" cy="26" r="2"/></svg><span>COLUMBUS<span class="brand-sub">POWER NETWORK</span></span></a>
+    <nav class="view-nav" aria-label="Explorer views">
+      <button class="active" data-view="network" aria-current="page"><span aria-hidden="true">◉</span> Network</button>
+      <button data-view="timeline">Timeline</button>
+      <button data-view="relations">Links</button>
+      <button data-view="directory">Entities</button>
+      <button data-view="sources">Sources <span id="source-total" class="nav-count"></span></button>
+    </nav>
+    <button class="text-button methodology-open">About the records <span aria-hidden="true">↗</span></button>
+  </header>
+
+  <main>
+    <section class="intro" aria-labelledby="page-title">
+      <div><h1 id="page-title">Columbus power network</h1></div>
+      <div class="intro-right"><div id="dataset-counts" class="intro-stats"></div></div>
+    </section>
+    <p id="route-warning" role="status" hidden></p>
+
+    <section id="explorer" class="explorer" aria-label="Columbus network explorer">
+      <div class="toolbar" id="search-window">
+        <div class="search-wrap"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m15 15 5 5"/></svg><input id="search" type="search" placeholder="Search names or tags…" aria-label="Search names or tags" aria-controls="starting-results" aria-expanded="false" autocomplete="off"><kbd aria-hidden="true">/</kbd></div>
+        <div id="active-tags" role="group" aria-label="Active tags" hidden></div>
+        <div id="starting-results" role="region" aria-label="Search results" hidden></div>
+        <button id="search-show-all" class="search-show-all">Show all</button>
+      </div>
+      <div class="exploration-tools" aria-label="Map windows"><button id="undo-map" class="explore-button" title="Undo last exploration step (Ctrl/Cmd+Z)" disabled>↶ Undo</button><button id="mobile-filters" class="explore-button" aria-expanded="false" aria-controls="filters">Filters</button><button id="path-open" class="explore-button" aria-expanded="false" aria-controls="path-dialog">Paths</button><button id="legend-open" class="explore-button" aria-expanded="true" aria-controls="connection-legend">Legend</button><details class="secondary-actions"><summary aria-label="More actions">•••</summary><div><button id="export" class="plain-button" title="Download the currently displayed data">Download data</button></div></details></div>
+
+      <div id="active-filters" class="active-filters" aria-label="Active filters" hidden></div>
+      <aside id="filters" class="filter-drawer floating-panel" aria-label="Network filters" hidden>
+        <div class="floating-panel-header" tabindex="0"><h2>Filters</h2><button data-close-floating="filters" aria-label="Close filters">×</button></div>
+        <div class="distance-control"><label class="connection-filter">Visible distance<select id="connection-distance" aria-describedby="distance-summary"><option value="1">Within 1 connection</option><option value="2">Within 2 connections</option><option value="3">Within 3 connections</option><option value="4">Within 4 connections</option><option value="5">Within 5 connections</option><option value="6" selected>Within 6 connections</option><option value="7">Within 7 connections</option><option value="8">Within 8 connections</option><option value="9">Within 9 connections</option><option value="10">Within 10 connections</option><option value="11">Within 11 connections</option><option value="12">Within 12 connections</option><option value="all">All explored nodes</option></select></label><p id="distance-summary" role="status">Connection steps from the selected entity.</p></div>
+        <label class="topic-control">Topic<select id="topic-select"><option value="all" selected>All topics</option><option value="money">Money &amp; control</option><option value="jobsohio">JobsOhio</option><option value="media">Media &amp; information</option><option value="politics">State &amp; federal</option><option value="cityhall">City Hall</option><option value="sports">Sports &amp; development</option><option value="datacenters">Data centers</option><option value="alpr">ALPR</option><option value="hb6">HB 6</option><option value="epstein">Wexner–Epstein</option><option value="redflex">Redflex</option></select></label>
+        <label class="connection-filter">Connections<select id="connection-mode"><option value="all" selected>All connections</option><option value="ownership">Ownership / voting</option><option value="governance">Governance / appointments</option><option value="leadership">Leadership / public office</option><option value="money">Money / contracts</option><option value="content">Content / programming</option></select></label><button id="reset-filters" class="text-button">Reset filters</button>
+        <details class="filter-section"><summary>Dates</summary><div class="date-filter-grid"><label>From<input id="valid-from" type="date"></label><label>Through<input id="valid-to" type="date"></label><label><input id="include-uncertain" type="checkbox" checked> Include unclear dates</label><label><input id="history" type="checkbox" checked> Include past records</label></div><p id="query-error" role="alert" hidden></p></details>
+        <details class="filter-section"><summary>More filters</summary><div class="detailed-filter-grid"><fieldset><legend>People &amp; organizations</legend><div id="category-filters"></div></fieldset><fieldset><legend>Individual connection types</legend><div id="relationship-filters"></div></fieldset></div></details>
+      </aside>
+
+      <div id="media-overview" class="media-overview" hidden></div>
+      <div class="workspace" data-current-view="network">
+        <div id="network-view" class="network-view view-panel">
+          <div id="map-status" class="map-status"><div class="graph-heading"><div><span id="graph-title" class="eyebrow">Columbus network</span><button id="map-scope" class="node-details-link" aria-controls="inspector"></button></div><span id="visible-count" aria-live="polite"></span></div><div class="map-exploration-controls"><button id="map-small" class="explore-button">Start small</button><button id="map-full" class="explore-button">Show whole network</button></div></div>
+          <p id="starting-summary" class="starting-summary" role="status"></p>
+          <p class="exploration-hint">Click a node to expand its connections. Click again to collapse unused nodes. Select a line for its sources.</p>
+          <section id="connection-legend" class="connection-legend floating-panel" aria-label="Connection types currently shown"><div class="floating-panel-header" tabindex="0"><h2>Connections shown</h2><button data-close-floating="connection-legend" aria-label="Close legend">×</button></div><ul id="legend-types"></ul><p id="legend-key"></p><p id="indirect-key" hidden><span class="indirect-swatch" aria-hidden="true"></span>Dotted line: indirect route · select it to reveal the recorded links.</p><p id="legend-context">Other visible nodes stay clickable at 50% opacity.</p></section>
+          <div id="graph-stage" class="graph-stage">
+            <div id="canvas-area"><svg id="graph" aria-label="Interactive map of documented Columbus relationships" role="group" tabindex="0"><g id="graph-world"><g id="edge-layer"></g><g id="route-layer"></g><g id="connection-icon-layer"></g><g id="node-layer"></g></g></svg>
+            <div id="graph-empty" class="graph-empty" hidden><span aria-hidden="true">⌕</span><h2>No entities found</h2><p>Try a different search or reset the filters.</p><button id="empty-reset" class="primary-button">Reset the map</button></div>
+            <div id="selection-chip" class="selection-chip" hidden></div>
+            <div class="graph-controls" aria-label="Map controls"><button id="zoom-in" title="Zoom in" aria-label="Zoom in">+</button><button id="zoom-out" title="Zoom out" aria-label="Zoom out">−</button><span></span><button id="fit" title="Fit all visible nodes" aria-label="Fit the network"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4H4v5m11-5h5v5M4 15v5h5m11-5v5h-5"/></svg></button><button id="reset-layout" title="Restore the original layout" aria-label="Reset node positions">↺</button></div>
+          </div>
+          </div>
+          <div class="graph-footer"><span>Select for evidence <span class="hint-separator">·</span> Drag to pan · Ctrl/Cmd-scroll to zoom</span><button id="label-toggle" class="text-button" aria-label="Cycle node labels" title="Cycle automatic labels, all labels, and labels off">Labels auto</button></div>
+        </div>
+
+        <section id="timeline-view" class="timeline-view view-panel" aria-label="Follow the money timeline" hidden>
+          <div class="timeline-header">
+            <div class="timeline-heading"><div><p class="eyebrow">FOLLOW THE MONEY</p><h2 id="timeline-title">JobsOhio</h2></div><span id="timeline-count" aria-live="polite"></span></div>
+            <div class="timeline-controls">
+              <label>Entity<select id="timeline-entity" aria-label="Timeline entity"></select></label>
+              <label>Scope<select id="timeline-scope" aria-label="Timeline scope"><option value="direct">Entity only</option><option value="nearby" selected>Connected entities</option><option value="case">Entire case</option></select></label>
+              <label>Money status<select id="timeline-money" aria-label="Timeline money status"><option value="all">All records</option><option value="cash">Cash & reported receipts</option><option value="commitments">Authorizations & commitments</option><option value="credit">Credit limits</option><option value="unpriced">No transfer amount</option></select></label>
+            </div>
+            <div class="timeline-caption"><span>Year headings use the end of a reporting period. Cards show the dates available.</span><label><input id="timeline-undated" type="checkbox" checked> Include undated records</label></div>
+            <nav id="timeline-year-nav" class="timeline-year-nav" aria-label="Jump to timeline year"></nav>
+            <div id="timeline-lane-headings" class="timeline-lane-headings"></div>
+          </div>
+          <div id="timeline-events" class="timeline-events"></div>
+        </section>
+        <section id="relations-view" class="relations-view view-panel" aria-label="Relationship ledger" hidden><div class="list-heading"><h2>Links</h2><span id="relations-count"></span></div><div id="relations-list"></div></section>
+        <section id="directory-view" class="directory-view view-panel" aria-label="Entity directory" hidden><div class="list-heading"><h2>Entities</h2><span id="directory-count"></span></div><div id="directory-list" class="directory-list"></div></section>
+        <section id="sources-view" class="sources-view view-panel" aria-label="Source library" hidden><div class="list-heading"><h2>Sources</h2></div><p id="archive-summary" class="archive-summary"></p><div id="source-list"></div></section>
+        <aside id="inspector" class="inspector" aria-label="Selected entity or connection details"></aside>
+      </div>
+    </section>
+
+    <footer class="page-footer"><span id="review-date"></span><span id="release-label"></span><nav aria-label="Project information"><a href="#about-project" data-project-dialog="about-project">About</a><a href="#contribute" data-project-dialog="contribute">Contribute</a><a href="#contact" data-project-dialog="contact">Contact</a><button class="methodology-open">About the records</button></nav></footer>
+  </main>
+
+  <dialog id="about-project" aria-labelledby="about-title"><form method="dialog"><button class="dialog-close" aria-label="Close about">×</button></form><h2 id="about-title">About this project</h2><p>I was inspired by <a href="https://theyrule.net/" target="_blank" rel="noopener noreferrer">TheyRule</a> to bring more transparency to Columbus politics.</p><p>This map follows the people, organizations, money and public decisions that shape Columbus. It starts with a few connections and grows as you explore. Each connection opens the records and sources behind it.</p><p><a href="https://github.com/someonelikeTIM/cbus-power-network">Project on GitHub</a> · <a href="https://github.com/someonelikeTIM/cbus-power-network/blob/main/LICENSE">MIT code</a> · <a href="https://github.com/someonelikeTIM/cbus-power-network/blob/main/DATA-LICENSE.md">CC BY 4.0 curated data</a></p><p>Third-party materials keep their own terms. <a href="./docs/PRIVACY.html">Privacy</a></p><a href="#contribute" data-project-dialog="contribute">Help build the picture →</a></dialog>
+  <dialog id="contribute" aria-labelledby="contribute-title"><form method="dialog"><button class="dialog-close" aria-label="Close contribution information">×</button></form><h2 id="contribute-title">Help build the picture</h2><p>Found a missing connection, a better source or something that needs correcting? Contributions go through GitHub.</p><p>A useful suggestion includes the person or organization, the connection, and a link to the document or reporting behind it. The record link in the details panel makes it easy to point to an existing entry.</p><p>Code, design and accessibility improvements are welcome too.</p><a id="github-contribute" class="explore-button explore-primary" hidden target="_blank" rel="noopener noreferrer">Contribute on GitHub ↗</a></dialog>
+  <dialog id="contact" aria-labelledby="contact-title"><form method="dialog"><button class="dialog-close" aria-label="Close contact information">×</button></form><h2 id="contact-title">Get in touch</h2><p>Questions, feedback and corrections go through the project’s GitHub issues. That keeps the conversation with the project and makes updates easy to follow.</p><p>GitHub issues are public, so this channel is for information you’re comfortable sharing openly.</p><a id="github-contact" class="explore-button explore-primary" hidden target="_blank" rel="noopener noreferrer">Contact through GitHub ↗</a></dialog>
+  <dialog id="methodology" aria-labelledby="method-title"><form method="dialog"><button class="dialog-close" aria-label="Close methodology">×</button></form><h2 id="method-title">About the records</h2><div class="method-grid"><div><h3>Status</h3><p>Evidence labels describe the statement behind each connection: a finding, allegation, participant account or documented record. Its source and qualifications appear in the details.</p></div><div><h3>Money & authority</h3><p>Arrows show the recorded direction. Amounts identify payments, funding, spending ceilings, asset values or penalties. Each amount belongs to its own recipient and period.</p></div><div><h3>Sources</h3><p>Source links lead to the cited documents, with page or paragraph references where recorded. Source information includes the research method and check date.</p></div><div><h3>Coverage</h3><p>State and federal politics, campaign money, contracts, lobbying, HB 6, Wexner–Epstein, Redflex, and selected affiliations. Authorizations are distinct from payments. Node size counts dataset links; placement is for readability.</p></div></div></dialog>
+  <section id="path-dialog" class="floating-panel" aria-labelledby="path-title" hidden><div class="floating-panel-header" tabindex="0"><h2 id="path-title">Explore paths</h2><button data-close-floating="path-dialog" aria-label="Close paths">×</button></div><form id="path-form"><label for="path-from">From</label><input id="path-from" type="search" list="path-entities" required placeholder="Search an entity…"><label for="path-to">To</label><input id="path-to" type="search" list="path-entities" required placeholder="Search an entity…"><datalist id="path-entities"></datalist><label class="path-direction"><input id="path-directed" type="checkbox"> Follow recorded directions</label><button class="primary-button" type="submit">Find path <span aria-hidden="true">→</span></button></form><div id="path-result" aria-live="polite"></div></section>
+  <div id="toast" role="status"></div>
+  <div id="tag-tooltip" role="tooltip" hidden></div>
+  <noscript><p class="noscript">This interactive map needs JavaScript. The source data is available in <a href="./data.js">data.js</a>.</p></noscript>
+</body>
+</html>

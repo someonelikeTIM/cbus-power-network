@@ -1,0 +1,40 @@
+name: New evidence or research lead
+description: Suggest a missing connection, source update or document to examine.
+title: "[Evidence proposal] "
+body:
+  - type: markdown
+    attributes:
+      value: "This issue is public. Suggestions are reviewed before becoming part of the dataset."
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Proposal kind
+      options:
+        - Additional evidence
+        - Proposed relationship
+        - Identity question
+        - Ownership or leadership update
+        - Changed source
+        - Research lead
+    validations:
+      required: true
+  - type: textarea
+    id: record
+    attributes:
+      label: People, organizations or records involved
+      description: Record links or IDs help connect your suggestion to the existing map.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence or document to examine
+      description: Include public source links, relevant pages and dates. For a missing document, describe who may hold it and the question it could answer.
+    validations:
+      required: true
+  - type: input
+    id: attribution
+    attributes:
+      label: Public attribution
+    validations:
+      required: true

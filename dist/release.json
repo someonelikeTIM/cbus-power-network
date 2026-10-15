@@ -1,0 +1,15 @@
+{
+  "release": {
+    "schemaVersion": "1.0.0",
+    "releaseId": "2026-10-15",
+    "status": "published",
+    "preparedOn": "2026-10-15",
+    "publishedAt": "2026-10-15",
+    "dataRevision": 12,
+    "codeLicense": "MIT",
+    "dataLicense": "CC-BY-4.0",
+    "sourceCheckIds": []
+  },
+  "inputFingerprint": "5cdcf15dba265e244abee17de9b551551c5792bf8bdbce9a46f309581b9dbc22",
+  "manifest": "downloads/2026-10-15/manifest.json"
+}

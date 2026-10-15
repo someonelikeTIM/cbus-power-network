@@ -1,0 +1,10 @@
+{
+  "repositoryOwner": "someonelikeTIM",
+  "repositoryName": "cbus-power-network",
+  "visibility": "public",
+  "basePath": "/cbus-power-network/",
+  "maintainerContact": "https://github.com/someonelikeTIM/cbus-power-network/issues",
+  "thirdPartyDocuments": "Citations only; no source documents bundled",
+  "codeLicense": "MIT",
+  "dataLicense": "CC-BY-4.0"
+}

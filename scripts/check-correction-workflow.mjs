@@ -1,0 +1,22 @@
+import assert from 'node:assert/strict';
+import { readFile,writeFile,mkdir,copyFile } from 'node:fs/promises';
+import { dirname,resolve } from 'node:path';
+import { execFileSync } from 'node:child_process';
+import { edges } from '../dist/data.js';
+import { transitionProposal } from '../dist/contributions.js';
+import { filesUnder } from './public-files.mjs';
+const root=`artifacts/correction-fixture-${Date.now()}`;
+for(const path of [...(await filesUnder('dist')).filter(p=>!p.startsWith('dist/downloads/')&&!p.startsWith('dist/docs/')),'scripts/review-proposal.mjs','package.json','content/reviews.json']){await mkdir(dirname(`${root}/${path}`),{recursive:true});await copyFile(path,`${root}/${path}`);}
+const submitted={id:'fixture-correction',kind:'correction',recordKind:'relationship',recordId:'m63',releaseId:'2026-10-14-rc1',proposedChange:'Exercise the isolated fixture updater.',attribution:'Fixture contributor (test only)',state:'submitted',evidence:[{sourceId:'media-fcc-wsyx',locator:'WSYX renewal row',role:'qualify'}],history:[]};
+const review={reviewer:{type:'human',identity:'Fixture reviewer (test only)'},reviewedAt:'2026-10-14',reason:'Test fixture only; no actual accepted dataset change.'};
+const pending=transitionProposal(submitted,'under-review',review),accepted=transitionProposal(pending,'accepted',review),declined=transitionProposal({...pending,id:'fixture-declined'},'declined',review);
+const expected=edges.find(e=>e.id==='m63').context+' [Isolated workflow fixture.]';accepted.patch={context:expected};
+await writeFile(`${root}/accepted.json`,JSON.stringify(accepted));await writeFile(`${root}/declined.json`,JSON.stringify(declined));
+for(const file of ['accepted.json','declined.json'])execFileSync(process.execPath,['scripts/review-proposal.mjs',file],{cwd:resolve(root),encoding:'utf8'});
+const script="import {edges} from './dist/data.js';import {acceptedCorrections} from './dist/corrections.js';console.log(JSON.stringify({context:edges.find(e=>e.id==='m63').context,count:acceptedCorrections.length,review:acceptedCorrections[0].review,attribution:acceptedCorrections[0].attribution,before:acceptedCorrections[0].before}));";
+const result=JSON.parse(execFileSync(process.execPath,['--input-type=module','-e',script],{cwd:resolve(root),encoding:'utf8'}));
+assert.equal(result.context,expected);assert.equal(result.count,1);assert.equal(result.review.reviewer.type,'human');assert.equal(result.attribution,'Fixture contributor (test only)');assert.equal(result.before.context,edges.find(e=>e.id==='m63').context);
+const ledger=JSON.parse(await readFile(`${root}/content/reviews.json`));assert.equal(ledger.length,2);assert.equal(ledger[1].state,'declined');
+assert.equal(JSON.parse(await readFile('content/reviews.json')).length,0,'Actual review ledger was changed by fixture');
+await writeFile('artifacts/correction-workflow-checks.json',JSON.stringify({fixtureRoot:root,acceptedCorrections:result.count,declinedProposals:1,attribution:result.attribution,actualDataChanged:false},null,2)+'\n');
+console.log('PASS isolated CLI correction: submitted → reviewed → accepted / declined; generated overlay loaded; before/after and attribution retained; actual data unchanged.');

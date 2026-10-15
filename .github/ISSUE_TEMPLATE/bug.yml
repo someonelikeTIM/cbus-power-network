@@ -1,0 +1,16 @@
+name: Bug report
+description: Report a problem with the explorer, links or downloads.
+title: "[Bug] "
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Include the steps, expected result and browser/device. Record IDs or a shared view link help reproduce the problem.
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Screenshot or additional context
+      description: Include only information suitable for this public issue.

@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Contribution guide
+    url: https://github.com/someonelikeTIM/cbus-power-network/blob/main/docs/CONTRIBUTING.md
+    about: Evidence, corrections, code and accessibility contributions

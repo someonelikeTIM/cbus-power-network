@@ -1,0 +1,11 @@
+name: Question or feedback
+description: Ask about the project or suggest an improvement.
+title: "[Question] "
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: Your question or suggestion
+      description: This conversation is public. A record ID or view link helps when asking about particular data.
+    validations:
+      required: true

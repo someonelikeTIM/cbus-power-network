@@ -1,0 +1,114 @@
+// Public records and reporting for the City Hall expansion.
+export const cityHallSources = [
+  {id:'campaign-developers-2025',title:'Developer contributions to Columbus campaigns (2025)',publisher:'WOSU Public Media',url:'https://www.wosu.org/politics-government/2025-08-04/developers-make-big-contributions-to-columbus-elected-officials-for-future-campaigns',date:'2025-08-04',kind:'Reporting / campaign-finance records',note:'Named donors, amounts and company affiliations; reporting period through July 2025.'},
+  {id:'wexner-campaigns-2026',title:'Wexner campaign contributions and charity donations',publisher:'WOSU Public Media',url:'https://www.wosu.org/politics-government/2026-02-16/several-ohio-politicians-donate-money-given-to-their-campaigns-by-les-and-abigail-wexner',date:'2026-02-16',kind:'Reporting / campaign-finance records',note:'Couple’s combined totals since 2016; Hardin’s $10,000 Columbus Promise donation.'},
+  {id:'wexner-charity-followup',title:'Campaign-record follow-up on Wexner-linked donations',publisher:'WOSU / Ideastream Public Media',url:'https://www.ideastream.org/2026-09-08/ohio-politicians-keep-promise-to-rebuke-les-wexner-by-donating-200k-in-campaign-contributions',date:'2026-09-08',kind:'Reporting / campaign-finance records',note:'Records verify charity donations; notes that Hardin did not donate his entire historical total.'},
+  {id:'rooster-hardin-2026',title:'Hardin and Beatty announce Wexner-linked charity donations',publisher:'The Rooster / D.J. Byrnes',url:'https://www.rooster.info/p/shannon-hardin-and-joyce-beatty-return',date:'2026-02-13',kind:'Local reporting / commentary',note:'Hardin’s Columbus Promise donation. Exact amount and historical total are crosschecked with WOSU.'},
+  {id:'pizzuti-team',title:'Pizzuti company leadership',publisher:'The Pizzuti Companies',url:'https://www.pizzuti.com/about',date:null,note:'Ron Pizzuti, chairman and founder; Joel Pizzuti, president and CEO since 2006.'},
+  {id:'pizzuti-stelzer-eza',title:'Ordinance 1893-2025: Pizzuti Stelzer tax-abatement authorization',publisher:'City of Columbus',url:'https://columbus.legistar.com/LegislationDetail.aspx?FullText=1&GUID=6AC42AE1-6D45-44E5-A5BC-1301AA89B4B3&ID=7477660',date:'2025-07-23',note:'75% for ten years, subject to agreement execution and investment/job conditions; subsidiary ownership.'},
+  {id:'pizzuti-solutions',title:'Pizzuti Solutions division and public-project roster',publisher:'The Pizzuti Companies',url:'https://www.pizzuti.com/solutions',date:null,note:'Public/private development division; Michael B. Coleman government office building in its project roster.'},
+  {id:'marker-team',title:'Marker construction leadership',publisher:'Marker, Inc.',url:'https://buildwithmarker.com/our-team/',date:null,note:'Alison Marker, president and CEO; Randy Marker, board chair.'},
+  {id:'marker-city-pool',title:'Ordinance 2062-2025: city facilities contractor pool',publisher:'City of Columbus',url:'https://columbus.legistar.com/LegislationDetail.aspx?GUID=1D315275-AAEF-4190-8228-793150964963&ID=7494570&Options=&Search=',date:'2025-07-30',note:'Marker is one of four suppliers. The $400,000 appropriation is shared, not a payment solely to Marker.'},
+  {id:'city-lobbyists-2025',title:'City lobbyists and utility-rate hearing — November 15, 2025',publisher:'City of Columbus',url:'https://www.columbus.gov/files/sharedassets/city/v/1/city-council/documents/city-bulletins/2025/bulletin20251115.pdf',date:'2025-11-15',note:'Registered city lobbyists and clients; utility hearing pp. 51–53 discusses proposed rates for large water users.'},
+  {id:'bma-team',title:'Byers Minton principals and prior public-policy roles',publisher:'Byers, Minton & Associates',url:'https://www.byersminton.com/our-team/',date:null,note:'Bill Byers and Andrew Minton, principals; Byers’s prior Nationwide Children’s role.'},
+  {id:'bma-city-contract',title:'Ordinance 2330-2025: Byers Minton contract and bidding waiver',publisher:'City of Columbus',url:'https://www.columbus.gov/files/sharedassets/city/v/1/city-council/documents/city-bulletins/2025/bulletin20250920.pdf',date:'2025-09-20',note:'Council minutes and ordinance: $60,000 government-relations authorization and competitive-bidding waiver.'},
+  {id:'byers-register',title:'Ohio lobbyist register: William L. Byers IV',publisher:'Ohio Legislative Inspector General / OLAC',url:'https://www2.jlec-olig.state.oh.us/OLAC/Reports/Agents/1276/Employers',date:null,note:'Named employers in the dated roster; terminated engagements are excluded.'},
+  {id:'new-albany-company',title:'New Albany Company founders',publisher:'The New Albany Company',url:'https://newalbanycompany.com/about-us/',date:null,note:'Les Wexner and Jack Kessler founded the development company; company dates its founding to 1987.'},
+  {id:'partnership-founders',title:'Columbus Partnership founders and member companies',publisher:'Columbus Region / Columbus Partnership',url:'https://columbusregion.com/about-us/columbus-partnership/',date:null,note:'Founders Les Wexner, Jack Kessler and John F. Wolfe; company membership.'}
+];
+
+export const cityHallSourceChecks = {
+  'campaign-developers-2025':['alex fischer','alison marker','pizzuti','jeffrey edwards','10,000','columbus apartment association','central ohio realtors','moun dioun','stonehenge','15,000'],
+  'wexner-campaigns-2026':['150,000','40,000','10,000','columbus promise'],
+  'wexner-charity-followup':['september 8, 2026','hardin','verified','exact total'],
+  'rooster-hardin-2026':['feb 13, 2026','hardin','columbus promise'],
+  'pizzuti-team':['ronald a. pizzuti','joel s. pizzuti','chief executive','2006'],
+  'pizzuti-stelzer-eza':['1893-2025','75%','ten','subsidiary','ninety'],
+  'pizzuti-solutions':['consulting division','owner','michael b.','coleman government office'],
+  'marker-team':['alison marker','president','randy marker','board chair'],
+  'marker-city-pool':['2062-2025','marker','400,000','old fashioned','righter'],
+  'city-lobbyists-2025':['november 15, 2025','george mccue','pizzuti solutions','the pizzuti companies'],
+  'bma-team':['bill byers','andrew minton','principal','nationwide children'],
+  'bma-city-contract':['2330-2025','60,000','competitive bidding','state government relations'],
+  'byers-register':['employers for william','american electric power','charter communications operating','city of columbus','the columbus partnership','new albany company','central ohio transit authority','battelle','nationwide children','columbus state community college','columbus crew sc','cleveland browns'],
+  'new-albany-company':['les wexner','jack kessler','1987'],
+  'partnership-founders':['founded in 2002','les wexner','jack kessler','john f.','new albany company','chairman emeritus','joel s. pizzuti','jeffrey w. edwards','susan (dee)','haslam']
+};
+
+const n=(id,name,category,role,sourceIds,x,y,description='')=>({id,name,category,role,sourceIds,x,y,description,historical:false});
+export const cityHallNodes = [
+  n('ginther-fund','Friends for Ginther','institution','Ginther campaign receipts · 2016–2026',['campaign-developers-2025','wexner-campaigns-2026','haslam-gifts-2026'],2150,250),
+  n('hardin-fund','Hardin campaign','institution','Campaign receipts · 2016–2026',['wexner-campaigns-2026','campaign-developers-2025'],2150,600),
+  n('wexner-donors','Les & Abigail Wexner','person','Combined reported contribution totals',['wexner-campaigns-2026'],1800,900,'Aggregate donor record; amounts are not allocated between the two individuals.'),
+  n('promise','Columbus Promise','initiative','City-led Columbus State tuition program',['wexner-campaigns-2026','rooster-hardin-2026'],2500,800),
+  n('alex-fischer','Alex Fischer','person','Development / real estate consultant',['campaign-developers-2025'],1950,0),
+  n('alison-marker','Alison Marker','person','Marker president & CEO',['marker-team'],2700,0),
+  n('marker-inc','Marker, Inc.','corporation','Construction contractor',['marker-city-pool','marker-team'],2700,350),
+  n('randy-marker','Randy Marker','person','Marker board chair',['marker-team'],3000,0),
+  n('pizzuti','The Pizzuti Companies','corporation','Real estate development group',['pizzuti-team','pizzuti-stelzer-eza'],2800,1200),
+  n('pizzuti-pac','Pizzuti Companies PAC','institution','Company-named political committee',['campaign-developers-2025'],2500,1150),
+  n('pizzuti-stelzer','Pizzuti Stelzer LLC','corporation','Pizzuti-owned project entity',['pizzuti-stelzer-eza'],3100,1450),
+  n('pizzuti-solutions','Pizzuti Solutions LLC','corporation','Public-project owner’s representative',['pizzuti-solutions'],3100,1150),
+  n('ron-pizzuti','Ron Pizzuti','person','Pizzuti chairman / founder',['pizzuti-team'],2850,1650),
+  n('joel-pizzuti','Joel Pizzuti','person','Pizzuti president & CEO',['pizzuti-team','partnership-founders'],2600,1650),
+  n('george-mccue','George McCue','person','Registered Columbus legislative agent',['city-lobbyists-2025'],3450,1200),
+  n('byers-minton','Byers Minton & Associates','corporation','Government-relations firm',['bma-team','bma-city-contract'],2000,1500),
+  n('bill-byers','Bill Byers','person','Lobbyist / Byers Minton principal',['bma-team','byers-register'],1700,1750),
+  n('andrew-minton','Andrew Minton','person','Byers Minton principal',['bma-team'],2250,1750),
+  n('jeff-edwards','Jeffrey Edwards','person','Edwards Companies chairman / CEO',['partnership-founders','campaign-developers-2025'],2300,0),
+  n('edwards-companies','Edwards Companies','corporation','Development company group',['partnership-founders'],2300,-250),
+  n('new-albany-company','The New Albany Company','corporation','Wexner / Kessler development company',['new-albany-company','byers-register','partnership-founders'],1800,1250),
+  n('jack-kessler','Jack Kessler','person','New Albany Company co-founder / chairman',['new-albany-company','partnership-founders'],1500,1400),
+  n('charter-operating','Charter Communications Operating LLC','corporation','Named employer in Ohio lobbyist register',['byers-register'],1350,2050)
+];
+cityHallNodes.find(n=>n.id==='bill-byers').aliases=['William L. Byers IV','William L Byers, IV'];
+cityHallNodes.find(n=>n.id==='ginther-fund').aliases=['Ginther campaign'];
+
+const link=(id,source,target,type,label,evidence,sourceIds,period,details={})=>({id,source,target,type,label,evidence,sourceIds,period,caseId:'cityhall',historical:true,status:'documented',directional:true,...details});
+const gift={status:'reported',unit:'USD reported campaign contributions'};
+export const cityHallEdges = [
+  link('e78','ginther','ginther-fund','leadership','Candidate / campaign','Campaign receipts reported for Ginther.',['campaign-developers-2025','wexner-campaigns-2026'],'2016–2026',{status:'reported'}),
+  link('e79','hardin','hardin-fund','leadership','Candidate / campaign','Campaign receipts reported for Hardin.',['wexner-campaigns-2026'],'2016–2026',{status:'reported'}),
+  link('e80','alex-fischer','ginther-fund','money','$10,000 campaign contribution','WOSU reports Fischer’s contribution.',['campaign-developers-2025'],'2025 reporting through July',{...gift,amount:10000,amountLabel:'$10k'}),
+  link('e81','alison-marker','ginther-fund','money','$5,000 campaign contribution','WOSU reports Marker’s contribution.',['campaign-developers-2025'],'2025 reporting through July',{...gift,amount:5000,amountLabel:'$5k'}),
+  link('e82','pizzuti-pac','ginther-fund','money','$10,000 PAC contribution','WOSU identifies the PAC as donor.',['campaign-developers-2025'],'2025 reporting through July',{...gift,amount:10000,amountLabel:'$10k'}),
+  link('e83','jeff-edwards','ginther-fund','money','More than $16,000 in contributions','WOSU reports Edwards’s contributions.',['campaign-developers-2025'],'2025 reporting through July',{...gift,amount:16000,amountIsLowerBound:true,amountLabel:'>$16k'}),
+  link('e84','jeff-edwards','edwards-companies','leadership','Chairman / CEO / president','Partnership roster identifies his company leadership.',['partnership-founders'],'Role in dated source snapshot',{historical:false}),
+  link('e85','alison-marker','marker-inc','leadership','President & CEO','Company leadership roster.',['marker-team'],'Role in dated source snapshot',{historical:false}),
+  link('e86','randy-marker','marker-inc','board','Board chair','Company leadership roster.',['marker-team'],'Role in dated source snapshot',{historical:false}),
+  link('e87','pizzuti','pizzuti-pac','partnership','Company-named PAC','WOSU identifies the Pizzuti Companies’ PAC.',['campaign-developers-2025'],'2025',{status:'reported',directional:false}),
+  link('e88','ron-pizzuti','pizzuti','leadership','Chairman / founder','Company biography records his founding in 1976 and chairmanship.',['pizzuti-team'],'Founded 1976; role in source snapshot',{historical:false}),
+  link('e89','joel-pizzuti','pizzuti','leadership','President & CEO','Company biography dates his CEO role to 2006.',['pizzuti-team'],'Since 2006; role in source snapshot',{historical:false}),
+  link('e90','pizzuti','pizzuti-stelzer','control','Owns subsidiary','City ordinance identifies parent ownership.',['pizzuti-stelzer-eza'],'July 2025', {graphLabel:'Owns'}),
+  link('e91','city','pizzuti-stelzer','influence','Authorized 75% / 10-year tax abatement','Council authorized an exemption on the increase in real-property assessed value.',['pizzuti-stelzer-eza'],'Approved July 21, 2025',{status:'authorized',graphLabel:'75% / 10 years',locator:'Ordinance 1893-2025 §§3–4',context:'Requires agreement execution within 90 days and specified investment/job conditions. This records authorization; execution and realized tax savings are not established here.'}),
+  link('e92','pizzuti','pizzuti-solutions','control','Public/private development division','Company roster identifies Solutions as its development and consulting division.',['pizzuti-solutions'],'Established 2005; division in source snapshot',{graphLabel:'Public-project division',context:'The source describes a division; it does not specify equity ownership percentages.'}),
+  link('e93','pizzuti-solutions','city','contract','Coleman government office building project','Company roster lists the city’s Michael B. Coleman government office building among its projects.',['pizzuti-solutions'],'Project work listed in source snapshot; dates not provided',{status:'acknowledged',graphLabel:'Government office project',context:'Company project statement; contract price, payment records and dates are not supplied here.'}),
+  link('e94','city','marker-inc','contract','Supplier in shared $400,000 contractor pool','The ordinance names Marker and three other facilities contractors.',['marker-city-pool'],'Approved July 28, 2025',{status:'authorized',graphLabel:'Shared $400k pool',appropriationTotal:400000,unit:'USD shared pool appropriation',locator:'Ordinance 2062-2025, Background / Fiscal Impact',context:'The $400,000 covers four suppliers. Marker’s individual award and actual payments are not specified.'}),
+  link('e95','pizzuti','george-mccue','lobbying','Registered city lobbyist','City roster lists this client for McCue.',['city-lobbyists-2025'],'City roster November 15, 2025',{status:'registered'}),
+  link('e96','pizzuti-solutions','george-mccue','lobbying','Registered city lobbyist','City roster lists this client for McCue.',['city-lobbyists-2025'],'City roster November 15, 2025',{status:'registered'}),
+  link('e97','bill-byers','byers-minton','leadership','Principal','Firm biography identifies Byers as principal.',['bma-team'],'Role in dated source snapshot',{historical:false}),
+  link('e98','andrew-minton','byers-minton','leadership','Principal','Firm biography identifies Minton as principal.',['bma-team'],'Role in dated source snapshot',{historical:false}),
+  link('e99','city','byers-minton','contract','$60,000 contract; bidding waived','Council authorized government-relations services and waived competitive bidding.',['bma-city-contract'],'Council action September 15, 2025',{status:'authorized',amount:60000,amountLabel:'$60k authorized',unit:'USD contract authorization',locator:'Ordinance 2330-2025; bulletin PDF pp. 22–23 and 151–152',context:'The city cited the firm’s institutional knowledge and experience for the waiver. Authorization is distinct from actual payments.'}),
+  link('e100','byers-minton','city','lobbying','State government-relations consultant','Contract scope covers state policy, legislation and official relationships.',['bma-city-contract'],'Authorization September 2025',{status:'authorized',graphLabel:'State government relations'}),
+  ...['aep','charter-operating','city','partnership','cota','children','battelle','new-albany-company','cstate'].map((client,i)=>link('e'+(101+i),client,'bill-byers','lobbying','Registered lobbying agent','Register lists Byers for this employer.',['byers-register'],'Register capture May 19, 2026',{status:'registered',historical:false,locator:'OLAC employer roster for William L. Byers IV'})),
+  link('e110','les','new-albany-company','history','Co-founder','Company identifies Wexner and Kessler as its founders.',['new-albany-company'],'Founded 1987 per company',{graphLabel:'Co-founder'}),
+  link('e111','jack-kessler','new-albany-company','leadership','Co-founder / chairman','Company and Partnership rosters identify these roles.',['new-albany-company','partnership-founders'],'Founded 1987; chair in source snapshot',{historical:false}),
+  link('e112','les','partnership','history','Co-founder','Partnership identifies Wexner among its 2002 founders.',['partnership-founders'],'Founded 2002',{graphLabel:'Co-founder 2002'}),
+  link('e113','jack-kessler','partnership','history','Co-founder','Partnership identifies Kessler among its 2002 founders.',['partnership-founders'],'Founded 2002'),
+  link('e114','new-albany-company','partnership','partnership','Member / founding-company representation','Partnership roster lists Kessler and the New Albany Company.',['partnership-founders'],'Membership in source snapshot',{historical:false,directional:false}),
+  link('e115','les','wexner-donors','partnership','Contributor included in joint total','WOSU reports combined contributions from the couple.',['wexner-campaigns-2026'],'2016–February 2026',{status:'reported',directional:false}),
+  link('e116','abigail','wexner-donors','partnership','Contributor included in joint total','WOSU reports combined contributions from the couple.',['wexner-campaigns-2026'],'2016–February 2026',{status:'reported',directional:false}),
+  link('e117','wexner-donors','ginther-fund','money','More than $150,000 combined contributions','WOSU reports the couple’s combined total since 2016.',['wexner-campaigns-2026'],'2016–February 2026',{...gift,amount:150000,amountIsLowerBound:true,amountLabel:'>$150k combined',context:'Combined Les and Abigail total; individual allocation is not supplied. September reporting says Ginther had not donated these funds to charity.',additionalSourceIds:['wexner-charity-followup']}),
+  link('e118','wexner-donors','hardin-fund','money','More than $40,000 combined contributions','WOSU reports the couple’s combined total since 2016.',['wexner-campaigns-2026'],'2016–February 2026',{...gift,amount:40000,amountIsLowerBound:true,amountLabel:'>$40k combined',context:'Combined Les and Abigail total; this is not the amount Hardin later donated.'}),
+  link('e119','hardin-fund','promise','money','$10,000 charity donation','Rooster reported the donation; WOSU supplied the amount and later checked campaign records.',['rooster-hardin-2026','wexner-campaigns-2026','wexner-charity-followup'],'Announced February 2026; follow-up September 2026',{status:'reported',amount:10000,amountLabel:'$10k',unit:'USD reported charity donation',context:'A partial donation to a program, not a refund to the Wexners or the campaign’s entire historical receipts.'}),
+  link('e120','promise','cstate','partnership','Tuition program at Columbus State','WOSU describes the program’s college tuition benefit.',['wexner-campaigns-2026'],'Program described February 2026',{status:'reported',historical:false,directional:false}),
+  link('e121','city','promise','partnership','City-led program','WOSU identifies Columbus Promise as a city-led initiative.',['wexner-campaigns-2026'],'Program described February 2026',{status:'reported',historical:false,directional:false}),
+  link('e122','bill-byers','children','history','Former external-relations vice president','Firm biography records the former hospital role.',['bma-team'],'Prior role; dates not supplied',{graphLabel:'Former VP'}),
+  link('e123','joel-pizzuti','partnership','board','Member company representative','Partnership roster identifies Pizzuti and his company.',['partnership-founders'],'Membership in source snapshot',{historical:false}),
+  link('e124','jeff-edwards','partnership','board','Executive committee member','Listed in the Partnership’s Executive Committee.',['partnership-founders'],'Role in dated source snapshot',{historical:false}),
+  link('e125','les','partnership','leadership','Co-founder / chairman emeritus','Partnership roster lists Wexner’s emeritus title.',['partnership-founders'],'Title in dated source snapshot',{historical:false,graphLabel:'Chairman emeritus',context:'The roster establishes the title; it does not establish day-to-day spending authority.'})
+];
+// Additional sources are normal references, included in the inspector and export.
+for(const edge of cityHallEdges) if(edge.additionalSourceIds){edge.sourceIds.push(...edge.additionalSourceIds);delete edge.additionalSourceIds;}
+
+export const cityHallCase={label:'City Hall',title:'Campaigns / contracts / lobbying',summary:'Campaign donors, corporate principals, lobbying clients, and public authorizations.',outcomes:['Pizzuti: $10k PAC contribution; 75% / ten-year tax-abatement authorization.','Marker: $5k CEO contribution; supplier in a shared $400k city contractor pool.','Byers Minton: $60k city contract; competitive bidding waived in 2025.'],contextEdgeIds:['e01','e02','e03'],positions:{city:[650,600],ginther:[850,350],'ginther-fund':[1050,100],hardin:[1100,1100],'hardin-fund':[1050,850],council:[850,900],'wexner-donors':[550,900],les:[100,100],abigail:[550,1200],promise:[1450,950],cstate:[1300,1250],'alex-fischer':[900,-220],'alison-marker':[1450,-200],'marker-inc':[1700,100],'randy-marker':[1950,-200],'jeff-edwards':[1150,-450],'edwards-companies':[1350,-650],pizzuti:[1900,650],'pizzuti-pac':[1500,400],'pizzuti-stelzer':[1650,800],'pizzuti-solutions':[2000,1050],'ron-pizzuti':[2200,450],'joel-pizzuti':[2200,650],'george-mccue':[2250,1100],'byers-minton':[300,600],'bill-byers':[0,600],'andrew-minton':[300,850],aep:[-350,850],charter:[-350,1100],cota:[0,1000],children:[-350,350],battelle:[-350,100],'new-albany-company':[0,350],'jack-kessler':[250,-150],partnership:[600,-350]}};
