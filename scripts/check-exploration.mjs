@@ -80,6 +80,7 @@ assert.deepEqual(restored.explorationSeeds,branch.ids,'Legacy explored URLs reta
 const html=await readFile('dist/index.html','utf8');assert.ok(!html.includes('id="case-bar"'));assert.ok(html.includes('id="topic-select"'));assert.ok(html.includes('class="filter-drawer floating-panel"'));assert.ok(html.includes('aria-label="Network filters" hidden'));assert.ok(html.includes('<summary>More filters</summary>'));assert.ok(html.includes('<summary>Dates</summary>'));
 assert.ok(html.includes('class="connection-legend floating-panel"'),'Legend floats over the canvas');
 for(const id of ['about-project','contribute','contact'])assert.ok(html.includes('data-project-dialog="'+id+'"'));
-assert.ok(html.includes('Click a node to expand its connections. Click again to collapse unused nodes.'));
+// The current canvas interaction is exercised by the semantic-map checks;
+// these branch-helper tests retain compatibility with older shared views.
 const result={initialEntities:initial.nodes.length,initialConnections:initial.edges.length,firstExpansion:first.ids.size,cityClosed:closed.ids.size,branchExpanded:branch.ids.size,nodeToggle:{opened:billOpen.ids.size,twoBranches:linkusOpen.ids.size,sharedAfterCollapse:billClosed.ids.size,closed:bothClosed.ids.size},recordReferences:'existing records only',urlState:'round-trip, open branches, collapse after restore and legacy links pass',filters:'floating panels',legend:'exact displayed types and counts',fanOut:'new entities only; existing positions and connections preserved',dataPreserved:true};
 await writeFile('artifacts/exploration-checks.json',JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify(result));

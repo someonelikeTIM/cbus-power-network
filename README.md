@@ -18,11 +18,17 @@ The explorer provides record links, current-view downloads and evidence packets.
 
 New tab opens another independent exploration. Side by side keeps two views visible; Single view returns to one canvas. Each tab keeps its own search, tags, filters, pins, camera and entity positions. On narrow screens, two views stack vertically.
 
-Pin as anchor in entity details, or use a node's pin button, to keep reference points visible while exploring. Several entities can be pinned. Their bubbles are larger and their names remain prominent. Other bubble sizes reflect the number of recorded connections in the dataset. Arrange redistributes entities around the visible map windows; zoom and manual dragging remain available.
+The overview is a word cloud: larger names have more recorded connections. Lower-priority entities stay out of view until zoom and available space allow them to appear. Visible names and bubbles have separate footprints; an entity that cannot fit stays hidden rather than overlapping another. The count explains how much of the current scope is visible. Zoom brings additional layers into focus.
 
-Visible distance sits beside search. A fresh view starts with direct connections (one step). Increasing it reveals more recorded steps from the selected entity and pinned anchors; reducing it narrows the displayed neighborhood. Pins remain visible. Filters group related connection types with whole-group checkboxes and Select all / Deselect all. Excluded types stay muted in the legend, where Show adds a type back.
+Choose an entity to move into a small neighborhood and open its Pin and Details menu. Details opens the evidence window when you want it. Explore connections provides a searchable guide to every matching connection, including records currently outside the visible map. Choosing a next entity starts a fresh focused neighborhood while keeping your research anchors.
+
+Pin entities or specific connections to chart a research path. Research opens the ordered steps, their connecting routes and space for your own notes. Steps can be reordered or removed; Undo restores changes. Show path brings the research network forward. Save path keeps a named copy in this browser. Export path creates a distinct research artifact with its identifier, edition, step order, notes, presentation settings and referenced source records. Import path opens that artifact in a new tab. Connecting routes use existing relationships, with gaps retained where no route is recorded; they remain separate from your notes and interpretations.
+
+Visible distance sits beside search. Choosing an entity starts with direct connections (one step). Increasing it broadens the available neighborhood; zoom controls how much detail fits on screen. Filters group related connection types with whole-group checkboxes and Select all / Deselect all. The legend counts the connections currently drawn. Excluded relevant types stay muted, where Show adds a type back.
 
 Views → Save this view stores a named copy in this browser. Load a saved view opens that copy in a new tab. Export this view or Export all tabs creates a portable JSON file, including pins, filters, positions and zoom. Import views opens valid files as additional tabs, keeping existing work. These files store presentation choices; Download data separately exports the sourced records. Browser reloads retain the current tab session, while a fresh site visit still begins with search.
+
+Views → Load a research path opens your saved research paths from the search-only start screen as well as from the map.
 
 ## Contributing
 

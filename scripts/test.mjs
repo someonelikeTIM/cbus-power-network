@@ -12,6 +12,7 @@ const checks = [
   'check-tags-path-focus',
   'check-correction-workflow',
   'check-workspaces',
+  'check-semantic',
   'check-public-files',
 ];
 

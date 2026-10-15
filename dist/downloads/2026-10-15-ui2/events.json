@@ -1,0 +1,6536 @@
+{
+  "release": {
+    "schemaVersion": "1.0.0",
+    "releaseId": "2026-10-15-ui2",
+    "status": "local-candidate",
+    "preparedOn": "2026-10-15",
+    "publishedAt": null,
+    "dataRevision": 12,
+    "codeLicense": "MIT",
+    "dataLicense": "CC-BY-4.0",
+    "sourceCheckIds": []
+  },
+  "table": "events",
+  "records": [
+    {
+      "id": "media-injunction-start",
+      "edgeIds": [
+        "m23"
+      ],
+      "primaryEdgeId": "m23",
+      "title": "Court issues TEGNA hold-separate injunction",
+      "lane": "media",
+      "date": {
+        "precision": "day",
+        "start": "2026-04-17",
+        "end": "2026-04-17",
+        "role": "Preliminary injunction issued",
+        "note": "April 17 issuance; August 6 later clarification is a separate event. Interim order, not final antitrust merits judgment."
+      },
+      "moneyKind": "none",
+      "additional": true,
+      "suppressAmount": true,
+      "actorIds": [
+        "tegna-litigation",
+        "tegna"
+      ],
+      "sourceIds": [
+        "media-injunction"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "jobs-audit-2013",
+      "edgeIds": [
+        "j09",
+        "j10",
+        "j11"
+      ],
+      "primaryEdgeId": "j11",
+      "title": "JobsOhio state audit issued",
+      "lane": "oversight",
+      "date": {
+        "precision": "day",
+        "start": "2013-11-15",
+        "end": "2013-11-15",
+        "role": "Audit report issued",
+        "note": "Audited activity: July 2011–June 2012"
+      },
+      "moneyKind": "finding",
+      "actorIds": [
+        "jobs-audit-2013",
+        "jobsohio"
+      ],
+      "sourceIds": [
+        "flow-jobs-audit"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": {
+        "value": 59747,
+        "label": "Sampled costs lacking invoices / receipts"
+      },
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "anduril-financing-2024",
+      "edgeIds": [
+        "j35",
+        "j67"
+      ],
+      "primaryEdgeId": "j67",
+      "title": "Anduril Series F financing announced",
+      "date": {
+        "precision": "day",
+        "start": "2024-08-07",
+        "end": "2024-08-07",
+        "role": "Financing announced",
+        "note": ""
+      },
+      "moneyKind": "financing",
+      "lane": "contracts",
+      "actorIds": [
+        "founders-fund",
+        "anduril-round-2024",
+        "anduril"
+      ],
+      "sourceIds": [
+        "flow-ff-anduril"
+      ],
+      "amount": 1500000000,
+      "amountLabel": "$1.5bn round",
+      "unit": "USD total company financing",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "strive-financing-2024",
+      "edgeIds": [
+        "p15",
+        "p16",
+        "p17",
+        "p18"
+      ],
+      "primaryEdgeId": "p15",
+      "title": "Strive Series B financing announced",
+      "date": {
+        "precision": "day",
+        "start": "2024-07-23",
+        "end": "2024-07-23",
+        "role": "Financing announced",
+        "note": ""
+      },
+      "moneyKind": "financing",
+      "lane": "contracts",
+      "actorIds": [
+        "strive-round-2024",
+        "strive",
+        "cantor",
+        "deason-capital",
+        "narya"
+      ],
+      "sourceIds": [
+        "political-strive"
+      ],
+      "amount": 30000000,
+      "amountLabel": "$30m round",
+      "unit": "USD announced company financing",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "flock-financing-2025",
+      "edgeIds": [
+        "e186",
+        "e187",
+        "e188",
+        "e189",
+        "e190",
+        "e191",
+        "e192",
+        "e193",
+        "e194",
+        "e195",
+        "e196"
+      ],
+      "primaryEdgeId": "e186",
+      "title": "Flock financing round announced",
+      "date": {
+        "precision": "day",
+        "start": "2025-03-13",
+        "end": "2025-03-13",
+        "role": "Financing announced",
+        "note": ""
+      },
+      "moneyKind": "financing",
+      "lane": "contracts",
+      "actorIds": [
+        "flock-round-2025",
+        "flock",
+        "a16z",
+        "greenoaks",
+        "bedrock",
+        "meritech",
+        "matrix",
+        "sands",
+        "founders-fund",
+        "kleiner",
+        "tiger-global",
+        "y-combinator"
+      ],
+      "sourceIds": [
+        "flock-financing-2025"
+      ],
+      "amount": 275000000,
+      "amountLabel": "$275m round",
+      "unit": "USD total announced company financing",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "flock-city-authorization",
+      "edgeIds": [
+        "e179",
+        "e180"
+      ],
+      "primaryEdgeId": "e179",
+      "title": "Columbus Flock lease authorized",
+      "date": {
+        "precision": "day",
+        "start": "2024-12-09",
+        "end": "2024-12-09",
+        "role": "Lease spending authorized",
+        "note": ""
+      },
+      "moneyKind": "authorization",
+      "lane": "contracts",
+      "actorIds": [
+        "city",
+        "flock",
+        "columbus-police"
+      ],
+      "sourceIds": [
+        "flock-contract-2024"
+      ],
+      "amount": 228000,
+      "amountLabel": "Up to $228k",
+      "unit": "USD two-year contract authorization ceiling",
+      "metric": null,
+      "amountIsUpperBound": true,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "forcemetrics-trial",
+      "edgeIds": [
+        "e182",
+        "e183"
+      ],
+      "primaryEdgeId": "e182",
+      "title": "ForceMetrics free trial authorized",
+      "date": {
+        "precision": "day",
+        "start": "2025-06-23",
+        "end": "2025-06-23",
+        "role": "Trial authorized",
+        "note": ""
+      },
+      "moneyKind": "authorization",
+      "lane": "contracts",
+      "actorIds": [
+        "city",
+        "forcemetrics",
+        "flock"
+      ],
+      "sourceIds": [
+        "forcemetrics-trial-2025"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "vistra-meta-agreements",
+      "edgeIds": [
+        "j48",
+        "j49"
+      ],
+      "primaryEdgeId": "j48",
+      "title": "Vistra–Meta power agreements announced",
+      "date": {
+        "precision": "day",
+        "start": "2026-01-09",
+        "end": "2026-01-09",
+        "role": "Agreements announced",
+        "note": "Purchases scheduled to begin later in 2026"
+      },
+      "lane": "contracts",
+      "moneyKind": "none",
+      "actorIds": [
+        "vistra",
+        "vistra-meta-ppa",
+        "meta"
+      ],
+      "sourceIds": [
+        "flow-vistra-meta"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "podcast-recovery-review",
+      "edgeIds": [
+        "j20"
+      ],
+      "primaryEdgeId": "j20",
+      "title": "Podcast clawback review announced",
+      "date": {
+        "precision": "month",
+        "start": "2026-03-01",
+        "end": "2026-03-31",
+        "role": "Recovery review announced",
+        "note": "Final recovery outcome is not established"
+      },
+      "lane": "oversight",
+      "moneyKind": "none",
+      "suppressAmount": true,
+      "additional": true,
+      "actorIds": [
+        "jobsohio",
+        "krisanthe-vlachos"
+      ],
+      "sourceIds": [
+        "flow-podcast"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e48",
+      "edgeIds": [
+        "e48"
+      ],
+      "primaryEdgeId": "e48",
+      "lane": "contracts",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "$8.7m in funding",
+      "moneyKind": "receipt",
+      "actorIds": [
+        "aep",
+        "empowering"
+      ],
+      "sourceIds": [
+        "eoe-money"
+      ],
+      "amount": 8700000,
+      "amountLabel": "$8.7m",
+      "unit": "USD funding",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e49",
+      "edgeIds": [
+        "e49"
+      ],
+      "primaryEdgeId": "e49",
+      "lane": "oversight",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "Formed & controlled spending",
+      "moneyKind": "none",
+      "actorIds": [
+        "aep",
+        "empowering"
+      ],
+      "sourceIds": [
+        "aep-order"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e50",
+      "edgeIds": [
+        "e50"
+      ],
+      "primaryEdgeId": "e50",
+      "lane": "contracts",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "$700,000 in payments",
+      "moneyKind": "receipt",
+      "actorIds": [
+        "empowering",
+        "generation-now"
+      ],
+      "sourceIds": [
+        "gn-bank",
+        "eoe-money",
+        "aep-order"
+      ],
+      "amount": 700000,
+      "amountLabel": "$700k",
+      "unit": "USD payments",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e52",
+      "edgeIds": [
+        "e52"
+      ],
+      "primaryEdgeId": "e52",
+      "lane": "contracts",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "Bribery payments · admitted",
+      "moneyKind": "none",
+      "actorIds": [
+        "firstenergy",
+        "generation-now"
+      ],
+      "sourceIds": [
+        "fe-admission",
+        "hb6-verdict"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e53",
+      "edgeIds": [
+        "e53"
+      ],
+      "primaryEdgeId": "e53",
+      "lane": "contracts",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "> $500,000 personal expenses",
+      "moneyKind": "none",
+      "actorIds": [
+        "generation-now",
+        "householder"
+      ],
+      "sourceIds": [
+        "householder-sentence"
+      ],
+      "amount": null,
+      "amountLabel": ">$500k",
+      "unit": "USD · lower bound",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e55",
+      "edgeIds": [
+        "e55"
+      ],
+      "primaryEdgeId": "e55",
+      "lane": "oversight",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "Legislation benefited AEP",
+      "moneyKind": "none",
+      "actorIds": [
+        "hb6",
+        "aep"
+      ],
+      "sourceIds": [
+        "aep-order"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e56",
+      "edgeIds": [
+        "e56"
+      ],
+      "primaryEdgeId": "e56",
+      "lane": "oversight",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "$19m civil penalty",
+      "moneyKind": "penalty",
+      "actorIds": [
+        "aep",
+        "sec"
+      ],
+      "sourceIds": [
+        "aep-sec"
+      ],
+      "amount": 19000000,
+      "amountLabel": "$19m",
+      "unit": "USD civil penalty",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e59",
+      "edgeIds": [
+        "e59"
+      ],
+      "primaryEdgeId": "e59",
+      "lane": "contracts",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "$34.28m in Apple shares",
+      "moneyKind": "paid",
+      "actorIds": [
+        "financial-trust",
+        "ylk"
+      ],
+      "sourceIds": [
+        "wexner-review"
+      ],
+      "amount": 34280154,
+      "amountLabel": "$34.28m",
+      "unit": "USD book value · shares",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e60",
+      "edgeIds": [
+        "e60"
+      ],
+      "primaryEdgeId": "e60",
+      "lane": "contracts",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "$12.38m in assets",
+      "moneyKind": "paid",
+      "actorIds": [
+        "couq",
+        "ylk"
+      ],
+      "sourceIds": [
+        "wexner-review"
+      ],
+      "amount": 12377844,
+      "amountLabel": "$12.38m",
+      "unit": "USD asset value",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e63",
+      "edgeIds": [
+        "e63"
+      ],
+      "primaryEdgeId": "e63",
+      "lane": "contracts",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "$250,000 wire",
+      "moneyKind": "receipt",
+      "actorIds": [
+        "resource-fuels",
+        "generation-now"
+      ],
+      "sourceIds": [
+        "gn-bank"
+      ],
+      "amount": 250000,
+      "amountLabel": "$250k",
+      "unit": "USD wire",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e64",
+      "edgeIds": [
+        "e64"
+      ],
+      "primaryEdgeId": "e64",
+      "lane": "contracts",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "$25,000 check",
+      "moneyKind": "receipt",
+      "actorIds": [
+        "boich-donors",
+        "generation-now"
+      ],
+      "sourceIds": [
+        "gn-bank"
+      ],
+      "amount": 25000,
+      "amountLabel": "$25k",
+      "unit": "USD check",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e65",
+      "edgeIds": [
+        "e65"
+      ],
+      "primaryEdgeId": "e65",
+      "lane": "contracts",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "$250,000 wire",
+      "moneyKind": "receipt",
+      "actorIds": [
+        "karen-trust",
+        "generation-now"
+      ],
+      "sourceIds": [
+        "gn-bank"
+      ],
+      "amount": 250000,
+      "amountLabel": "$250k",
+      "unit": "USD wire",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e66",
+      "edgeIds": [
+        "e66"
+      ],
+      "primaryEdgeId": "e66",
+      "lane": "contracts",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "$125,000 in checks",
+      "moneyKind": "receipt",
+      "actorIds": [
+        "penn-national",
+        "generation-now"
+      ],
+      "sourceIds": [
+        "gn-bank"
+      ],
+      "amount": 125000,
+      "amountLabel": "$125k",
+      "unit": "USD payments",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e67",
+      "edgeIds": [
+        "e67"
+      ],
+      "primaryEdgeId": "e67",
+      "lane": "contracts",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "$100,000 check",
+      "moneyKind": "receipt",
+      "actorIds": [
+        "fair-gaming",
+        "generation-now"
+      ],
+      "sourceIds": [
+        "gn-bank"
+      ],
+      "amount": 100000,
+      "amountLabel": "$100k",
+      "unit": "USD check",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e68",
+      "edgeIds": [
+        "e68"
+      ],
+      "primaryEdgeId": "e68",
+      "lane": "contracts",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "$75,000 in two checks",
+      "moneyKind": "receipt",
+      "actorIds": [
+        "jack-entertainment",
+        "generation-now"
+      ],
+      "sourceIds": [
+        "gn-bank"
+      ],
+      "amount": 75000,
+      "amountLabel": "$75k",
+      "unit": "USD payments",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e69",
+      "edgeIds": [
+        "e69"
+      ],
+      "primaryEdgeId": "e69",
+      "lane": "contracts",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "$125,000 in five checks",
+      "moneyKind": "receipt",
+      "actorIds": [
+        "charter",
+        "generation-now"
+      ],
+      "sourceIds": [
+        "gn-bank"
+      ],
+      "amount": 125000,
+      "amountLabel": "$125k",
+      "unit": "USD payments",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e70",
+      "edgeIds": [
+        "e70"
+      ],
+      "primaryEdgeId": "e70",
+      "lane": "contracts",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "$75,000 in four checks",
+      "moneyKind": "receipt",
+      "actorIds": [
+        "att",
+        "generation-now"
+      ],
+      "sourceIds": [
+        "gn-bank"
+      ],
+      "amount": 75000,
+      "amountLabel": "$75k",
+      "unit": "USD payments",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e71",
+      "edgeIds": [
+        "e71"
+      ],
+      "primaryEdgeId": "e71",
+      "lane": "contracts",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "Cash extorted for campaign conduits",
+      "moneyKind": "none",
+      "actorIds": [
+        "redflex",
+        "raphael"
+      ],
+      "sourceIds": [
+        "redflex-npa"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "Cash · amount not specified in this release",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e72",
+      "edgeIds": [
+        "e72"
+      ],
+      "primaryEdgeId": "e72",
+      "lane": "contracts",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "Reported conduit route",
+      "moneyKind": "none",
+      "actorIds": [
+        "raphael",
+        "ohio-democrats"
+      ],
+      "sourceIds": [
+        "redflex-ginther",
+        "redflex-npa"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e73",
+      "edgeIds": [
+        "e73"
+      ],
+      "primaryEdgeId": "e73",
+      "date": {
+        "precision": "day",
+        "start": "2011-11-01",
+        "end": "2011-11-01",
+        "role": "Reported contribution date",
+        "note": ""
+      },
+      "lane": "campaign",
+      "moneyKind": "receipt",
+      "title": "$21,000 party contribution",
+      "actorIds": [
+        "ohio-democrats",
+        "ginther-campaign"
+      ],
+      "sourceIds": [
+        "redflex-ginther"
+      ],
+      "amount": 21000,
+      "amountLabel": "$21k",
+      "unit": "USD campaign contribution",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e80",
+      "edgeIds": [
+        "e80"
+      ],
+      "primaryEdgeId": "e80",
+      "lane": "campaign",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "$10,000 campaign contribution",
+      "moneyKind": "receipt",
+      "actorIds": [
+        "alex-fischer",
+        "ginther-fund"
+      ],
+      "sourceIds": [
+        "campaign-developers-2025"
+      ],
+      "amount": 10000,
+      "amountLabel": "$10k",
+      "unit": "USD reported campaign contributions",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e81",
+      "edgeIds": [
+        "e81"
+      ],
+      "primaryEdgeId": "e81",
+      "lane": "campaign",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "$5,000 campaign contribution",
+      "moneyKind": "receipt",
+      "actorIds": [
+        "alison-marker",
+        "ginther-fund"
+      ],
+      "sourceIds": [
+        "campaign-developers-2025"
+      ],
+      "amount": 5000,
+      "amountLabel": "$5k",
+      "unit": "USD reported campaign contributions",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e82",
+      "edgeIds": [
+        "e82"
+      ],
+      "primaryEdgeId": "e82",
+      "lane": "campaign",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "$10,000 PAC contribution",
+      "moneyKind": "receipt",
+      "actorIds": [
+        "pizzuti-pac",
+        "ginther-fund"
+      ],
+      "sourceIds": [
+        "campaign-developers-2025"
+      ],
+      "amount": 10000,
+      "amountLabel": "$10k",
+      "unit": "USD reported campaign contributions",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e83",
+      "edgeIds": [
+        "e83"
+      ],
+      "primaryEdgeId": "e83",
+      "lane": "campaign",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "More than $16,000 in contributions",
+      "moneyKind": "receipt",
+      "actorIds": [
+        "jeff-edwards",
+        "ginther-fund"
+      ],
+      "sourceIds": [
+        "campaign-developers-2025"
+      ],
+      "amount": 16000,
+      "amountLabel": ">$16k",
+      "unit": "USD reported campaign contributions",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": true,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e91",
+      "edgeIds": [
+        "e91"
+      ],
+      "primaryEdgeId": "e91",
+      "lane": "contracts",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "Authorized 75% / 10-year tax abatement",
+      "moneyKind": "authorization",
+      "actorIds": [
+        "city",
+        "pizzuti-stelzer"
+      ],
+      "sourceIds": [
+        "pizzuti-stelzer-eza"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e93",
+      "edgeIds": [
+        "e93"
+      ],
+      "primaryEdgeId": "e93",
+      "lane": "contracts",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "Coleman government office building project",
+      "moneyKind": "none",
+      "actorIds": [
+        "pizzuti-solutions",
+        "city"
+      ],
+      "sourceIds": [
+        "pizzuti-solutions"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e94",
+      "edgeIds": [
+        "e94"
+      ],
+      "primaryEdgeId": "e94",
+      "lane": "contracts",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "Supplier in shared $400,000 contractor pool",
+      "moneyKind": "authorization",
+      "actorIds": [
+        "city",
+        "marker-inc"
+      ],
+      "sourceIds": [
+        "marker-city-pool"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "USD shared pool appropriation",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e95",
+      "edgeIds": [
+        "e95"
+      ],
+      "primaryEdgeId": "e95",
+      "lane": "lobbying",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Engagement start",
+        "note": "Start date not established",
+        "observedOn": "2026-08-27",
+        "observationRole": "Snapshot captured"
+      },
+      "title": "Registered city lobbyist",
+      "moneyKind": "none",
+      "actorIds": [
+        "pizzuti",
+        "george-mccue"
+      ],
+      "sourceIds": [
+        "city-lobbyists-2025"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e96",
+      "edgeIds": [
+        "e96"
+      ],
+      "primaryEdgeId": "e96",
+      "lane": "lobbying",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Engagement start",
+        "note": "Start date not established",
+        "observedOn": "2026-08-27",
+        "observationRole": "Snapshot captured"
+      },
+      "title": "Registered city lobbyist",
+      "moneyKind": "none",
+      "actorIds": [
+        "pizzuti-solutions",
+        "george-mccue"
+      ],
+      "sourceIds": [
+        "city-lobbyists-2025"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e99",
+      "edgeIds": [
+        "e99"
+      ],
+      "primaryEdgeId": "e99",
+      "lane": "contracts",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "$60,000 contract; bidding waived",
+      "moneyKind": "authorization",
+      "actorIds": [
+        "city",
+        "byers-minton"
+      ],
+      "sourceIds": [
+        "bma-city-contract"
+      ],
+      "amount": 60000,
+      "amountLabel": "$60k authorized",
+      "unit": "USD contract authorization",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e100",
+      "edgeIds": [
+        "e100"
+      ],
+      "primaryEdgeId": "e100",
+      "lane": "lobbying",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Engagement start",
+        "note": "Start date not established",
+        "observedOn": "2026-08-27",
+        "observationRole": "Snapshot captured"
+      },
+      "title": "State government-relations consultant",
+      "moneyKind": "authorization",
+      "actorIds": [
+        "byers-minton",
+        "city"
+      ],
+      "sourceIds": [
+        "bma-city-contract"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e101",
+      "edgeIds": [
+        "e101"
+      ],
+      "primaryEdgeId": "e101",
+      "lane": "lobbying",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Engagement start",
+        "note": "Start date not established",
+        "observedOn": "2026-05-19",
+        "observationRole": "Snapshot captured"
+      },
+      "title": "Registered lobbying agent",
+      "moneyKind": "none",
+      "actorIds": [
+        "aep",
+        "bill-byers"
+      ],
+      "sourceIds": [
+        "byers-register"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e102",
+      "edgeIds": [
+        "e102"
+      ],
+      "primaryEdgeId": "e102",
+      "lane": "lobbying",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Engagement start",
+        "note": "Start date not established",
+        "observedOn": "2026-05-19",
+        "observationRole": "Snapshot captured"
+      },
+      "title": "Registered lobbying agent",
+      "moneyKind": "none",
+      "actorIds": [
+        "charter-operating",
+        "bill-byers"
+      ],
+      "sourceIds": [
+        "byers-register"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e103",
+      "edgeIds": [
+        "e103"
+      ],
+      "primaryEdgeId": "e103",
+      "lane": "lobbying",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Engagement start",
+        "note": "Start date not established",
+        "observedOn": "2026-05-19",
+        "observationRole": "Snapshot captured"
+      },
+      "title": "Registered lobbying agent",
+      "moneyKind": "none",
+      "actorIds": [
+        "city",
+        "bill-byers"
+      ],
+      "sourceIds": [
+        "byers-register"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e104",
+      "edgeIds": [
+        "e104"
+      ],
+      "primaryEdgeId": "e104",
+      "lane": "lobbying",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Engagement start",
+        "note": "Start date not established",
+        "observedOn": "2026-05-19",
+        "observationRole": "Snapshot captured"
+      },
+      "title": "Registered lobbying agent",
+      "moneyKind": "none",
+      "actorIds": [
+        "partnership",
+        "bill-byers"
+      ],
+      "sourceIds": [
+        "byers-register"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e105",
+      "edgeIds": [
+        "e105"
+      ],
+      "primaryEdgeId": "e105",
+      "lane": "lobbying",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Engagement start",
+        "note": "Start date not established",
+        "observedOn": "2026-05-19",
+        "observationRole": "Snapshot captured"
+      },
+      "title": "Registered lobbying agent",
+      "moneyKind": "none",
+      "actorIds": [
+        "cota",
+        "bill-byers"
+      ],
+      "sourceIds": [
+        "byers-register"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e106",
+      "edgeIds": [
+        "e106"
+      ],
+      "primaryEdgeId": "e106",
+      "lane": "lobbying",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Engagement start",
+        "note": "Start date not established",
+        "observedOn": "2026-05-19",
+        "observationRole": "Snapshot captured"
+      },
+      "title": "Registered lobbying agent",
+      "moneyKind": "none",
+      "actorIds": [
+        "children",
+        "bill-byers"
+      ],
+      "sourceIds": [
+        "byers-register"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e107",
+      "edgeIds": [
+        "e107"
+      ],
+      "primaryEdgeId": "e107",
+      "lane": "lobbying",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Engagement start",
+        "note": "Start date not established",
+        "observedOn": "2026-05-19",
+        "observationRole": "Snapshot captured"
+      },
+      "title": "Registered lobbying agent",
+      "moneyKind": "none",
+      "actorIds": [
+        "battelle",
+        "bill-byers"
+      ],
+      "sourceIds": [
+        "byers-register"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e108",
+      "edgeIds": [
+        "e108"
+      ],
+      "primaryEdgeId": "e108",
+      "lane": "lobbying",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Engagement start",
+        "note": "Start date not established",
+        "observedOn": "2026-05-19",
+        "observationRole": "Snapshot captured"
+      },
+      "title": "Registered lobbying agent",
+      "moneyKind": "none",
+      "actorIds": [
+        "new-albany-company",
+        "bill-byers"
+      ],
+      "sourceIds": [
+        "byers-register"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e109",
+      "edgeIds": [
+        "e109"
+      ],
+      "primaryEdgeId": "e109",
+      "lane": "lobbying",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Engagement start",
+        "note": "Start date not established",
+        "observedOn": "2026-05-19",
+        "observationRole": "Snapshot captured"
+      },
+      "title": "Registered lobbying agent",
+      "moneyKind": "none",
+      "actorIds": [
+        "cstate",
+        "bill-byers"
+      ],
+      "sourceIds": [
+        "byers-register"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e117",
+      "edgeIds": [
+        "e117"
+      ],
+      "primaryEdgeId": "e117",
+      "lane": "campaign",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "More than $150,000 combined contributions",
+      "moneyKind": "receipt",
+      "actorIds": [
+        "wexner-donors",
+        "ginther-fund"
+      ],
+      "sourceIds": [
+        "wexner-campaigns-2026",
+        "wexner-charity-followup"
+      ],
+      "amount": 150000,
+      "amountLabel": ">$150k combined",
+      "unit": "USD reported campaign contributions",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": true,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e118",
+      "edgeIds": [
+        "e118"
+      ],
+      "primaryEdgeId": "e118",
+      "lane": "campaign",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "More than $40,000 combined contributions",
+      "moneyKind": "receipt",
+      "actorIds": [
+        "wexner-donors",
+        "hardin-fund"
+      ],
+      "sourceIds": [
+        "wexner-campaigns-2026"
+      ],
+      "amount": 40000,
+      "amountLabel": ">$40k combined",
+      "unit": "USD reported campaign contributions",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": true,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e119",
+      "edgeIds": [
+        "e119"
+      ],
+      "primaryEdgeId": "e119",
+      "lane": "contracts",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "$10,000 charity donation",
+      "moneyKind": "receipt",
+      "actorIds": [
+        "hardin-fund",
+        "promise"
+      ],
+      "sourceIds": [
+        "rooster-hardin-2026",
+        "wexner-campaigns-2026",
+        "wexner-charity-followup"
+      ],
+      "amount": 10000,
+      "amountLabel": "$10k",
+      "unit": "USD reported charity donation",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e139",
+      "edgeIds": [
+        "e139"
+      ],
+      "primaryEdgeId": "e139",
+      "moneyKind": "receipt",
+      "lane": "campaign",
+      "date": {
+        "precision": "day",
+        "start": "2026-07-16",
+        "end": "2026-07-16",
+        "role": "Transaction date",
+        "note": ""
+      },
+      "title": "$16,615.67 reported contribution",
+      "actorIds": [
+        "dee-haslam",
+        "ginther-fund"
+      ],
+      "sourceIds": [
+        "haslam-gifts-2026",
+        "partnership-founders"
+      ],
+      "amount": 16615.67,
+      "amountLabel": "$16,615.67",
+      "unit": "USD reported personal campaign contribution",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e140",
+      "edgeIds": [
+        "e140"
+      ],
+      "primaryEdgeId": "e140",
+      "moneyKind": "receipt",
+      "lane": "campaign",
+      "date": {
+        "precision": "day",
+        "start": "2026-07-20",
+        "end": "2026-07-20",
+        "role": "Transaction date",
+        "note": ""
+      },
+      "title": "$8,000 reported contribution",
+      "actorIds": [
+        "whitney-johnson",
+        "ginther-fund"
+      ],
+      "sourceIds": [
+        "haslam-gifts-2026"
+      ],
+      "amount": 8000,
+      "amountLabel": "$8k",
+      "unit": "USD reported personal campaign contribution",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e141",
+      "edgeIds": [
+        "e141"
+      ],
+      "primaryEdgeId": "e141",
+      "moneyKind": "receipt",
+      "lane": "campaign",
+      "date": {
+        "precision": "day",
+        "start": "2026-07-21",
+        "end": "2026-07-21",
+        "role": "Transaction date",
+        "note": ""
+      },
+      "title": "$8,000 reported contribution",
+      "actorIds": [
+        "jw-johnson",
+        "ginther-fund"
+      ],
+      "sourceIds": [
+        "haslam-gifts-2026",
+        "jw-johnson-profile"
+      ],
+      "amount": 8000,
+      "amountLabel": "$8k",
+      "unit": "USD reported personal campaign contribution",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e142",
+      "edgeIds": [
+        "e142"
+      ],
+      "primaryEdgeId": "e142",
+      "lane": "lobbying",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Engagement start",
+        "note": "Start date not established",
+        "observedOn": "2026-05-19",
+        "observationRole": "Snapshot captured"
+      },
+      "title": "Registered lobbying agent",
+      "moneyKind": "none",
+      "actorIds": [
+        "crew",
+        "bill-byers"
+      ],
+      "sourceIds": [
+        "byers-register"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e143",
+      "edgeIds": [
+        "e143"
+      ],
+      "primaryEdgeId": "e143",
+      "lane": "lobbying",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Engagement start",
+        "note": "Start date not established",
+        "observedOn": "2026-05-19",
+        "observationRole": "Snapshot captured"
+      },
+      "title": "Registered lobbying agent",
+      "moneyKind": "none",
+      "actorIds": [
+        "browns",
+        "bill-byers"
+      ],
+      "sourceIds": [
+        "byers-register"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e152",
+      "edgeIds": [
+        "e152"
+      ],
+      "primaryEdgeId": "e152",
+      "lane": "contracts",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "Authorized site lease; realty rules waived",
+      "moneyKind": "authorization",
+      "actorIds": [
+        "city",
+        "confluence-authority"
+      ],
+      "sourceIds": [
+        "nwsl-agreement-2026"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e153",
+      "edgeIds": [
+        "e153"
+      ],
+      "primaryEdgeId": "e153",
+      "lane": "contracts",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "Planned training-site / facility sublease",
+      "moneyKind": "commitment",
+      "actorIds": [
+        "confluence-authority",
+        "nwsl-newco"
+      ],
+      "sourceIds": [
+        "nwsl-agreement-2026"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e154",
+      "edgeIds": [
+        "e154"
+      ],
+      "primaryEdgeId": "e154",
+      "lane": "contracts",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "Planned facility owner",
+      "moneyKind": "commitment",
+      "actorIds": [
+        "confluence-authority",
+        "nwsl-training"
+      ],
+      "sourceIds": [
+        "nwsl-agreement-2026"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e155",
+      "edgeIds": [
+        "e155"
+      ],
+      "primaryEdgeId": "e155",
+      "lane": "contracts",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "Controls planned design / construction",
+      "moneyKind": "commitment",
+      "actorIds": [
+        "nwsl-newco",
+        "nwsl-training"
+      ],
+      "sourceIds": [
+        "nwsl-agreement-2026"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e156",
+      "edgeIds": [
+        "e156"
+      ],
+      "primaryEdgeId": "e156",
+      "lane": "contracts",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "$25m conditional capital commitment",
+      "moneyKind": "commitment",
+      "actorIds": [
+        "city",
+        "confluence-authority"
+      ],
+      "sourceIds": [
+        "nwsl-agreement-2026"
+      ],
+      "amount": 25000000,
+      "amountLabel": "$25m conditional",
+      "unit": "USD contemplated capital commitment",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e157",
+      "edgeIds": [
+        "e157"
+      ],
+      "primaryEdgeId": "e157",
+      "lane": "contracts",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "$25m county commitment described",
+      "moneyKind": "commitment",
+      "actorIds": [
+        "county",
+        "nwsl-projects"
+      ],
+      "sourceIds": [
+        "nwsl-agreement-2026"
+      ],
+      "amount": 25000000,
+      "amountLabel": "$25m conditional",
+      "unit": "USD contemplated county project commitment",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e158",
+      "edgeIds": [
+        "e158"
+      ],
+      "primaryEdgeId": "e158",
+      "lane": "contracts",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "Planned admissions revenue for debt service",
+      "moneyKind": "commitment",
+      "actorIds": [
+        "crew-stadium",
+        "city"
+      ],
+      "sourceIds": [
+        "nwsl-agreement-2026"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e159",
+      "edgeIds": [
+        "e159"
+      ],
+      "primaryEdgeId": "e159",
+      "lane": "contracts",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "$3m park-benefit obligation",
+      "moneyKind": "commitment",
+      "actorIds": [
+        "nwsl-newco",
+        "parks-foundation"
+      ],
+      "sourceIds": [
+        "nwsl-agreement-2026"
+      ],
+      "amount": 3000000,
+      "amountLabel": "$3m obligation",
+      "unit": "USD future community-benefit obligation",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e160",
+      "edgeIds": [
+        "e160"
+      ],
+      "primaryEdgeId": "e160",
+      "date": {
+        "precision": "day",
+        "start": "2025-07-28",
+        "end": "2025-07-28",
+        "role": "Grant authorized",
+        "note": ""
+      },
+      "moneyKind": "authorization",
+      "lane": "contracts",
+      "title": "Up to $1.3m economic-development grant",
+      "actorIds": [
+        "city",
+        "one-columbus"
+      ],
+      "sourceIds": [
+        "city-capital-2025"
+      ],
+      "amount": 1300000,
+      "amountLabel": "Up to $1.3m",
+      "unit": "USD grant authorization ceiling",
+      "metric": null,
+      "amountIsUpperBound": true,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e161",
+      "edgeIds": [
+        "e161"
+      ],
+      "primaryEdgeId": "e161",
+      "date": {
+        "precision": "year",
+        "start": "2025-01-01",
+        "end": "2025-12-31",
+        "role": "Grant allocation year",
+        "note": "Month and day not established"
+      },
+      "moneyKind": "earmark",
+      "lane": "contracts",
+      "title": "$500k support within grant",
+      "actorIds": [
+        "one-columbus",
+        "housing-coalition"
+      ],
+      "sourceIds": [
+        "city-capital-2025"
+      ],
+      "amount": 500000,
+      "amountLabel": "$500k earmark",
+      "unit": "USD earmarked support within grant",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": "e160"
+    },
+    {
+      "id": "event-e162",
+      "edgeIds": [
+        "e162"
+      ],
+      "primaryEdgeId": "e162",
+      "date": {
+        "precision": "day",
+        "start": "2025-07-28",
+        "end": "2025-07-28",
+        "role": "Contract modification authorized",
+        "note": ""
+      },
+      "moneyKind": "authorization",
+      "lane": "contracts",
+      "title": "Up to $841,900 court contract modification",
+      "actorIds": [
+        "city",
+        "gilbane-smoot-jv"
+      ],
+      "sourceIds": [
+        "city-capital-2025"
+      ],
+      "amount": 841900,
+      "amountLabel": "Up to $841.9k",
+      "unit": "USD contract-modification ceiling",
+      "metric": null,
+      "amountIsUpperBound": true,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e163",
+      "edgeIds": [
+        "e163"
+      ],
+      "primaryEdgeId": "e163",
+      "lane": "contracts",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "Construction manager at risk",
+      "moneyKind": "authorization",
+      "actorIds": [
+        "gilbane-smoot-jv",
+        "municipal-court-project"
+      ],
+      "sourceIds": [
+        "city-capital-2025"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e164",
+      "edgeIds": [
+        "e164"
+      ],
+      "primaryEdgeId": "e164",
+      "lane": "campaign",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "$5,000 PAC contribution",
+      "moneyKind": "receipt",
+      "actorIds": [
+        "caa-pac",
+        "hardin-fund"
+      ],
+      "sourceIds": [
+        "campaign-developers-2025"
+      ],
+      "amount": 5000,
+      "amountLabel": "$5k",
+      "unit": "USD reported PAC contribution",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e165",
+      "edgeIds": [
+        "e165"
+      ],
+      "primaryEdgeId": "e165",
+      "lane": "campaign",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "$5,000 PAC contribution",
+      "moneyKind": "receipt",
+      "actorIds": [
+        "realtors-pac",
+        "hardin-fund"
+      ],
+      "sourceIds": [
+        "campaign-developers-2025"
+      ],
+      "amount": 5000,
+      "amountLabel": "$5k",
+      "unit": "USD reported PAC contribution",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e166",
+      "edgeIds": [
+        "e166"
+      ],
+      "primaryEdgeId": "e166",
+      "lane": "campaign",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "More than $15,000 contributions",
+      "moneyKind": "receipt",
+      "actorIds": [
+        "moun-dioun",
+        "hardin-fund"
+      ],
+      "sourceIds": [
+        "campaign-developers-2025"
+      ],
+      "amount": 15000,
+      "amountLabel": ">$15k",
+      "unit": "USD reported personal contributions",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": true,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e168",
+      "edgeIds": [
+        "e168"
+      ],
+      "primaryEdgeId": "e168",
+      "lane": "contracts",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "Project component",
+      "moneyKind": "commitment",
+      "actorIds": [
+        "nwsl-projects",
+        "nwsl-training"
+      ],
+      "sourceIds": [
+        "nwsl-agreement-2026"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e169",
+      "edgeIds": [
+        "e169"
+      ],
+      "primaryEdgeId": "e169",
+      "lane": "contracts",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "Stadium-enhancement component",
+      "moneyKind": "commitment",
+      "actorIds": [
+        "nwsl-projects",
+        "crew-stadium"
+      ],
+      "sourceIds": [
+        "nwsl-agreement-2026"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e171",
+      "edgeIds": [
+        "e171"
+      ],
+      "primaryEdgeId": "e171",
+      "lane": "lobbying",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Engagement start",
+        "note": "Start date not established",
+        "observedOn": "2026-08-27",
+        "observationRole": "Snapshot captured"
+      },
+      "title": "Registered city lobbyist",
+      "moneyKind": "none",
+      "actorIds": [
+        "flock",
+        "capobianco"
+      ],
+      "sourceIds": [
+        "city-lobbyists-2025"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e172",
+      "edgeIds": [
+        "e172"
+      ],
+      "primaryEdgeId": "e172",
+      "lane": "lobbying",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Engagement start",
+        "note": "Start date not established",
+        "observedOn": "2026-08-27",
+        "observationRole": "Snapshot captured"
+      },
+      "title": "Registered city lobbyist",
+      "moneyKind": "none",
+      "actorIds": [
+        "google",
+        "stanley-gates"
+      ],
+      "sourceIds": [
+        "city-lobbyists-2025"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e173",
+      "edgeIds": [
+        "e173"
+      ],
+      "primaryEdgeId": "e173",
+      "lane": "lobbying",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Engagement start",
+        "note": "Start date not established",
+        "observedOn": "2026-08-27",
+        "observationRole": "Snapshot captured"
+      },
+      "title": "Registered city lobbyist",
+      "moneyKind": "none",
+      "actorIds": [
+        "verizon",
+        "capobianco"
+      ],
+      "sourceIds": [
+        "city-lobbyists-2025"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e177",
+      "edgeIds": [
+        "e177"
+      ],
+      "primaryEdgeId": "e177",
+      "date": {
+        "precision": "year",
+        "start": "2025-01-01",
+        "end": "2025-12-31",
+        "role": "Rate proposal discussed",
+        "note": "2027 is a proposed implementation year, not an enacted event date"
+      },
+      "moneyKind": "commitment",
+      "lane": "contracts",
+      "title": "Commercial-rate changes proposed for 2027",
+      "actorIds": [
+        "city-water-power",
+        "water-rate-review"
+      ],
+      "sourceIds": [
+        "city-lobbyists-2025"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e181",
+      "edgeIds": [
+        "e181"
+      ],
+      "primaryEdgeId": "e181",
+      "lane": "contracts",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "LPR grant source",
+      "moneyKind": "none",
+      "actorIds": [
+        "ocjs",
+        "city"
+      ],
+      "sourceIds": [
+        "flock-contract-2024"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e184",
+      "edgeIds": [
+        "e184"
+      ],
+      "primaryEdgeId": "e184",
+      "date": {
+        "precision": "day",
+        "start": "2026-06-01",
+        "end": "2026-06-01",
+        "role": "Subscription spending authorized",
+        "note": ""
+      },
+      "moneyKind": "authorization",
+      "lane": "contracts",
+      "title": "$103,990 subscriptions; bidding waived",
+      "actorIds": [
+        "city",
+        "motorola-vigilant"
+      ],
+      "sourceIds": [
+        "vigilant-contract-2026"
+      ],
+      "amount": 103990,
+      "amountLabel": "Up to $103.99k",
+      "unit": "USD subscription authorization ceiling",
+      "metric": null,
+      "amountIsUpperBound": true,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e198",
+      "edgeIds": [
+        "e198"
+      ],
+      "primaryEdgeId": "e198",
+      "date": {
+        "precision": "day",
+        "start": "2018-12-10",
+        "end": "2018-12-10",
+        "role": "Tax benefit authorized",
+        "note": ""
+      },
+      "moneyKind": "authorization",
+      "lane": "contracts",
+      "title": "100% / 15-year property abatement authorized",
+      "actorIds": [
+        "new-albany-city",
+        "montauk"
+      ],
+      "sourceIds": [
+        "google-incentive-2018"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e199",
+      "edgeIds": [
+        "e199"
+      ],
+      "primaryEdgeId": "e199",
+      "date": {
+        "precision": "month",
+        "start": "2018-12-01",
+        "end": "2018-12-31",
+        "role": "Fee waiver authorized",
+        "note": "Day not established"
+      },
+      "moneyKind": "waiver",
+      "lane": "contracts",
+      "title": "Up to $250,000 permit-fee waiver",
+      "actorIds": [
+        "new-albany-city",
+        "montauk"
+      ],
+      "sourceIds": [
+        "google-incentive-2018"
+      ],
+      "amount": 250000,
+      "amountLabel": "Up to $250k waived",
+      "unit": "USD authorized fee-waiver ceiling",
+      "metric": null,
+      "amountIsUpperBound": true,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e200",
+      "edgeIds": [
+        "e200"
+      ],
+      "primaryEdgeId": "e200",
+      "date": {
+        "precision": "year",
+        "start": "2021-01-01",
+        "end": "2021-12-31",
+        "role": "Revenue requirement starts",
+        "note": "Required minimum, not a verified payment"
+      },
+      "moneyKind": "commitment",
+      "lane": "contracts",
+      "title": "$750,000 minimum annual city revenue required",
+      "actorIds": [
+        "montauk",
+        "new-albany-city"
+      ],
+      "sourceIds": [
+        "google-incentive-2018"
+      ],
+      "amount": 750000,
+      "amountLabel": "$750k annual minimum",
+      "unit": "USD minimum annual city-revenue requirement",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e201",
+      "edgeIds": [
+        "e201"
+      ],
+      "primaryEdgeId": "e201",
+      "date": {
+        "precision": "month",
+        "start": "2018-12-01",
+        "end": "2018-12-31",
+        "role": "Infrastructure agreement authorized",
+        "note": "Day not established"
+      },
+      "lane": "contracts",
+      "title": "Infrastructure delivery agreement authorized",
+      "moneyKind": "authorization",
+      "actorIds": [
+        "new-albany-city",
+        "montauk"
+      ],
+      "sourceIds": [
+        "google-incentive-2018"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e202",
+      "edgeIds": [
+        "e202"
+      ],
+      "primaryEdgeId": "e202",
+      "date": {
+        "precision": "year",
+        "start": "2023-01-01",
+        "end": "2023-12-31",
+        "role": "Project investment announced",
+        "note": "Month and day not established"
+      },
+      "moneyKind": "commitment",
+      "lane": "contracts",
+      "title": "Announced data-center project investment",
+      "actorIds": [
+        "aws",
+        "aws-na-project"
+      ],
+      "sourceIds": [
+        "new-albany-budget-2024"
+      ],
+      "amount": 3500000000,
+      "amountLabel": "$3.5bn",
+      "unit": "USD announced private project investment",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e203",
+      "edgeIds": [
+        "e203"
+      ],
+      "primaryEdgeId": "e203",
+      "date": {
+        "precision": "year",
+        "start": "2023-01-01",
+        "end": "2023-12-31",
+        "role": "Project investment announced",
+        "note": "Month and day not established"
+      },
+      "moneyKind": "commitment",
+      "lane": "contracts",
+      "title": "Announced data-center project investment",
+      "actorIds": [
+        "qts",
+        "qts-na-project"
+      ],
+      "sourceIds": [
+        "new-albany-budget-2024"
+      ],
+      "amount": 3600000000,
+      "amountLabel": "$3.6bn",
+      "unit": "USD announced private project investment",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e204",
+      "edgeIds": [
+        "e204"
+      ],
+      "primaryEdgeId": "e204",
+      "date": {
+        "precision": "year",
+        "start": "2023-01-01",
+        "end": "2023-12-31",
+        "role": "Project investment announced",
+        "note": "Month and day not established"
+      },
+      "moneyKind": "commitment",
+      "lane": "contracts",
+      "title": "Announced data-center project investment",
+      "actorIds": [
+        "edged",
+        "edged-na-project"
+      ],
+      "sourceIds": [
+        "new-albany-budget-2024"
+      ],
+      "amount": 246000000,
+      "amountLabel": "$246m",
+      "unit": "USD announced private project investment",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e210",
+      "edgeIds": [
+        "e210"
+      ],
+      "primaryEdgeId": "e210",
+      "date": {
+        "precision": "day",
+        "start": "2025-07-09",
+        "end": "2025-07-09",
+        "role": "Tariff adopted",
+        "note": ""
+      },
+      "lane": "oversight",
+      "title": "Adopted data-center tariff settlement",
+      "moneyKind": "none",
+      "actorIds": [
+        "puco",
+        "dct"
+      ],
+      "sourceIds": [
+        "aep-data-tariff"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e211",
+      "edgeIds": [
+        "e211"
+      ],
+      "primaryEdgeId": "e211",
+      "date": {
+        "precision": "day",
+        "start": "2025-07-23",
+        "end": "2025-07-23",
+        "role": "Tariff effective",
+        "note": ""
+      },
+      "lane": "oversight",
+      "title": "Filed / administers Schedule DCT",
+      "moneyKind": "none",
+      "actorIds": [
+        "aep-ohio",
+        "dct"
+      ],
+      "sourceIds": [
+        "aep-data-tariff"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e213",
+      "edgeIds": [
+        "e213"
+      ],
+      "primaryEdgeId": "e213",
+      "lane": "lobbying",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Engagement start",
+        "note": "Start date not established",
+        "observedOn": "2026-08-27",
+        "observationRole": "Snapshot captured"
+      },
+      "title": "Municipal legislative-agent registration",
+      "moneyKind": "none",
+      "actorIds": [
+        "capobianco",
+        "council"
+      ],
+      "sourceIds": [
+        "city-lobbyists-2025"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-e214",
+      "edgeIds": [
+        "e214"
+      ],
+      "primaryEdgeId": "e214",
+      "lane": "lobbying",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Engagement start",
+        "note": "Start date not established",
+        "observedOn": "2026-08-27",
+        "observationRole": "Snapshot captured"
+      },
+      "title": "Municipal legislative-agent registration",
+      "moneyKind": "none",
+      "actorIds": [
+        "stanley-gates",
+        "council"
+      ],
+      "sourceIds": [
+        "city-lobbyists-2025"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-p19",
+      "edgeIds": [
+        "p19"
+      ],
+      "primaryEdgeId": "p19",
+      "lane": "contracts",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "Named seed investor",
+      "moneyKind": "none",
+      "actorIds": [
+        "peter-thiel",
+        "strive"
+      ],
+      "sourceIds": [
+        "political-strive"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-p20",
+      "edgeIds": [
+        "p20"
+      ],
+      "primaryEdgeId": "p20",
+      "lane": "contracts",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "Named seed investor",
+      "moneyKind": "none",
+      "actorIds": [
+        "bill-ackman",
+        "strive"
+      ],
+      "sourceIds": [
+        "political-strive"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-p21",
+      "edgeIds": [
+        "p21"
+      ],
+      "primaryEdgeId": "p21",
+      "lane": "contracts",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "Named seed investor",
+      "moneyKind": "none",
+      "actorIds": [
+        "founders-fund",
+        "strive"
+      ],
+      "sourceIds": [
+        "political-strive"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-p23",
+      "edgeIds": [
+        "p23"
+      ],
+      "primaryEdgeId": "p23",
+      "lane": "contracts",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "Limited partner",
+      "moneyKind": "none",
+      "actorIds": [
+        "battelle",
+        "narya"
+      ],
+      "sourceIds": [
+        "political-narya"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-p25",
+      "edgeIds": [
+        "p25"
+      ],
+      "primaryEdgeId": "p25",
+      "date": {
+        "precision": "day",
+        "start": "2026-05-08",
+        "end": "2026-05-08",
+        "role": "Transaction date",
+        "note": ""
+      },
+      "moneyKind": "contribution",
+      "lane": "campaign",
+      "title": "$5m PAC contribution",
+      "actorIds": [
+        "elon-musk",
+        "v-pac"
+      ],
+      "sourceIds": [
+        "trail-vpac-q2"
+      ],
+      "amount": 5000000,
+      "amountLabel": "$5m",
+      "unit": "USD super-PAC contribution",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-p26",
+      "edgeIds": [
+        "p26"
+      ],
+      "primaryEdgeId": "p26",
+      "date": {
+        "precision": "day",
+        "start": "2026-05-12",
+        "end": "2026-05-12",
+        "role": "Transaction date",
+        "note": ""
+      },
+      "moneyKind": "contribution",
+      "lane": "campaign",
+      "title": "$5m PAC contribution",
+      "actorIds": [
+        "ratmir-timashev",
+        "v-pac"
+      ],
+      "sourceIds": [
+        "trail-vpac-q2"
+      ],
+      "amount": 5000000,
+      "amountLabel": "$5m",
+      "unit": "USD super-PAC contribution",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-p27",
+      "edgeIds": [
+        "p27"
+      ],
+      "primaryEdgeId": "p27",
+      "date": {
+        "precision": "day",
+        "start": "2026-06-08",
+        "end": "2026-06-08",
+        "role": "Transaction date",
+        "note": ""
+      },
+      "moneyKind": "contribution",
+      "lane": "campaign",
+      "title": "$1m PAC contribution",
+      "actorIds": [
+        "bill-ackman",
+        "v-pac"
+      ],
+      "sourceIds": [
+        "trail-vpac-q2"
+      ],
+      "amount": 1000000,
+      "amountLabel": "$1m",
+      "unit": "USD super-PAC contribution",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-p28",
+      "edgeIds": [
+        "p28"
+      ],
+      "primaryEdgeId": "p28",
+      "date": {
+        "precision": "day",
+        "start": "2026-05-01",
+        "end": "2026-05-01",
+        "role": "Transaction date",
+        "note": ""
+      },
+      "moneyKind": "contribution",
+      "lane": "campaign",
+      "title": "$1m PAC contribution",
+      "actorIds": [
+        "ross-stevens",
+        "v-pac"
+      ],
+      "sourceIds": [
+        "trail-vpac-q2"
+      ],
+      "amount": 1000000,
+      "amountLabel": "$1m",
+      "unit": "USD super-PAC contribution",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-p29",
+      "edgeIds": [
+        "p29"
+      ],
+      "primaryEdgeId": "p29",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Contribution date",
+        "note": "Source says before the 2026 primary; transaction date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "moneyKind": "receipt",
+      "lane": "campaign",
+      "title": "Reported $20m PAC contribution",
+      "actorIds": [
+        "jeff-yass",
+        "v-pac"
+      ],
+      "sourceIds": [
+        "political-vpac"
+      ],
+      "amount": 20000000,
+      "amountLabel": "$20m",
+      "unit": "USD reported super-PAC contribution",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-p30",
+      "edgeIds": [
+        "p30"
+      ],
+      "primaryEdgeId": "p30",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Contribution date",
+        "note": "Source says early 2025; exact period not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "moneyKind": "receipt",
+      "lane": "campaign",
+      "title": "Reported $5m PAC contribution",
+      "actorIds": [
+        "ross-stevens",
+        "v-pac"
+      ],
+      "sourceIds": [
+        "political-vpac"
+      ],
+      "amount": 5000000,
+      "amountLabel": "$5m",
+      "unit": "USD reported super-PAC contribution",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-p31",
+      "edgeIds": [
+        "p31"
+      ],
+      "primaryEdgeId": "p31",
+      "date": {
+        "precision": "day",
+        "start": "2023-02-16",
+        "end": "2023-02-16",
+        "role": "Gift announced",
+        "note": "Gift disbursement schedule not supplied"
+      },
+      "moneyKind": "commitment",
+      "lane": "contracts",
+      "title": "$110m gift announced",
+      "actorIds": [
+        "timashev-foundation",
+        "ohio-state"
+      ],
+      "sourceIds": [
+        "political-osu"
+      ],
+      "amount": 110000000,
+      "amountLabel": "$110m gift",
+      "unit": "USD announced philanthropic gift",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-p47",
+      "edgeIds": [
+        "p47"
+      ],
+      "primaryEdgeId": "p47",
+      "lane": "contracts",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "Construction lead announced",
+      "moneyKind": "none",
+      "actorIds": [
+        "marker-inc",
+        "rickenbacker-center"
+      ],
+      "sourceIds": [
+        "political-rickenbacker"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-j03",
+      "edgeIds": [
+        "j03"
+      ],
+      "primaryEdgeId": "j03",
+      "date": {
+        "precision": "period",
+        "start": "2025-07-01",
+        "end": "2026-06-30",
+        "label": "FY2026",
+        "role": "Reporting period",
+        "note": "Fiscal-year total; individual transaction dates are not supplied"
+      },
+      "moneyKind": "internal",
+      "lane": "contracts",
+      "title": "$280m internal liquor-funded grant",
+      "actorIds": [
+        "jobs-beverage",
+        "jobsohio"
+      ],
+      "sourceIds": [
+        "flow-jobs-finance"
+      ],
+      "amount": 280000000,
+      "amountLabel": "$280m",
+      "unit": "USD internal grant",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-j04",
+      "edgeIds": [
+        "j04"
+      ],
+      "primaryEdgeId": "j04",
+      "date": {
+        "precision": "day",
+        "start": "2026-06-30",
+        "end": "2026-06-30",
+        "role": "Balance as of",
+        "note": "Facility ceiling at year-end; not a transaction on this date"
+      },
+      "moneyKind": "credit",
+      "lane": "contracts",
+      "title": "$125m revolving facility ceiling",
+      "actorIds": [
+        "huntington-national",
+        "jobs-consolidated"
+      ],
+      "sourceIds": [
+        "flow-jobs-finance"
+      ],
+      "amount": 125000000,
+      "amountLabel": "Up to $125m",
+      "unit": "USD credit limit",
+      "metric": null,
+      "amountIsUpperBound": true,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-j05",
+      "edgeIds": [
+        "j05"
+      ],
+      "primaryEdgeId": "j05",
+      "date": {
+        "precision": "period",
+        "start": "2025-07-01",
+        "end": "2026-06-30",
+        "label": "FY2026",
+        "role": "Reporting period",
+        "note": "Fiscal-year total; individual transaction dates are not supplied"
+      },
+      "moneyKind": "borrowed",
+      "lane": "contracts",
+      "title": "$71.9m FY2026 draws",
+      "actorIds": [
+        "huntington-national",
+        "jobs-consolidated"
+      ],
+      "sourceIds": [
+        "flow-jobs-finance"
+      ],
+      "amount": 71900000,
+      "amountLabel": "$71.9m",
+      "unit": "USD gross borrowing additions",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-j06",
+      "edgeIds": [
+        "j06"
+      ],
+      "primaryEdgeId": "j06",
+      "date": {
+        "precision": "period",
+        "start": "2025-07-01",
+        "end": "2026-06-30",
+        "label": "FY2026",
+        "role": "Reporting period",
+        "note": "Fiscal-year total; individual transaction dates are not supplied"
+      },
+      "moneyKind": "repaid",
+      "lane": "contracts",
+      "title": "$91.9m FY2026 repayments",
+      "actorIds": [
+        "jobs-consolidated",
+        "huntington-national"
+      ],
+      "sourceIds": [
+        "flow-jobs-finance"
+      ],
+      "amount": 91900000,
+      "amountLabel": "$91.9m",
+      "unit": "USD borrowing reductions",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-j12",
+      "edgeIds": [
+        "j12"
+      ],
+      "primaryEdgeId": "j12",
+      "date": {
+        "precision": "day",
+        "start": "2021-09-30",
+        "end": "2021-09-30",
+        "role": "Cited law version effective",
+        "note": "Not the original creation date of JobsOhio"
+      },
+      "lane": "oversight",
+      "title": "Special public-body exemption",
+      "moneyKind": "none",
+      "actorIds": [
+        "jobs-disclosure",
+        "jobsohio"
+      ],
+      "sourceIds": [
+        "flow-jobs-records"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-j13",
+      "edgeIds": [
+        "j13"
+      ],
+      "primaryEdgeId": "j13",
+      "date": {
+        "precision": "day",
+        "start": "2013-09-04",
+        "end": "2013-09-04",
+        "role": "Cited law version effective",
+        "note": ""
+      },
+      "lane": "oversight",
+      "title": "Specified records remain public",
+      "moneyKind": "none",
+      "actorIds": [
+        "jobs-disclosure",
+        "jobsohio"
+      ],
+      "sourceIds": [
+        "flow-jobs-contract"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-j14",
+      "edgeIds": [
+        "j14"
+      ],
+      "primaryEdgeId": "j14",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Contract execution",
+        "note": "Statute requires a contract; execution date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "lane": "contracts",
+      "title": "Statutory services contract",
+      "moneyKind": "none",
+      "actorIds": [
+        "ohio-development",
+        "jobsohio"
+      ],
+      "sourceIds": [
+        "flow-jobs-contract"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-j16",
+      "edgeIds": [
+        "j16"
+      ],
+      "primaryEdgeId": "j16",
+      "date": {
+        "precision": "day",
+        "start": "2026-04-20",
+        "end": "2026-04-20",
+        "role": "Investigation report issued",
+        "note": ""
+      },
+      "lane": "oversight",
+      "title": "Misuse of office / policy violations",
+      "moneyKind": "none",
+      "actorIds": [
+        "carter-investigation",
+        "ted-carter"
+      ],
+      "sourceIds": [
+        "flow-carter-report"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-j17",
+      "edgeIds": [
+        "j17"
+      ],
+      "primaryEdgeId": "j17",
+      "date": {
+        "precision": "period",
+        "start": "2024-01-01",
+        "end": "2026-03-07",
+        "label": "2024–26 conduct reviewed",
+        "role": "Reporting period",
+        "note": "Broad conduct period; individual actions are not dated here"
+      },
+      "lane": "oversight",
+      "title": "Sought resources for personal associate",
+      "moneyKind": "none",
+      "actorIds": [
+        "ted-carter",
+        "krisanthe-vlachos"
+      ],
+      "sourceIds": [
+        "flow-carter-report"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-j18",
+      "edgeIds": [
+        "j18"
+      ],
+      "primaryEdgeId": "j18",
+      "date": {
+        "precision": "year",
+        "start": "2025-01-01",
+        "end": "2025-12-31",
+        "role": "Introductions / advocacy period",
+        "note": "Month and day not established"
+      },
+      "lane": "oversight",
+      "title": "Introduced / advocated for podcast operator",
+      "moneyKind": "none",
+      "actorIds": [
+        "ted-carter",
+        "jobsohio"
+      ],
+      "sourceIds": [
+        "flow-carter-report"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-j19",
+      "edgeIds": [
+        "j19"
+      ],
+      "primaryEdgeId": "j19",
+      "date": {
+        "precision": "day",
+        "start": "2025-07-10",
+        "end": "2025-07-10",
+        "role": "Meeting date",
+        "note": ""
+      },
+      "lane": "oversight",
+      "title": "Introduced podcast operator",
+      "moneyKind": "none",
+      "actorIds": [
+        "ted-carter",
+        "anduril"
+      ],
+      "sourceIds": [
+        "flow-carter-report"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-j20",
+      "edgeIds": [
+        "j20"
+      ],
+      "primaryEdgeId": "j20",
+      "date": {
+        "precision": "year",
+        "start": "2025-01-01",
+        "end": "2025-12-31",
+        "role": "Payment year",
+        "note": "Month and day not established"
+      },
+      "moneyKind": "paid",
+      "lane": "contracts",
+      "title": "$60,000 podcast payment reported",
+      "actorIds": [
+        "jobsohio",
+        "krisanthe-vlachos"
+      ],
+      "sourceIds": [
+        "flow-podcast"
+      ],
+      "amount": 60000,
+      "amountLabel": "$60k",
+      "unit": "USD payment acknowledged by JobsOhio",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-j23",
+      "edgeIds": [
+        "j23"
+      ],
+      "primaryEdgeId": "j23",
+      "date": {
+        "precision": "month",
+        "start": "2013-07-01",
+        "end": "2013-07-31",
+        "role": "Allocation pledged",
+        "note": "Day not established"
+      },
+      "moneyKind": "allocation",
+      "lane": "contracts",
+      "title": "Reported $50m fund allocation",
+      "actorIds": [
+        "ohio-state",
+        "drive-capital"
+      ],
+      "sourceIds": [
+        "flow-drive"
+      ],
+      "amount": 50000000,
+      "amountLabel": "$50m allocation",
+      "unit": "USD reported fund allocation",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-j29",
+      "edgeIds": [
+        "j29"
+      ],
+      "primaryEdgeId": "j29",
+      "date": {
+        "precision": "day",
+        "start": "2025-07-09",
+        "end": "2025-07-09",
+        "role": "Executed grant announced",
+        "note": "Signature date may precede this announcement; paid amount not established"
+      },
+      "moneyKind": "conditional",
+      "lane": "contracts",
+      "title": "$310m executed conditional grant",
+      "actorIds": [
+        "jobsohio",
+        "anduril"
+      ],
+      "sourceIds": [
+        "flow-anduril-grant"
+      ],
+      "amount": 310000000,
+      "amountLabel": "$310m commitment",
+      "unit": "USD conditional grant agreement",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-j39",
+      "edgeIds": [
+        "j39"
+      ],
+      "primaryEdgeId": "j39",
+      "date": {
+        "precision": "period",
+        "start": "2014-01-01",
+        "end": "2015-12-31",
+        "label": "2014–15 incentive",
+        "role": "Reporting period",
+        "note": "Year-level period; award and payment dates not supplied"
+      },
+      "moneyKind": "none",
+      "lane": "contracts",
+      "title": "Historic one-time incentive",
+      "actorIds": [
+        "jobsohio",
+        "aws"
+      ],
+      "sourceIds": [
+        "flow-jobs-datacenters"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-j40",
+      "edgeIds": [
+        "j40"
+      ],
+      "primaryEdgeId": "j40",
+      "date": {
+        "precision": "day",
+        "start": "2026-06-12",
+        "end": "2026-06-12",
+        "role": "Grant support reported",
+        "note": "Testimony date, not a payment date"
+      },
+      "moneyKind": "grant-support",
+      "lane": "contracts",
+      "title": "$3m Lawrence County supplier grant",
+      "actorIds": [
+        "jobsohio",
+        "vertiv"
+      ],
+      "sourceIds": [
+        "flow-jobs-datacenters"
+      ],
+      "amount": 3000000,
+      "amountLabel": "$3m",
+      "unit": "USD announced supplier grant",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-j41",
+      "edgeIds": [
+        "j41"
+      ],
+      "primaryEdgeId": "j41",
+      "date": {
+        "precision": "day",
+        "start": "2026-06-12",
+        "end": "2026-06-12",
+        "role": "Grant support reported",
+        "note": "Testimony date, not a payment date"
+      },
+      "moneyKind": "grant-support",
+      "lane": "contracts",
+      "title": "$1m Delaware County supplier grant",
+      "actorIds": [
+        "jobsohio",
+        "vertiv"
+      ],
+      "sourceIds": [
+        "flow-jobs-datacenters"
+      ],
+      "amount": 1000000,
+      "amountLabel": "$1m",
+      "unit": "USD announced supplier grant",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-j42",
+      "edgeIds": [
+        "j42"
+      ],
+      "primaryEdgeId": "j42",
+      "date": {
+        "precision": "day",
+        "start": "2026-06-12",
+        "end": "2026-06-12",
+        "role": "Advisory role described",
+        "note": ""
+      },
+      "lane": "lobbying",
+      "title": "Data-center incentive advice",
+      "moneyKind": "none",
+      "actorIds": [
+        "jobsohio",
+        "ohio-development"
+      ],
+      "sourceIds": [
+        "flow-jobs-datacenters"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-j44",
+      "edgeIds": [
+        "j44"
+      ],
+      "primaryEdgeId": "j44",
+      "date": {
+        "precision": "day",
+        "start": "2026-06-12",
+        "end": "2026-06-12",
+        "role": "Testimony submitted",
+        "note": ""
+      },
+      "lane": "lobbying",
+      "title": "Submitted data-center testimony",
+      "moneyKind": "none",
+      "actorIds": [
+        "jobsohio",
+        "data-center-committee"
+      ],
+      "sourceIds": [
+        "flow-jobs-datacenters"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-j45",
+      "edgeIds": [
+        "j45"
+      ],
+      "primaryEdgeId": "j45",
+      "date": {
+        "precision": "day",
+        "start": "2026-05-07",
+        "end": "2026-05-07",
+        "role": "Transaction date",
+        "note": ""
+      },
+      "moneyKind": "contribution",
+      "lane": "campaign",
+      "title": "$16,615 campaign contribution",
+      "actorIds": [
+        "vistra-pac",
+        "vivek-rob-campaign"
+      ],
+      "sourceIds": [
+        "flow-vistra-fec"
+      ],
+      "amount": 16615,
+      "amountLabel": "$16,615",
+      "unit": "USD PAC contribution",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-j50",
+      "edgeIds": [
+        "j50"
+      ],
+      "primaryEdgeId": "j50",
+      "date": {
+        "precision": "day",
+        "start": "2026-01-09",
+        "end": "2026-01-09",
+        "role": "Supportive statement published",
+        "note": ""
+      },
+      "lane": "contracts",
+      "title": "Public statement supporting energy deal",
+      "moneyKind": "none",
+      "actorIds": [
+        "moreno",
+        "vistra-meta-ppa"
+      ],
+      "sourceIds": [
+        "flow-vistra-meta"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-j51",
+      "edgeIds": [
+        "j51"
+      ],
+      "primaryEdgeId": "j51",
+      "lane": "lobbying",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Engagement start",
+        "note": "Start date not established",
+        "observedOn": "2026-10-13",
+        "observationRole": "Roster checked"
+      },
+      "title": "Registered state legislative / executive agent",
+      "moneyKind": "none",
+      "actorIds": [
+        "flock",
+        "ryan-lehman"
+      ],
+      "sourceIds": [
+        "flow-flock-agents"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-j52",
+      "edgeIds": [
+        "j52"
+      ],
+      "primaryEdgeId": "j52",
+      "lane": "lobbying",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Engagement start",
+        "note": "Start date not established",
+        "observedOn": "2026-10-13",
+        "observationRole": "Roster checked"
+      },
+      "title": "Registered state legislative / executive agent",
+      "moneyKind": "none",
+      "actorIds": [
+        "flock",
+        "gary-smith-jr"
+      ],
+      "sourceIds": [
+        "flow-flock-agents"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-j53",
+      "edgeIds": [
+        "j53"
+      ],
+      "primaryEdgeId": "j53",
+      "lane": "lobbying",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Engagement start",
+        "note": "Start date not established",
+        "observedOn": "2026-10-13",
+        "observationRole": "Roster checked"
+      },
+      "title": "Registered state legislative / executive agent",
+      "moneyKind": "none",
+      "actorIds": [
+        "motorola-vigilant",
+        "anthony-aquillo"
+      ],
+      "sourceIds": [
+        "flow-motorola-agents"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-j54",
+      "edgeIds": [
+        "j54"
+      ],
+      "primaryEdgeId": "j54",
+      "lane": "lobbying",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Engagement start",
+        "note": "Start date not established",
+        "observedOn": "2026-10-13",
+        "observationRole": "Roster checked"
+      },
+      "title": "Registered state legislative / executive agent",
+      "moneyKind": "none",
+      "actorIds": [
+        "motorola-vigilant",
+        "michael-toman"
+      ],
+      "sourceIds": [
+        "flow-motorola-agents"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-j55",
+      "edgeIds": [
+        "j55"
+      ],
+      "primaryEdgeId": "j55",
+      "lane": "lobbying",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Engagement start",
+        "note": "Start date not established",
+        "observedOn": "2026-10-13",
+        "observationRole": "Roster checked"
+      },
+      "title": "Registered state legislative agent",
+      "moneyKind": "none",
+      "actorIds": [
+        "motorola-vigilant",
+        "mckenzie-davis"
+      ],
+      "sourceIds": [
+        "flow-motorola-agents"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-j56",
+      "edgeIds": [
+        "j56"
+      ],
+      "primaryEdgeId": "j56",
+      "lane": "lobbying",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Engagement start",
+        "note": "Start date not established",
+        "observedOn": "2026-10-13",
+        "observationRole": "Roster checked"
+      },
+      "title": "Registered state legislative / executive agent",
+      "moneyKind": "none",
+      "actorIds": [
+        "motorola-vigilant",
+        "fletch-zimpher"
+      ],
+      "sourceIds": [
+        "flow-motorola-agents"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-j57",
+      "edgeIds": [
+        "j57"
+      ],
+      "primaryEdgeId": "j57",
+      "lane": "lobbying",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Engagement start",
+        "note": "Start date not established",
+        "observedOn": "2026-10-13",
+        "observationRole": "Roster checked"
+      },
+      "title": "Registered state legislative / executive agent",
+      "moneyKind": "none",
+      "actorIds": [
+        "google",
+        "stanley-gates"
+      ],
+      "sourceIds": [
+        "flow-google-agents"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-j58",
+      "edgeIds": [
+        "j58"
+      ],
+      "primaryEdgeId": "j58",
+      "lane": "lobbying",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Engagement start",
+        "note": "Start date not established",
+        "observedOn": "2026-10-13",
+        "observationRole": "Roster checked"
+      },
+      "title": "Registered state legislative / executive agent",
+      "moneyKind": "none",
+      "actorIds": [
+        "google",
+        "chris-slagle"
+      ],
+      "sourceIds": [
+        "flow-google-agents"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-j59",
+      "edgeIds": [
+        "j59"
+      ],
+      "primaryEdgeId": "j59",
+      "lane": "lobbying",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Engagement start",
+        "note": "Start date not established",
+        "observedOn": "2026-10-13",
+        "observationRole": "Roster checked"
+      },
+      "title": "Registered state legislative / executive agent",
+      "moneyKind": "none",
+      "actorIds": [
+        "anduril",
+        "bill-byers"
+      ],
+      "sourceIds": [
+        "flow-anduril-agents"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-j60",
+      "edgeIds": [
+        "j60"
+      ],
+      "primaryEdgeId": "j60",
+      "lane": "lobbying",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Engagement start",
+        "note": "Start date not established",
+        "observedOn": "2026-10-13",
+        "observationRole": "Roster checked"
+      },
+      "title": "Registered state legislative / executive agent",
+      "moneyKind": "none",
+      "actorIds": [
+        "anduril",
+        "andrew-minton"
+      ],
+      "sourceIds": [
+        "flow-anduril-agents"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-j61",
+      "edgeIds": [
+        "j61"
+      ],
+      "primaryEdgeId": "j61",
+      "date": {
+        "precision": "year",
+        "start": "2017-01-01",
+        "end": "2017-12-31",
+        "role": "Reported receipt year",
+        "note": "Month and day not established"
+      },
+      "lane": "campaign",
+      "moneyKind": "receipt",
+      "title": "Reported $1m outside-group payment",
+      "actorIds": [
+        "firstenergy",
+        "freedom-frontier"
+      ],
+      "sourceIds": [
+        "flow-husted-money"
+      ],
+      "amount": 1000000,
+      "amountLabel": "$1m",
+      "unit": "USD reported nonprofit contribution",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-j62",
+      "edgeIds": [
+        "j62"
+      ],
+      "primaryEdgeId": "j62",
+      "date": {
+        "precision": "year",
+        "start": "2017-01-01",
+        "end": "2017-12-31",
+        "role": "Reported funding year",
+        "note": "Month and day not established"
+      },
+      "lane": "campaign",
+      "moneyKind": "receipt",
+      "title": "More than $1m reported to super PAC",
+      "actorIds": [
+        "freedom-frontier",
+        "ohio-conservatives-change"
+      ],
+      "sourceIds": [
+        "flow-husted-money"
+      ],
+      "amount": 1000000,
+      "amountLabel": "More than $1m",
+      "unit": "USD reported outside-group funding",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": true,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-j64",
+      "edgeIds": [
+        "j64"
+      ],
+      "primaryEdgeId": "j64",
+      "date": {
+        "precision": "year",
+        "start": "2018-01-01",
+        "end": "2018-12-31",
+        "role": "Reported receipt year",
+        "note": "Month and day not established"
+      },
+      "lane": "campaign",
+      "moneyKind": "receipt",
+      "title": "Reported $2.5m nonprofit receipts",
+      "actorIds": [
+        "firstenergy",
+        "state-solutions"
+      ],
+      "sourceIds": [
+        "flow-dewine-money"
+      ],
+      "amount": 2500000,
+      "amountLabel": "$2.5m",
+      "unit": "USD reported nonprofit contributions",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-t01",
+      "edgeIds": [
+        "t01"
+      ],
+      "primaryEdgeId": "t01",
+      "date": {
+        "precision": "period",
+        "start": "2025-01-01",
+        "end": "2025-12-31",
+        "label": "Calendar 2025 disclosure",
+        "role": "Disclosure reporting period",
+        "note": "Individual acquisition, income and gift dates are not supplied. Filing dates are listed separately under source dates; current ownership is not inferred."
+      },
+      "moneyKind": "interest",
+      "lane": "oversight",
+      "title": "Disclosed Narya Fund I interest",
+      "actorIds": [
+        "vivek",
+        "narya-fund-i"
+      ],
+      "sourceIds": [
+        "trail-vivek-fds"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "Disclosed financial interest; value not stated",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-t02",
+      "edgeIds": [
+        "t02"
+      ],
+      "primaryEdgeId": "t02",
+      "date": {
+        "precision": "period",
+        "start": "2025-01-01",
+        "end": "2025-12-31",
+        "label": "Calendar 2025 disclosure",
+        "role": "Disclosure reporting period",
+        "note": "Individual acquisition, income and gift dates are not supplied. Filing dates are listed separately under source dates; current ownership is not inferred."
+      },
+      "moneyKind": "commitment",
+      "lane": "contracts",
+      "title": "Disclosed Narya capital commitment",
+      "actorIds": [
+        "vivek",
+        "narya-fund-i"
+      ],
+      "sourceIds": [
+        "trail-vivek-fds"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "Capital commitment; amount not stated",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-t05",
+      "edgeIds": [
+        "t05"
+      ],
+      "primaryEdgeId": "t05",
+      "date": {
+        "precision": "period",
+        "start": "2025-01-01",
+        "end": "2025-12-31",
+        "label": "Calendar 2025 disclosure",
+        "role": "Disclosure reporting period",
+        "note": "Individual acquisition, income and gift dates are not supplied. Filing dates are listed separately under source dates; current ownership is not inferred."
+      },
+      "moneyKind": "income-source",
+      "lane": "oversight",
+      "title": "Listed 8VC Fund III income source",
+      "actorIds": [
+        "8vc-fund-iii",
+        "vivek"
+      ],
+      "sourceIds": [
+        "trail-vivek-fds"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "Income source; amount not stated",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-t08",
+      "edgeIds": [
+        "t08"
+      ],
+      "primaryEdgeId": "t08",
+      "lane": "contracts",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "Lists Anduril as portfolio company",
+      "moneyKind": "none",
+      "actorIds": [
+        "8vc",
+        "anduril"
+      ],
+      "sourceIds": [
+        "trail-8vc-anduril"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-t09",
+      "edgeIds": [
+        "t09"
+      ],
+      "primaryEdgeId": "t09",
+      "lane": "contracts",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "Early investor named by 8VC",
+      "moneyKind": "none",
+      "actorIds": [
+        "joe-lonsdale",
+        "anduril"
+      ],
+      "sourceIds": [
+        "trail-lonsdale"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-t10",
+      "edgeIds": [
+        "t10"
+      ],
+      "primaryEdgeId": "t10",
+      "date": {
+        "precision": "period",
+        "start": "2025-01-01",
+        "end": "2025-12-31",
+        "label": "Calendar 2025 disclosure",
+        "role": "Disclosure reporting period",
+        "note": "Individual acquisition, income and gift dates are not supplied. Filing dates are listed separately under source dates; current ownership is not inferred."
+      },
+      "moneyKind": "interest",
+      "lane": "oversight",
+      "title": "Amazon.com stock in 2025 disclosure",
+      "actorIds": [
+        "vivek",
+        "amazon-parent"
+      ],
+      "sourceIds": [
+        "trail-vivek-fds"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "Disclosed financial interest; value not stated",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-t11",
+      "edgeIds": [
+        "t11"
+      ],
+      "primaryEdgeId": "t11",
+      "date": {
+        "precision": "period",
+        "start": "2025-01-01",
+        "end": "2025-12-31",
+        "label": "Calendar 2025 disclosure",
+        "role": "Disclosure reporting period",
+        "note": "Individual acquisition, income and gift dates are not supplied. Filing dates are listed separately under source dates; current ownership is not inferred."
+      },
+      "moneyKind": "interest",
+      "lane": "oversight",
+      "title": "Microsoft stock in 2025 disclosure",
+      "actorIds": [
+        "vivek",
+        "microsoft"
+      ],
+      "sourceIds": [
+        "trail-vivek-fds"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "Disclosed financial interest; value not stated",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-t12",
+      "edgeIds": [
+        "t12"
+      ],
+      "primaryEdgeId": "t12",
+      "date": {
+        "precision": "period",
+        "start": "2025-01-01",
+        "end": "2025-12-31",
+        "label": "Calendar 2025 disclosure",
+        "role": "Disclosure reporting period",
+        "note": "Individual acquisition, income and gift dates are not supplied. Filing dates are listed separately under source dates; current ownership is not inferred."
+      },
+      "moneyKind": "interest",
+      "lane": "oversight",
+      "title": "NVIDIA stock in 2025 disclosure",
+      "actorIds": [
+        "vivek",
+        "nvidia"
+      ],
+      "sourceIds": [
+        "trail-vivek-fds"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "Disclosed financial interest; value not stated",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-t15",
+      "edgeIds": [
+        "t15"
+      ],
+      "primaryEdgeId": "t15",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Contract execution",
+        "note": "Contract signature date and price not supplied"
+      },
+      "lane": "contracts",
+      "moneyKind": "none",
+      "title": "Contracted New Albany general contractor",
+      "actorIds": [
+        "microsoft",
+        "ames-construction"
+      ],
+      "sourceIds": [
+        "trail-microsoft-ohio"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-t16",
+      "edgeIds": [
+        "t16"
+      ],
+      "primaryEdgeId": "t16",
+      "date": {
+        "precision": "month",
+        "start": "2026-07-01",
+        "end": "2026-07-31",
+        "role": "Construction update month",
+        "note": "Status update; not a contract-signature, payment or opening date."
+      },
+      "lane": "contracts",
+      "moneyKind": "none",
+      "title": "Site preparation / general contracting",
+      "actorIds": [
+        "ames-construction",
+        "microsoft-new-albany"
+      ],
+      "sourceIds": [
+        "trail-microsoft-ohio"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-t17",
+      "edgeIds": [
+        "t17"
+      ],
+      "primaryEdgeId": "t17",
+      "lane": "lobbying",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Engagement start",
+        "note": "Start date not established",
+        "observedOn": "2026-10-14",
+        "observationRole": "Roster checked"
+      },
+      "title": "Registered Ohio legislative / executive engagement",
+      "moneyKind": "none",
+      "actorIds": [
+        "microsoft",
+        "willa-ebersole"
+      ],
+      "sourceIds": [
+        "trail-microsoft-agents"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-t18",
+      "edgeIds": [
+        "t18"
+      ],
+      "primaryEdgeId": "t18",
+      "date": {
+        "precision": "period",
+        "start": "2025-01-01",
+        "end": "2025-12-31",
+        "label": "Calendar 2025 disclosure",
+        "role": "Disclosure reporting period",
+        "note": "Individual acquisition, income and gift dates are not supplied. Filing dates are listed separately under source dates; current ownership is not inferred."
+      },
+      "moneyKind": "gift-source",
+      "lane": "oversight",
+      "title": "Gift source in 2025 disclosure",
+      "actorIds": [
+        "mark-kvamme",
+        "vivek"
+      ],
+      "sourceIds": [
+        "trail-vivek-fds"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "Disclosed personal gift source; amount not stated",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-t19",
+      "edgeIds": [
+        "t19"
+      ],
+      "primaryEdgeId": "t19",
+      "date": {
+        "precision": "day",
+        "start": "2022-01-28",
+        "end": "2022-01-28",
+        "role": "Planned assistance announced",
+        "note": "Final agreements and payments are not established by this announcement"
+      },
+      "moneyKind": "commitment",
+      "lane": "contracts",
+      "title": "Planned grants up to $150m",
+      "actorIds": [
+        "jobsohio",
+        "intel"
+      ],
+      "sourceIds": [
+        "trail-intel-plan"
+      ],
+      "amount": 150000000,
+      "amountLabel": "Up to $150m planned",
+      "unit": "USD planned grant ceiling",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-t20",
+      "edgeIds": [
+        "t20"
+      ],
+      "primaryEdgeId": "t20",
+      "date": {
+        "precision": "day",
+        "start": "2025-12-04",
+        "end": "2025-12-04",
+        "role": "Audit summary released",
+        "note": ""
+      },
+      "lane": "oversight",
+      "moneyKind": "none",
+      "title": "39 of 60 reviewed recipients noncompliant",
+      "actorIds": [
+        "state-incentive-review-2025",
+        "ohio-development"
+      ],
+      "sourceIds": [
+        "trail-state-compliance"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-t21",
+      "edgeIds": [
+        "t21"
+      ],
+      "primaryEdgeId": "t21",
+      "lane": "campaign",
+      "moneyKind": "paid",
+      "date": {
+        "precision": "day",
+        "start": "2026-06-05",
+        "end": "2026-06-05",
+        "role": "Transaction date",
+        "note": ""
+      },
+      "title": "$7,963,282 opposition-media payment",
+      "actorIds": [
+        "v-pac",
+        "flexpoint-media"
+      ],
+      "sourceIds": [
+        "trail-vpac-q2"
+      ],
+      "amount": 7963282,
+      "amountLabel": "$7,963,282",
+      "unit": "USD outside-group vendor payment",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-t22",
+      "edgeIds": [
+        "t22"
+      ],
+      "primaryEdgeId": "t22",
+      "lane": "campaign",
+      "moneyKind": "paid",
+      "date": {
+        "precision": "day",
+        "start": "2026-06-25",
+        "end": "2026-06-25",
+        "role": "Transaction date",
+        "note": ""
+      },
+      "title": "$219,000 opposition-media payment",
+      "actorIds": [
+        "v-pac",
+        "flexpoint-media"
+      ],
+      "sourceIds": [
+        "trail-vpac-q2"
+      ],
+      "amount": 219000,
+      "amountLabel": "$219,000",
+      "unit": "USD outside-group vendor payment",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-t24",
+      "edgeIds": [
+        "t24"
+      ],
+      "primaryEdgeId": "t24",
+      "date": {
+        "precision": "period",
+        "start": "2025-01-01",
+        "end": "2025-12-31",
+        "label": "Calendar 2025 disclosure",
+        "role": "Disclosure reporting period",
+        "note": "Individual acquisition, income and gift dates are not supplied. Filing dates are listed separately under source dates; current ownership is not inferred."
+      },
+      "moneyKind": "interest",
+      "lane": "oversight",
+      "title": "Fund I interest: $500,001–$1m range",
+      "actorIds": [
+        "vance-enterprises",
+        "narya-fund-i"
+      ],
+      "sourceIds": [
+        "trail-vance-oge"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "USD disclosed asset-value interval; exact value not supplied",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-t25",
+      "edgeIds": [
+        "t25"
+      ],
+      "primaryEdgeId": "t25",
+      "date": {
+        "precision": "period",
+        "start": "2025-01-01",
+        "end": "2025-12-31",
+        "label": "Calendar 2025 disclosure",
+        "role": "Disclosure reporting period",
+        "note": "Individual acquisition, income and gift dates are not supplied. Filing dates are listed separately under source dates; current ownership is not inferred."
+      },
+      "moneyKind": "interest",
+      "lane": "oversight",
+      "title": "Fund II interest: $15,001–$50,000 range",
+      "actorIds": [
+        "vance-enterprises",
+        "narya-fund-ii"
+      ],
+      "sourceIds": [
+        "trail-vance-oge"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "USD disclosed asset-value interval; exact value not supplied",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-t26",
+      "edgeIds": [
+        "t26"
+      ],
+      "primaryEdgeId": "t26",
+      "date": {
+        "precision": "period",
+        "start": "2025-01-01",
+        "end": "2025-12-31",
+        "label": "Calendar 2025 disclosure",
+        "role": "Disclosure reporting period",
+        "note": "Individual acquisition, income and gift dates are not supplied. Filing dates are listed separately under source dates; current ownership is not inferred."
+      },
+      "moneyKind": "interest",
+      "lane": "oversight",
+      "title": "Huntington cash account: $1m–$5m range",
+      "actorIds": [
+        "vance-enterprises",
+        "huntington-national"
+      ],
+      "sourceIds": [
+        "trail-vance-oge"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "USD disclosed account-value interval; exact value not supplied",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-t28",
+      "edgeIds": [
+        "t28"
+      ],
+      "primaryEdgeId": "t28",
+      "date": {
+        "precision": "month",
+        "start": "2023-08-01",
+        "end": "2023-08-31",
+        "role": "Latest disclosed amendment month",
+        "note": "Disclosed in June 2026 annual report; no proceeds payment date or dollar total supplied."
+      },
+      "moneyKind": "interest",
+      "lane": "oversight",
+      "title": "Disclosed carried-interest and fee rights",
+      "actorIds": [
+        "narya-gp-i",
+        "jd-vance"
+      ],
+      "sourceIds": [
+        "trail-vance-oge"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "Contractual economic rights; not a cash payment",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-t29",
+      "edgeIds": [
+        "t29"
+      ],
+      "primaryEdgeId": "t29",
+      "date": {
+        "precision": "month",
+        "start": "2023-08-01",
+        "end": "2023-08-31",
+        "role": "Latest disclosed amendment month",
+        "note": "Entitlement stated in annual report, not proof of payment on this date."
+      },
+      "moneyKind": "commitment",
+      "lane": "contracts",
+      "title": "$525,000 fee set-off entitlement",
+      "actorIds": [
+        "narya-gp-i",
+        "jd-vance"
+      ],
+      "sourceIds": [
+        "trail-vance-oge"
+      ],
+      "amount": 525000,
+      "amountLabel": "$525,000 entitlement",
+      "unit": "USD contractual receivable; payment not established",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-t30",
+      "edgeIds": [
+        "t30"
+      ],
+      "primaryEdgeId": "t30",
+      "date": {
+        "precision": "period",
+        "start": "2025-01-01",
+        "end": "2025-12-31",
+        "label": "Calendar 2025 disclosure",
+        "role": "Disclosure reporting period",
+        "note": "Individual acquisition, income and gift dates are not supplied. Filing dates are listed separately under source dates; current ownership is not inferred."
+      },
+      "moneyKind": "income-source",
+      "lane": "contracts",
+      "title": "Disclosed note interest: $100,001–$1m range",
+      "actorIds": [
+        "narya",
+        "jd-vance"
+      ],
+      "sourceIds": [
+        "trail-vance-oge"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "USD annual income interval; exact amount not supplied",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-t31",
+      "edgeIds": [
+        "t31"
+      ],
+      "primaryEdgeId": "t31",
+      "lane": "campaign",
+      "moneyKind": "contribution",
+      "date": {
+        "precision": "day",
+        "start": "2021-03-12",
+        "end": "2021-03-12",
+        "role": "Transaction date",
+        "note": ""
+      },
+      "title": "$10,000,000 non-contribution-account receipt",
+      "actorIds": [
+        "peter-thiel",
+        "protect-ohio-values"
+      ],
+      "sourceIds": [
+        "trail-pov-2021"
+      ],
+      "amount": 10000000,
+      "amountLabel": "$10,000,000",
+      "unit": "USD outside-group contribution",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-t32",
+      "edgeIds": [
+        "t32"
+      ],
+      "primaryEdgeId": "t32",
+      "lane": "campaign",
+      "moneyKind": "contribution",
+      "date": {
+        "precision": "day",
+        "start": "2022-04-18",
+        "end": "2022-04-18",
+        "role": "Transaction date",
+        "note": ""
+      },
+      "title": "$3,500,000 non-contribution-account receipt",
+      "actorIds": [
+        "peter-thiel",
+        "protect-ohio-values"
+      ],
+      "sourceIds": [
+        "trail-pov-2022"
+      ],
+      "amount": 3500000,
+      "amountLabel": "$3,500,000",
+      "unit": "USD outside-group contribution",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-t33",
+      "edgeIds": [
+        "t33"
+      ],
+      "primaryEdgeId": "t33",
+      "lane": "campaign",
+      "moneyKind": "contribution",
+      "date": {
+        "precision": "day",
+        "start": "2022-04-25",
+        "end": "2022-04-25",
+        "role": "Transaction date",
+        "note": ""
+      },
+      "title": "$1,500,000 non-contribution-account receipt",
+      "actorIds": [
+        "peter-thiel",
+        "protect-ohio-values"
+      ],
+      "sourceIds": [
+        "trail-pov-2022"
+      ],
+      "amount": 1500000,
+      "amountLabel": "$1,500,000",
+      "unit": "USD outside-group contribution",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-t35",
+      "edgeIds": [
+        "t35"
+      ],
+      "primaryEdgeId": "t35",
+      "date": {
+        "precision": "day",
+        "start": "2022-05-01",
+        "end": "2022-05-01",
+        "role": "Dissemination date",
+        "note": "The filing uses a dissemination date; bank settlement date is not supplied."
+      },
+      "lane": "campaign",
+      "moneyKind": "paid",
+      "title": "$49,999.99 Vance-supporting messaging payment",
+      "actorIds": [
+        "protect-ohio-values",
+        "envoi"
+      ],
+      "sourceIds": [
+        "trail-pov-spending"
+      ],
+      "amount": 49999.99,
+      "amountLabel": "$49,999.99",
+      "unit": "USD independent-expenditure vendor record",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-t36",
+      "edgeIds": [
+        "t36"
+      ],
+      "primaryEdgeId": "t36",
+      "date": {
+        "precision": "day",
+        "start": "2024-06-03",
+        "end": "2024-06-03",
+        "role": "Waiver / spending authority approved",
+        "note": ""
+      },
+      "moneyKind": "authorization",
+      "lane": "contracts",
+      "title": "Approved Flock ceiling: $180,000 over two fiscal years",
+      "actorIds": [
+        "ohio-highway-patrol",
+        "flock"
+      ],
+      "sourceIds": [
+        "trail-oshp-flock",
+        "trail-oshp-agreement"
+      ],
+      "amount": 180000,
+      "amountLabel": "Up to $180,000",
+      "unit": "USD approved two-year spending ceiling",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-t37",
+      "edgeIds": [
+        "t37"
+      ],
+      "primaryEdgeId": "t37",
+      "date": {
+        "precision": "day",
+        "start": "2025-01-27",
+        "end": "2025-01-27",
+        "role": "Tax credit approved",
+        "note": ""
+      },
+      "moneyKind": "authorization",
+      "lane": "contracts",
+      "title": "Approved 2.594% / 30-year payroll tax credit",
+      "actorIds": [
+        "ohio-tax-credit-authority",
+        "anduril"
+      ],
+      "sourceIds": [
+        "trail-anduril-tax"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-t38",
+      "edgeIds": [
+        "t38"
+      ],
+      "primaryEdgeId": "t38",
+      "date": {
+        "precision": "day",
+        "start": "2025-02-13",
+        "end": "2025-02-13",
+        "role": "Approved award announced",
+        "note": "Approval announcement; not a payment date."
+      },
+      "moneyKind": "authorization",
+      "lane": "contracts",
+      "title": "$86m approved infrastructure award",
+      "actorIds": [
+        "ohio-development",
+        "pickaway-port"
+      ],
+      "sourceIds": [
+        "trail-pickaway-infrastructure"
+      ],
+      "amount": 86000000,
+      "amountLabel": "$86m award",
+      "unit": "USD approved infrastructure award; grant / loan structure",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-t39",
+      "edgeIds": [
+        "t39"
+      ],
+      "primaryEdgeId": "t39",
+      "date": {
+        "precision": "day",
+        "start": "2025-02-13",
+        "end": "2025-02-13",
+        "role": "Site allocation announced",
+        "note": ""
+      },
+      "moneyKind": "earmark",
+      "lane": "contracts",
+      "title": "$70m Arsenal-1 infrastructure earmark",
+      "actorIds": [
+        "pickaway-port",
+        "arsenal-one"
+      ],
+      "sourceIds": [
+        "trail-pickaway-infrastructure"
+      ],
+      "amount": 70000000,
+      "amountLabel": "$70m included earmark",
+      "unit": "USD earmark included in $86m award",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": "t38"
+    },
+    {
+      "id": "event-t40",
+      "edgeIds": [
+        "t40"
+      ],
+      "primaryEdgeId": "t40",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Hosting arrangement start",
+        "note": "The supplier-signed document describes hosting; service-start and infrastructure payment dates are not supplied."
+      },
+      "lane": "contracts",
+      "moneyKind": "none",
+      "title": "Discloses AWS hosting, including Ohio region",
+      "actorIds": [
+        "flock",
+        "aws"
+      ],
+      "sourceIds": [
+        "trail-oshp-agreement"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-m04",
+      "edgeIds": [
+        "m04"
+      ],
+      "primaryEdgeId": "m04",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Relationship start",
+        "note": "Voting position disclosed in 2026 proxy; not the date control began.",
+        "observedOn": "2026-10-14",
+        "observationRole": "Record checked"
+      },
+      "lane": "media",
+      "moneyKind": "none",
+      "title": "Collectively hold over 50% voting power",
+      "actorIds": [
+        "smith-brothers",
+        "sinclair-inc"
+      ],
+      "sourceIds": [
+        "media-smith"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-m07",
+      "edgeIds": [
+        "m07"
+      ],
+      "primaryEdgeId": "m07",
+      "lane": "contracts",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Event date",
+        "note": "Date not established",
+        "observedOn": null,
+        "observationRole": "Record checked"
+      },
+      "title": "Provides services under master agreement",
+      "moneyKind": "none",
+      "actorIds": [
+        "sinclair-group",
+        "wtte"
+      ],
+      "sourceIds": [
+        "media-sinclair"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-m09",
+      "edgeIds": [
+        "m09"
+      ],
+      "primaryEdgeId": "m09",
+      "date": {
+        "precision": "month",
+        "start": "2025-10-01",
+        "end": "2025-10-31",
+        "role": "License-asset acquisition month",
+        "note": "Exact closing day not established."
+      },
+      "lane": "media",
+      "moneyKind": "none",
+      "title": "Acquired WWHO license assets",
+      "actorIds": [
+        "sinclair-group",
+        "wwho"
+      ],
+      "sourceIds": [
+        "media-sinclair"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-m13",
+      "edgeIds": [
+        "m13"
+      ],
+      "primaryEdgeId": "m13",
+      "date": {
+        "precision": "day",
+        "start": "2025-09-17",
+        "end": "2025-09-17",
+        "role": "Corporate programming decision announced",
+        "note": ""
+      },
+      "lane": "media",
+      "moneyKind": "none",
+      "title": "Kimmel preemption / replacement programming",
+      "actorIds": [
+        "sinclair-group",
+        "wsyx"
+      ],
+      "sourceIds": [
+        "media-kimmel",
+        "media-local-kimmel"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-m14",
+      "edgeIds": [
+        "m14"
+      ],
+      "primaryEdgeId": "m14",
+      "date": {
+        "precision": "day",
+        "start": "2025-09-26",
+        "end": "2025-09-26",
+        "role": "Preemption ended, per company",
+        "note": ""
+      },
+      "lane": "media",
+      "moneyKind": "none",
+      "title": "Ends Kimmel preemption",
+      "actorIds": [
+        "sinclair-group",
+        "wsyx"
+      ],
+      "sourceIds": [
+        "media-kimmel-return"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-m18",
+      "edgeIds": [
+        "m18"
+      ],
+      "primaryEdgeId": "m18",
+      "date": {
+        "precision": "day",
+        "start": "2019-08-08",
+        "end": "2019-08-08",
+        "role": "Broadcast acquisition completed",
+        "note": ""
+      },
+      "lane": "media",
+      "moneyKind": "none",
+      "title": "Acquired WBNS in Dispatch broadcast purchase",
+      "actorIds": [
+        "tegna",
+        "wbns"
+      ],
+      "sourceIds": [
+        "media-tegna-2019"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-m20",
+      "edgeIds": [
+        "m20"
+      ],
+      "primaryEdgeId": "m20",
+      "date": {
+        "precision": "day",
+        "start": "2026-03-19",
+        "end": "2026-03-19",
+        "role": "Acquisition closing announced",
+        "note": ""
+      },
+      "lane": "media",
+      "moneyKind": "none",
+      "title": "Announced completed acquisition; integration restricted",
+      "actorIds": [
+        "nexstar",
+        "tegna"
+      ],
+      "sourceIds": [
+        "media-close",
+        "media-injunction"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-m23",
+      "edgeIds": [
+        "m23"
+      ],
+      "primaryEdgeId": "m23",
+      "date": {
+        "precision": "day",
+        "start": "2026-08-06",
+        "end": "2026-08-06",
+        "role": "Clarification order filed",
+        "note": "Order signed August 5, 2026; filed August 6. Date here is filing, not signature."
+      },
+      "lane": "media",
+      "moneyKind": "none",
+      "title": "Preserve separate, independent operations",
+      "actorIds": [
+        "tegna-litigation",
+        "tegna"
+      ],
+      "sourceIds": [
+        "media-injunction"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-m24",
+      "edgeIds": [
+        "m24"
+      ],
+      "primaryEdgeId": "m24",
+      "date": {
+        "precision": "day",
+        "start": "2026-04-30",
+        "end": "2026-04-30",
+        "role": "MOU announced",
+        "note": ""
+      },
+      "lane": "media",
+      "moneyKind": "none",
+      "title": "Announces local-news independence MOU",
+      "actorIds": [
+        "dave-yost",
+        "nexstar"
+      ],
+      "sourceIds": [
+        "media-yost"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-m28",
+      "edgeIds": [
+        "m28"
+      ],
+      "primaryEdgeId": "m28",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Relationship start",
+        "note": "Current schedule observation; first local carriage date not established.",
+        "observedOn": "2026-10-14",
+        "observationRole": "Record checked"
+      },
+      "lane": "media",
+      "moneyKind": "none",
+      "title": "Scheduled program carriage",
+      "actorIds": [
+        "hannity-show",
+        "wtvn"
+      ],
+      "sourceIds": [
+        "media-wtvn-schedule"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-m33",
+      "edgeIds": [
+        "m33"
+      ],
+      "primaryEdgeId": "m33",
+      "date": {
+        "precision": "day",
+        "start": "2015-06-15",
+        "end": "2015-06-15",
+        "role": "Publishing asset acquisition completed",
+        "note": ""
+      },
+      "lane": "media",
+      "moneyKind": "transaction-value",
+      "title": "Completed $47m publishing-asset purchase",
+      "actorIds": [
+        "new-media-2015",
+        "dispatch"
+      ],
+      "sourceIds": [
+        "media-dispatch-2015"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "USD total asset-purchase consideration; not editorial spending",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-m34",
+      "edgeIds": [
+        "m34"
+      ],
+      "primaryEdgeId": "m34",
+      "date": {
+        "precision": "day",
+        "start": "2019-11-19",
+        "end": "2019-11-19",
+        "role": "Corporate merger completed",
+        "note": ""
+      },
+      "lane": "media",
+      "moneyKind": "none",
+      "title": "2019 acquisition / combined Gannett name",
+      "actorIds": [
+        "new-media-2015",
+        "usa-today-co"
+      ],
+      "sourceIds": [
+        "media-gannett-2019"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-m35",
+      "edgeIds": [
+        "m35"
+      ],
+      "primaryEdgeId": "m35",
+      "date": {
+        "precision": "day",
+        "start": "2025-11-18",
+        "end": "2025-11-18",
+        "role": "Corporate name change effective",
+        "note": ""
+      },
+      "lane": "media",
+      "moneyKind": "none",
+      "title": "Parent renamed USA TODAY Co.",
+      "actorIds": [
+        "usa-today-co",
+        "dispatch"
+      ],
+      "sourceIds": [
+        "media-rename",
+        "media-dispatch-current"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-m47",
+      "edgeIds": [
+        "m47"
+      ],
+      "primaryEdgeId": "m47",
+      "date": {
+        "precision": "day",
+        "start": "2026-06-04",
+        "end": "2026-06-04",
+        "role": "Verified article republication",
+        "note": ""
+      },
+      "lane": "media",
+      "moneyKind": "none",
+      "title": "Republished OCJ data-center report",
+      "actorIds": [
+        "ocj",
+        "columbus-underground"
+      ],
+      "sourceIds": [
+        "media-ocj-republication"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-m57",
+      "edgeIds": [
+        "m57"
+      ],
+      "primaryEdgeId": "m57",
+      "date": {
+        "precision": "period",
+        "start": "2023-07-01",
+        "end": "2024-06-30",
+        "role": "Fiscal reporting period",
+        "label": "FY2024",
+        "note": "Recognized revenue, not a dated cash transfer."
+      },
+      "lane": "contracts",
+      "moneyKind": "recognized-revenue",
+      "title": "$2,096,132 FY2024 grant revenue",
+      "actorIds": [
+        "cpb",
+        "wosu"
+      ],
+      "sourceIds": [
+        "media-wosu-finance"
+      ],
+      "amount": 2096132,
+      "amountLabel": "$2,096,132 recognized revenue",
+      "unit": "USD FY2024 recognized CPB grant revenue",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-m58",
+      "edgeIds": [
+        "m58"
+      ],
+      "primaryEdgeId": "m58",
+      "date": {
+        "precision": "period",
+        "start": "2023-07-01",
+        "end": "2024-06-30",
+        "role": "Fiscal reporting period",
+        "label": "FY2024",
+        "note": "Recognized subsidy, not a single dated bank payment."
+      },
+      "lane": "contracts",
+      "moneyKind": "recognized-revenue",
+      "title": "$1,666,681 FY2024 operating subsidy",
+      "actorIds": [
+        "ohio-state",
+        "wosu"
+      ],
+      "sourceIds": [
+        "media-wosu-finance"
+      ],
+      "amount": 1666681,
+      "amountLabel": "$1,666,681 operating subsidy",
+      "unit": "USD FY2024 recognized operating subsidy",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-m59",
+      "edgeIds": [
+        "m59"
+      ],
+      "primaryEdgeId": "m59",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Relationship start",
+        "note": "Policy adoption date not established; no editorial intervention is implied.",
+        "observedOn": "2026-10-14",
+        "observationRole": "Record checked"
+      },
+      "lane": "media",
+      "moneyKind": "none",
+      "title": "Published independence / funder safeguards",
+      "actorIds": [
+        "ohio-state",
+        "wosu"
+      ],
+      "sourceIds": [
+        "media-wosu-code"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-m61",
+      "edgeIds": [
+        "m61"
+      ],
+      "primaryEdgeId": "m61",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Relationship start",
+        "note": "Announcement gives October 26 without a verified year; kept outside dated chronology.",
+        "observedOn": "2026-10-14",
+        "observationRole": "Record checked"
+      },
+      "lane": "media",
+      "moneyKind": "none",
+      "title": "Announces music-intensive programming change",
+      "actorIds": [
+        "greg-moebius",
+        "wcbe"
+      ],
+      "sourceIds": [
+        "media-wcbe-format"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-m65",
+      "edgeIds": [
+        "m65"
+      ],
+      "primaryEdgeId": "m65",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Relationship start",
+        "note": "Donation date and amount not supplied; cumulative list is not an annual grant ledger.",
+        "observedOn": "2026-10-14",
+        "observationRole": "Record checked"
+      },
+      "lane": "contracts",
+      "moneyKind": "none",
+      "title": "Disclosed donor above $1,000 lifetime threshold",
+      "actorIds": [
+        "wyss-foundation",
+        "states-newsroom"
+      ],
+      "sourceIds": [
+        "media-states-support"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-c26-01",
+      "edgeIds": [
+        "c26-01"
+      ],
+      "primaryEdgeId": "c26-01",
+      "lane": "contracts",
+      "moneyKind": "authorization",
+      "date": {
+        "precision": "day",
+        "start": "2024-10-21",
+        "end": "2024-10-21",
+        "role": "Council authorization",
+        "note": "Expenditure ceiling, not a payment date"
+      },
+      "title": "2024: up to $60,000; competitive bidding waived",
+      "actorIds": [
+        "city",
+        "byers-minton"
+      ],
+      "sourceIds": [
+        "enrich-byers-2024"
+      ],
+      "amount": 60000,
+      "amountLabel": "Up to $60k",
+      "unit": "USD expenditure authorization ceiling",
+      "metric": null,
+      "amountIsUpperBound": true,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-c26-02",
+      "edgeIds": [
+        "c26-02"
+      ],
+      "primaryEdgeId": "c26-02",
+      "lane": "lobbying",
+      "moneyKind": "none",
+      "date": {
+        "precision": "day",
+        "start": "2024-12-11",
+        "end": "2024-12-11",
+        "role": "Contract referenced on agenda",
+        "note": "Agenda observation; not an award or payment date"
+      },
+      "title": "Existing state-affairs contract referenced in 2024 agenda",
+      "actorIds": [
+        "cota",
+        "byers-minton"
+      ],
+      "sourceIds": [
+        "enrich-cota-contracts-2024"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-c26-03",
+      "edgeIds": [
+        "c26-03"
+      ],
+      "primaryEdgeId": "c26-03",
+      "lane": "contracts",
+      "moneyKind": "authorization",
+      "date": {
+        "precision": "day",
+        "start": "2013-04-05",
+        "end": "2013-04-05",
+        "role": "Agreement effective",
+        "note": "Date recounted in the 2018 ordinance; tax-abatement years are 2015–2024"
+      },
+      "title": "75% tax abatement: 2015–2024 agreement",
+      "actorIds": [
+        "city",
+        "pizzuti-short-north-office"
+      ],
+      "sourceIds": [
+        "enrich-shortnorth-2018"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-c26-04",
+      "edgeIds": [
+        "c26-04"
+      ],
+      "primaryEdgeId": "c26-04",
+      "lane": "contracts",
+      "moneyKind": "none",
+      "date": {
+        "precision": "day",
+        "start": "2018-06-18",
+        "end": "2018-06-18",
+        "role": "Amendment authorized",
+        "note": "Council action; execution is not established here"
+      },
+      "title": "Tax abatement terms amended: 217 → 20 jobs",
+      "actorIds": [
+        "city",
+        "pizzuti-short-north-office"
+      ],
+      "sourceIds": [
+        "enrich-shortnorth-2018"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-c26-05",
+      "edgeIds": [
+        "c26-05"
+      ],
+      "primaryEdgeId": "c26-05",
+      "lane": "oversight",
+      "moneyKind": "none",
+      "date": {
+        "precision": "year",
+        "start": "2017-01-01",
+        "end": "2017-12-31",
+        "role": "Review year",
+        "note": "Exact review date not established; recounted in the 2018 ordinance."
+      },
+      "title": "Tax abatement review: noncompliance in 2017",
+      "actorIds": [
+        "columbus-tirc",
+        "pizzuti-short-north-office"
+      ],
+      "sourceIds": [
+        "enrich-shortnorth-2018"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-c26-13",
+      "edgeIds": [
+        "c26-13"
+      ],
+      "primaryEdgeId": "c26-13",
+      "lane": "contracts",
+      "moneyKind": "none",
+      "date": {
+        "precision": "day",
+        "start": "2022-07-25",
+        "end": "2022-07-25",
+        "role": "Easements authorized",
+        "note": "Authorization, not proof of execution or fee payment"
+      },
+      "title": "East Gay Street sculpture easements authorized",
+      "actorIds": [
+        "city",
+        "edwards-companies"
+      ],
+      "sourceIds": [
+        "enrich-edwards-easements-2022"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-d26-01",
+      "edgeIds": [
+        "d26-01"
+      ],
+      "primaryEdgeId": "d26-01",
+      "lane": "campaign",
+      "moneyKind": "receipt",
+      "date": {
+        "precision": "year",
+        "start": "2025-01-01",
+        "end": "2025-12-31",
+        "role": "Reported contribution year",
+        "note": "Exact transaction dates and number of individual contributions are not supplied by the report."
+      },
+      "title": "$10,000 reported campaign contributions",
+      "actorIds": [
+        "matthew-ferris",
+        "ginther-fund"
+      ],
+      "sourceIds": [
+        "campaign-developers-2025"
+      ],
+      "amount": 10000,
+      "amountLabel": "$10,000",
+      "unit": "USD reported campaign contributions",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-d26-03",
+      "edgeIds": [
+        "d26-03"
+      ],
+      "primaryEdgeId": "d26-03",
+      "lane": "contracts",
+      "moneyKind": "authorization",
+      "date": {
+        "precision": "day",
+        "start": "2024-07-15",
+        "end": "2024-07-15",
+        "role": "Base contract authorized",
+        "note": ""
+      },
+      "title": "Up to $800,000 pedestrian-safety contract authorization",
+      "actorIds": [
+        "city",
+        "ep-ferris"
+      ],
+      "sourceIds": [
+        "donation-ferris-contract-2024"
+      ],
+      "amount": 800000,
+      "amountLabel": "Up to $800k",
+      "unit": "USD contract expenditure authorization ceiling",
+      "metric": null,
+      "amountIsUpperBound": true,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-d26-04",
+      "edgeIds": [
+        "d26-04"
+      ],
+      "primaryEdgeId": "d26-04",
+      "lane": "contracts",
+      "moneyKind": "authorization",
+      "date": {
+        "precision": "day",
+        "start": "2025-09-29",
+        "end": "2025-09-29",
+        "role": "Contract modification authorized",
+        "note": ""
+      },
+      "title": "Up to $400,000 added to the same pedestrian-safety contract",
+      "actorIds": [
+        "city",
+        "ep-ferris"
+      ],
+      "sourceIds": [
+        "donation-ferris-contract-2025"
+      ],
+      "amount": 400000,
+      "amountLabel": "Up to $400k added",
+      "unit": "USD additional expenditure authorization ceiling",
+      "metric": null,
+      "amountIsUpperBound": true,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-d26-05",
+      "edgeIds": [
+        "d26-05"
+      ],
+      "primaryEdgeId": "d26-05",
+      "lane": "campaign",
+      "moneyKind": "receipt",
+      "date": {
+        "precision": "period",
+        "start": "2025-03-31",
+        "end": "2026-03-27",
+        "role": "Reported contribution dates",
+        "note": "Four dates: March 31, June 10 and October 3, 2025; March 27, 2026."
+      },
+      "title": "$1,400 reported campaign contributions · four dates",
+      "actorIds": [
+        "bill-byers",
+        "dovilla-campaign"
+      ],
+      "sourceIds": [
+        "donation-dovilla-report",
+        "donation-dovilla-identity"
+      ],
+      "amount": 1400,
+      "amountLabel": "$1.4k reported",
+      "unit": "USD reported aggregate campaign contributions",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-d26-06",
+      "edgeIds": [
+        "d26-06"
+      ],
+      "primaryEdgeId": "d26-06",
+      "lane": "campaign",
+      "moneyKind": "receipt",
+      "date": {
+        "precision": "period",
+        "start": "2025-03-31",
+        "end": "2026-03-27",
+        "role": "Reported contribution dates",
+        "note": "Four dates: March 31, June 10 and October 3, 2025; March 27, 2026."
+      },
+      "title": "$1,400 reported campaign contributions · four dates",
+      "actorIds": [
+        "andrew-minton",
+        "dovilla-campaign"
+      ],
+      "sourceIds": [
+        "donation-dovilla-report",
+        "donation-dovilla-identity"
+      ],
+      "amount": 1400,
+      "amountLabel": "$1.4k reported",
+      "unit": "USD reported aggregate campaign contributions",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-d26-08",
+      "edgeIds": [
+        "d26-08"
+      ],
+      "primaryEdgeId": "d26-08",
+      "lane": "lobbying",
+      "moneyKind": "none",
+      "date": {
+        "precision": "day",
+        "start": "2026-02-17",
+        "end": "2026-02-17",
+        "role": "Roster captured",
+        "note": "Capture date, not the beginning of representation; original roster also checked October 15, 2026"
+      },
+      "title": "Listed QTS lobbying agent",
+      "actorIds": [
+        "qts",
+        "bill-byers"
+      ],
+      "sourceIds": [
+        "donation-qts-register"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-d26-09",
+      "edgeIds": [
+        "d26-09"
+      ],
+      "primaryEdgeId": "d26-09",
+      "lane": "lobbying",
+      "moneyKind": "none",
+      "date": {
+        "precision": "day",
+        "start": "2026-02-17",
+        "end": "2026-02-17",
+        "role": "Roster captured",
+        "note": "Capture date, not the beginning of representation; original roster also checked October 15, 2026"
+      },
+      "title": "Listed QTS lobbying agent",
+      "actorIds": [
+        "qts",
+        "andrew-minton"
+      ],
+      "sourceIds": [
+        "donation-qts-register"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-d26-10",
+      "edgeIds": [
+        "d26-10"
+      ],
+      "primaryEdgeId": "d26-10",
+      "lane": "campaign",
+      "moneyKind": "receipt",
+      "date": {
+        "precision": "year",
+        "start": "2025-01-01",
+        "end": "2025-12-31",
+        "role": "Reported contribution year",
+        "note": "Exact transaction dates and number of individual contributions are not supplied by the report."
+      },
+      "title": "$1,000 reported campaign contributions",
+      "actorIds": [
+        "mark-corna",
+        "klein-campaign-reported"
+      ],
+      "sourceIds": [
+        "campaign-developers-2025"
+      ],
+      "amount": 1000,
+      "amountLabel": "$1,000",
+      "unit": "USD reported campaign contributions",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-d26-12",
+      "edgeIds": [
+        "d26-12"
+      ],
+      "primaryEdgeId": "d26-12",
+      "lane": "campaign",
+      "moneyKind": "receipt",
+      "date": {
+        "precision": "year",
+        "start": "2025-01-01",
+        "end": "2025-12-31",
+        "role": "Reported contribution year",
+        "note": "Exact transaction dates and number of individual contributions are not supplied by the report."
+      },
+      "title": "$5,000 reported campaign contributions",
+      "actorIds": [
+        "bia-central-ohio-pac",
+        "klein-campaign-reported"
+      ],
+      "sourceIds": [
+        "campaign-developers-2025"
+      ],
+      "amount": 5000,
+      "amountLabel": "$5,000",
+      "unit": "USD reported campaign contributions",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    }
+  ]
+}

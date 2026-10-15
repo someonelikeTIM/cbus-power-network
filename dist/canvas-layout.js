@@ -33,47 +33,32 @@ export function scopedConnections(graph, anchors, distance) {
 }
 
 const intersects = (a, b, gap = 8) => a.left < b.right + gap && a.right > b.left - gap && a.top < b.bottom + gap && a.bottom > b.top - gap;
-const clamp = (value, low, high) => Math.max(low, Math.min(Math.max(low, high), value));
 
-export function arrangeCanvas(graph, {width, height, obstacles = [], current = new Map(), pins = new Set(), center = '', degrees = new Map()}) {
-  const count = graph.nodes.length;
-  const scale = Math.max(.52, Math.min(1, Math.sqrt(width * height / Math.max(1, count * 14000))));
-  const targets = new Map(), boxes = [];
-  if (!count) return {positions: targets, scale};
-  const items = graph.nodes.map(node => {
-    const radius = entityRadius(degrees.get(node.id) || 0, pins.has(node.id), scale);
-    const longest = Math.min(24, Math.max(...node.name.split(/\s+/).map(word => word.length), Math.min(20, node.name.length)));
-    return {id: node.id, radius, width: Math.max(radius * 2 + 24, longest * 7 * Math.max(.82, scale)), height: radius * 2 + (node.name.length > 24 ? 53 : 38)};
-  }).sort((a, b) => Number(pins.has(b.id)) - Number(pins.has(a.id)) || Number(b.id === center) - Number(a.id === center) || (degrees.get(b.id) || 0) - (degrees.get(a.id) || 0) || a.id.localeCompare(b.id));
-  const boxFor = (item, point) => ({left: point.x - item.width / 2, right: point.x + item.width / 2, top: point.y - item.radius - 10, bottom: point.y - item.radius - 10 + item.height});
-  const area = box => Math.max(0, box.right - box.left) * Math.max(0, box.bottom - box.top);
-  const overlapArea = (a, b) => Math.max(0, Math.min(a.right, b.right) - Math.max(a.left, b.left)) * Math.max(0, Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top));
-  const cellX = Math.max(34, Math.min(80, width / 10)), cellY = Math.max(32, Math.min(70, height / 8));
-  for (const item of items) {
-    const constrain = point => ({x: clamp(point.x, item.width / 2 + 12, width - item.width / 2 - 12), y: clamp(point.y, item.radius + 16, height - item.height + item.radius - 8)});
-    const old = current.get(item.id);
-    // Pins retain their screen location as the view changes, bounded on resize.
-    if (pins.has(item.id) && old) {
-      const point = constrain(old); targets.set(item.id, point); boxes.push(boxFor(item, point)); continue;
+export function arrangeCanvas(graph, {width, height, obstacles = [], current = new Map(), pins = new Set(), retained = new Set(), center = '', degrees = new Map(), measurements = new Map(), flow=false}) {
+  const positions=new Map(),boxes=[],latent=[];
+  const items=[...graph.nodes].sort((a,b)=>Number(b.id===center)-Number(a.id===center)||Number(pins.has(b.id))-Number(pins.has(a.id))||(degrees.get(b.id)||0)-(degrees.get(a.id)||0)||a.id.localeCompare(b.id));
+  const boxAt=(size,p)=>({left:p.x+size.left,right:p.x+size.right,top:p.y+size.top,bottom:p.y+size.bottom});
+  const fits=box=>box.left>=12&&box.right<=width-12&&box.top>=12&&box.bottom<=height-12&&!obstacles.some(other=>intersects(box,other,12))&&!boxes.some(other=>intersects(box,other,14));
+  for(let index=0;index<items.length;index++){
+    const node=items[index],radius=entityRadius(degrees.get(node.id)||0,pins.has(node.id));
+    const size=measurements.get(node.id)||{left:-Math.max(radius+12,Math.min(210,node.name.length*7)/2),right:Math.max(radius+12,Math.min(210,node.name.length*7)/2),top:-radius-8,bottom:radius+45};
+    const old=current.get(node.id),preferred=flow?{x:0,y:0}:(pins.has(node.id)||retained.has(node.id))&&old?old:node.id===center?{x:width/2,y:height/2}:{x:width/2+Math.cos(index*2.399963)*Math.min(width*.34,Math.sqrt(index)*width*.09),y:height/2+Math.sin(index*2.399963)*Math.min(height*.31,Math.sqrt(index)*height*.095)};
+    let chosen=null,best=Infinity;
+    const consider=point=>{const box=boxAt(size,point);if(!fits(box))return;const score=Math.hypot(point.x-preferred.x,point.y-preferred.y);if(score<best){best=score;chosen={point,box};}};
+    consider(preferred);
+    for(const box of [...boxes,...obstacles]){
+      consider({x:box.right+16-size.left,y:Math.max(16,box.top)-size.top});
+      consider({x:Math.max(16,box.left)-size.left,y:box.bottom+16-size.top});
+      consider({x:box.left-16-size.right,y:Math.max(16,box.top)-size.top});
     }
-    const linked = graph.edges.filter(edge => edge.source === item.id || edge.target === item.id).flatMap(edge => [edge.source, edge.target]).filter(id => id !== item.id && targets.has(id)).map(id => targets.get(id));
-    const retained=old&&old.x>0&&old.x<width&&old.y>0&&old.y<height?old:null;
-    const preferred = item.id===center?{x:width/2,y:height/2}:retained || (linked.length ? {x: linked.reduce((s, p) => s + p.x, 0) / linked.length, y: linked.reduce((s, p) => s + p.y, 0) / linked.length} : {x: width / 2, y: height / 2});
-    const candidates = [constrain(preferred)];
-    for (let y = item.radius + 22; y < height - item.height + item.radius; y += cellY) for (let x = item.width / 2 + 16; x < width - item.width / 2; x += cellX) candidates.push({x, y});
-    let best = null;
-    for (const point of candidates) {
-      const box = boxFor(item, point);
-      const collision = boxes.reduce((sum, other) => sum + (intersects(box, other) ? overlapArea(box, {left: other.left - 8, top: other.top - 8, right: other.right + 8, bottom: other.bottom + 8}) : 0), 0);
-      const obstruction = obstacles.reduce((sum, other) => sum + overlapArea(box, other), 0);
-      const distance = Math.hypot(point.x - preferred.x, point.y - preferred.y);
-      const spacing=Math.min(250,Math.max(100,Math.sqrt(width*height/count)*.6));
-      const spread=linked.length?linked.reduce((sum,other)=>sum+Math.abs(Math.hypot(point.x-other.x,point.y-other.y)-spacing),0)/linked.length:distance;
-      const score = collision * 10000 + obstruction * 15000 + distance*.12+spread + (item.id === center ? Math.hypot(point.x - width / 2, point.y - height / 2) : 0);
-      if (!best || score < best.score) best = {point, box, score};
+    if(!chosen)for(let y=16-size.top;y<height-size.bottom-12;y+=30)for(let x=16-size.left;x<width-size.right-12;x+=36)consider({x,y});
+    if(chosen){positions.set(node.id,chosen.point);boxes.push(chosen.box);}
+    else{
+      // Latent positions are never forced onto an occupied label. The renderer
+      // reveals them only when zoom, panning and collision clearance allow it.
+      const columns=Math.max(2,Math.floor(width/62)),row=Math.floor(index/columns),rows=Math.max(2,Math.ceil(items.length/columns));
+      positions.set(node.id,{x:40+(index%columns)*(width-80)/(columns-1),y:45+row*(height-90)/(rows-1)});latent.push(node.id);
     }
-    const chosen = best || {point: constrain(preferred), box: boxFor(item, constrain(preferred)), score: area(boxFor(item, constrain(preferred)))};
-    targets.set(item.id, chosen.point); boxes.push(chosen.box);
   }
-  return {positions: targets, scale};
+  return {positions,scale:1,latent};
 }

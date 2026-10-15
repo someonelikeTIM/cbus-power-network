@@ -1,7 +1,8 @@
-import {nodes, sources, meta} from './data.js';
+import {nodes, edges, sources, meta} from './data.js';
 import {release} from './contract.js';
 import {repositoryURL} from './project-links.js';
 import {parseWorkspace, validateView, workspaceFile, maximumViews} from './saved-views.js';
+import {researchFormat,researchSnapshot} from './research-paths.js';
 
 const ids = new Set(nodes.map(node => node.id));
 const libraryKey = 'columbus-network:saved-views-v1';
@@ -9,7 +10,7 @@ const sessionKey = 'columbus-network:workspace-v1';
 const frames = new Map();
 const captures = new Map();
 let captureSerial = 0;
-const emptySnapshot = () => ({query: '', positions: [], camera: {x: 0, y: 0, z: 1}, dimensions: {width: 800, height: 570}, details: {open: true, docked: false, width: 420}});
+const emptySnapshot = () => ({query: '', positions: [], camera: {x: 0, y: 0, z: 1}, dimensions: {width: 800, height: 570}, details: {open: false, docked: false, width: 420}});
 let serial = 1;
 let views = [{id: 'view-1', name: 'View 1', snapshot: {...emptySnapshot(), query: location.search}}];
 let activeId = 'view-1', primaryId = activeId, secondaryId = null;
@@ -27,7 +28,7 @@ const main = document.querySelector('main');
 const footer = document.querySelector('.page-footer');
 main.replaceChildren();
 const explorer = document.createElement('section'); explorer.id = 'explorer'; explorer.setAttribute('aria-label', 'Explorer workspace');
-explorer.innerHTML = `<div class="workspace-bar"><div class="explorer-tabs" role="tablist" aria-label="Explorer views"></div><button class="workspace-button" id="new-view" aria-label="New explorer tab">+ New tab</button><div class="workspace-actions"><button class="workspace-button" id="split-views" aria-pressed="false">Side by side</button><label id="compare-label" hidden>Beside<select id="compare-view" aria-label="View to show beside"></select></label><details class="views-menu"><summary>Views <span aria-hidden="true">▾</span></summary><div><button id="rename-view">Rename tab</button><button id="save-view">Save this view…</button><button id="load-view">Load a saved view…</button><button id="export-view">Export this view</button><button id="export-workspace">Export all tabs</button><button id="import-views">Import views…</button></div></details></div></div><div class="explorer-panes"></div><p class="workspace-status" role="status" aria-live="polite"></p><input type="file" id="view-file" accept=".json,application/json" hidden><dialog id="view-name-dialog"><form method="dialog"><h2 id="view-name-title">Save this view</h2><label>Name<input id="view-name" maxlength="80" required></label><div class="view-dialog-actions"><button value="cancel" formnovalidate>Cancel</button><button id="confirm-view-name" value="save">Save</button></div></form></dialog><dialog id="view-library"><form method="dialog"><button class="dialog-close" aria-label="Close saved views">×</button></form><h2>Saved views</h2><p>Stored in this browser. Export a file to keep a copy or use another browser.</p><div id="saved-view-list"></div></dialog>`;
+explorer.innerHTML = `<div class="workspace-bar"><div class="explorer-tabs" role="tablist" aria-label="Explorer views"></div><button class="workspace-button" id="new-view" aria-label="New explorer tab">+ New tab</button><div class="workspace-actions"><button class="workspace-button" id="split-views" aria-pressed="false">Side by side</button><label id="compare-label" hidden>Beside<select id="compare-view" aria-label="View to show beside"></select></label><details class="views-menu"><summary>Views <span aria-hidden="true">▾</span></summary><div><button id="rename-view">Rename tab</button><button id="save-view">Save this view…</button><button id="load-view">Load a saved view…</button><button id="load-research">Load a research path…</button><button id="export-view">Export this view</button><button id="export-workspace">Export all tabs</button><button id="import-views">Import views…</button></div></details></div></div><div class="explorer-panes"></div><p class="workspace-status" role="status" aria-live="polite"></p><input type="file" id="view-file" accept=".json,application/json" hidden><dialog id="view-name-dialog"><form method="dialog"><h2 id="view-name-title">Save this view</h2><label>Name<input id="view-name" maxlength="80" required></label><div class="view-dialog-actions"><button value="cancel" formnovalidate>Cancel</button><button id="confirm-view-name" value="save">Save</button></div></form></dialog><dialog id="view-library"><form method="dialog"><button class="dialog-close" aria-label="Close saved views">×</button></form><h2>Saved views</h2><p>Stored in this browser. Export a file to keep a copy or use another browser.</p><div id="saved-view-list"></div></dialog>`;
 main.append(explorer, footer);
 const $ = id => document.getElementById(id);
 $('source-total').textContent = String(sources.length);
@@ -150,6 +151,7 @@ function showLibrary() {
   });
 }
 $('load-view').addEventListener('click', () => { showLibrary(); $('view-library').showModal(); });
+$('load-research').addEventListener('click',()=>send(activeId,'research-library'));
 async function exportViews(all) {
   const chosen = all ? views : [currentView()];
   try{await Promise.all(chosen.map(view=>capture(view.id)));}catch(error){status(error.message);return;}
@@ -163,7 +165,9 @@ $('view-file').addEventListener('change', async () => {
   const file = $('view-file').files?.[0]; $('view-file').value = ''; if (!file) return;
   try {
     if (file.size > 2 * 1024 * 1024) throw Error('Choose an explorer views file smaller than 2 MB.');
-    const imported = parseWorkspace(JSON.parse(await file.text()), ids);
+    const json=JSON.parse(await file.text());
+    if(json?.format===researchFormat){const snapshot=researchSnapshot(json,{nodeIds:ids,edgeIds:new Set(edges.map(edge=>edge.id)),validateSnapshot:validateView});if(addView(snapshot,json.research.title.slice(0,80)))status('Research path opened in a new tab. Existing tabs were kept.');return;}
+    const imported = parseWorkspace(json, ids);
     if (views.length + imported.views.length > maximumViews) throw Error('These views would exceed 12 tabs. Close a tab or import fewer views.');
     const additions = imported.views.map(view => ({...view, id: 'view-' + (++serial)}));
     views.push(...additions); activate(additions[imported.views.findIndex(view => view.id === imported.activeId)].id);
@@ -175,6 +179,11 @@ window.addEventListener('message', event => {
   if (event.origin !== location.origin || event.data?.channel !== 'columbus-explorer') return;
   const entry = [...frames.entries()].find(([, entry]) => entry.frame.contentWindow === event.source); if (!entry) return;
   const [id, frame] = entry, view = views.find(view => view.id === id);
+  if(event.data.type==='download-research'){
+    try{const file=event.data.file;researchSnapshot(file,{nodeIds:ids,edgeIds:new Set(edges.map(edge=>edge.id)),validateSnapshot:validateView});const value=JSON.stringify(file,null,2);if(value.length>2*1024*1024)throw Error('The research file is larger than 2 MB.');const url=URL.createObjectURL(new Blob([value],{type:'application/json'})),link=document.createElement('a');link.href=url;link.download=String(event.data.name||'research-path.json').replace(/[^a-zA-Z0-9_.-]/g,'-').slice(0,120);link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);status('Research path file prepared.');}catch(error){status(error.message);}return;
+  }
+  if(event.data.type==='import-research'){$('view-file').click();return;}
+  if(event.data.type==='open-research'){try{const snapshot=validateView(event.data.snapshot,ids);addView(snapshot,String(event.data.name||'Research path').slice(0,80));}catch(error){status(error.message);}return;}
   if (event.data.type === 'ready') { frame.ready = true; send(id, 'restore', {snapshot: frame.pending||view.snapshot}); frame.pending = null; return; }
   if (event.data.type === 'focus') { if (activeId !== id) activate(id); return; }
   if (event.data.type === 'height') { const height = Number(event.data.height); if (Number.isFinite(height)) frame.frame.style.height = Math.max(baseHeight(), Math.min(150000, height)) + 'px'; return; }
