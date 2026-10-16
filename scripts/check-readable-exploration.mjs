@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import {nodes,edges} from '../dist/data.js';
-import {connectedCanvas,labelPlacements,appendWalk,networkStyle} from '../dist/desktop-network.js';
+import {connectedCanvas,labelPlacements,appendWalk,networkStyle,networkPositions,orbitalBranch,flyoutPlacement,explorationSpace,clearNodeCamera} from '../dist/desktop-network.js';
 import {validateView} from '../dist/saved-views.js';
 
 const fixture={nodes:['a','b','c','orphan'].map(id=>({id})),edges:[{id:'ab',source:'a',target:'b',type:'one'},{id:'bc',source:'b',target:'c',type:'two'}]};
@@ -30,4 +30,24 @@ const entityIds=new Set(nodes.map(n=>n.id)),snapshot={query:'',positions:[],came
 const restored=validateView(snapshot,entityIds);
 assert.deepEqual(restored.interaction.walk,walk);assert.equal(restored.interaction.showDirect,true);
 assert.throws(()=>validateView({...snapshot,interaction:{walk:[walk[0],{id:'wcmh',via:'m20'}]}},entityIds));
+
+const world=networkPositions({nodes,edges}),sun={...world.get('ginther-fund')},first=orbitalBranch({nodes,edges},'ginther-fund',world);
+assert.equal(first.positions.size,10);assert.deepEqual(world.get('ginther-fund'),sun,'The anchor never moves');
+for(const [id,p]of first.positions){assert.ok(Math.abs(Math.hypot(p.x-sun.x,p.y-sun.y)-240)<.02);world.set(id,p);}
+const frozen=new Map([...first.placed].map(id=>[id,{...world.get(id)}]));
+const repeat=orbitalBranch({nodes,edges},'ginther-fund',world,first.placed);assert.equal(repeat.positions.size,0,'Repeated expansion never runs another layout');
+const next=orbitalBranch({nodes,edges},'alison-marker',world,first.placed,{parent:'ginther-fund'});
+for(const [id,p]of next.positions){assert.ok(!frozen.has(id));world.set(id,p);}
+for(const [id,p]of frozen)assert.deepEqual(world.get(id),p,'Expanding the next planet preserves every previously placed entity');
+const geometry={width:1200,height:700,size:{width:300,height:400},preferred:{left:420,top:100},points:[{x:500,y:300,r:30}],segments:[[{x:300,y:300},{x:650,y:300}]]};
+const windowBox=flyoutPlacement(geometry);assert.ok(windowBox.right<300||windowBox.left>650||windowBox.bottom<288||windowBox.top>312,'The flyout clears the active entity and path');
+const space=explorationSpace(1200,700,[{left:800,right:1180,top:60,bottom:650},{left:490,right:790,top:70,bottom:520}]);assert.ok(space.right<=474&&space.width>=400);
+const windowState={manual:true,left:750,top:90,width:340,height:380};
+const saved=validateView({...snapshot,interaction:{walk,showDirect:true,orbitIds:[...first.placed],flyout:windowState}},entityIds);
+assert.deepEqual(saved.interaction.orbitIds,[...first.placed]);assert.deepEqual(saved.interaction.flyout,windowState);
+assert.throws(()=>validateView({...snapshot,interaction:{orbitIds:['missing']}},entityIds));
+assert.throws(()=>validateView({...snapshot,interaction:{flyout:{...windowState,width:'large'}}},entityIds));
+const cameraPoints=new Map([['sun',{x:0,y:0}],['up',{x:0,y:-240}],['down',{x:0,y:240}]]),controls=[{left:0,right:220,top:500,bottom:680},{left:0,right:320,top:10,bottom:120}];
+const clear=clearNodeCamera({x:240,y:340,z:1},cameraPoints.keys(),cameraPoints,{width:1200,height:700,obstacles:controls});
+for(const p of cameraPoints.values()){const x=p.x*clear.z+clear.x,y=p.y*clear.z+clear.y;assert.ok(x>=26&&x<=1174&&y>=26&&y<=674);for(const b of controls){const px=Math.max(b.left,Math.min(x,b.right)),py=Math.max(b.top,Math.min(y,b.bottom));assert.ok(Math.hypot(x-px,y-py)>=24,'Camera framing keeps direct entities clear of controls');}}
 console.log('PASS readable exploration: orphan filtering, nonoverlapping labels, minimum node sizes, explicit source-linked traversal, and saved origin/path state.');

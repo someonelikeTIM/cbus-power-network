@@ -124,3 +124,20 @@ body[data-view=network][data-direct-exploration=true] #graph .context-link .grap
 body[data-view=network] #graph .trail-node{opacity:1!important}
 
 .overview-trail-line{stroke:var(--rust);stroke-width:1.2;fill:none}
+
+/* Flyouts use the same direct manipulation as the other desktop windows. */
+body[data-view=network] #entity-popover{display:flex;flex-direction:column;overflow:visible;min-height:0}
+#entity-popover>.popover-heading.floating-panel-header{flex:none;padding:0 0 7px;margin:0;border:0;cursor:move;touch-action:none}
+#entity-popover>.popover-heading:before{display:block;width:6px;height:13px;opacity:.65}
+#entity-popover .flyout-scroll{display:flex;flex-direction:column;min-height:0;flex:1;overflow:auto}
+#entity-popover #popover-type-menu{display:flex;flex-direction:column;min-height:0;flex:1}
+#entity-popover #popover-types{flex:none}
+#entity-popover #popover-neighbors{min-height:45px;max-height:none;flex:1}
+#entity-popover #popover-neighbors[hidden]{display:none!important}
+#entity-popover .record-popover-actions{flex:none;gap:10px;flex-wrap:wrap}
+#entity-popover .record-popover-actions button{min-height:23px}
+#entity-popover .window-corner-resizer{right:-2px;bottom:-2px}
+
+#entity-popover .record-popover-actions button{flex:none;white-space:nowrap}
+
+body[data-view=network] #entity-popover{min-width:250px;max-width:620px}

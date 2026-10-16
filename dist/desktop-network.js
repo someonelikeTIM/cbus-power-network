@@ -59,3 +59,62 @@ export function appendWalk(walk,id,{from='',via='',edges=[]}={}){
   }else if(result.at(-1).id!==id)result.push({id,via:''});
   return result.length>30?[result[0],{...result.at(-28),via:''},...result.slice(-27)]:result;
 }
+// Place only newly revealed neighbors. Previously placed entities are immutable.
+export function orbitalBranch(graph,anchor,positions,placed=new Set(),{radius=240,ringStep=140,gap=112,parent=''}={}){
+  const center=positions.get(anchor);if(!center)return {positions:new Map(),placed:new Set(placed)};
+  const locked=new Set([...placed,anchor]),added=new Map(),neighbors=[...directConnections(graph,anchor).nodes].filter(id=>!locked.has(id)).sort();
+  const fresh=placed.size===0;
+  const previous=positions.get(parent),outward=previous?Math.atan2(center.y-previous.y,center.x-previous.x):-Math.PI/2;
+  const occupied=[...locked].filter(id=>id!==anchor).map(id=>positions.get(id)).filter(Boolean);
+  for(const id of neighbors){let best=null;
+    for(let ring=0;ring<12&&!best;ring++){
+      const r=radius+ring*ringStep,capacity=Math.max(1,Math.floor(2*Math.PI*r/gap)),earlier=Array.from({length:ring},(_,i)=>Math.floor(2*Math.PI*(radius+i*ringStep)/gap)).reduce((sum,n)=>sum+n,0),slots=fresh?Math.max(1,Math.min(capacity,neighbors.length-earlier)):Math.max(16,Math.ceil(2*Math.PI*r/(gap*.5))),choices=[];
+      for(let i=0;i<slots;i++){const angle=outward+i*2*Math.PI/slots,point={x:center.x+Math.cos(angle)*r,y:center.y+Math.sin(angle)*r};
+        const clearance=occupied.length?Math.min(...occupied.map(p=>Math.hypot(p.x-point.x,p.y-point.y))):r*2;
+        if(clearance<gap)continue;choices.push({point,score:Math.min(clearance,r*2)+(previous?Math.cos(angle-outward)*42:0),i});
+      }
+      choices.sort((a,b)=>b.score-a.score||a.i-b.i);best=choices[0]?.point||null;
+    }
+    if(best){const point={x:Math.round(best.x*100)/100,y:Math.round(best.y*100)/100};added.set(id,point);occupied.push(point);locked.add(id);}
+  }
+  return {positions:added,placed:locked};
+}
+const lineInRect=(a,b,r)=>{
+  let lo=0,hi=1;const dx=b.x-a.x,dy=b.y-a.y;
+  for(const [p,q]of [[-dx,a.x-r.left],[dx,r.right-a.x],[-dy,a.y-r.top],[dy,r.bottom-a.y]]){if(!p){if(q<0)return false;continue;}const t=q/p;if(p<0)lo=Math.max(lo,t);else hi=Math.min(hi,t);if(lo>hi)return false;}return true;
+};
+export function flyoutPlacement({width,height,size,preferred,obstacles=[],points=[],segments=[]}){
+  const w=Math.min(size.width,width-16),h=Math.min(size.height,height-72),clamp=(v,min,max)=>Math.max(min,Math.min(max,v)),choices=[];
+  const add=(left,top)=>choices.push({left:clamp(left,8,width-w-8),top:clamp(top,8,height-h-56)});
+  add(preferred.left,preferred.top);for(const left of [8,width-w-8])for(const top of [70,8,height-h-56])add(left,top);
+  for(let left=8;left<=width-w;left+=80)for(let top=8;top<=height-h-56;top+=60)add(left,top);
+  const score=p=>{const box={...p,right:p.left+w,bottom:p.top+h},padded={left:box.left-12,right:box.right+12,top:box.top-12,bottom:box.bottom+12};
+    const hits=points.reduce((sum,point)=>{const x=clamp(point.x,box.left,box.right),y=clamp(point.y,box.top,box.bottom);return sum+(Math.hypot(point.x-x,point.y-y)<(point.r||24)?1:0);},0);
+    const pathHits=segments.filter(([a,b])=>lineInRect(a,b,padded)).length;
+    const panels=obstacles.reduce((sum,b)=>sum+Math.max(0,Math.min(box.right,b.right)-Math.max(box.left,b.left))*Math.max(0,Math.min(box.bottom,b.bottom)-Math.max(box.top,b.top)),0);
+    return hits*1e10+pathHits*1e7+panels*.02+Math.hypot(p.left-preferred.left,p.top-preferred.top);
+  };
+  const best=choices.sort((a,b)=>score(a)-score(b))[0];return {...best,right:best.left+w,bottom:best.top+h};
+}
+export function explorationSpace(width,height,obstacles=[]){
+  let spaces=[{left:18,top:70,right:width-18,bottom:height-56}];
+  for(const b of obstacles){const next=[];
+    for(const r of spaces){if(r.right<=b.left||r.left>=b.right||r.bottom<=b.top||r.top>=b.bottom){next.push(r);continue;}
+      next.push({...r,right:Math.min(r.right,b.left-16)},{...r,left:Math.max(r.left,b.right+16)},{...r,bottom:Math.min(r.bottom,b.top-16)},{...r,top:Math.max(r.top,b.bottom+16)});
+    }
+    spaces=next.filter(r=>r.right-r.left>=180&&r.bottom-r.top>=160);
+  }
+  const best=spaces.sort((a,b)=>(b.right-b.left)*(b.bottom-b.top)-(a.right-a.left)*(a.bottom-a.top))[0]||{left:18,top:70,right:width-18,bottom:height-56};
+  return {...best,width:best.right-best.left,height:best.bottom-best.top};
+}
+export function clearNodeCamera(target,ids,positions,{width,height,obstacles=[],center={x:width/2,y:height/2}}={}){
+  const points=[...ids].map(id=>positions.get(id)).filter(Boolean);let best={...target},bestScore=Infinity;
+  for(const scale of [1,.96,.92,.88,.84,.8])for(const dx of [0,24,-24,48,-48,72,-72,96,-96])for(const dy of [0,24,-24,48,-48,72,-72]){
+    const z=target.z*scale,x=center.x-(center.x-target.x)*scale+dx,y=center.y-(center.y-target.y)*scale+dy;let blocked=0,outside=0;
+    for(const p of points){const sx=p.x*z+x,sy=p.y*z+y;if(sx<26||sx>width-26||sy<26||sy>height-26)outside++;
+      for(const b of obstacles){const px=Math.max(b.left,Math.min(sx,b.right)),py=Math.max(b.top,Math.min(sy,b.bottom));if(Math.hypot(sx-px,sy-py)<24)blocked++;}
+    }
+    const score=outside*1e9+blocked*1e8+Math.hypot(dx,dy)+(1-scale)*10000;if(score<bestScore){bestScore=score;best={x,y,z};}
+  }
+  return best;
+}

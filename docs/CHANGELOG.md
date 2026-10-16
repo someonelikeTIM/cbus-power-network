@@ -1,6 +1,14 @@
 # Changelog
 
-## Unreleased — Readable path exploration
+## Unreleased — Fixed orbital branches and movable flyouts
+
+Show direct connections arranges each branch once into nearby rings around its existing anchor. Following a neighbor places only its newly revealed neighbors; all previously placed entities stay fixed. Type changes and repeated expansion never rerun the layout. Placed entities and their positions survive saved-view reloads. Explicit grouping or position reset starts a new arrangement.
+
+The flyout is movable by its header, resizable in both dimensions, and remembers its geometry. Automatic placement avoids the active entity and actual followed connections. Camera framing reserves space for the flyout and details, and keeps active nodes clear of the overview and controls. Whole network returns to the broader connected dataset without discarding the placed branch.
+
+The exploration canvas retains revealed entities plus connected surrounding context, excluding orphans after filters. The overview map retains the full filtered network. Counts distinguish the exploration from the whole network. The flyout footer and scrollable connection list no longer overlap.
+
+## Earlier in this local revision — Readable path exploration
 
 Entities have a six-pixel minimum radius and an eighteen-pixel selected radius. Label placement avoids overlaps without changing entity positions. Entities without an incident relationship in the current filters are excluded from the canvas.
 
