@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {readFile,writeFile} from 'node:fs/promises';
+import {readFile,writeFile,mkdir} from 'node:fs/promises';
 import {nodes,edges,sources,categories,relationships} from '../dist/data.js';
 import {campaignSources,campaignNodes,campaignEdges,campaignRoster,campaignRelease,campaignUpdatedNodeIds,campaign2026EdgeIds} from '../dist/campaigns-2026.js';
 import {sourceLiveEvidence} from '../dist/live-sources.js';
@@ -32,4 +32,4 @@ for(const event of buildTimelineEvents(edges,sources)){assert.ok(timelineLanes[e
 validateDataset(datasetFor());
 try{const before=JSON.parse(await readFile('artifacts/campaigns-2026/before.json','utf8'));for(const edge of before.edges)assert.deepEqual(edges.find(record=>record.id===edge.id),edge);for(const source of before.sources)assert.deepEqual(sources.find(record=>record.id===source.id),source);for(const node of before.nodes){const after=nodes.find(record=>record.id===node.id);assert.ok(after);if(!campaignUpdatedNodeIds.has(node.id))assert.deepEqual(after,node);else{for(const field of ['id','name','category','x','y'])assert.deepEqual(after[field],node[field]);assert.ok(node.sourceIds.every(id=>after.sourceIds.includes(id)));}}}catch(error){if(error.code!=='ENOENT')throw error;}
 const result={roster:campaignRoster.length,newNodes:nodes.length-316,newConnections:campaignEdges.length,newCheckedSources:campaignSources.length,candidates:{amyActon:edges.filter(edge=>edge.source==='amy-acton'||edge.target==='amy-acton').length,vivekRamaswamy:edges.filter(edge=>edge.source==='vivek'||edge.target==='vivek').length},taggedConnections:edges.filter(edge=>campaign2026EdgeIds.has(edge.id)).length,coverage:'All listed candidates in the explicitly covered races; selective finance, not a complete donor ledger',distinctions:'Charity, candidate financing, PAC receipts, vendor payments, opposition and endorsements stay separate',preservation:'Earlier record IDs, relationship values and sources retained'};
-await writeFile('artifacts/campaigns-2026/checks.json',JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify(result));
+await mkdir('artifacts/campaigns-2026',{recursive:true});await writeFile('artifacts/campaigns-2026/checks.json',JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify(result));

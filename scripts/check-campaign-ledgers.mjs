@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {readFile,writeFile} from 'node:fs/promises';
+import {readFile,writeFile,mkdir} from 'node:fs/promises';
 import {gunzipSync} from 'node:zlib';
 import {createHash} from 'node:crypto';
 import {campaignFinanceIndex as catalog} from '../dist/campaign-finance-index.js';
@@ -58,4 +58,4 @@ assert.equal(catalog.reports.find(r=>r.id==='oh-491730748').metrics.loans,251412
 assert.ok(identicalRows>0,'Real repeated transactions were dropped');assert.ok(memos>0&&blankFields>0&&unattributed>0);
 assert.ok(financeCSV(['name','amount'],[['=formula',-125]]).includes("'=formula"));assert.ok(financeCSV(['name'],[['a"b']]).includes('a""b'));
 const result={committees:catalog.units.length,reports:catalog.reports.length,rows,memos,identicalRowsRetained:identicalRows,sourceFiles:catalog.sources.length,blankSummaryFieldsRetained:blankFields,unattributedReceiptCents:unattributed,coverage:catalog.candidateCoverage.filter(r=>r.status!=='Filings indexed')};
-await writeFile('artifacts/campaign-ledger/checks.json',JSON.stringify(result,null,2)+'\n');console.log('PASS campaign ledgers: '+JSON.stringify({...result,coverageGaps:result.coverage.length,coverage:undefined}));
+await mkdir('artifacts/campaign-ledger',{recursive:true});await writeFile('artifacts/campaign-ledger/checks.json',JSON.stringify(result,null,2)+'\n');console.log('PASS campaign ledgers: '+JSON.stringify({...result,coverageGaps:result.coverage.length,coverage:undefined}));
