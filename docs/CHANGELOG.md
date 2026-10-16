@@ -1,6 +1,14 @@
 # Changelog
 
-## Unreleased — Stable desktop network
+## Unreleased — Readable path exploration
+
+Entities have a six-pixel minimum radius and an eighteen-pixel selected radius. Label placement avoids overlaps without changing entity positions. Entities without an incident relationship in the current filters are excluded from the canvas.
+
+An entity flyout shows connection and neighbor counts, connection-type filters, Show direct connections, and individual records to follow. Short camera motions follow selections and direct neighborhoods. An Origin trail and clickable network overview preserve context; traversal uses original relationship IDs and survives saved-view reloads. Undo restores the previous view without fanning entities out from an anchor.
+
+Details use compact typography, actions, record counts, connection rows and sources. Duplicate dataset/visible metric blocks and instructional filler are removed; evidence and amount/date qualifications remain.
+
+## Earlier in this local revision — Stable desktop network
 
 The desktop canvas now retains all entities and recorded connections in the current filters. Selection highlights a neighborhood and opens its evidence without repacking entities or changing the camera. Zoom changes label detail, not world positions. Panning updates the SVG transform directly. Center, Fit, connection-type buckets and position reset are explicit actions.
 

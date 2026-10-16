@@ -1,7 +1,7 @@
 // A view stores presentation state only. Imported files cannot add data or code.
 import {edges} from './data.js';
 import {validateResearch} from './research-paths.js';
-const relationshipIds=new Set(edges.map(edge=>edge.id));
+const relationshipIds=new Set(edges.map(edge=>edge.id)),relationshipsById=new Map(edges.map(edge=>[edge.id,edge]));
 export const workspaceFormat = 'columbus-network-views';
 export const workspaceVersion = 1;
 export const maximumViews = 12;
@@ -21,7 +21,12 @@ export function validateView(value, entityIds) {
   const details = value.details || {};
   const interaction=value.interaction||{};
   for(const [key,allowed]of [['entities',entityIds],['connections',relationshipIds],['bucketIds',entityIds]])if(interaction[key]&&(!Array.isArray(interaction[key])||interaction[key].some(id=>!allowed.has(id))||interaction[key].length>allowed.size))throw Error('This view contains an invalid map selection.');
-  const mapInteraction={entities:[...(interaction.entities||[])],connections:[...(interaction.connections||[])],bucketIds:interaction.bucketIds?[...interaction.bucketIds]:null};
+  if(interaction.walk!==undefined){
+    if(!Array.isArray(interaction.walk)||interaction.walk.length>30)throw Error('This view contains an invalid exploration path.');
+    interaction.walk.forEach((step,i)=>{if(!step||!entityIds.has(step.id)||typeof step.via!=='string')throw Error('This view contains an invalid exploration step.');if(step.via){const edge=relationshipsById.get(step.via),from=interaction.walk[i-1]?.id;if(!edge||!from||!((edge.source===from&&edge.target===step.id)||(edge.target===from&&edge.source===step.id)))throw Error('This exploration step does not follow its recorded relationship.');}});
+  }
+  if(interaction.showDirect!==undefined&&typeof interaction.showDirect!=='boolean')throw Error('This view contains an invalid connection display mode.');
+  const mapInteraction={...(interaction.walk?{walk:interaction.walk.map(step=>({id:step.id,via:step.via})),showDirect:interaction.showDirect===true}:{}),entities:[...(interaction.entities||[])],connections:[...(interaction.connections||[])],bucketIds:interaction.bucketIds?[...interaction.bucketIds]:null};
   return {query: value.query,...(value.interaction?{interaction:mapInteraction}:{}), ...(['bubble-cloud-v1','bubble-cloud-v2','stable-network-v1'].includes(value.mapLayout)?{mapLayout:value.mapLayout}:{}),...(value.overviewIds?{overviewIds:[...value.overviewIds]}:{}), positions: value.positions.map(row => [...row]), camera: {x:camera.x,y:camera.y,z:camera.z}, dimensions, scale:finite(value.scale)&&value.scale>=.3&&value.scale<=1?value.scale:1, details: {open: details.open !== false, docked: details.docked === true, width: finite(details.width) ? Math.max(240, Math.min(900, details.width)) : 380,...(finite(details.height)?{height:Math.max(180,Math.min(1200,details.height))}:{})},...(value.research?{research:validateResearch(value.research,entityIds,relationshipIds)}:{})};
 }
 
