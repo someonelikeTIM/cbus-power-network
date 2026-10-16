@@ -1,0 +1,156 @@
+{
+  "release": {
+    "schemaVersion": "1.0.0",
+    "releaseId": "2026-10-16",
+    "status": "published",
+    "preparedOn": "2026-10-16",
+    "publishedAt": "2026-10-16T06:08:17Z",
+    "dataRevision": 13,
+    "codeLicense": "MIT",
+    "dataLicense": "CC-BY-4.0",
+    "sourceCheckIds": []
+  },
+  "table": "leads",
+  "records": [
+    {
+      "id": "lead-media-01",
+      "question": "Obtain current FCC Form 323 ownership chains and agreements for WSYX, WTTE, WWHO, WBNS, WCMH and WTVN; distinguish license companies, non-voting interests and station operations. Verify the FOX 28 subchannel migration before dating it.",
+      "entityIds": [
+        "wsyx",
+        "wtte",
+        "wwho",
+        "wbns",
+        "wcmh",
+        "wtvn"
+      ],
+      "sourceIds": [
+        "media-fcc-wsyx",
+        "media-sinclair"
+      ],
+      "missingDocument": "Current FCC Form 323, license-company ownership exhibits and operating agreements",
+      "holder": "FCC public inspection files and licensees",
+      "identifiers": [
+        "FCC facility 56549 (WSYX)"
+      ],
+      "dateRange": "Current filings and the October 2025 WWHO transition",
+      "status": "open",
+      "lastAttempt": null,
+      "resultingRecordIds": [],
+      "note": "Research question, not an accepted relationship. No new retrieval was performed for this release preparation."
+    },
+    {
+      "id": "lead-media-02",
+      "question": "Refresh the Nexstar–TEGNA docket after the verified August 6, 2026 order; obtain the executed Ohio MOU and monitor its term and compliance. Do not infer integrated newsrooms from completed stock acquisition.",
+      "entityIds": [
+        "nexstar",
+        "tegna",
+        "wbns"
+      ],
+      "sourceIds": [
+        "media-injunction",
+        "media-yost"
+      ],
+      "missingDocument": "Executed Ohio MOU and post-August 6 court orders",
+      "holder": "Ohio Attorney General; federal court docket; agreement parties",
+      "dateRange": "After August 6, 2026",
+      "identifiers": [],
+      "status": "open",
+      "lastAttempt": null,
+      "resultingRecordIds": [],
+      "note": "Research question, not an accepted relationship. No new retrieval was performed for this release preparation."
+    },
+    {
+      "id": "lead-media-03",
+      "question": "Extend to Axios Columbus / Cox, WBNS Radio and ONN, Spectrum News / Charter, Columbus CEO, Matter News, The Rooster, WCRS and other community / minority media; verify their legal entities and disclosed authority before adding paths.",
+      "entityIds": [],
+      "sourceIds": [],
+      "missingDocument": "Ownership filings and disclosed authority for additional local outlets",
+      "holder": "Outlet disclosures, FCC and state registration records",
+      "dateRange": "Current; scope to be selected",
+      "identifiers": [],
+      "status": "open",
+      "lastAttempt": null,
+      "resultingRecordIds": [],
+      "note": "Research question, not an accepted relationship. No new retrieval was performed for this release preparation."
+    },
+    {
+      "id": "lead-media-04",
+      "question": "Resolve Dispatch’s current intermediate legal entities, parent voting holders and local editorial leadership; obtain historical publishing and distribution contracts rather than treating USA TODAY branding as the whole ownership chain.",
+      "entityIds": [
+        "dispatch",
+        "usa-today-co"
+      ],
+      "sourceIds": [
+        "media-dispatch-current",
+        "media-gannett-2019"
+      ],
+      "missingDocument": "Current intermediate legal-entity chain, voting filings and local editorial roster",
+      "holder": "SEC, Ohio business register and publisher",
+      "dateRange": "2019 merger through current records",
+      "identifiers": [],
+      "status": "open",
+      "lastAttempt": null,
+      "resultingRecordIds": [],
+      "note": "Research question, not an accepted relationship. No new retrieval was performed for this release preparation."
+    },
+    {
+      "id": "lead-media-05",
+      "question": "Add nonprofit Forms 990, specific trustee appointments, named WOSU / WCBE funders and underwriting contracts. Current funding must not be inferred from FY2024 recognized revenue; advisory boards must not be assigned license authority.",
+      "entityIds": [
+        "wosu",
+        "wcbe"
+      ],
+      "sourceIds": [
+        "media-wosu-board",
+        "media-wosu-finance",
+        "media-wcbe"
+      ],
+      "missingDocument": "Current financial reports, appointment records, named grants and underwriting agreements",
+      "holder": "Stations, license holders, university and school district",
+      "dateRange": "After FY2024 and current appointments",
+      "identifiers": [],
+      "status": "open",
+      "lastAttempt": null,
+      "resultingRecordIds": [],
+      "note": "Research question, not an accepted relationship. No new retrieval was performed for this release preparation."
+    },
+    {
+      "id": "lead-media-06",
+      "question": "Seek FCC political files, invoices and sponsor agreements for JobsOhio, Columbus businesses, data-center developers and ALPR vendors. No direct media advertising / funding link to those vendors was verified in this batch; coverage of a company is not such a link.",
+      "entityIds": [
+        "jobsohio",
+        "flock",
+        "anduril"
+      ],
+      "sourceIds": [],
+      "missingDocument": "Named advertising invoices, FCC political files and sponsor agreements",
+      "holder": "Stations, advertisers and relevant public agencies",
+      "dateRange": "Relevant invoice / campaign periods to be established",
+      "identifiers": [],
+      "status": "open",
+      "lastAttempt": null,
+      "resultingRecordIds": [],
+      "note": "Research question, not an accepted relationship. No new retrieval was performed for this release preparation."
+    },
+    {
+      "id": "lead-media-07",
+      "question": "Verify specific local airings of mandatory Sinclair segments, shared newsroom staffing, news-share agreements and syndication fees. Corporate direction and a local story’s production require their own evidence.",
+      "entityIds": [
+        "wsyx",
+        "wtte"
+      ],
+      "sourceIds": [
+        "media-kimmel",
+        "media-local-kimmel"
+      ],
+      "missingDocument": "Dated local-airing logs, news-share agreements, staffing records and syndication invoices",
+      "holder": "Stations, program suppliers and public inspection files",
+      "dateRange": "September 2025 and individually established program periods",
+      "identifiers": [],
+      "status": "open",
+      "lastAttempt": null,
+      "resultingRecordIds": [],
+      "note": "Research question, not an accepted relationship. No new retrieval was performed for this release preparation."
+    }
+  ]
+}

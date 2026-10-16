@@ -1,15 +1,15 @@
 {
   "release": {
     "schemaVersion": "1.0.0",
-    "releaseId": "2026-10-16-explorer-rc3",
-    "status": "local-candidate",
+    "releaseId": "2026-10-16",
+    "status": "published",
     "preparedOn": "2026-10-16",
-    "publishedAt": null,
+    "publishedAt": "2026-10-16T06:08:17Z",
     "dataRevision": 13,
     "codeLicense": "MIT",
     "dataLicense": "CC-BY-4.0",
     "sourceCheckIds": []
   },
-  "inputFingerprint": "dad1d0f52c6ef6138aa346cd580d5411164086ab9b9a63b4fa6f7a0ef7dba3b6",
-  "manifest": "downloads/2026-10-16-explorer-rc3/manifest.json"
+  "inputFingerprint": "9353f59010b943e09383a00cd06e52b6cdcb31456e6b3d1f51408145e4ce63a8",
+  "manifest": "downloads/2026-10-16/manifest.json"
 }
