@@ -1,0 +1,232 @@
+{
+  "release": {
+    "schemaVersion": "1.0.0",
+    "releaseId": "2026-10-16-explorer-rc3",
+    "status": "local-candidate",
+    "preparedOn": "2026-10-16",
+    "publishedAt": null,
+    "dataRevision": 13,
+    "codeLicense": "MIT",
+    "dataLicense": "CC-BY-4.0",
+    "sourceCheckIds": []
+  },
+  "meta": {
+    "title": "CBUS Power",
+    "reviewed": "2026-10-15",
+    "version": 13,
+    "scope": "Columbus and Ohio: money, control, public corruption, civic affiliations, and media ownership, governance, funding and information supply.",
+    "limitations": "Selected records, not complete coverage. Evidence status, source date, and direction are attached to each case relationship. Assets, cash transfers, and penalties are identified separately.",
+    "enrichmentState": "complete",
+    "pendingSourceIds": [],
+    "infrastructureState": "complete",
+    "politicalState": "complete",
+    "flowState": "complete",
+    "trailState": "complete",
+    "mediaState": "complete",
+    "civicState": "complete",
+    "donationState": "complete",
+    "campaign2026State": "source-checked subset",
+    "campaign2026Coverage": "Official roster for selected statewide and Franklin County races; selected financial filings and campaign statements, with incomplete donor and outside-spending ledgers."
+  },
+  "entities": [
+    {
+      "id": "wsyx-licensee",
+      "name": "WSYX Licensee, Inc.",
+      "category": "corporation",
+      "role": "FCC-listed license holder",
+      "sourceIds": [
+        "media-fcc-wsyx"
+      ],
+      "description": "",
+      "x": 0,
+      "y": 0,
+      "historical": false,
+      "externalIdentifiers": [],
+      "publicationState": "accepted",
+      "claimReview": {
+        "status": "legacy-unrecorded",
+        "reviewedAt": null,
+        "reviewer": {
+          "type": "unknown",
+          "identity": null
+        },
+        "note": "Inherited curated record. Previous substantive review identity and claim-level date were not recorded; source content checks are separate. Independent editorial review is pending."
+      }
+    },
+    {
+      "id": "sinclair-group",
+      "name": "Sinclair Broadcast Group, LLC",
+      "category": "corporation",
+      "role": "Broadcast operating group",
+      "sourceIds": [
+        "media-sinclair"
+      ],
+      "description": "",
+      "x": 0,
+      "y": 0,
+      "historical": false,
+      "externalIdentifiers": [],
+      "publicationState": "accepted",
+      "claimReview": {
+        "status": "legacy-unrecorded",
+        "reviewedAt": null,
+        "reviewer": {
+          "type": "unknown",
+          "identity": null
+        },
+        "note": "Inherited curated record. Previous substantive review identity and claim-level date were not recorded; source content checks are separate. Independent editorial review is pending."
+      }
+    }
+  ],
+  "relationships": [
+    {
+      "id": "m63",
+      "source": "sinclair-group",
+      "target": "wsyx-licensee",
+      "type": "ownership",
+      "label": "Ultimate broadcast operating group",
+      "evidence": "FCC identifies WSYX’s license company; Sinclair reports owning WSYX.",
+      "sourceIds": [
+        "media-fcc-wsyx",
+        "media-sinclair"
+      ],
+      "period": "2025 FCC and corporate records",
+      "historical": false,
+      "directional": true,
+      "status": "documented",
+      "caseId": "media",
+      "context": "Group-level parent path through WSYX ownership. Intermediate subsidiaries between the group and license company are not exhaustively resolved.",
+      "publicationState": "accepted",
+      "claimReview": {
+        "status": "legacy-unrecorded",
+        "reviewedAt": null,
+        "reviewer": {
+          "type": "unknown",
+          "identity": null
+        },
+        "note": "Inherited curated record. Previous substantive review identity and claim-level date were not recorded; source content checks are separate. Independent editorial review is pending."
+      },
+      "validity": {
+        "start": null,
+        "end": null,
+        "startPrecision": "unknown",
+        "endPrecision": "unknown",
+        "certainty": "unknown",
+        "note": "Relationship validity not established. Event, source and observation dates do not establish a term."
+      },
+      "evidenceStatus": {
+        "code": "documented",
+        "label": "Documented record"
+      },
+      "evidenceEntries": [
+        {
+          "sourceId": "media-fcc-wsyx",
+          "role": "support",
+          "locator": null,
+          "excerpt": null,
+          "note": "Precise locator not recorded; follow-up needed."
+        },
+        {
+          "sourceId": "media-sinclair",
+          "role": "support",
+          "locator": null,
+          "excerpt": null,
+          "note": "Precise locator not recorded; follow-up needed."
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "media-sinclair",
+      "title": "Sinclair FY2025 Form 10-K",
+      "publisher": "Sinclair / SEC",
+      "date": "2026",
+      "note": "Station table, 2025 transactions and Note 15 related-party Cunningham agreements. WWHO license assets acquired October 2025; WTTE is a serviced Cunningham station. Fiscal snapshot, not a claim that every station shares a newsroom.",
+      "kind": "Primary source",
+      "reviewed": "2026-10-14",
+      "archiveTimestamp": null,
+      "archiveStatus": "pending",
+      "liveVerified": true,
+      "sourceFormat": "original",
+      "contentCheckedAt": "2026-10-14T17:07:28.645Z",
+      "url": "https://www.sec.gov/Archives/edgar/data/1971213/000197121326000012/sbgi-20251231.htm",
+      "publicationDate": {
+        "value": "2026",
+        "precision": "year"
+      },
+      "contentCheck": {
+        "verified": true,
+        "checkedAt": "2026-10-14T17:07:28.645Z",
+        "method": "Original content fetch",
+        "reviewer": {
+          "type": "unknown",
+          "identity": null
+        },
+        "sha256": "befeaa50ed7ecc7d995b352ddb2056b5777c1578e7a373ef45852d1d663b2282",
+        "checks": [
+          "WSYX, WWHO, WTTE",
+          "October 2025",
+          "Manhan",
+          "non-voting stock",
+          "July 1, 2028"
+        ],
+        "note": "Initial review attribution is unavailable. Content availability / matching is separate from claim review."
+      },
+      "archiveCapture": null
+    },
+    {
+      "id": "media-fcc-wsyx",
+      "title": "FCC license renewal action: WSYX",
+      "publisher": "Federal Communications Commission",
+      "date": "2025-03-05",
+      "note": "WSYX facility 56549; WSYX Licensee, Inc.; renewal granted March 3, 2025. Notice published March 5. A license action is distinct from network affiliation.",
+      "kind": "Primary source",
+      "reviewed": "2026-10-14",
+      "archiveTimestamp": null,
+      "archiveStatus": "pending",
+      "liveVerified": true,
+      "sourceFormat": "original",
+      "contentCheckedAt": "2026-10-14T17:07:29.713Z",
+      "url": "https://docs.fcc.gov/public/attachments/DOC-409989A1.pdf",
+      "publicationDate": {
+        "value": "2025-03-05",
+        "precision": "day"
+      },
+      "contentCheck": {
+        "verified": true,
+        "checkedAt": "2026-10-14T17:07:29.713Z",
+        "method": "Original content fetch",
+        "reviewer": {
+          "type": "unknown",
+          "identity": null
+        },
+        "sha256": "aada1d45e8f28348450bbd85a2bb5f26e0c75d2cc0ea91b0d60394200b9e3096",
+        "checks": [
+          "WSYX Licensee, Inc.",
+          "56549",
+          "03/03/2025"
+        ],
+        "note": "Initial review attribution is unavailable. Content availability / matching is separate from claim review."
+      },
+      "archiveCapture": null
+    }
+  ],
+  "events": [],
+  "leads": [],
+  "relatedLeadIds": [],
+  "externalRelationshipReferences": [],
+  "corrections": [],
+  "limitations": [
+    "Selected records, not complete coverage. Evidence status, source date, and direction are attached to each case relationship. Assets, cash transfers, and penalties are identified separately.",
+    "Claim-level review metadata is incomplete for inherited records.",
+    "Dates usually describe events or observations; relationship validity is largely unknown.",
+    "Filtered packets include complete lead records only when all their entities are present; relatedLeadIds and externalRelationshipReferences refer to the full release."
+  ],
+  "selection": {
+    "kind": "edge",
+    "id": "m63"
+  },
+  "packetType": "evidence",
+  "thirdPartyDocumentsIncluded": false
+}

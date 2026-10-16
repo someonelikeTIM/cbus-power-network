@@ -135,6 +135,11 @@ const baseGraph = () => filterGraph({ ...state, query: '' });
 const topicRoots={all:'city',money:'city',cityhall:'city',jobsohio:'jobsohio',media:'wsyx',politics:'vivek',campaigns2026:'ohio-governor-election',sports:'hsg',datacenters:'google',alpr:'flock',hb6:'aep',epstein:'les',redflex:'redflex'};
 function seedMap(preferred=state.exploreRoot){const seed=seedExploration(baseGraph(),preferred);state.exploreRoot=seed.root;state.explorationSeeds=new Set(seed.ids);state.openNodes=new Set();state.exploredIds=seed.ids;state.startingIds=new Set(seed.root?[seed.root]:[]);state.customStart=false;}
 function currentResearch(){return researchConnections(state.research.steps,{nodes,edges});}
+function exploredForeground(){
+  const ids=new Set([...state.trailEdges,...(state.path?.edges||[]),...currentResearch().edgeIds]);
+  const links=graph.edges.filter(edge=>ids.has(edge.id));
+  return {edges:new Set(links.map(edge=>edge.id)),nodes:new Set(links.flatMap(edge=>[edge.source,edge.target]))};
+}
 function syncResearchPins(){const path=currentResearch();state.pinnedIds=path.anchors;state.pinnedEdgeIds=path.pinnedEdges;}
 function networkGraph(){
   const available=filterGraph(state),research=currentResearch();let result=available;
@@ -468,9 +473,9 @@ function positionEntityTooltip(event){
   const above=y-tooltip.offsetHeight-12;tooltip.style.top=Math.max(8,Math.min(dimensions.height-tooltip.offsetHeight-8,above>=8?above:core.bottom-surface.top+12))+'px';
 }
 function raisePathForeground(){
-  if(!state.path)return;
-  for(const id of state.path.edges){const edge=edgeEls.get(id);if(edge&&edge.group.style.display!=='none')$('edge-layer').append(edge.group);const icon=connectionIcons.get(id);if(icon&&icon.group.style.display!=='none')$('connection-icon-layer').append(icon.group);}
-  for(const id of state.path.nodes){const node=nodeEls.get(id);if(node&&node.group.style.display!=='none')$('node-layer').append(node.group);}
+  const explored=exploredForeground();
+  for(const id of explored.edges){const edge=edgeEls.get(id);if(edge&&edge.group.style.display!=='none'&&!edge.group.contains(document.activeElement))$('edge-layer').append(edge.group);const icon=connectionIcons.get(id);if(icon&&icon.group.style.display!=='none'&&!icon.group.contains(document.activeElement))$('connection-icon-layer').append(icon.group);}
+  for(const id of explored.nodes){const node=nodeEls.get(id);if(node&&node.group.style.display!=='none'&&!node.group.contains(document.activeElement))$('node-layer').append(node.group);}
 }
 function positionConnectionBadges(){
   connectionIcons.forEach(({group,peerIds},id)=>{
@@ -614,7 +619,7 @@ function styleNode(id,zoom){
   entry.group.dataset.bubble=String(style.bubble);
   const labelKey=style.bubble?'bubble:'+Math.round(style.radius)+':'+Math.round(style.font*2)+':'+style.fullName:'detail';
   if(entry.labelKey!==labelKey){bubbleTextMeasure.font='600 '+style.font+'px '+getComputedStyle(document.documentElement).getPropertyValue('--sans');const lines=style.fullName?style.fullLines:style.bubble?(style.radius<19?[initials(nodeById.get(id))]:bubbleLabel(nodeById.get(id).name,style.radius,style.font,text=>bubbleTextMeasure.measureText(text).width)):entry.normalLines;entry.label.replaceChildren(...lines.map(line=>{const span=svgEl('tspan',{x:0});span.textContent=line;return span;}));entry.labelKey=labelKey;}
-  entry.label.style.fontSize=style.font+'px';entry.label.style.fontWeight=protectedNode?'750':'600';entry.label.querySelectorAll('tspan').forEach((span,index)=>span.setAttribute('dy',index?String(style.font*1.12):'0'));
+  entry.label.style.fontSize=style.font+'px';entry.label.style.fontWeight=protectedNode||entry.group.classList.contains('trail-node')?'750':'600';entry.label.querySelectorAll('tspan').forEach((span,index)=>span.setAttribute('dy',index?String(style.font*1.12):'0'));
   const count=entry.label.children.length,y=style.bubble?-((count-1)*style.font*1.12)/2+style.font*.32:style.radius+style.font+7;
   entry.label.setAttribute('transform','translate(0 '+y/zoom+') scale('+1/zoom+')');
   entry.core.style.opacity='1';entry.halo.style.opacity=String(style.bubble?.12:style.detail);
@@ -751,6 +756,10 @@ function placeLabels() {
   for(const [id,entry]of nodeEls){const item=visible.items.find(item=>item.id===id),shown=!!item;entry.group.style.display=shown?'':'none';entry.group.style.opacity=String(item?.opacity||0);entry.group.setAttribute('aria-hidden',String(!shown));entry.core.setAttribute('tabindex',shown?'0':'-1');entry.group.dataset.semanticHidden=shown?'false':'true';}
   semanticEdges=new Set();
   for(const edge of graph.edges){const shown=semanticNodes.has(edge.source)&&semanticNodes.has(edge.target)&&(edge.source===center||edge.target===center||state.path?.edges.includes(edge.id)||route.edgeIds.has(edge.id)||state.trailEdges.has(edge.id)||state.selected?.kind==='edge'&&state.selected.id===edge.id);if(shown)semanticEdges.add(edge.id);}
+  const hasVisibleTrail=graph.edges.some(edge=>semanticEdges.has(edge.id)&&edgeEls.get(edge.id).group.classList.contains('trail-link'));
+  $('graph').dataset.trailHighlight=String(hasVisibleTrail);
+  $('graph').setAttribute('aria-description',hasVisibleTrail?'The explored trail is highlighted. Other connections remain visible and interactive.':'Select entities to explore their connections.');
+  $('connection-legend').title=hasVisibleTrail?'Stronger lines show the explored trail; faint lines show other connections. Colors identify connection types.':'Colors identify connection types.';
   const occupied=[...visible.items.flatMap(item=>item.parts),...(focusMenuRect&&recordMenuOpen?[focusMenuRect]:[])],scene=!!center||!!state.path;
   const portsByEdge=new Map();
   for(const port of focusPorts.values()){
@@ -841,6 +850,7 @@ function renderGraph() {
   const shownNodes = new Set(graph.nodes.map(n => n.id)), shownEdges = new Set(graph.edges.map(e => e.id));
   const tags=previewTag?[...state.tags,previewTag]:state.tags,tagFocus=tags.size||tags.length?tagForeground(graph,tags):null,baseForeground=center?nodeNeighborhood(graph,center):pathForeground(graph,state.startingIds,state.path),foreground=tagFocus||baseForeground;
   const highlightedNodes = new Set(), highlightedEdges = new Set();
+  const explored=exploredForeground(),selectedConnections=new Set(state.selected?.kind==='edge'?pairedRelationships(graph.edges,edgeById.get(state.selected.id)).map(edge=>edge.id):[]);
   if(tagFocus){tagFocus.nodes.forEach(id=>highlightedNodes.add(id));tagFocus.edges.forEach(id=>highlightedEdges.add(id));}
   else if (state.path) { state.path.nodes.forEach(id => highlightedNodes.add(id)); state.path.edges.forEach(id => highlightedEdges.add(id)); }
   else if ((hoveredNode&&shownNodes.has(hoveredNode))||(state.selected?.kind==='node'&&shownNodes.has(state.selected.id))) {
@@ -851,7 +861,7 @@ function renderGraph() {
   nodeEls.forEach(({ group, core,label,pin }, id) => {
     const visible = shownNodes.has(id);
     group.style.display = visible ? '' : 'none';
-    group.classList.toggle('context-node',!foreground.nodes.has(id)&&!state.pinnedIds.has(id)&&!state.trailNodes.has(id));group.classList.toggle('trail-node',state.trailNodes.has(id));
+    group.classList.toggle('context-node',!foreground.nodes.has(id)&&!state.pinnedIds.has(id)&&!state.trailNodes.has(id));group.classList.toggle('trail-node',state.trailNodes.has(id)||explored.nodes.has(id));
     group.classList.toggle('pinned-node',state.pinnedIds.has(id));
     pin.setAttribute('aria-label',(state.pinnedIds.has(id)?'Unpin ':'Pin ')+nodeById.get(id).name+(state.pinnedIds.has(id)?'':' as anchor'));pin.setAttribute('aria-pressed',String(state.pinnedIds.has(id)));pin.setAttribute('tabindex',visible?'0':'-1');
     group.classList.toggle('path-node',!!state.path?.nodes.includes(id));
@@ -865,7 +875,7 @@ function renderGraph() {
   edgeEls.forEach(({ group, line, label }, id) => {
     delete label.dataset.badgeAnchored;
     group.style.display = shownEdges.has(id) ? '' : 'none';
-    group.classList.toggle('context-link',!foreground.edges.has(id)&&!state.trailEdges.has(id));group.classList.toggle('trail-link',state.trailEdges.has(id));
+    group.classList.toggle('context-link',!foreground.edges.has(id)&&!state.trailEdges.has(id));group.classList.toggle('trail-link',explored.edges.has(id));group.classList.toggle('selected-connection',selectedConnections.has(id));
     line.classList.toggle('active', highlightedEdges.has(id));
     line.classList.toggle('path-line',!!state.path?.edges.includes(id));
     label.style.display = state.labels === 'off' ? 'none' : '';
@@ -875,6 +885,7 @@ function renderGraph() {
   connectionIcons.forEach(({group,count},id)=>{
     const edge=edgeById.get(id),key=[edge.source,edge.target].sort().join('|')+'|'+edge.type,visible=shownEdges.has(id)&&iconEdges.has(id)&&!seenPairs.has(key);if(visible)seenPairs.add(key);
     const peers=visible?pairedRelationships(eligible,edge).filter(other=>other.type===edge.type):[];connectionIcons.get(id).peerIds=peers.map(other=>other.id);count.textContent=peers.length>1?String(peers.length):'';
+    group.classList.toggle('trail-icon',peers.some(peer=>explored.edges.has(peer.id)));
     group.style.display=visible?'':'none';group.setAttribute('tabindex',visible?'0':'-1');group.setAttribute('aria-hidden',String(!visible));group.classList.toggle('selected',state.selected?.kind==='edge'&&highlightedEdges.has(id));
     if(visible){group.setAttribute('aria-label',peers.length>1?`Connection icon: ${peers.length} connections between ${nodeById.get(edge.source).name} and ${nodeById.get(edge.target).name}, ${peers.map(other=>relationships[other.type].label).join(', ')}`:`Connection icon: ${relationships[edge.type].label}, ${readerField(edge,'label')}, ${nodeById.get(edge.source).name} to ${nodeById.get(edge.target).name}`);group.querySelector('title').textContent=peers.map(other=>relationships[other.type].label+' · '+readerField(other,'label')).join('\n')+'\nSelect for Pin and Details';}
   });

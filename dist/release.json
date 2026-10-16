@@ -1,7 +1,7 @@
 {
   "release": {
     "schemaVersion": "1.0.0",
-    "releaseId": "2026-10-16-explorer-rc2",
+    "releaseId": "2026-10-16-explorer-rc3",
     "status": "local-candidate",
     "preparedOn": "2026-10-16",
     "publishedAt": null,
@@ -10,6 +10,6 @@
     "dataLicense": "CC-BY-4.0",
     "sourceCheckIds": []
   },
-  "inputFingerprint": "bc764d71859980effbd9000766114945cb9feda87f7b59bb6f92e7dd5bc50593",
-  "manifest": "downloads/2026-10-16-explorer-rc2/manifest.json"
+  "inputFingerprint": "dad1d0f52c6ef6138aa346cd580d5411164086ab9b9a63b4fa6f7a0ef7dba3b6",
+  "manifest": "downloads/2026-10-16-explorer-rc3/manifest.json"
 }

@@ -2,6 +2,8 @@
 
 ## Unreleased — Automatic entity focus
 
+Explored trails use stronger connection lines, clear type icons and outlined entities. Surrounding connections stay visible at lower contrast and return to full contrast on hover, keyboard focus or selection. Relationship colors and historical dashes retain their original meaning. The same emphasis applies to paths opened through Show this path and saved research paths.
+
 Selecting an entity frames its full direct neighborhood automatically, with readable names, colored connection icons and a flyout containing connection counts and type choices. Overview zoom thresholds no longer hide direct neighbors. Smooth camera flights, type changes, pins and reverse Undo preserve continuity while exploring. The full direct neighborhood fits the visible canvas without extending its height. Icons are placed on their connection lines beside the corresponding entity, with space reserved before layout. A compact flyout and inline legend leave more room for the map. Very dense, narrow views use compact bubbles with full names available on focus or hover. Explored steps and their original connection records persist through later focus, saved views and reloads; Collapse connections and Collapse explored path are explicit actions. Undo restores the trail and its presentation together.
 
 ## Unreleased — 2026 campaign coverage

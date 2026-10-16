@@ -1,0 +1,126 @@
+{
+  "release": {
+    "schemaVersion": "1.0.0",
+    "releaseId": "2026-10-16-explorer-rc3",
+    "status": "local-candidate",
+    "preparedOn": "2026-10-16",
+    "publishedAt": null,
+    "dataRevision": 13,
+    "codeLicense": "MIT",
+    "dataLicense": "CC-BY-4.0",
+    "sourceCheckIds": []
+  },
+  "inputFingerprint": "dad1d0f52c6ef6138aa346cd580d5411164086ab9b9a63b4fa6f7a0ef7dba3b6",
+  "counts": {
+    "entities": 377,
+    "relationships": 541,
+    "sources": 175,
+    "events": 209,
+    "leads": 7
+  },
+  "sourceChecksReperformed": false,
+  "sourceCheckScope": [],
+  "thirdPartyDocumentsIncluded": false,
+  "files": [
+    {
+      "path": "dataset.json",
+      "bytes": 1687324,
+      "sha256": "01273b5e8b4d27f2cf3583ad9c2aef29904a39b27e96bc28e5c6b8e1f5241725"
+    },
+    {
+      "path": "entities.csv",
+      "bytes": 216235,
+      "sha256": "64a4c013797b5f2283e4b49e37f30bef4102a0ae29c4b146f5ac2fcefe6aa49c"
+    },
+    {
+      "path": "entities.json",
+      "bytes": 315840,
+      "sha256": "e62f08f35ea503faefa200b3a293c483b9ed7527de56f489e37d48e0fdabb2fa"
+    },
+    {
+      "path": "entities.schema.json",
+      "bytes": 11452,
+      "sha256": "5261821c3fe483bcb93476bb5e817a9f42b7d5c08ee8cacd0dc87a5bfe79eb68"
+    },
+    {
+      "path": "events.csv",
+      "bytes": 90710,
+      "sha256": "cdae7d8b3ba5b6b1e04da186388a900099787d44a9912fcfa45a263454209ad1"
+    },
+    {
+      "path": "events.json",
+      "bytes": 169298,
+      "sha256": "0b36dce8f58e524d4dfbb8e6910794dc42c32ec26fb0d22b21efeccb79030cd2"
+    },
+    {
+      "path": "events.schema.json",
+      "bytes": 11447,
+      "sha256": "a91890a4b6d0239239338187224f8b1339c74ee1b0322868ecca3fca0a43dfaf"
+    },
+    {
+      "path": "leads.csv",
+      "bytes": 4830,
+      "sha256": "73c71c4c8b04eeea31fc0620cebe4000fce7ca6f71a9c132525dace46de41afd"
+    },
+    {
+      "path": "leads.json",
+      "bytes": 6761,
+      "sha256": "04bd572f8bfa6fb14ac26687072096866cdd91939f51c09cc82e2a4db95ff247"
+    },
+    {
+      "path": "leads.schema.json",
+      "bytes": 11444,
+      "sha256": "7a12e42bbcaf464bd879e1b957f198a53e86b8535d105e442092cb319189ad2e"
+    },
+    {
+      "path": "packet-anduril-city.json",
+      "bytes": 21151,
+      "sha256": "2cb6c435470e7f20c0c8ab8a31f6017a9082f0477196d7f9321c79ac1d2b675c"
+    },
+    {
+      "path": "packet-flock.json",
+      "bytes": 14016,
+      "sha256": "0323bea11849ac6a9b6b001ac05a034fdefd7ab6302177499d92e37d935f0135"
+    },
+    {
+      "path": "packet-m63.json",
+      "bytes": 8435,
+      "sha256": "2948f804b8e6706a0af89ad86442a15eefde4b34f45492b82bee835452bb013f"
+    },
+    {
+      "path": "relationships.csv",
+      "bytes": 725631,
+      "sha256": "2c09a102616fc091bcefe9a7c62b2180b0d82019df8119f32939844bfa2f6cd7"
+    },
+    {
+      "path": "relationships.json",
+      "bytes": 944050,
+      "sha256": "fb4e32d7b91f5e84889d3c6040169492e8edcf8630dfb2f9c93828329ad2efb4"
+    },
+    {
+      "path": "relationships.schema.json",
+      "bytes": 11468,
+      "sha256": "a97f2ab1a6dec680d58b04bf1ab5b09a63295594c256d46ebb58f03ddcb48a0f"
+    },
+    {
+      "path": "schema.json",
+      "bytes": 12018,
+      "sha256": "c7210d6f42a50d5b52cd10af52e2de4cdf3a623c69bb1646a3921c051db00926"
+    },
+    {
+      "path": "sources.csv",
+      "bytes": 171326,
+      "sha256": "f1e7ee49a21db419c374e466ace98f2be7b36b374c7e002d1bde62c5d80cadd7"
+    },
+    {
+      "path": "sources.json",
+      "bytes": 250889,
+      "sha256": "69974d41cf8dfc4a043a8e085600984ccd384f000d00cd248f3a1a0319d1c21e"
+    },
+    {
+      "path": "sources.schema.json",
+      "bytes": 11450,
+      "sha256": "57ca6d29edcfc048047fcbaa1aa9cc0865a91fe9fbbe94c756b6c8d2696257b2"
+    }
+  ]
+}

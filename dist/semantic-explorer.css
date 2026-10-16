@@ -147,3 +147,28 @@ body[data-view=network][data-focus-scene=true] #connection-legend .floating-pane
 body[data-view=network][data-focus-scene=true] #connection-legend .floating-panel-header button{float:right;pointer-events:auto}
 body[data-view=network][data-focus-scene=true] #connection-legend #legend-types{padding-right:20px}
 body[data-view=network][data-focus-scene=true] #connection-legend #legend-types:before{content:'';width:31px;height:16px;flex:none}
+
+/* Keep the explored route distinct while its surrounding records stay interactive. */
+#graph .graph-edge{transition:opacity .2s ease,stroke-width .2s ease}
+#graph .connection-icon-card,#graph .connection-icon-glyph,#graph .connection-icon-count{transition:opacity .2s ease,stroke-width .2s ease}
+#graph[data-trail-highlight=true] #edge-layer>g:not(.trail-link) .graph-edge{opacity:.24;stroke-width:1.2px;filter:none}
+#graph[data-trail-highlight=true] #edge-layer>g.trail-link .graph-edge{opacity:1;stroke-width:3.4px;filter:drop-shadow(0 0 2px var(--white))}
+#graph[data-trail-highlight=true] .connection-icon:not(.trail-icon) .connection-icon-card,
+#graph[data-trail-highlight=true] .connection-icon:not(.trail-icon) .connection-icon-glyph,
+#graph[data-trail-highlight=true] .connection-icon:not(.trail-icon) .connection-icon-count{opacity:.4}
+#graph[data-trail-highlight=true] .connection-icon.trail-icon .connection-icon-card{stroke-width:2.8px;filter:drop-shadow(0 0 2px var(--white))}
+#graph[data-trail-highlight=true] .connection-icon.trail-icon .connection-icon-glyph,
+#graph[data-trail-highlight=true] .connection-icon.trail-icon .connection-icon-count{opacity:1}
+#graph[data-trail-highlight=true] .graph-node.trail-node .node-halo{fill:none;stroke:var(--ink);stroke-width:3px;opacity:.72!important}
+#graph[data-trail-highlight=true] #edge-layer>g.hovered .graph-edge,
+#graph[data-trail-highlight=true] #edge-layer>g.selected-connection .graph-edge{opacity:1;stroke-width:3.8px;filter:drop-shadow(0 0 2px var(--white))}
+#graph[data-trail-highlight=true] .connection-icon.hovered .connection-icon-card,
+#graph[data-trail-highlight=true] .connection-icon.hovered .connection-icon-glyph,
+#graph[data-trail-highlight=true] .connection-icon.hovered .connection-icon-count,
+#graph[data-trail-highlight=true] .connection-icon.selected .connection-icon-card,
+#graph[data-trail-highlight=true] .connection-icon.selected .connection-icon-glyph,
+#graph[data-trail-highlight=true] .connection-icon.selected .connection-icon-count,
+#graph[data-trail-highlight=true] .connection-icon:focus-visible .connection-icon-card,
+#graph[data-trail-highlight=true] .connection-icon:focus-visible .connection-icon-glyph,
+#graph[data-trail-highlight=true] .connection-icon:focus-visible .connection-icon-count{opacity:1}
+@media(prefers-reduced-motion:reduce){#graph .graph-edge,#graph .connection-icon-card,#graph .connection-icon-glyph,#graph .connection-icon-count{transition:none}}
