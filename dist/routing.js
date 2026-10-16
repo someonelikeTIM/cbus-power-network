@@ -25,6 +25,9 @@ export function encodeState(base,state,releaseId) {
   if(state.research?.steps.length)values.research=state.research.steps.map(step=>step.kind+':'+step.id).join('|');
   if(state.focus&&state.selected?.kind!=='node'&&state.focusEntity)values.center=state.focusEntity;
   if(state.focus&&Object.hasOwn(relationships,state.focusType))values.focusType=state.focusType;
+  if(state.trailNodes?.size)values.trail=[...state.trailNodes].join(',');
+  if(state.trailEdges?.size)values.trailEdges=[...state.trailEdges].join(',');
+  if(state.collapsedNodes?.size)values.collapsed=[...state.collapsedNodes].join(',');
   const tags=normalizeTags(state.tags??state.tag);if(state.view==='network'&&tags.length){if(tags.length===1)values.tag=tags[0];else values.tags=tags.join(',');}
   if(state.selected)values.record=`${recordKind(state.selected.kind)}:${state.selected.id}`;
   if(state.path)values.path=state.path.edges.join(',');
@@ -41,6 +44,7 @@ export function decodeState(base,defaults) {
   state.requestedResearch=(p.get('research')||'').split('|').filter(Boolean).map(value=>{const split=value.indexOf(':');return {kind:value.slice(0,split),id:value.slice(split+1),note:''};});
   state.focusEntity=p.get('center')||'';
   state.focusType=Object.hasOwn(relationships,p.get('focusType'))?p.get('focusType'):'';
+  state.trailNodes=new Set((p.get('trail')||'').split(',').filter(Boolean));state.trailEdges=new Set((p.get('trailEdges')||'').split(',').filter(Boolean));state.collapsedNodes=new Set((p.get('collapsed')||'').split(',').filter(Boolean));
   state.tags=new Set(normalizeTags(p.has('tags')?p.get('tags'):p.get('tag')));
   if(['explore','full'].includes(p.get('map')))state.mapMode=p.get('map');
   else if(p.has('case')||p.has('categories')||p.has('relationships'))state.mapMode='full'; // Existing shared views retain their original full context.
@@ -61,7 +65,7 @@ export function decodeState(base,defaults) {
   const raw=p.get('record'),split=raw?.indexOf(':');
   if(split>0&&kinds[raw.slice(0,split)])state.selected={kind:kinds[raw.slice(0,split)],id:raw.slice(split+1)};
   state.requestedRelease=p.get('release');state.requestedPath=p.has('path')?p.get('path').split(',').filter(Boolean):null;
-  const hasMapContext=['case','map','record','path','starts','seeded','expanded','explored','anchor','q','categories','relationships','mode','from','to','history','focus','startOnly','pins'].some(key=>p.has(key));
+  const hasMapContext=['case','map','record','path','starts','seeded','expanded','explored','anchor','q','categories','relationships','mode','from','to','history','focus','startOnly','pins','trail','trailEdges','collapsed'].some(key=>p.has(key));
   if(!hasMapContext){state.mapMode='explore';state.exploreRoot='';state.startingIds=new Set();state.explorationSeeds=new Set();state.exploredIds=new Set();state.openNodes=new Set();state.customStart=true;state.selected=null;state.path=null;state.query='';state.focus=false;}
   try{validateRange(state.from,state.to);}catch{state.from='';state.to='';state.routeWarning='Invalid historical date range was cleared.';}
   return state;

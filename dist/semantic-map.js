@@ -82,11 +82,12 @@ export function fullBubbleLabel(name,font,measure=text=>text.length*font*.54){
   return {radius:measure(full)/2+font+12,lines:[full]};
 }
 
-export function connectionRoute(start,end,{obstacles=[],bend=0,width=Infinity,height=Infinity}={}){
+export function connectionRoute(start,end,{obstacles=[],bend=0,width=Infinity,height=Infinity,bounded=false}={}){
   const dx=end.x-start.x,dy=end.y-start.y,length=Math.hypot(dx,dy)||1;
   let best=null;
   for(const offset of [...new Set([bend,0,80,-80,160,-160,260,-260,400,-400,600,-600])]){
     const control={x:(start.x+end.x)/2-dy/length*offset,y:(start.y+end.y)/2+dx/length*offset};
+    if(bounded&&(control.x<8||control.x>width-8||control.y<8||control.y>height-8))continue;
     const point=t=>({x:(1-t)*(1-t)*start.x+2*(1-t)*t*control.x+t*t*end.x,y:(1-t)*(1-t)*start.y+2*(1-t)*t*control.y+t*t*end.y});
     let collisions=0,outside=0;
     for(let i=1;i<40;i++){const p=point(i/40);collisions+=obstacles.filter(b=>p.x>b.left-7&&p.x<b.right+7&&p.y>b.top-7&&p.y<b.bottom+7).length;if(p.x<8||p.x>width-8||p.y<8||p.y>height-8)outside++;}

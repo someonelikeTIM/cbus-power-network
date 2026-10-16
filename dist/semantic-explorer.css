@@ -8,7 +8,6 @@
 #graph .graph-node:focus-within .node-label,#graph .graph-node:hover .node-label{text-decoration:none}
 #graph .edge-label{display:none!important}
 #graph .connection-icon{pointer-events:auto}
-#graph .badge-leader{stroke-width:1;stroke-dasharray:2 3;opacity:.65}
 body[data-view=network] .selection-chip{display:none!important}
 body[data-view=network] #search-window{width:310px}
 body[data-view=network] #search-window .distance-control{padding:6px 12px}
@@ -92,3 +91,59 @@ body[data-view=network] #connection-legend .legend-show{opacity:1;min-height:24p
 @media(max-width:650px){body[data-view=network] #map-status{width:calc(100% - 170px);max-width:190px;min-width:0}}
 .campaign-finance{margin:16px 0;padding:12px;border:1px solid var(--line);border-radius:6px;font:12px/1.5 var(--sans)}.campaign-finance h3{font:650 13px/1.5 var(--sans);margin:0 0 7px}.campaign-finance p{font-size:11px!important;color:var(--muted);margin:8px 0!important}.campaign-finance table{width:100%;border-collapse:collapse}.campaign-finance th,.campaign-finance td{padding:7px 0;border-bottom:1px solid var(--line);vertical-align:top}.campaign-finance th{text-align:left;font-weight:500;padding-right:8px}.campaign-finance td{text-align:right;white-space:nowrap;font:11px/1.5 var(--mono)}.campaign-finance a{font-size:11px;text-underline-offset:3px}
 #campaign-coverage>p{font:11px/1.5 var(--sans);color:var(--muted)}#campaign-coverage-list{list-style:none;margin:0;padding:0}#campaign-coverage-list li{display:grid;gap:2px;padding:8px 0;border-bottom:1px solid var(--line);font:11px/1.5 var(--sans)}#campaign-coverage-list span,#campaign-coverage-list small{color:var(--muted);font-size:10px}
+
+/* Focus uses the visible canvas; the flyout opens additional choices on demand. */
+body[data-view=network][data-focus-scene=true] #entity-popover{width:184px;min-width:184px;padding:8px;max-height:calc(100% - 100px)}
+body[data-view=network][data-focus-scene=true] .popover-heading{font-size:12px}
+body[data-view=network][data-focus-scene=true] #popover-stats{font-size:10px;margin:3px 0 5px}
+body[data-view=network][data-focus-scene=true] .record-popover-actions button{min-height:34px;font-size:9px;padding:2px}
+body[data-view=network][data-focus-scene=true] .record-popover-actions svg{width:19px;height:19px}
+#popover-type-menu{border-top:1px solid var(--line);margin-top:5px;padding-top:4px;font:600 10px var(--sans)}
+#popover-type-menu summary{cursor:pointer;padding:5px;border-radius:4px;background:var(--paper)}
+#popover-type-menu[open] #popover-types{max-height:180px;overflow:auto;margin-top:3px;padding-top:0;border-top:0}
+body[data-view=network][data-focus-scene=true] #guided-open{min-height:24px;font-size:10px;margin-top:4px;padding:4px}
+#popover-collapse-path{font:10px var(--sans);width:100%;min-height:25px;border:1px solid var(--line);border-radius:4px;margin-top:5px}
+body[data-view=network][data-focus-scene=true] #connection-legend{left:16px;right:16px;bottom:68px;top:auto;width:auto;max-width:none;min-height:0!important;max-height:110px;padding:5px 8px;box-shadow:0 2px 10px #252b2910}
+body[data-view=network][data-focus-scene=true] #connection-legend .floating-panel-header{border:0;padding:0;margin:0 0 2px;min-height:18px}
+body[data-view=network][data-focus-scene=true] #connection-legend .floating-panel-header:before{display:none}
+body[data-view=network][data-focus-scene=true] #connection-legend .floating-panel-header h2{font-size:10px}
+body[data-view=network][data-focus-scene=true] #connection-legend #legend-types{display:flex!important;flex-direction:row;flex-wrap:wrap;gap:2px 12px;margin:0;padding:0;grid-template-columns:none!important}
+body[data-view=network][data-focus-scene=true] #connection-legend li[data-legend-type]{min-height:18px;font-size:10px;gap:4px}
+body[data-view=network][data-focus-scene=true] #connection-legend .legend-type-label{flex:none}
+body[data-view=network][data-focus-scene=true] #connection-legend .legend-line{width:14px}
+body[data-view=network][data-focus-scene=true] #connection-legend p{display:none}
+body[data-view=network][data-focus-scene=true] #connection-legend .floating-panel-header button{min-height:18px;min-width:20px;font-size:17px}
+body[data-view=network][data-focus-scene=true] #map-status{left:16px;bottom:14px;width:auto;max-width:230px;padding:6px 9px}
+body[data-view=network][data-focus-scene=true] #map-status .graph-heading>div,body[data-view=network][data-focus-scene=true] #semantic-summary,body[data-view=network][data-focus-scene=true] #map-status .map-exploration-controls{display:none}
+body[data-view=network][data-focus-scene=true] #visible-count{margin:0;font-size:9px}
+body[data-view=network][data-focus-scene=true] .graph-node.trail-node .node-halo{stroke-width:2.4px;opacity:.45}
+body[data-view=network][data-focus-scene=true] #edge-layer>g.trail-link .graph-edge{stroke-width:1.8px;opacity:.9}
+@media(max-width:800px){
+body[data-view=network][data-focus-scene=true] #graph-stage #search-window{left:10px;top:10px;width:250px;max-width:calc(100% - 20px)}
+body[data-view=network][data-focus-scene=true] #graph-stage .exploration-tools{top:10px;right:10px;left:auto}
+body[data-view=network][data-focus-scene=true] .exploration-tools>.explore-button{padding:6px;font-size:10px;min-height:32px}
+body[data-view=network][data-focus-scene=true] #connection-legend{left:10px;right:10px;width:auto;max-height:110px}
+}
+@media(max-width:600px){
+body[data-view=network][data-focus-scene=true] #graph-stage #search-window{width:calc(100% - 20px)}
+body[data-view=network][data-focus-scene=true] #graph-stage .exploration-tools{top:var(--focus-search-bottom,110px);left:10px;right:10px;display:flex;justify-content:space-between;gap:1px}
+body[data-view=network][data-focus-scene=true] .exploration-tools>.explore-button{font-size:9px;padding:5px 4px;min-height:28px}
+body[data-view=network][data-focus-scene=true] .secondary-actions summary{min-height:28px;padding:5px}
+body[data-view=network][data-focus-scene=true] #entity-popover{width:162px;min-width:162px;font-size:10px}
+body[data-view=network][data-focus-scene=true] #connection-legend{bottom:62px;max-height:100px}
+body[data-view=network][data-focus-scene=true] #map-status{left:10px;bottom:12px;max-width:170px}
+}
+
+@media(max-width:600px){
+body[data-view=network][data-focus-scene=true] #entity-popover{padding:6px}
+body[data-view=network][data-focus-scene=true] .popover-heading{font-size:11px}
+body[data-view=network][data-focus-scene=true] #popover-stats{font-size:9px;line-height:1.2;margin:3px 0}
+body[data-view=network][data-focus-scene=true] .record-popover-actions button{min-height:30px}
+body[data-view=network][data-focus-scene=true] #connection-legend li[data-legend-type]{font-size:9px;min-height:16px}
+}
+
+body[data-view=network][data-focus-scene=true] #connection-legend .floating-panel-header{position:absolute;left:8px;right:8px;top:5px;display:block;height:18px;pointer-events:none;cursor:move}
+body[data-view=network][data-focus-scene=true] #connection-legend .floating-panel-header h2{float:left;font-size:9px;pointer-events:auto}
+body[data-view=network][data-focus-scene=true] #connection-legend .floating-panel-header button{float:right;pointer-events:auto}
+body[data-view=network][data-focus-scene=true] #connection-legend #legend-types{padding-right:20px}
+body[data-view=network][data-focus-scene=true] #connection-legend #legend-types:before{content:'';width:31px;height:16px;flex:none}

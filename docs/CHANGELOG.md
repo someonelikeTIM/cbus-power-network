@@ -2,7 +2,7 @@
 
 ## Unreleased — Automatic entity focus
 
-Selecting an entity frames its full direct neighborhood automatically, with readable names, colored connection icons and a flyout containing connection counts and type choices. Overview zoom thresholds no longer hide direct neighbors. Smooth camera flights, type changes, pins and reverse Undo preserve continuity while exploring. Large neighborhoods use additional document space rather than dropping direct records. The compact legend and flyout reserve space before entity placement.
+Selecting an entity frames its full direct neighborhood automatically, with readable names, colored connection icons and a flyout containing connection counts and type choices. Overview zoom thresholds no longer hide direct neighbors. Smooth camera flights, type changes, pins and reverse Undo preserve continuity while exploring. The full direct neighborhood fits the visible canvas without extending its height. Icons are placed on their connection lines beside the corresponding entity, with space reserved before layout. A compact flyout and inline legend leave more room for the map. Very dense, narrow views use compact bubbles with full names available on focus or hover. Explored steps and their original connection records persist through later focus, saved views and reloads; Collapse connections and Collapse explored path are explicit actions. Undo restores the trail and its presentation together.
 
 ## Unreleased — 2026 campaign coverage
 
