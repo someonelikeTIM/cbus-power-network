@@ -34,6 +34,10 @@ export function segmentInBox(a,b,box){
     if(!p){if(q<0)return false;continue;}const t=q/p;if(p<0)lo=Math.max(lo,t);else hi=Math.min(hi,t);if(lo>hi)return false;
   }return true;
 }
+export function circleInBox(point,radius,box){
+  const x=Math.max(box.left,Math.min(point.x,box.right)),y=Math.max(box.top,Math.min(point.y,box.bottom));
+  return (point.x-x)**2+(point.y-y)**2<=radius**2;
+}
 export function dollarLabel(edge){
   // Keep the record's own qualifier (ceiling, range, commitment, etc.) in view.
   const label=edge.amountLabel||edge.label||'';

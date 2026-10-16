@@ -222,31 +222,35 @@ body:not([data-view=network]) .secondary-actions #export{display:none}
   body[data-view=network][data-empty-start=true] #start-overview-note:not([hidden]){display:none}
 }
 
-/* The map's quick actions and legend stay readable above the working canvas. */
-.quick-menu{position:sticky;top:8px;z-index:24;margin:12px 16px;padding:12px 16px;background:var(--white);border:1px solid var(--line);border-radius:10px;box-shadow:0 5px 18px #252b2918;font:13px/1.45 var(--sans)}
-.quick-menu[hidden]{display:none!important}.quick-controls,.quick-context,#quick-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.quick-controls{padding-bottom:10px;border-bottom:1px solid var(--line)}
-.quick-title{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:8px}.quick-title strong{font:650 12px var(--sans)}.quick-title button{min-height:30px!important;padding:4px 8px!important;font-size:11px!important;background:transparent!important}.quick-menu[data-collapsed=true] .quick-title{margin-bottom:0}.quick-menu[data-collapsed=true] .quick-controls,.quick-menu[data-collapsed=true] .quick-context,.quick-menu[data-collapsed=true] #quick-hint{display:none}
-body[data-view=network] #network-view{position:relative}
-.quick-menu button{min-height:38px;padding:7px 11px;border:1px solid var(--line);border-radius:6px;background:var(--paper);color:var(--ink);font:600 12px var(--sans)}
-.quick-menu button[aria-pressed=true]{background:var(--ink);color:var(--white)}.quick-menu button:hover{border-color:var(--rust)}.quick-context{margin-top:10px;justify-content:space-between}.quick-context strong{font-size:13px}.quick-menu p{font:11px/1.5 var(--sans);margin:8px 0 0;color:var(--muted)}
-body[data-view=network] #network-view #connection-legend{position:relative!important;inset:auto!important;transform:none!important;margin:12px 16px 18px!important;width:auto!important;max-width:none!important;height:auto!important;max-height:none!important;padding:18px 20px!important;border-radius:9px;overflow:visible!important;box-shadow:0 3px 12px #252b2910;display:block!important}
-body[data-view=network] #network-view #connection-legend[hidden]{display:none!important}
-body[data-view=network][data-empty-start=true] #network-view #connection-legend{display:none!important}
-body[data-view=network] #network-view #connection-legend .floating-panel-header{display:flex!important;cursor:default;touch-action:auto;margin-bottom:14px!important;padding-bottom:10px!important}
-body[data-view=network] #network-view #connection-legend .floating-panel-header:before{display:none}
-body[data-view=network] #network-view #connection-legend h2{font:600 18px var(--sans)!important;display:block!important}
-body[data-view=network] #network-view #connection-legend #legend-types{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(210px,1fr))!important;gap:12px 20px!important;flex-direction:initial!important}
+/* Canvas tools overlay the map without consuming workspace height. */
+.quick-menu{position:absolute;left:16px;top:74px;z-index:24;width:310px;max-width:calc(100% - 32px);margin:0;padding:6px 9px;background:var(--white);border:1px solid var(--line);border-radius:8px;box-shadow:0 3px 12px #252b2914;font:13px/1.45 var(--sans)}
+.quick-menu[hidden]{display:none!important}
+.quick-title{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:30px}.quick-title strong{font:600 12px var(--sans)}
+.quick-menu button{min-height:36px;padding:7px 9px;border:1px solid var(--line);border-radius:5px;background:var(--paper);color:var(--ink);font:600 12px var(--sans)}
+.quick-title button{min-height:30px;padding:4px 8px;border:0;background:transparent}.quick-menu button[aria-pressed=true]{background:var(--ink);color:var(--white)}.quick-menu button:hover{border-color:var(--rust)}
+.quick-controls{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:8px 0;border-bottom:1px solid var(--line)}.quick-controls button:first-child{grid-column:1/-1}
+.quick-context{margin-top:10px}.quick-context strong{font-size:12px}#quick-actions{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px}
+.quick-menu p{font:11px/1.5 var(--sans);margin:8px 0 3px;color:var(--muted)}
+.quick-menu[data-collapsed=true] .quick-controls,.quick-menu[data-collapsed=true] .quick-context,.quick-menu[data-collapsed=true] #quick-hint{display:none}
+body[data-view=network] #network-view #connection-legend{position:absolute!important;left:16px!important;right:auto!important;bottom:auto!important;transform:none!important;margin:0!important;width:380px!important;max-width:calc(100% - 32px)!important;height:auto!important;min-height:0!important;padding:16px!important;border-radius:8px;overflow:auto!important;box-shadow:0 4px 16px #252b2918;display:block!important;z-index:25}
+body[data-view=network] #network-view #connection-legend[hidden],body[data-view=network][data-empty-start=true] #network-view #connection-legend{display:none!important}
+body[data-view=network] #network-view #connection-legend .floating-panel-header{position:static!important;display:flex!important;height:auto!important;cursor:default;touch-action:auto;pointer-events:auto;margin:0 0 12px!important;padding:0 0 8px!important;border-bottom:1px solid var(--line)}
+body[data-view=network] #network-view #connection-legend .floating-panel-header:before,body[data-view=network] #network-view #connection-legend #legend-types:before{display:none}
+body[data-view=network] #network-view #connection-legend h2{font:600 18px var(--sans)!important;display:block!important;float:none!important}
+body[data-view=network] #network-view #connection-legend #legend-types{display:grid!important;grid-template-columns:1fr!important;gap:9px!important;flex-direction:initial!important;padding:0!important}
 body[data-view=network] #network-view #connection-legend li{display:flex;align-items:center;font-size:14px!important;line-height:1.45;gap:9px!important;min-height:28px}
-body[data-view=network] #network-view #connection-legend .legend-type-label{font-size:14px!important;color:var(--ink)}
+body[data-view=network] #network-view #connection-legend .legend-type-label{font-size:14px!important;color:var(--ink);flex:1!important}
 body[data-view=network] #network-view #connection-legend small{font:600 13px var(--mono)!important}
 body[data-view=network] #network-view #connection-legend .legend-line{width:30px!important;min-width:30px;border-top-width:3px!important}
 body[data-view=network] #network-view #connection-legend p{font:12px/1.5 var(--sans)!important;display:block!important;margin:12px 0 0!important}
 body[data-view=network] #network-view #connection-legend p[hidden]{display:none!important}
-body[data-view=network] #network-view #connection-legend .floating-panel-header button{min-width:38px!important;min-height:38px!important;font-size:25px!important}
-#graph{user-select:none;touch-action:none}#selection-box{fill:#aa4d3820;stroke:var(--rust);stroke-width:1.5;stroke-dasharray:5 3;pointer-events:none}#selection-box[hidden]{display:none}
-#graph .graph-node.multi-selected .node-core{stroke:var(--rust)!important;stroke-width:4px!important}
-#graph .graph-node.multi-selected{opacity:1!important}#graph .selected-connection .graph-edge{stroke-width:4!important;opacity:1!important}
+body[data-view=network] #network-view #connection-legend .floating-panel-header button{min-width:36px!important;min-height:36px!important;font-size:25px!important;float:none!important}
+#graph{user-select:none;touch-action:none}#graph[data-selection-mode=true],#graph[data-selection-mode=true]:active{cursor:default}#graph[data-panning=true],#graph[data-panning=true] *{cursor:grabbing!important}#graph[data-selecting=true],#graph[data-selecting=true] *{cursor:default!important}
+#selection-box{fill:#aa4d3812;stroke:var(--rust);stroke-width:2;stroke-dasharray:5 3;vector-effect:non-scaling-stroke;pointer-events:none}#selection-box[hidden]{display:none}
+#graph[data-selecting=true] .graph-node{transition:none}
+#graph .graph-node.marquee-preview .node-core,#graph .graph-node.multi-selected .node-core{stroke:var(--rust)!important;stroke-width:4px!important}
+#graph .graph-node.marquee-preview,#graph .graph-node.multi-selected{opacity:1!important}#graph .selected-connection .graph-edge{stroke-width:4!important;opacity:1!important}
 #graph .edge-label.dollar-label{display:block!important;font:600 11px var(--sans);fill:var(--ink);text-anchor:middle;paint-order:stroke;stroke:var(--white);stroke-width:5px;stroke-linejoin:round;pointer-events:none}
 .bucket-heading{font:650 14px var(--sans)}#bucket-layer{pointer-events:none}
 body[data-grouped=true] #graph .graph-edge{opacity:.24!important}body[data-grouped=true] #graph .selected-connection .graph-edge,body[data-grouped=true] #graph #edge-layer>g.hovered .graph-edge{opacity:1!important}
-@media(max-width:720px){.quick-menu{position:relative;top:auto;margin:8px;padding:12px}.quick-menu button{min-height:44px}.quick-controls{display:grid;grid-template-columns:1fr 1fr}.quick-controls button:first-child{grid-column:1/-1}.quick-context{display:block}#quick-actions{margin-top:9px}body[data-view=network] #network-view #connection-legend{margin:8px!important;padding:16px!important}body[data-view=network] #network-view #connection-legend #legend-types{grid-template-columns:1fr!important}}
+@media(max-width:720px){.quick-menu{left:10px;max-width:calc(100% - 20px)}.quick-menu:not([data-collapsed=true]) button{min-height:40px}body[data-view=network] #network-view #connection-legend{left:10px!important;max-width:calc(100% - 20px)!important}}

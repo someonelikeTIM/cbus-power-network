@@ -23,7 +23,7 @@ export function encodeState(base,state,releaseId) {
   if(state.connectionDistance!=null)values.distance=normalizeConnectionDistance(state.connectionDistance);
   if(state.pinnedIds?.size)values.pins=[...state.pinnedIds].sort().join(',');
   if(state.research?.steps.length)values.research=state.research.steps.map(step=>step.kind+':'+step.id).join('|');
-  if(state.focus&&state.selected?.kind!=='node'&&state.focusEntity)values.center=state.focusEntity;
+  if(state.focus&&state.focusEntity&&(state.selected?.kind!=='node'||state.selected.id!==state.focusEntity))values.center=state.focusEntity;
   if(state.focus&&Object.hasOwn(relationships,state.focusType))values.focusType=state.focusType;
   if(state.trailNodes?.size)values.trail=[...state.trailNodes].join(',');
   if(state.trailEdges?.size)values.trailEdges=[...state.trailEdges].join(',');
