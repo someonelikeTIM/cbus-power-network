@@ -44,4 +44,4 @@ export function caseHighlights(id,outcomes){
   };
   return outcomes.filter(text=>!omitted.has(text)).map(text=>readable[text]||text);
 }
-export const overlapLabel=status=>({'overlap-unknown':'Shared dates: not recorded','non-overlapping':'The connections cover different periods','established-overlap':'The recorded periods overlap'})[status]||status;
+export const overlapLabel=status=>({'overlap-unknown':'Not established across these links','non-overlapping':'The connections cover different periods','established-overlap':'The recorded periods overlap'})[status]||status;

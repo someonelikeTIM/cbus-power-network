@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased — Guided exploration and record context
+
+The first visit now explains what the explorer covers and offers three concrete starting points. The network overview action describes its readable subset instead of suggesting that every entity and connection appears at once. Narrow network details use a wider record sheet with the record type, qualification and first cited source visible before the longer evidence.
+
+Entity timelines start with direct records. The connected scope explains its two-link inclusion rule, and indirect cards identify the recorded route that brings them into view. Switching to a view that cannot show the selected record closes its inspector. Path finding no longer preselects an unrelated destination and uses a single link's recorded period instead of a shared-range warning.
+
+Download data is visible in list and timeline views. A preview shows the current selection, record counts, JSON format, edition and file name before saving. The confirmation names the file and included entity, link and source counts. These changes do not alter curated records or source distinctions.
+
 ## 2026-10-16 — Explorer focus and retained trails
 
 Explored trails use stronger connection lines, clear type icons and outlined entities. Surrounding connections stay visible at lower contrast and return to full contrast on hover, keyboard focus or selection. Relationship colors and historical dashes retain their original meaning. The same emphasis applies to paths opened through Show this path and saved research paths.
