@@ -8,7 +8,7 @@ Entity and connection pins form an ordered research path with notes, documented 
 
 Explorer tabs support independent views, side-by-side comparison, named browser saves and versioned JSON export/import. Grouped filters offer bulk selection, and the legend retains muted excluded connection types with Show controls. Factual records and stable IDs are unchanged.
 
-Hovering or focusing a connection names its type. The legend fits a compact list of displayed types and grows with its content. Contribute links directly to the GitHub contribution guide; Contact opens GitHub issues.
+Solid entity bubbles use white text. Hovering or focusing a bubble shows its full name and recorded connection count; connection hover names its type. The legend fits a compact list of displayed types and grows with its content. Contribute links directly to the GitHub contribution guide; Contact opens GitHub issues.
 
 ## 2026-10-15 — first public edition
 

@@ -41,7 +41,7 @@ try{preferredConnectionDistance=normalizeConnectionDistance(localStorage.getItem
 Object.assign(state,{connectionMode:'all',from:'',to:'',includeUncertain:true,mapMode:'explore',exploreRoot:'',exploredIds:new Set(),explorationSeeds:new Set(),openNodes:new Set(),startingIds:new Set(),customStart:true,detailsOpen:false,connectionDistance:preferredConnectionDistance});
 state.pinnedIds=new Set();state.pinnedEdgeIds=new Set();state.research=emptyResearch();
 let researchUI=null,recordMenuOpen=false,semanticNodes=new Set(),semanticEdges=new Set(),legendSignature='',semanticStyles=new Map(),legendReflow=false;
-let workspaceTimer=null,entityScale=1;
+let workspaceTimer=null,entityScale=1,entityTooltipId=null;
 const defaults={...state};
 state.tags=new Set();defaults.tags=new Set();
 let restoringURL=true,selectionOpener=null;
@@ -430,6 +430,20 @@ function positionConnectionTooltip(event){
   const bounds=$('canvas-area').getBoundingClientRect(),point=edgeEls.get(edge.id).midpoint,x=event?.clientX!==undefined?event.clientX-bounds.left:camera.x+point.x*camera.z,y=event?.clientY!==undefined?event.clientY-bounds.top:camera.y+point.y*camera.z;
   tooltip.style.left=Math.max(8,Math.min(dimensions.width-tooltip.offsetWidth-8,x+14))+'px';tooltip.style.top=Math.max(8,Math.min(dimensions.height-tooltip.offsetHeight-8,y-tooltip.offsetHeight-12))+'px';
 }
+function hideEntityTooltip(){if(entityTooltipId)nodeEls.get(entityTooltipId)?.core.removeAttribute('aria-describedby');entityTooltipId=null;$('entity-tooltip').hidden=true;}
+function showEntityTooltip(id,event){
+  if(entityTooltipId!==id)hideEntityTooltip();entityTooltipId=id;
+  const node=nodeById.get(id),count=degrees.get(id)||0,tooltip=$('entity-tooltip');
+  tooltip.querySelector('strong').textContent=node.name;tooltip.querySelector('span').textContent=count+' recorded connection'+(count===1?'':'s');
+  nodeEls.get(id).core.setAttribute('aria-describedby','entity-tooltip');positionEntityTooltip(event);
+}
+function positionEntityTooltip(event){
+  const tooltip=$('entity-tooltip');if(!entityTooltipId||!semanticNodes.has(entityTooltipId)||state.view!=='network'){tooltip.hidden=true;return;}
+  tooltip.hidden=false;const surface=$('canvas-area').getBoundingClientRect(),core=nodeEls.get(entityTooltipId).core.getBoundingClientRect();
+  const x=event?.clientX!==undefined?event.clientX-surface.left:(core.left+core.right)/2-surface.left,y=event?.clientY!==undefined?event.clientY-surface.top:core.top-surface.top;
+  tooltip.style.left=Math.max(8,Math.min(dimensions.width-tooltip.offsetWidth-8,x-tooltip.offsetWidth/2))+'px';
+  const above=y-tooltip.offsetHeight-12;tooltip.style.top=Math.max(8,Math.min(dimensions.height-tooltip.offsetHeight-8,above>=8?above:core.bottom-surface.top+12))+'px';
+}
 function raisePathForeground(){
   if(!state.path)return;
   for(const id of state.path.edges){const edge=edgeEls.get(id);if(edge&&edge.group.style.display!=='none')$('edge-layer').append(edge.group);const icon=connectionIcons.get(id);if(icon&&icon.group.style.display!=='none')$('connection-icon-layer').append(icon.group);}
@@ -467,7 +481,7 @@ function buildGraph() {
   });
   nodes.forEach(n => {
     const group = svgEl('g', { class: 'graph-node', 'data-node': n.id, style: `--color:${categories[n.category].color};--base-radius:${8+Math.min(9,degrees.get(n.id)*.85)}px` });
-    const title = svgEl('title'); title.textContent = `${n.name} · ${n.role}`;
+    const title = svgEl('title'); title.textContent = `${n.name} · ${degrees.get(n.id)} recorded connection${degrees.get(n.id)===1?'':'s'} · ${n.role}`;
     const hit=svgEl('circle',{class:'node-hit',fill:'transparent'});
     const halo = svgEl('circle', { class: 'node-halo' });
     const core = svgEl('circle', { class: 'node-core',role:'button',tabindex:'0','data-node':n.id,'aria-label':`Explore ${n.name}` });
@@ -479,10 +493,11 @@ function buildGraph() {
     const pin=svgEl('g',{class:'node-pin-control',role:'button',tabindex:'0','data-pin':n.id,'aria-label':`Pin ${n.name} as anchor`});
     pin.append(svgEl('circle',{r:22,fill:'transparent'}),svgEl('circle',{r:10,class:'node-pin-disc'}),svgEl('path',{d:'M-3 -6h6l-1 5 3 3H-5l3-3zM0 2v6',class:'node-pin-glyph'}));
     group.append(title, hit,halo, core, letter, label,pin); $('node-layer').append(group); nodeEls.set(n.id, { group, hit,halo, core, letter, label,pin,normalLines:lines });
-    group.addEventListener('pointerenter',()=>{hoveredNode=n.id;renderGraph();});
-    group.addEventListener('pointerleave',()=>{hoveredNode=null;renderGraph();});
-    group.addEventListener('focus',()=>{hoveredNode=n.id;renderGraph();});
-    group.addEventListener('blur',()=>{hoveredNode=null;renderGraph();});
+    group.addEventListener('pointerenter',event=>{hoveredNode=n.id;renderGraph();showEntityTooltip(n.id,event);});
+    group.addEventListener('pointermove',positionEntityTooltip);
+    group.addEventListener('pointerleave',()=>{if(group.contains(document.activeElement)){positionEntityTooltip();return;}hoveredNode=null;hideEntityTooltip();renderGraph();});
+    group.addEventListener('focusin',()=>{hoveredNode=n.id;renderGraph();showEntityTooltip(n.id);});
+    group.addEventListener('focusout',event=>{if(group.contains(event.relatedTarget)||group.matches(':hover'))return;hoveredNode=null;hideEntityTooltip();renderGraph();});
   });
   $('graph').addEventListener('click', event => {
     if (suppressClick) { suppressClick = false; return; }
@@ -680,6 +695,7 @@ function placeLabels() {
   const legend=$('connection-legend'),legendRect=legend.getBoundingClientRect(),legendBox={left:legendRect.left-surface.left,top:legendRect.top-surface.top,right:legendRect.right-surface.left,bottom:legendRect.bottom-surface.top};
   if(!legendReflow&&!expansionAnimation&&!legend.hidden&&legendRect.width&&visible.items.some(item=>footprintsOverlap(item,{box:legendBox},gap))){legendReflow=true;camera=fittedCamera(camera.z,true);positionGraph();legendReflow=false;}
   positionConnectionTooltip();
+  positionEntityTooltip();
 }
 
 function positionRecordMenu(items,obstacles){
@@ -1070,6 +1086,7 @@ for(const id of ['timeline-entity','timeline-scope','timeline-money','timeline-u
 document.addEventListener('keydown', event => {
   if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='z'&&!event.shiftKey&&state.view==='network'&&!event.target.closest('input,textarea,[contenteditable=true]')&&explorationHistory.length){event.preventDefault();undoExploration();return;}
   if (event.key === '/' && !['INPUT', 'SELECT', 'TEXTAREA'].includes(event.target.tagName) && !document.querySelector('dialog[open]')) { event.preventDefault(); $('search').focus(); }
+  if(event.key==='Escape'&&!$('entity-tooltip').hidden){hideEntityTooltip();event.preventDefault();return;}
   if(event.key==='Escape'&&event.target.closest('.floating-panel')){closeFloatingPanel(event.target.closest('.floating-panel').id);return;}
   if (event.key === 'Escape' && !document.querySelector('dialog[open]')) { settleExpansion(false);state.selected = null; state.focus = false; state.path = null; render();restoreFocus(); }
 });
