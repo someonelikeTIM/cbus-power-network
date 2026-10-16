@@ -34,15 +34,17 @@ export function scopedConnections(graph, anchors, distance) {
 
 const intersects = (a, b, gap = 8) => a.left < b.right + gap && a.right > b.left - gap && a.top < b.bottom + gap && a.bottom > b.top - gap;
 
-export function arrangeCanvas(graph, {width, height, obstacles = [], current = new Map(), pins = new Set(), retained = new Set(), center = '', degrees = new Map(), measurements = new Map(), flow=false}) {
+export function arrangeCanvas(graph, {width, height, obstacles = [], current = new Map(), pins = new Set(), retained = new Set(), required = new Set(), center = '', centerPoint=null, degrees = new Map(), measurements = new Map(), flow=false}) {
   const positions=new Map(),boxes=[],latent=[];
-  const items=[...graph.nodes].sort((a,b)=>Number(b.id===center)-Number(a.id===center)||Number(pins.has(b.id))-Number(pins.has(a.id))||(degrees.get(b.id)||0)-(degrees.get(a.id)||0)||a.id.localeCompare(b.id));
+  const area=id=>{const m=measurements.get(id);return m?(m.right-m.left)*(m.bottom-m.top):0;};
+  const items=[...graph.nodes].sort((a,b)=>Number(b.id===center)-Number(a.id===center)||Number(required.has(b.id))-Number(required.has(a.id))||Number(pins.has(b.id))-Number(pins.has(a.id))||(required.size?area(b.id)-area(a.id):0)||(degrees.get(b.id)||0)-(degrees.get(a.id)||0)||a.id.localeCompare(b.id));
   const boxAt=(size,p)=>({left:p.x+size.left,right:p.x+size.right,top:p.y+size.top,bottom:p.y+size.bottom});
   const fits=box=>box.left>=12&&box.right<=width-12&&box.top>=12&&box.bottom<=height-12&&!obstacles.some(other=>intersects(box,other,12))&&!boxes.some(other=>intersects(box,other,14));
   for(let index=0;index<items.length;index++){
     const node=items[index],radius=entityRadius(degrees.get(node.id)||0,pins.has(node.id));
     const size=measurements.get(node.id)||{left:-Math.max(radius+12,Math.min(210,node.name.length*7)/2),right:Math.max(radius+12,Math.min(210,node.name.length*7)/2),top:-radius-8,bottom:radius+45};
-    const old=current.get(node.id),preferred=flow?{x:0,y:0}:(pins.has(node.id)||retained.has(node.id))&&old?old:node.id===center?{x:width/2,y:height/2}:{x:width/2+Math.cos(index*2.399963)*Math.min(width*.34,Math.sqrt(index)*width*.09),y:height/2+Math.sin(index*2.399963)*Math.min(height*.31,Math.sqrt(index)*height*.095)};
+    const origin=centerPoint||{x:width/2,y:height/2};
+    const old=current.get(node.id),preferred=flow?{x:0,y:0}:(pins.has(node.id)||retained.has(node.id))&&old?old:node.id===center?origin:{x:origin.x+Math.cos(index*2.399963)*Math.min(width*.34,Math.sqrt(index)*width*.09),y:origin.y+Math.sin(index*2.399963)*Math.min(height*.31,Math.sqrt(index)*height*.095)};
     let chosen=null,best=Infinity;
     const consider=point=>{const box=boxAt(size,point);if(!fits(box))return;const score=Math.hypot(point.x-preferred.x,point.y-preferred.y);if(score<best){best=score;chosen={point,box};}};
     consider(preferred);

@@ -24,6 +24,7 @@ export function encodeState(base,state,releaseId) {
   if(state.pinnedIds?.size)values.pins=[...state.pinnedIds].sort().join(',');
   if(state.research?.steps.length)values.research=state.research.steps.map(step=>step.kind+':'+step.id).join('|');
   if(state.focus&&state.selected?.kind!=='node'&&state.focusEntity)values.center=state.focusEntity;
+  if(state.focus&&Object.hasOwn(relationships,state.focusType))values.focusType=state.focusType;
   const tags=normalizeTags(state.tags??state.tag);if(state.view==='network'&&tags.length){if(tags.length===1)values.tag=tags[0];else values.tags=tags.join(',');}
   if(state.selected)values.record=`${recordKind(state.selected.kind)}:${state.selected.id}`;
   if(state.path)values.path=state.path.edges.join(',');
@@ -39,6 +40,7 @@ export function decodeState(base,defaults) {
   state.pinnedIds=new Set((p.get('pins')||'').split(',').filter(Boolean));
   state.requestedResearch=(p.get('research')||'').split('|').filter(Boolean).map(value=>{const split=value.indexOf(':');return {kind:value.slice(0,split),id:value.slice(split+1),note:''};});
   state.focusEntity=p.get('center')||'';
+  state.focusType=Object.hasOwn(relationships,p.get('focusType'))?p.get('focusType'):'';
   state.tags=new Set(normalizeTags(p.has('tags')?p.get('tags'):p.get('tag')));
   if(['explore','full'].includes(p.get('map')))state.mapMode=p.get('map');
   else if(p.has('case')||p.has('categories')||p.has('relationships'))state.mapMode='full'; // Existing shared views retain their original full context.

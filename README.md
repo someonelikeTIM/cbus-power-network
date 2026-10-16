@@ -6,6 +6,8 @@ An independent, source-linked map of the people, organizations, money and public
 
 Start with a name or a tag such as **Lobbyist** or **Campaign donations**. Combine tags to narrow the map, click a person or organization to reveal connections, and open a connection to read its sources. Paths, filters, a visible legend and Undo support exploration. **Show all** opens the complete network.
 
+Selecting an entity automatically frames its direct connections with full names and colored type icons. The entity flyout shows connection counts and lets you explore one type or return to all connections. Pin entities or connections to keep anchors in your research path. Dense neighborhoods receive additional page space so direct records stay available without a manual zoom step.
+
 The first public edition, **2026-10-15**, contains **316 entities, 462 relationships, 160 sources and 202 timeline events**. Coverage includes campaign contributions, public contracts, tax incentives, lobbying, civic affiliations and media ownership. This is a selected collection, not a complete register.
 
 Evidence labels distinguish reporting, allegations, findings, registrations and authorizations. A connection alone establishes neither wrongdoing nor causation. Donation totals may summarize several reported receipts; spending ceilings are different from payments. Details preserve those distinctions and explain missing dates or records. See [methodology](docs/METHODOLOGY.md).

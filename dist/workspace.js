@@ -42,7 +42,7 @@ const status = message => { document.querySelector('.workspace-status').textCont
 const currentView = () => views.find(view => view.id === activeId);
 const baseHeight = () => Math.max(480, innerHeight - document.querySelector('.masthead').offsetHeight - document.querySelector('.workspace-bar').offsetHeight - 24);
 function send(id, type, payload = {}) {
-  frames.get(id)?.frame.contentWindow?.postMessage({channel: 'columbus-explorer', type, ...payload}, location.origin);
+  frames.get(id)?.frame.contentWindow?.postMessage({channel: 'columbus-explorer', type, viewportHeight:baseHeight(), ...payload}, location.origin);
 }
 function capture(id) {
   return new Promise((resolve,reject)=>{

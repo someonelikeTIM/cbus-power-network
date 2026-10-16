@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased — Automatic entity focus
+
+Selecting an entity frames its full direct neighborhood automatically, with readable names, colored connection icons and a flyout containing connection counts and type choices. Overview zoom thresholds no longer hide direct neighbors. Smooth camera flights, type changes, pins and reverse Undo preserve continuity while exploring. Large neighborhoods use additional document space rather than dropping direct records. The compact legend and flyout reserve space before entity placement.
+
 ## Unreleased — 2026 campaign coverage
 
 The 2026 political campaigns topic and searchable tag collect election-cycle candidacies, committees, donations, personal financing, endorsements and outside opposition. A September 22 official roster adds candidates from every listed party and qualified write-ins in the covered statewide executive, Senate, OH-03/OH-15 and Franklin County races. Existing record IDs and earlier relationship values are retained.

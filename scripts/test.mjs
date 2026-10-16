@@ -15,6 +15,7 @@ const checks = [
   'check-correction-workflow',
   'check-workspaces',
   'check-semantic',
+  'check-focused-explorer',
   'check-public-files',
 ];
 
