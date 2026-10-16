@@ -17,9 +17,11 @@
   <link rel="stylesheet" href="./explorer-workspace.css">
   <link rel="stylesheet" href="./semantic-explorer.css">
   <link rel="stylesheet" href="./campaign-finance.css">
+  <link rel="stylesheet" href="./desktop-explorer.css">
   <script type="module" src="./bootstrap.js"></script>
 </head>
 <body>
+  <aside class="mobile-notice" role="note">Not optimized for mobile devices. Please visit <strong>cbuspower.org</strong> in a full-size browser for the best experience.</aside>
   <a class="skip-link" href="#explorer">Skip to the explorer</a>
   <header class="masthead">
     <a class="brand" href="./" aria-label="CBUS Power home"><svg viewBox="0 0 36 36" aria-hidden="true"><path d="M8 9L27 7L18 26L8 9L29 26L27 7M18 26L29 26"/><circle cx="8" cy="9" r="4"/><circle cx="27" cy="7" r="3"/><circle cx="18" cy="26" r="4"/><circle cx="29" cy="26" r="2"/></svg><span>CBUS POWER<span class="brand-sub">cbuspower.org</span></span></a>
@@ -48,16 +50,16 @@
         <div id="starting-results" role="region" aria-label="Search results" hidden></div>
         <section id="start-guide" class="start-guide" aria-labelledby="start-guide-title">
           <p class="eyebrow">A source-linked Columbus explorer</p>
-          <h2 id="start-guide-title">Follow a question through the records.</h2>
-          <p>Explore people, organizations, money and public decisions. Choose a starting point to reveal its documented connections and sources.</p>
+          <h2 id="start-guide-title">Start anywhere in the network.</h2>
+          <p>Search any person, organization or topic, or browse the whole network. A few examples are shown below; any entity can be your starting point.</p>
           <div class="start-examples" aria-label="Example starting points">
             <button type="button" data-start-entity="jobsohio">JobsOhio and public incentives <span aria-hidden="true">→</span></button>
             <button type="button" data-start-entity="city">Columbus city government <span aria-hidden="true">→</span></button>
             <button type="button" data-start-entity="ohio-governor-election">2026 governor election <span aria-hidden="true">→</span></button>
           </div>
         </section>
-        <button id="search-show-all" class="search-show-all">Browse network overview</button>
-        <p id="start-overview-note" class="start-overview-note">The overview shows a readable selection first. Choose an entity to reveal its connections.</p>
+        <button id="search-show-all" class="search-show-all">Browse the whole network</button>
+        <p id="start-overview-note" class="start-overview-note">Explore all entities and documented connections. Selecting a record highlights it without rearranging the map.</p>
       </div>
       <div class="exploration-tools" aria-label="Map windows"><button id="undo-map" class="explore-button" title="Undo last exploration step (Ctrl/Cmd+Z)" disabled>↶ Undo</button><button id="mobile-filters" class="explore-button" aria-expanded="false" aria-controls="filters">Filters</button><button id="path-open" class="explore-button" aria-expanded="false" aria-controls="path-dialog">Paths</button><button id="legend-open" class="explore-button" aria-expanded="false" aria-controls="connection-legend">Legend</button><button id="research-open" class="explore-button" aria-controls="research-panel">Research <span id="research-count"></span></button><button id="export-visible" class="explore-button" type="button">Download data</button><details class="secondary-actions"><summary aria-label="More actions">•••</summary><div><button class="plain-button" data-campaign-money="">Campaign money</button><button id="export" class="plain-button" title="Download the currently displayed data">Download data</button></div></details></div>
 
@@ -75,12 +77,12 @@
       <div class="workspace" data-current-view="network">
         <div id="network-view" class="network-view view-panel">
           <section id="quick-menu" class="quick-menu" aria-label="Map quick menu" hidden>
-            <div class="quick-title"><strong id="quick-title">Quick menu</strong><button id="quick-minimize" type="button" aria-expanded="false">Actions ▾</button></div>
-            <div class="quick-controls"><button id="group-connections" type="button" aria-pressed="false">Sort by connection type</button><button id="toggle-amounts" type="button" aria-pressed="false">Show dollar amounts</button><button id="selection-mode" type="button" aria-pressed="true">Drag to select</button></div>
+            <div class="quick-title floating-panel-header" tabindex="0" title="Drag to move · double-click to dock or undock"><strong id="quick-title">Map tools</strong><button id="quick-dock" type="button" title="Dock tools to the upper-left">Dock</button><button id="quick-minimize" type="button" aria-expanded="false">Actions ▾</button></div>
+            <div class="quick-controls"><button id="group-connections" type="button" aria-pressed="false">Sort by connection type</button><button id="toggle-amounts" type="button" aria-pressed="false">Show dollar amounts</button><button id="selection-mode" type="button" aria-pressed="false">Drag to pan</button></div>
             <div class="quick-context"><strong id="quick-selection" aria-live="polite">Explore the map</strong><div id="quick-actions"></div></div>
-            <p id="quick-hint">Drag empty space to select. Ctrl/Cmd-click adds or removes a record. Space-drag pans.</p>
+            <p id="quick-hint">Drag to pan. Scroll to zoom. Shift-drag selects; Ctrl/Cmd-click adds records.</p><div class="window-corner-resizer" tabindex="0" role="separator" aria-label="Resize map tools" title="Drag to resize width and height"></div>
           </section>
-          <div id="map-status" class="map-status"><div class="graph-heading"><div><span id="graph-title" class="eyebrow">Columbus network</span><button id="map-scope" class="node-details-link" aria-controls="inspector"></button></div><span id="visible-count" aria-live="polite"></span><small id="semantic-summary"></small></div><div class="map-exploration-controls"><button id="map-small" class="explore-button">Start small</button><button id="map-full" class="explore-button">Browse network overview</button></div></div>
+          <div id="map-status" class="map-status"><div class="graph-heading"><div><span id="graph-title" class="eyebrow">Columbus network</span><button id="map-scope" class="node-details-link" aria-controls="inspector"></button></div><span id="visible-count" aria-live="polite"></span><small id="semantic-summary"></small></div><div class="map-exploration-controls"><button id="map-small" class="explore-button">Start small</button><button id="map-full" class="explore-button">Browse the whole network</button></div></div>
           <p id="starting-summary" class="starting-summary" role="status"></p>
           <p class="exploration-hint">Choose an entity to explore its connections. Follow a path and keep earlier steps in view. Pin records to save them in your research path.</p>
           <section id="connection-legend" class="connection-legend floating-panel" aria-label="Connection types currently shown" hidden><div class="floating-panel-header" tabindex="0"><h2>Connections shown</h2><button data-close-floating="connection-legend" aria-label="Close legend">×</button></div><ul id="legend-types"></ul><p id="legend-key"></p><p id="indirect-key" hidden><span class="indirect-swatch" aria-hidden="true"></span>Dotted line: indirect route · select it to reveal the recorded links.</p><p id="legend-context">Other visible nodes stay clickable at 50% opacity.</p></section>
@@ -96,7 +98,7 @@
             <div class="graph-controls" aria-label="Map controls"><button id="zoom-in" title="Zoom in" aria-label="Zoom in">+</button><button id="zoom-out" title="Zoom out" aria-label="Zoom out">−</button><span></span><button id="fit" title="Fit all visible nodes" aria-label="Fit the network"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4H4v5m11-5h5v5M4 15v5h5m11-5v5h-5"/></svg></button><button id="reset-layout" title="Arrange entities in the available canvas" aria-label="Arrange entities">↺</button></div>
           </div>
           </div>
-          <div class="graph-footer"><span>Select for evidence <span class="hint-separator">·</span> Drag to select · Space-drag to pan · Ctrl/Cmd-scroll to zoom</span><button id="label-toggle" class="text-button" aria-label="Cycle node labels" title="Cycle automatic labels, all labels, and labels off">Labels auto</button></div>
+          <div class="graph-footer"><span>Select for evidence <span class="hint-separator">·</span> Drag to pan · Scroll to zoom · Shift-drag to select</span><button id="label-toggle" class="text-button" aria-label="Cycle node labels" title="Cycle automatic labels, all labels, and labels off">Labels auto</button></div>
         </div>
 
         <section id="timeline-view" class="timeline-view view-panel" aria-label="Follow the money timeline" hidden>

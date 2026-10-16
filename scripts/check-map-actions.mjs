@@ -8,7 +8,7 @@ const buckets=connectionBuckets(graph,'jobsohio');
 assert.equal(buckets.flatMap(bucket=>bucket.nodes).length,graph.nodes.length);
 assert.equal(new Set(buckets.flatMap(bucket=>bucket.nodes.map(node=>node.id))).size,graph.nodes.length);
 assert.equal(buckets.find(bucket=>bucket.type==='anchor').nodes[0].id,'jobsohio');
-for(const width of [290,780]){const layout=bucketLayout(graph,{anchor:'jobsohio',width});assert.equal(layout.positions.size,graph.nodes.length);for(const bucket of layout.buckets)for(const node of bucket.nodes){const p=layout.positions.get(node.id);assert.ok(p.x>bucket.left&&p.x<bucket.left+bucket.width);assert.ok(p.y>bucket.top&&p.y<bucket.top+bucket.height);}assert.deepEqual(bucketLayout(graph,{anchor:'jobsohio',width}),layout);}
+for(const width of [900,1600]){const layout=bucketLayout(graph,{anchor:'jobsohio',width});assert.equal(layout.positions.size,graph.nodes.length);for(const bucket of layout.buckets)for(const node of bucket.nodes){const p=layout.positions.get(node.id);assert.ok(p.x>bucket.left&&p.x<bucket.left+bucket.width);assert.ok(p.y>bucket.top&&p.y<bucket.top+bucket.height);}assert.deepEqual(bucketLayout(graph,{anchor:'jobsohio',width}),layout);}
 const grant=edges.find(edge=>edge.id==='j29'),selected=selectionGraph(graph,new Set(),new Set(['j29']));assert.deepEqual(selected.edges,[grant]);assert.deepEqual(new Set(selected.nodes.map(node=>node.id)),new Set([grant.source,grant.target]));
 assert.match(dollarLabel(grant),/\$310m.*commitment/);assert.equal(dollarLabel({label:'Unpriced registration',amount:10,unit:'people'}),'');
 const box={left:10,right:30,top:10,bottom:30};assert.ok(segmentInBox({x:0,y:20},{x:40,y:20},box));assert.ok(!segmentInBox({x:0,y:0},{x:40,y:0},box));

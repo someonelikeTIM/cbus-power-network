@@ -80,5 +80,5 @@ body[data-view=network] #connection-legend .legend-show{flex:none}
 body[data-view=network] #connection-legend{width:255px;max-height:40%}
 body[data-view=network] #graph-stage[data-tiny=true] .exploration-tools{display:flex;flex-wrap:nowrap;gap:0}
 body[data-view=network] #graph-stage[data-tiny=true] .exploration-tools>.explore-button{flex:1;min-height:38px}
-@media(max-width:800px){.explorer-panes[data-layout=split]{grid-template-columns:minmax(0,1fr)}.workspace-bar{flex-wrap:wrap}.explorer-tabs{max-width:calc(100% - 95px);flex:1}.workspace-actions{width:100%;justify-content:flex-end}.workspace-button{min-height:40px}.workspace-actions label{margin-right:auto}.workspace-actions select{max-width:160px}.legend-show{opacity:1}body[data-view=network] #graph-stage[data-compact=true] #search-window{width:calc(100% - 20px)}.pin-entity-button{min-height:44px}}
+
 @media(prefers-reduced-motion:reduce){.node-pin-control{transition:none}}

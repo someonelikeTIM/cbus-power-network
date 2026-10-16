@@ -1,8 +1,7 @@
 // Presentation helpers only: no new entities or relationship records.
 export function detailsWidth(requested,available,docked=false){
-  const maximum=Math.max(160,available-(docked?Math.min(280,available*.4):24));
-  const minimum=Math.min(available<600?180:320,maximum);
-  return Math.round(Math.max(minimum,Math.min(maximum,Number(requested)||420)));
+  const maximum=Math.max(240,Math.min(760,available-(docked?300:24)));
+  return Math.round(Math.max(240,Math.min(maximum,Number(requested)||380)));
 }
 export function pairedRelationships(edges,edge){
   return edges.filter(other=>(other.source===edge.source&&other.target===edge.target)||(other.source===edge.target&&other.target===edge.source));

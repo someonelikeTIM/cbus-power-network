@@ -25,10 +25,10 @@ assert.equal(targets.size,first.added.length);assert.ok([...targets.keys()].ever
 const placed=[...seed.ids].map(id=>points.get(id));
 for(const target of targets.values()){assert.ok(Number.isFinite(target.x)&&Number.isFinite(target.y));assert.ok(placed.every(point=>Math.hypot(target.x-point.x,target.y-point.y)>135),'Revealed entities have room beside the existing map');placed.push(target);}
 const cameraBefore={x:120,y:160,z:1},cameraAnchor={x:0,y:0},cameraPoints=[{x:-100,y:-100},{x:500,y:350}];
-const cameraAfter=anchoredCamera(cameraPoints,cameraAnchor,cameraBefore,{width:390,height:600});
+const cameraAfter=anchoredCamera(cameraPoints,cameraAnchor,cameraBefore,{width:1280,height:720});
 assert.equal(cameraAfter.x+cameraAnchor.x*cameraAfter.z,cameraBefore.x+cameraAnchor.x*cameraBefore.z);
 assert.equal(cameraAfter.y+cameraAnchor.y*cameraAfter.z,cameraBefore.y+cameraAnchor.y*cameraBefore.z);
-assert.ok(cameraAfter.z<=cameraBefore.z);assert.ok(cameraPoints.every(point=>point.x*cameraAfter.z+cameraAfter.x>=38&&point.x*cameraAfter.z+cameraAfter.x<=352));
+assert.ok(cameraAfter.z<=cameraBefore.z);assert.ok(cameraPoints.every(point=>point.x*cameraAfter.z+cameraAfter.x>=38&&point.x*cameraAfter.z+cameraAfter.x<=1242));
 const focusGraph={nodes:[{id:'root'},{id:'one'},{id:'two'},{id:'far'}],edges:[{id:'first',source:'root',target:'one'},{id:'second',source:'two',target:'root'},{id:'context',source:'one',target:'far'}]},focusIds=nodeNeighborhood(focusGraph,'root');
 assert.deepEqual(focusIds.nodes,new Set(['root','one','two']));assert.deepEqual(focusIds.edges,new Set(['first','second']));
 const focusPositions=new Map([['root',{x:1000,y:500}],['one',{x:800,y:450}],['two',{x:1100,y:800}],['far',{x:100000,y:100000}]]),viewport={left:40,top:90,width:600,height:500};

@@ -1,10 +1,14 @@
 # Changelog
 
-## Unreleased — Guided exploration and record context
+## Unreleased — Stable desktop network
 
-A floating quick menu adds connection-type buckets, qualified dollar labels, rectangle selection and Ctrl/Cmd selection of entities and connections. Context actions support exploration, timelines, two-entity paths, endpoint selection, pinning, isolation and evidence-preserving selection export. Selections, grouping and amount visibility survive saved-view round trips. Entity and connection details open automatically; the connection-type legend opens as a larger, readable overlay. The quick menu defaults to a compact row at the top of the canvas. Neither control consumes page height. Drag selection uses an arrow cursor, a visible rectangle and immediate entity previews without running graph layout on pointer movement. Focus transitions complete in 240 ms. Phone details occupy at most 40% of the canvas, with the complete record scrollable inside the sheet.
+The desktop canvas now retains all entities and recorded connections in the current filters. Selection highlights a neighborhood and opens its evidence without repacking entities or changing the camera. Zoom changes label detail, not world positions. Panning updates the SVG transform directly. Center, Fit, connection-type buckets and position reset are explicit actions.
 
-The first visit now explains what the explorer covers and offers three concrete starting points. The network overview action describes its readable subset instead of suggesting that every entity and connection appears at once. Narrow network details use a wider record sheet with the record type, qualification and first cited source visible before the longer evidence.
+Drag to pan is the default. Scroll zooms, Shift-drag selects, Ctrl/Cmd-click adds records, and Alt-drag moves entities. Both quick tools and record details support header dragging, corner resizing and docking. Details can be resized in both dimensions, docked to the right, or undocked without reframing the map. Saved desktop views retain world positions and context height.
+
+The first-visit choices are presented as examples alongside unrestricted search and the whole network. Desktop controls use compact dimensions. Mobile-specific canvas packing, responsive control stacks and record sheets have been removed. Small devices receive a nonblocking full-size-browser notice. Mobile regression gates are deferred until the desktop version is delivered.
+
+The first visit now explains what the explorer covers and offers three concrete starting points. The network overview action describes its readable subset instead of suggesting that every entity and connection appears at once. Record details keep source and qualification information alongside the selected record.
 
 Entity timelines start with direct records. The connected scope explains its two-link inclusion rule, and indirect cards identify the recorded route that brings them into view. Switching to a view that cannot show the selected record closes its inspector. Path finding no longer preselects an unrelated destination and uses a single link's recorded period instead of a shared-range warning.
 
