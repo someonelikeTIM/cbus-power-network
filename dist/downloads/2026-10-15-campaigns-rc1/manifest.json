@@ -1,0 +1,158 @@
+{
+  "release": {
+    "schemaVersion": "1.0.0",
+    "releaseId": "2026-10-15-campaigns-rc1",
+    "status": "local-candidate",
+    "preparedOn": "2026-10-15",
+    "publishedAt": null,
+    "dataRevision": 13,
+    "codeLicense": "MIT",
+    "dataLicense": "CC-BY-4.0",
+    "sourceCheckIds": [
+      "pc26-ballot",
+      "pc26-acton-bio",
+      "pc26-pepper-bio",
+      "pc26-acton-support",
+      "pc26-acton-finance",
+      "pc26-vivek-finance",
+      "pc26-rapid5-gift",
+      "pc26-brown-committee",
+      "pc26-husted-committee",
+      "pc26-redpath-committee",
+      "pc26-aep-pac",
+      "pc26-kidspac",
+      "pc26-brown-joint",
+      "pc26-aep-filing",
+      "pc26-kidspac-filing"
+    ]
+  },
+  "inputFingerprint": "d93353c02190b1bc49ec533a26dbf185796b57d2a6f6e9570a2ed73b957e50de",
+  "counts": {
+    "entities": 377,
+    "relationships": 541,
+    "sources": 175,
+    "events": 209,
+    "leads": 7
+  },
+  "sourceChecksReperformed": true,
+  "sourceCheckScope": [
+    "pc26-ballot",
+    "pc26-acton-bio",
+    "pc26-pepper-bio",
+    "pc26-acton-support",
+    "pc26-acton-finance",
+    "pc26-vivek-finance",
+    "pc26-rapid5-gift",
+    "pc26-brown-committee",
+    "pc26-husted-committee",
+    "pc26-redpath-committee",
+    "pc26-aep-pac",
+    "pc26-kidspac",
+    "pc26-brown-joint",
+    "pc26-aep-filing",
+    "pc26-kidspac-filing"
+  ],
+  "thirdPartyDocumentsIncluded": false,
+  "files": [
+    {
+      "path": "dataset.json",
+      "bytes": 1687726,
+      "sha256": "88271689151cc2f3b31b3d225f56b1905a33a16f215dc52cfec31a63f2d2aa9b"
+    },
+    {
+      "path": "entities.csv",
+      "bytes": 216612,
+      "sha256": "3d87889f1c6d60d44e64a2f8f3c5fd7ba63772a39bf0a4d30402c39075744483"
+    },
+    {
+      "path": "entities.json",
+      "bytes": 316242,
+      "sha256": "093dd8ea9298d289b0ef1b55cf5aa60382d20bde162c478d8647e3672963da47"
+    },
+    {
+      "path": "entities.schema.json",
+      "bytes": 11452,
+      "sha256": "5261821c3fe483bcb93476bb5e817a9f42b7d5c08ee8cacd0dc87a5bfe79eb68"
+    },
+    {
+      "path": "events.csv",
+      "bytes": 90919,
+      "sha256": "c411b15dcf05e0636d0184b9a3ebe9b111a6f933e56291a42d8daf8a052b5233"
+    },
+    {
+      "path": "events.json",
+      "bytes": 169700,
+      "sha256": "caaebae835dd50627fa41391edbfcf89672ada75d519cdafd968038b9e54578e"
+    },
+    {
+      "path": "events.schema.json",
+      "bytes": 11447,
+      "sha256": "a91890a4b6d0239239338187224f8b1339c74ee1b0322868ecca3fca0a43dfaf"
+    },
+    {
+      "path": "leads.csv",
+      "bytes": 4837,
+      "sha256": "6a3e657aeee36683040888ec1de40de7d787c65aee8e7c6c6488f32ae6276f5c"
+    },
+    {
+      "path": "leads.json",
+      "bytes": 7163,
+      "sha256": "cab7741ca93485781a1cc7c8922cf225156c4df0b978dd603a78a471b331fc6d"
+    },
+    {
+      "path": "leads.schema.json",
+      "bytes": 11444,
+      "sha256": "7a12e42bbcaf464bd879e1b957f198a53e86b8535d105e442092cb319189ad2e"
+    },
+    {
+      "path": "packet-anduril-city.json",
+      "bytes": 21553,
+      "sha256": "74e682978e15d2937d05a9f314e12042d58c7d9f30aabca28905858a799443d4"
+    },
+    {
+      "path": "packet-flock.json",
+      "bytes": 14418,
+      "sha256": "ea9eac5a39bded3d6875c96e81820a2e59dddd503d91f759b004f147e7b30586"
+    },
+    {
+      "path": "packet-m63.json",
+      "bytes": 8837,
+      "sha256": "4eb0e2cf0f0bc75b0135009fffe9aafb79d7ee7d526e16ae1b2274e80f7e3c4a"
+    },
+    {
+      "path": "relationships.csv",
+      "bytes": 726172,
+      "sha256": "a06536cccce4c0ac60f83015a85ae5ad95d1d7d829bba5f602389e64f1a7b936"
+    },
+    {
+      "path": "relationships.json",
+      "bytes": 944452,
+      "sha256": "1ceb6713b2243d0a66ce1f4019c66565970129e5bcdae96864e54309ffecf6af"
+    },
+    {
+      "path": "relationships.schema.json",
+      "bytes": 11468,
+      "sha256": "a97f2ab1a6dec680d58b04bf1ab5b09a63295594c256d46ebb58f03ddcb48a0f"
+    },
+    {
+      "path": "schema.json",
+      "bytes": 12018,
+      "sha256": "c7210d6f42a50d5b52cd10af52e2de4cdf3a623c69bb1646a3921c051db00926"
+    },
+    {
+      "path": "sources.csv",
+      "bytes": 171501,
+      "sha256": "24cd7b869208467a98e7be29530dcce48191d35eb6e7c78a213ef5089df4732e"
+    },
+    {
+      "path": "sources.json",
+      "bytes": 251291,
+      "sha256": "e8ec4484ea3830a93562b1b4f09661093914b89fae9cd058d737671d3d5895c4"
+    },
+    {
+      "path": "sources.schema.json",
+      "bytes": 11450,
+      "sha256": "57ca6d29edcfc048047fcbaa1aa9cc0865a91fe9fbbe94c756b6c8d2696257b2"
+    }
+  ]
+}

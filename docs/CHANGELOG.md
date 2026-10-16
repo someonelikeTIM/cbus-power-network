@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased — 2026 campaign coverage
+
+The 2026 political campaigns topic and searchable tag collect election-cycle candidacies, committees, donations, personal financing, endorsements and outside opposition. A September 22 official roster adds candidates from every listed party and qualified write-ins in the covered statewide executive, Senate, OH-03/OH-15 and Franklin County races. Existing record IDs and earlier relationship values are retained.
+
+Amy Acton's recorded background now includes her health-department, university, foundation and RAPID 5 roles, her ticket and campaign committee, campaign-listed organizational endorsements, and the purpose of existing V-PAC opposition spending. RAPID 5's developer gift remains charitable funding, separate from campaign donations. New FEC records add distinct Senate campaign committees and selected PAC contributions; a voided AEP PAC item is excluded rather than counted twice.
+
+Campaign money opens within the existing explorer. It contains 160 available 2025–2026 reports, 1,837,416 transaction/memo/balance rows and 88 original source-file references across 29 committees. Ohio bulk exports are supplemented with loan schedules; eight Franklin County scanned reports are transcribed and reconciled to their covers. Current federal amendments replace earlier versions. Totals by reported name link to their underlying rows and sources; names are not treated as resolved identities. Files load on demand, preserving a small default map.
+
+Eight candidate filing gaps, blank summary fields and federal amounts without named itemized rows remain visible. Memo rows, carried loan balances, transfers, in-kind support and accounting carry-over subtotals are distinguished. Candidate receipts and outside-group spending are separate; the collection does not claim exhaustive outside-spending coverage.
+
 ## 2026-10-15 — CBUS Power and explorer workspaces
 
 A tightly packed bubble overview and zoom-dependent detail replace the dense all-at-once map. Bubbles scale with connection counts, with smaller entities filling gaps between larger ones. Visible entity footprints remain separate; lower-priority entities are withheld until there is room. Selecting an entity moves into a small neighborhood with a Pin/Details pop-out. Guided exploration lists the matching connections without filling the canvas. Visible distance controls the available scope, while zoom reveals finer layers.

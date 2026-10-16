@@ -11,8 +11,9 @@ import { trailSources, trailRelease, applyTrailUpdates } from './trails.js';
 import { mediaSources, mediaRelease, mediaCase } from './media.js';
 import { civicSources, civicRelease } from './civic-enrichment.js';
 import { donationSources, donationRelease } from './donation-enrichment.js';
+import { campaignSources,campaignRelease,applyCampaignUpdates,campaignCase } from './campaigns-2026.js';
 export const meta = {
-  title: 'CBUS Power', reviewed: '2026-10-15', version: 12,
+  title: 'CBUS Power', reviewed: '2026-10-15', version: 13,
   scope: 'Columbus and Ohio: money, control, public corruption, civic affiliations, and media ownership, governance, funding and information supply.',
   limitations: 'Selected records, not complete coverage. Evidence status, source date, and direction are attached to each case relationship. Assets, cash transfers, and penalties are identified separately.'
 };
@@ -37,6 +38,7 @@ export const relationships = {
   contract: { label: 'Contracts & procurement', color: '#315c72' },
   lobbying: { label: 'Lobbying representation', color: '#775882' },
   endorsement: { label: 'Campaign support', color: '#ad683f' },
+  opposition: { label: 'Campaign opposition', color: '#9a4b63' },
   candidacy: { label: 'Elections & candidacy', color: '#9d7852' },
   ownership: {label:'Ownership & parent companies',color:'#344d5a'},
   voting: {label:'Voting interests',color:'#574d78'},
@@ -84,7 +86,7 @@ export const allDeclaredSources = [
   {id:'redflex-plea',title:'Finley guilty plea: camera-contract bribery scheme',publisher:'U.S. Department of Justice',url:'https://www.justice.gov/archives/opa/pr/former-ceo-pleads-guilty-bribery-and-fraud-scheme-involving-red-light-camera-contracts',date:'2015-06-19',note:'Finley admitted conduit contributions, false invoices, and contracts in Columbus and Cincinnati.'},
   {id:'redflex-npa',title:'Redflex non-prosecution agreement; Raphael extortion plea',publisher:'U.S. Department of Justice',url:'https://www.justice.gov/usao-sdoh/pr/redflex-traffic-systems-enters-non-prosecution-agreement-united-states',date:'2016-12-27',note:'DOJ identifies John Raphael and his guilty plea; corporate non-prosecution agreement.'},
   {id:'redflex-ginther',title:'Ginther campaign donation crosscheck and response',publisher:'WOSU Public Media',url:'https://www.wosu.org/news/2015-06-22/ginther-im-not-a-target-of-a-redflex-investigation',date:'2015-06-22',kind:'Reporting / campaign-finance crosscheck',note:'Reported $21,000 ODP contribution in 2011. Ginther denied requesting that contribution; acknowledged asking Redflex for support. Court record did not name him.'},
-  ...cityHallSources, ...enrichmentSources, ...infrastructureSources, ...politicalSources, ...flowSources, ...trailSources, ...mediaSources, ...civicSources, ...donationSources
+  ...cityHallSources, ...enrichmentSources, ...infrastructureSources, ...politicalSources, ...flowSources, ...trailSources, ...mediaSources, ...civicSources, ...donationSources, ...campaignSources
 ].map((s,index) => {
   const archived = sourceArchives[s.id];
   const pinned = archived?.contentVerified === true && archived.originalUrl === s.url && /^\d{14}$/.test(archived.timestamp || '') && archived.url?.startsWith(`https://web.archive.org/web/${archived.timestamp}/`);
@@ -271,6 +273,10 @@ meta.civicState=civic.complete?'complete':'verified subset';
 const donations=donationRelease(verifiedSourceIds,nodes.map(node=>node.id));
 nodes.push(...donations.nodes);edges.push(...donations.edges);
 meta.donationState=donations.complete?'complete':'verified subset';
+const campaigns=campaignRelease(verifiedSourceIds,nodes.map(node=>node.id));
+nodes.push(...campaigns.nodes);edges.push(...campaigns.edges);applyCampaignUpdates(nodes,verifiedSourceIds);
+meta.campaign2026State=campaigns.complete?'source-checked subset':'partially source-checked';
+meta.campaign2026Coverage='Official roster for selected statewide and Franklin County races; selected financial filings and campaign statements, with incomplete donor and outside-spending ledgers.';
 if(verifiedSourceIds.has('flow-jobs-finance')){
  const record=nodes.find(n=>n.id==='jobsohio');
  const extraIds=['flow-jobs-finance','flow-jobs-audit','flow-podcast'].filter(id=>verifiedSourceIds.has(id));
@@ -279,6 +285,7 @@ if(verifiedSourceIds.has('flow-jobs-finance')){
 }
 
 export const cases = {
+  campaigns2026:campaignCase,
   hb6: { label: 'HB 6', title: 'Generation Now / HB 6', summary: 'Political payments, spending control, bailout legislation, and legal outcomes.', outcomes: ['Householder: racketeering conviction; 20-year sentence (2023).', 'FirstEnergy: bribery admission; $230m penalty (2021).', 'AEP: SEC findings; $19m civil penalty (2025).'], positions: {aep:[70,240],empowering:[400,240],'generation-now':[760,240],householder:[1100,80],firstenergy:[730,30],hb6:[1100,410],sec:[60,450],'resource-fuels':[450,-220],'boich-donors':[880,-220],'karen-trust':[1200,-220],'penn-national':[1430,30],'fair-gaming':[1450,240],'jack-entertainment':[1440,450],charter:[1150,650],att:[770,650]} },
   epstein: { label: 'Wexner–Epstein', title: 'Wexner / Epstein', summary: 'Financial authority, trusteeship, and transfers to Abigail Wexner’s charitable fund.', outcomes: ['Epstein: 2008 sex-offense guilty plea; died before trial on 2019 federal charges.', 'YLK: $46,657,998 in asset book value received in 2008.', 'Wexner’s explanation of those transfers: partial recovery of misappropriated assets.'], positions: {les:[90,100],epstein:[450,100],foundation:[120,370],'financial-trust':[800,100],couq:[450,390],ylk:[1060,390],abigail:[1060,100]} },
   redflex:{label:'Redflex',title:'Redflex / Columbus campaigns',summary:'Camera contracts, conduit payments, and campaign records.',outcomes:['Finley: bribery/fraud guilty plea (2015).','Raphael: extortion guilty plea, identified by DOJ.','Ginther campaign: $21,000 party contribution reported; he denied requesting it.'],positions:{redflex:[60,150],raphael:[380,150],'ohio-democrats':[730,150],'ginther-campaign':[1080,150],ginther:[1080,450],city:[60,450],finley:[60,-100]}},
@@ -288,6 +295,7 @@ export const cases = {
   ...Object.fromEntries(Object.entries(infrastructureCases).map(([id,record])=>[id,{...record,outcomes:[...record.outcomes]}]))
 };
 cases.datacenters.contextEdgeIds=[...new Set([...(cases.datacenters.contextEdgeIds||[]),'d26-05','d26-06','d26-07','d26-08','d26-09'])];
+cases.politics.contextEdgeIds=[...new Set([...cases.politics.contextEdgeIds,...campaigns.edges.map(edge=>edge.id)])];
 const caseFact=(sourceId,caseId,text)=>{if(verifiedSourceIds.has(sourceId))cases[caseId].outcomes.push(text);};
 for(const edge of trails.edges)for(const id of edge.relatedCases||[]){
   if(cases[id])cases[id].contextEdgeIds=[...new Set([...(cases[id].contextEdgeIds||[]),edge.id])];

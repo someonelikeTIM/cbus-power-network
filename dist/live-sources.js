@@ -1,4 +1,4 @@
-// Checked original sources and rendered-text observations. Archives stay preferred.
+// Original sources checked when a dated archive is unavailable. Archives stay preferred.
 export const sourceLiveEvidence = {
   "flock-contract-2024": {
     "originalUrl": "https://columbus.legistar.com/LegislationDetail.aspx?From=RSS&FullText=1&GUID=76B3DB80-9EF4-4657-A21F-24773FB0E5DD&ID=7043675",
@@ -1752,5 +1752,253 @@ export const sourceLiveEvidence = {
       "identity": "Unattributed initial review"
     },
     "contentCheckNote": "Committee identity only; contribution rows not independently verified."
+  },
+  "pc26-acton-bio": {
+    "originalUrl": "https://actonforgovernor.com/meet-amy/",
+    "finalUrl": "https://actonforgovernor.com/meet-amy/",
+    "contentVerified": true,
+    "checkedAt": "2026-10-16T02:50:55.168Z",
+    "sha256": "dd62f66322c1f78f43feb629932a13b1f1bb4c62095a48d8f2746452205f63e0",
+    "contentCheckMethod": "Original content fetch",
+    "contentChecks": [
+      "Director of Project L.O.V.E",
+      "faculty at Ohio State University",
+      "Columbus Foundation",
+      "Director of the Ohio Department of Health",
+      "Rapid 5"
+    ],
+    "missingChecks": []
+  },
+  "pc26-ballot": {
+    "originalUrl": "https://vote.franklincountyohio.gov/getmedia/e0a4ca45-6893-45c1-8190-87696f8804b4/2026-General-Candidate-List-5",
+    "finalUrl": "https://vote.franklincountyohio.gov/getmedia/e0a4ca45-6893-45c1-8190-87696f8804b4/2026-General-Candidate-List-5",
+    "contentVerified": true,
+    "checkedAt": "2026-10-16T02:50:55.414Z",
+    "sha256": "eab35eee4330e6f2c3be3ff6d5661b5d0153d618999c6760d5866686c1dae6f4",
+    "contentCheckMethod": "Original content fetch",
+    "contentChecks": [
+      "Revised September 22, 2026",
+      "Amy Acton",
+      "David Pepper",
+      "Don Kissick",
+      "James L. Mills",
+      "Greg Levy",
+      "William B. Redpath",
+      "Timothy Telymonde",
+      "Allison Russo",
+      "Seth Walsh"
+    ],
+    "missingChecks": []
+  },
+  "pc26-acton-support": {
+    "originalUrl": "https://actonforgovernor.com/endorsements/",
+    "finalUrl": "https://actonforgovernor.com/endorsements/",
+    "contentVerified": true,
+    "checkedAt": "2026-10-16T02:50:55.418Z",
+    "sha256": "af370107fed1fd231cadeff8523622cd24c7e4b76c130498dfbef2293064a1dd",
+    "contentCheckMethod": "Original content fetch",
+    "contentChecks": [
+      "Ohio Education Association",
+      "Ohio AFL-CIO",
+      "Council 8",
+      "Ohio Federation of Teachers",
+      "SEIU",
+      "Columbus/Central Ohio Building"
+    ],
+    "missingChecks": []
+  },
+  "pc26-pepper-bio": {
+    "originalUrl": "https://actonforgovernor.com/meet-david/",
+    "finalUrl": "https://actonforgovernor.com/meet-david/",
+    "contentVerified": true,
+    "checkedAt": "2026-10-16T02:50:55.418Z",
+    "sha256": "2fee2a009e34c734c1d57588a3ac33aa15173850ded0fec8421bb2bfc155ee8c",
+    "contentCheckMethod": "Original content fetch",
+    "contentChecks": [
+      "David Pepper",
+      "Chairman of the Ohio Democratic Party"
+    ],
+    "missingChecks": []
+  },
+  "pc26-acton-finance": {
+    "originalUrl": "https://actonforgovernor.com/dr-amy-acton-announces-raising-over-13-million-in-the-third-quarter-of-2026/",
+    "finalUrl": "https://actonforgovernor.com/dr-amy-acton-announces-raising-over-13-million-in-the-third-quarter-of-2026/",
+    "contentVerified": true,
+    "checkedAt": "2026-10-16T02:50:55.516Z",
+    "sha256": "f01509093f2b58a5e6c5740e86e784224c826ead057f5031ba3a9fe605f91639",
+    "contentCheckMethod": "Original content fetch",
+    "contentChecks": [
+      "October 8, 2026",
+      "13.2 million",
+      "6 million",
+      "185,000",
+      "Paid for by Ohioans for Amy Acton and David Pepper"
+    ],
+    "missingChecks": []
+  },
+  "pc26-vivek-finance": {
+    "originalUrl": "https://vivekforohio.com/vivek-for-ohio-reports-over-30m-raised-in-2026-pre-primary-filing/",
+    "finalUrl": "https://vivekforohio.com/vivek-for-ohio-reports-over-30m-raised-in-2026-pre-primary-filing/",
+    "contentVerified": true,
+    "checkedAt": "2026-10-16T02:50:55.547Z",
+    "sha256": "5058d296657745cfe9f87d346d0d3e4284fdedf8475751c0871a49d2677d064c",
+    "contentCheckMethod": "Original content fetch",
+    "contentChecks": [
+      "April 21, 2026",
+      "$5 million came from donors",
+      "$25 million investment",
+      "do not include any funds raised by outside groups",
+      "Paid for by Vivek Ramaswamy and Rob McColley for Ohio"
+    ],
+    "missingChecks": []
+  },
+  "pc26-rapid5-gift": {
+    "originalUrl": "https://www.rapid5.org/news/thrive-commits-1-million-to-rapid-5",
+    "finalUrl": "https://www.rapid5.org/news/thrive-commits-1-million-to-rapid-5",
+    "contentVerified": true,
+    "checkedAt": "2026-10-16T02:50:55.681Z",
+    "sha256": "8631555adc0cb862314a64b84805b8ead51ba0e8d66ddc6899847cc5a56b5ded",
+    "contentCheckMethod": "Original content fetch",
+    "contentChecks": [
+      "August 02, 2022",
+      "$1 million",
+      "Thrive",
+      "president and CEO",
+      "RAPID 5 Fund at The Columbus Foundation"
+    ],
+    "missingChecks": []
+  },
+  "pc26-brown-committee": {
+    "originalUrl": "https://www.fec.gov/data/committee/C00916288/?cycle=2026",
+    "finalUrl": "https://www.fec.gov/data/committee/C00916288/?cycle=2026",
+    "contentVerified": true,
+    "checkedAt": "2026-10-16T02:50:55.898Z",
+    "sha256": "50296184b1a0fcc6bad526958259103984282093ff292bb67f2b565f29b6a86a",
+    "contentCheckMethod": "Original content fetch",
+    "contentChecks": [
+      "C00916288",
+      "Principal campaign committee",
+      "08/11/2025 to 06/30/2026",
+      "38,566,234.10",
+      "32,007,356.12",
+      "22,336,492.78",
+      "16,229,741.32"
+    ],
+    "missingChecks": []
+  },
+  "pc26-aep-pac": {
+    "originalUrl": "https://www.fec.gov/data/committee/C00096842/?cycle=2026&tab=about-committee",
+    "finalUrl": "https://www.fec.gov/data/committee/C00096842/?cycle=2026&tab=about-committee",
+    "contentVerified": true,
+    "checkedAt": "2026-10-16T02:50:55.952Z",
+    "sha256": "20f01d38cb10c3842fac43933ee29b7c3e2e70d2890d904912f22e950d49b9f6",
+    "contentCheckMethod": "Original content fetch",
+    "contentChecks": [
+      "C00096842",
+      "Connected organization",
+      "AMERICAN ELECTRIC POWER",
+      "Lobbyist/Registrant PAC"
+    ],
+    "missingChecks": []
+  },
+  "pc26-redpath-committee": {
+    "originalUrl": "https://www.fec.gov/data/committee/C00937300/?cycle=2026",
+    "finalUrl": "https://www.fec.gov/data/committee/C00937300/?cycle=2026",
+    "contentVerified": true,
+    "checkedAt": "2026-10-16T02:50:55.990Z",
+    "sha256": "5929d57acaf81e36aa13c38d0843a3b0d7730381e4fe308bb316091310a732a7",
+    "contentCheckMethod": "Original content fetch",
+    "contentChecks": [
+      "C00937300",
+      "07/03/2025 to 06/30/2026",
+      "24,200.39",
+      "19,200.38",
+      "7,490.04",
+      "5,000.00",
+      "730.35"
+    ],
+    "missingChecks": []
+  },
+  "pc26-kidspac": {
+    "originalUrl": "https://www.fec.gov/data/committee/C00147975/?cycle=2026&tab=about-committee",
+    "finalUrl": "https://www.fec.gov/data/committee/C00147975/?cycle=2026&tab=about-committee",
+    "contentVerified": true,
+    "checkedAt": "2026-10-16T02:50:56.011Z",
+    "sha256": "1c8e49eb678006898112b6072af6d34cb3b50c2a95051ec0f1020f076f260401",
+    "contentCheckMethod": "Original content fetch",
+    "contentChecks": [
+      "C00147975",
+      "KIDSPAC"
+    ],
+    "missingChecks": []
+  },
+  "pc26-brown-joint": {
+    "originalUrl": "https://www.fec.gov/data/committee/C00916296/?cycle=2026&tab=about-committee",
+    "finalUrl": "https://www.fec.gov/data/committee/C00916296/?cycle=2026&tab=about-committee",
+    "contentVerified": true,
+    "checkedAt": "2026-10-16T02:50:56.060Z",
+    "sha256": "0132e31dc6560a3da1eedd44c2f502bcf96b36f4f8a03b60d421da216d4b623f",
+    "contentCheckMethod": "Original content fetch",
+    "contentChecks": [
+      "C00916296",
+      "Joint fundraising committee",
+      "FRIENDS OF SHERROD BROWN",
+      "OHIO DEMOCRATIC PARTY - FEDERAL",
+      "AMERICA WORKS FEDERAL PAC",
+      "DSCC"
+    ],
+    "missingChecks": []
+  },
+  "pc26-kidspac-filing": {
+    "originalUrl": "https://docquery.fec.gov/pdf/075/202601309794588075/202601309794588075.pdf",
+    "finalUrl": "https://docquery.fec.gov/pdf/075/202601309794588075/202601309794588075.pdf",
+    "contentVerified": true,
+    "checkedAt": "2026-10-16T02:50:56.685Z",
+    "sha256": "662b1dde397c3104b2dc997b27026549232ee14c534ebffa478dae4af519b3c4",
+    "contentCheckMethod": "Original content fetch",
+    "contentChecks": [
+      "C00147975",
+      "Friends of Sherrod Brown",
+      "C00916288",
+      "500176255",
+      "500176256",
+      "5000.00"
+    ],
+    "missingChecks": []
+  },
+  "pc26-husted-committee": {
+    "originalUrl": "https://www.fec.gov/data/committee/C00896019/?cycle=2026",
+    "finalUrl": "https://www.fec.gov/data/committee/C00896019/?cycle=2026",
+    "contentVerified": true,
+    "checkedAt": "2026-10-16T02:50:56.686Z",
+    "sha256": "7fb50a59310dd3d959065a840c76fe769ae3ed7d9a3c64040ba2aa3377ace04e",
+    "contentCheckMethod": "Original content fetch",
+    "contentChecks": [
+      "C00896019",
+      "Principal campaign committee",
+      "01/01/2025 to 06/30/2026",
+      "14,350,624.46",
+      "8,653,168.98",
+      "4,931,806.01",
+      "9,418,818.45"
+    ],
+    "missingChecks": []
+  },
+  "pc26-aep-filing": {
+    "originalUrl": "https://docquery.fec.gov/pdf/545/202604179863160545/202604179863160545.pdf",
+    "finalUrl": "https://docquery.fec.gov/pdf/545/202604179863160545/202604179863160545.pdf",
+    "contentVerified": true,
+    "checkedAt": "2026-10-16T02:50:59.596Z",
+    "sha256": "178b1ef6720a08d97b9f63a9a5a8cd90541d99cc4d0fde8563c96c7c342db0a0",
+    "contentCheckMethod": "Original content fetch",
+    "contentChecks": [
+      "C00096842",
+      "8AD73BC61A",
+      "2EB27DFBEB",
+      "Voided 1/28/26 Contribution",
+      "Husted For Senate",
+      "5000.00"
+    ],
+    "missingChecks": []
   }
 };

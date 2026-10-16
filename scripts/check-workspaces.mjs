@@ -4,6 +4,7 @@ import {nodes,edges,sources,relationships,categories} from '../dist/data.js';
 import {arrangeCanvas,entityRadius,scopedConnections,connectionGroups} from '../dist/canvas-layout.js';
 import {parseWorkspace,workspaceFile,validateView} from '../dist/saved-views.js';
 import {encodeState,decodeState} from '../dist/routing.js';
+import {campaignUpdatedNodeIds} from '../dist/campaigns-2026.js';
 
 assert.deepEqual(connectionGroups.flatMap(group=>group.types).sort(),Object.keys(relationships).sort());
 assert.ok(entityRadius(1)<entityRadius(9)&&entityRadius(9)<entityRadius(64));
@@ -31,6 +32,6 @@ restored.views[0].snapshot.positions[0][1]=999;assert.equal(restored.views[1].sn
 for(const mutate of [d=>d.version=99,d=>d.views=[],d=>d.views[0].snapshot.camera.z=0,d=>d.views[0].snapshot.positions.push(['unknown',1,2]),d=>d.views[0].snapshot.positions.push(['aep',1,2]),d=>d.views[0].snapshot.query='https://example.test/',d=>d.views[0].snapshot.query='?pins=unknown',d=>d.views[0].name='']){const bad=structuredClone(document);mutate(bad);assert.throws(()=>parseWorkspace(bad,new Set(nodes.map(node=>node.id))));}
 assert.throws(()=>validateView({...snapshot,positions:[['aep',Infinity,4]]},new Set(['aep'])));
 let factualPreservation='Source IDs and current schema checked';
-try{const baseline=JSON.parse(await readFile('artifacts/explorer-workspaces-before/data.json','utf8'));assert.deepEqual(nodes,baseline.nodes);assert.deepEqual(edges,baseline.edges);assert.deepEqual(sources,baseline.sources);factualPreservation='Every entity, relationship and source retains exact raw fields';}catch(error){if(error.code!=='ENOENT')throw error;}
-const result={tabs:'Independent state; versioned view files validate before import',pins:'Multiple anchors persist in URLs and snapshots',scope:'Distance reveals real neighborhoods from selected and pinned entities',layout:'Viewport bounds, obstacles, degree sizing and stable pin coordinates',filters:'All 18 connection types appear exactly once in grouped controls',factualPreservation};
+try{const baseline=JSON.parse(await readFile('artifacts/explorer-workspaces-before/data.json','utf8'));for(const record of baseline.nodes){const current=nodes.find(node=>node.id===record.id);assert.ok(current);if(!campaignUpdatedNodeIds.has(record.id))assert.deepEqual(current,record);}for(const record of baseline.edges)assert.deepEqual(edges.find(edge=>edge.id===record.id),record);for(const record of baseline.sources)assert.deepEqual(sources.find(source=>source.id===record.id),record);factualPreservation='All earlier IDs and relationship/source fields retained; roster-backed role updates checked separately';}catch(error){if(error.code!=='ENOENT')throw error;}
+const result={tabs:'Independent state; versioned view files validate before import',pins:'Multiple anchors persist in URLs and snapshots',scope:'Distance reveals real neighborhoods from selected and pinned entities',layout:'Viewport bounds, obstacles, degree sizing and stable pin coordinates',filters:'All '+Object.keys(relationships).length+' connection types appear exactly once in grouped controls',factualPreservation};
 await mkdir('artifacts',{recursive:true});await writeFile('artifacts/workspace-checks.json',JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify(result));

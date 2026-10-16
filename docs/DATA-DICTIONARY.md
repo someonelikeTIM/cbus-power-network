@@ -1,5 +1,17 @@
 # Data dictionary
 
+## Campaign filing ledgers
+
+`dist/finance/2026/index.json` lists candidate coverage, committees, reports, source files, checksums and reconciliation figures. Each on-demand `.json.gz` transaction file contains `columns` and `rows`. Amounts use integer US cents. Records retain reported dates, names, accounting categories, memo flags, form codes, public employer/occupation, references and source locators. Postal addresses and contact fields are excluded.
+
+Federal record IDs contain the filing and original transaction ID. Ohio bulk files lack transaction IDs; their IDs use the report key, a hash of the reduced public row and an occurrence suffix. Identical values survive as separate rows. IDs identify records in the captured edition, not unique people. Superseded federal filing versions are excluded from totals.
+
+Name-summary files group identical reported names and money types within each report, with counts and report references. Matching names do not establish one donor identity. Different spellings are not automatically merged. Matching a name to a map entity requires separate identity evidence.
+
+Reconciliation compares itemized rows and reported summaries in cents. Federal summary remainders stay unattributed, including unitemized contributions and other amounts without named rows. Ohio loan schedules supplement the bulk files. Memo rows, carried loan/debt balances and form-to-form accounting subtotals are not additional fundraising. Ohio in-kind support is separate from monetary contributions. Federal totals follow the filing's accounting basis and may include in-kind entries.
+
+Shared tickets use one ledger. Authorized nominee committees remain separate from principal committees. Transfers can appear in two committees' ledgers. Adding map donation amounts to the filing ledger would also count the same records twice. Missing reports and blank fields remain unknown. Report-year filters select reports, not a new transaction-date accounting period.
+
 The dataset is a static collection with schema version 1.0.0. Versioned downloads contain entities, relationships, sources, events and research leads in JSON and CSV, plus schemas and a SHA-256 manifest. Original curated data uses CC BY 4.0; third-party materials are excluded. See [license and attribution](https://github.com/someonelikeTIM/cbus-power-network/blob/main/DATA-LICENSE.md).
 
 ## Tables and joins

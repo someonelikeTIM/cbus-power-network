@@ -1,0 +1,1274 @@
+{
+  "asOf": "2026-10-15",
+  "basis": "Original FEC committee filing indexes, read October 16. Current financial versions selected by committee and reporting window; earlier versions retained in amendment-chain metadata.",
+  "financialFilingIds": [
+    2020004,
+    1994422,
+    1969005,
+    1962841,
+    1935183,
+    1919289,
+    1901894,
+    1885969,
+    2027366,
+    1998024,
+    1967594,
+    1935319,
+    1921855,
+    1921854,
+    1888253,
+    2023746,
+    2017531,
+    1995484,
+    1970942,
+    1964250,
+    1959221,
+    1939910,
+    1886450,
+    2025025,
+    1990427,
+    2023761,
+    1993936,
+    1987446,
+    1987429,
+    1939560,
+    1919823,
+    1907306,
+    1886689,
+    2025264,
+    1995818,
+    1970988,
+    1957479,
+    1931482,
+    1918483,
+    2027030,
+    1997409,
+    1971027,
+    1967034,
+    1943525,
+    1921538,
+    2028005,
+    1995817,
+    1970967,
+    1962531,
+    1951617,
+    2025197,
+    1990465,
+    1970510,
+    1961942,
+    2016915,
+    2016909
+  ],
+  "financialFilings": [
+    {
+      "committeeId": "C00507368",
+      "file": 2020004,
+      "form": "F3N",
+      "start": "2026-07-01",
+      "end": "2026-09-30",
+      "title": "OCT QUARTERLY",
+      "filedAt": "2026-10-12",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00507368/2020004/",
+      "amendmentChain": [
+        2020004
+      ]
+    },
+    {
+      "committeeId": "C00507368",
+      "file": 1994422,
+      "form": "F3A",
+      "start": "2026-04-16",
+      "end": "2026-06-30",
+      "title": "JUL QUARTERLY",
+      "filedAt": "2026-07-15",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00507368/1994422/",
+      "amendmentChain": [
+        1993667,
+        1994422
+      ]
+    },
+    {
+      "committeeId": "C00507368",
+      "file": 1969005,
+      "form": "F3N",
+      "start": "2026-04-01",
+      "end": "2026-04-15",
+      "title": "PRE-PRIMARY",
+      "filedAt": "2026-04-19",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00507368/1969005/",
+      "amendmentChain": [
+        1969005
+      ]
+    },
+    {
+      "committeeId": "C00507368",
+      "file": 1962841,
+      "form": "F3N",
+      "start": "2026-01-01",
+      "end": "2026-03-31",
+      "title": "APR QUARTERLY",
+      "filedAt": "2026-04-15",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00507368/1962841/",
+      "amendmentChain": [
+        1962841
+      ]
+    },
+    {
+      "committeeId": "C00507368",
+      "file": 1935183,
+      "form": "F3N",
+      "start": "2025-10-01",
+      "end": "2025-12-31",
+      "title": "YEAR-END",
+      "filedAt": "2026-01-25",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00507368/1935183/",
+      "amendmentChain": [
+        1935183
+      ]
+    },
+    {
+      "committeeId": "C00507368",
+      "file": 1919289,
+      "form": "F3N",
+      "start": "2025-07-01",
+      "end": "2025-09-30",
+      "title": "OCT QUARTERLY",
+      "filedAt": "2025-10-14",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00507368/1919289/",
+      "amendmentChain": [
+        1919289
+      ]
+    },
+    {
+      "committeeId": "C00507368",
+      "file": 1901894,
+      "form": "F3N",
+      "start": "2025-04-01",
+      "end": "2025-06-30",
+      "title": "JUL QUARTERLY",
+      "filedAt": "2025-07-15",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00507368/1901894/",
+      "amendmentChain": [
+        1901894
+      ]
+    },
+    {
+      "committeeId": "C00507368",
+      "file": 1885969,
+      "form": "F3N",
+      "start": "2025-01-01",
+      "end": "2025-03-31",
+      "title": "APR QUARTERLY",
+      "filedAt": "2025-04-14",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00507368/1885969/",
+      "amendmentChain": [
+        1885969
+      ]
+    },
+    {
+      "committeeId": "C00688465",
+      "file": 2027366,
+      "form": "F3N",
+      "start": "2026-07-01",
+      "end": "2026-09-30",
+      "title": "OCT QUARTERLY",
+      "filedAt": "2026-10-15",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00688465/2027366/",
+      "amendmentChain": [
+        2027366
+      ]
+    },
+    {
+      "committeeId": "C00688465",
+      "file": 1998024,
+      "form": "F3N",
+      "start": "2026-04-01",
+      "end": "2026-06-30",
+      "title": "JUL QUARTERLY",
+      "filedAt": "2026-07-15",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00688465/1998024/",
+      "amendmentChain": [
+        1998024
+      ]
+    },
+    {
+      "committeeId": "C00688465",
+      "file": 1967594,
+      "form": "F3N",
+      "start": "2026-01-01",
+      "end": "2026-03-31",
+      "title": "APR QUARTERLY",
+      "filedAt": "2026-04-15",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00688465/1967594/",
+      "amendmentChain": [
+        1967594
+      ]
+    },
+    {
+      "committeeId": "C00688465",
+      "file": 1935319,
+      "form": "F3N",
+      "start": "2025-10-01",
+      "end": "2025-12-31",
+      "title": "YEAR-END",
+      "filedAt": "2026-01-26",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00688465/1935319/",
+      "amendmentChain": [
+        1935319
+      ]
+    },
+    {
+      "committeeId": "C00688465",
+      "file": 1921855,
+      "form": "F3N",
+      "start": "2025-07-01",
+      "end": "2025-09-30",
+      "title": "OCT QUARTERLY",
+      "filedAt": "2025-10-16",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00688465/1921855/",
+      "amendmentChain": [
+        1921855
+      ]
+    },
+    {
+      "committeeId": "C00688465",
+      "file": 1921854,
+      "form": "F3N",
+      "start": "2025-04-01",
+      "end": "2025-06-30",
+      "title": "JUL QUARTERLY",
+      "filedAt": "2025-10-16",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00688465/1921854/",
+      "amendmentChain": [
+        1921854
+      ]
+    },
+    {
+      "committeeId": "C00688465",
+      "file": 1888253,
+      "form": "F3N",
+      "start": "2025-01-01",
+      "end": "2025-03-31",
+      "title": "APR QUARTERLY",
+      "filedAt": "2025-04-15",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00688465/1888253/",
+      "amendmentChain": [
+        1888253
+      ]
+    },
+    {
+      "committeeId": "C00779603",
+      "file": 2023746,
+      "form": "F3N",
+      "start": "2026-07-01",
+      "end": "2026-09-30",
+      "title": "OCT QUARTERLY",
+      "filedAt": "2026-10-15",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00779603/2023746/",
+      "amendmentChain": [
+        2023746
+      ]
+    },
+    {
+      "committeeId": "C00779603",
+      "file": 2017531,
+      "form": "F3A",
+      "start": "2025-07-01",
+      "end": "2025-09-30",
+      "title": "OCT QUARTERLY",
+      "filedAt": "2026-10-06",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00779603/2017531/",
+      "amendmentChain": [
+        1919880,
+        1930548,
+        2017531
+      ]
+    },
+    {
+      "committeeId": "C00779603",
+      "file": 1995484,
+      "form": "F3N",
+      "start": "2026-04-16",
+      "end": "2026-06-30",
+      "title": "JUL QUARTERLY",
+      "filedAt": "2026-07-15",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00779603/1995484/",
+      "amendmentChain": [
+        1995484
+      ]
+    },
+    {
+      "committeeId": "C00779603",
+      "file": 1970942,
+      "form": "F3N",
+      "start": "2026-04-01",
+      "end": "2026-04-15",
+      "title": "PRE-PRIMARY",
+      "filedAt": "2026-04-23",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00779603/1970942/",
+      "amendmentChain": [
+        1970942
+      ]
+    },
+    {
+      "committeeId": "C00779603",
+      "file": 1964250,
+      "form": "F3N",
+      "start": "2026-01-01",
+      "end": "2026-03-31",
+      "title": "APR QUARTERLY",
+      "filedAt": "2026-04-15",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00779603/1964250/",
+      "amendmentChain": [
+        1964250
+      ]
+    },
+    {
+      "committeeId": "C00779603",
+      "file": 1959221,
+      "form": "F3A",
+      "start": "2025-04-01",
+      "end": "2025-06-30",
+      "title": "JUL QUARTERLY",
+      "filedAt": "2026-04-09",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00779603/1959221/",
+      "amendmentChain": [
+        1901884,
+        1959221
+      ]
+    },
+    {
+      "committeeId": "C00779603",
+      "file": 1939910,
+      "form": "F3N",
+      "start": "2025-10-01",
+      "end": "2025-12-31",
+      "title": "YEAR-END",
+      "filedAt": "2026-01-30",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00779603/1939910/",
+      "amendmentChain": [
+        1939910
+      ]
+    },
+    {
+      "committeeId": "C00779603",
+      "file": 1886450,
+      "form": "F3N",
+      "start": "2025-01-01",
+      "end": "2025-03-31",
+      "title": "APR QUARTERLY",
+      "filedAt": "2025-04-15",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00779603/1886450/",
+      "amendmentChain": [
+        1886450
+      ]
+    },
+    {
+      "committeeId": "C00895276",
+      "file": 2025025,
+      "form": "F3T",
+      "start": "2026-07-01",
+      "end": "2026-09-30",
+      "title": "TERMINATION REPORT",
+      "filedAt": "2026-10-15",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00895276/2025025/",
+      "amendmentChain": [
+        2025025
+      ]
+    },
+    {
+      "committeeId": "C00895276",
+      "file": 1990427,
+      "form": "F3N",
+      "start": "2026-04-01",
+      "end": "2026-06-30",
+      "title": "JUL QUARTERLY",
+      "filedAt": "2026-07-11",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00895276/1990427/",
+      "amendmentChain": [
+        1990427
+      ]
+    },
+    {
+      "committeeId": "C00896019",
+      "file": 2023761,
+      "form": "F3N",
+      "start": "2026-07-01",
+      "end": "2026-09-30",
+      "title": "OCT QUARTERLY",
+      "filedAt": "2026-10-15",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00896019/2023761/",
+      "amendmentChain": [
+        2023761
+      ]
+    },
+    {
+      "committeeId": "C00896019",
+      "file": 1993936,
+      "form": "F3N",
+      "start": "2026-04-16",
+      "end": "2026-06-30",
+      "title": "JUL QUARTERLY",
+      "filedAt": "2026-07-15",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00896019/1993936/",
+      "amendmentChain": [
+        1993936
+      ]
+    },
+    {
+      "committeeId": "C00896019",
+      "file": 1987446,
+      "form": "F3A",
+      "start": "2026-04-01",
+      "end": "2026-04-15",
+      "title": "PRE-PRIMARY",
+      "filedAt": "2026-07-01",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00896019/1987446/",
+      "amendmentChain": [
+        1970913,
+        1987446
+      ]
+    },
+    {
+      "committeeId": "C00896019",
+      "file": 1987429,
+      "form": "F3A",
+      "start": "2026-01-01",
+      "end": "2026-03-31",
+      "title": "APR QUARTERLY",
+      "filedAt": "2026-07-01",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00896019/1987429/",
+      "amendmentChain": [
+        1964008,
+        1987429
+      ]
+    },
+    {
+      "committeeId": "C00896019",
+      "file": 1939560,
+      "form": "F3N",
+      "start": "2025-10-01",
+      "end": "2025-12-31",
+      "title": "YEAR-END",
+      "filedAt": "2026-01-30",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00896019/1939560/",
+      "amendmentChain": [
+        1939560
+      ]
+    },
+    {
+      "committeeId": "C00896019",
+      "file": 1919823,
+      "form": "F3N",
+      "start": "2025-07-01",
+      "end": "2025-09-30",
+      "title": "OCT QUARTERLY",
+      "filedAt": "2025-10-15",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00896019/1919823/",
+      "amendmentChain": [
+        1919823
+      ]
+    },
+    {
+      "committeeId": "C00896019",
+      "file": 1907306,
+      "form": "F3A",
+      "start": "2025-04-01",
+      "end": "2025-06-30",
+      "title": "JUL QUARTERLY",
+      "filedAt": "2025-07-30",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00896019/1907306/",
+      "amendmentChain": [
+        1901020,
+        1907306
+      ]
+    },
+    {
+      "committeeId": "C00896019",
+      "file": 1886689,
+      "form": "F3N",
+      "start": "2025-01-01",
+      "end": "2025-03-31",
+      "title": "APR QUARTERLY",
+      "filedAt": "2025-04-15",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00896019/1886689/",
+      "amendmentChain": [
+        1886689
+      ]
+    },
+    {
+      "committeeId": "C00913491",
+      "file": 2025264,
+      "form": "F3N",
+      "start": "2026-07-01",
+      "end": "2026-09-30",
+      "title": "OCT QUARTERLY",
+      "filedAt": "2026-10-15",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00913491/2025264/",
+      "amendmentChain": [
+        2025264
+      ]
+    },
+    {
+      "committeeId": "C00913491",
+      "file": 1995818,
+      "form": "F3N",
+      "start": "2026-04-16",
+      "end": "2026-06-30",
+      "title": "JUL QUARTERLY",
+      "filedAt": "2026-07-15",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00913491/1995818/",
+      "amendmentChain": [
+        1995818
+      ]
+    },
+    {
+      "committeeId": "C00913491",
+      "file": 1970988,
+      "form": "F3N",
+      "start": "2026-04-01",
+      "end": "2026-04-15",
+      "title": "PRE-PRIMARY",
+      "filedAt": "2026-04-23",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00913491/1970988/",
+      "amendmentChain": [
+        1970988
+      ]
+    },
+    {
+      "committeeId": "C00913491",
+      "file": 1957479,
+      "form": "F3N",
+      "start": "2026-01-01",
+      "end": "2026-03-31",
+      "title": "APR QUARTERLY",
+      "filedAt": "2026-04-03",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00913491/1957479/",
+      "amendmentChain": [
+        1957479
+      ]
+    },
+    {
+      "committeeId": "C00913491",
+      "file": 1931482,
+      "form": "F3N",
+      "start": "2025-10-01",
+      "end": "2025-12-31",
+      "title": "YEAR-END",
+      "filedAt": "2026-01-08",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00913491/1931482/",
+      "amendmentChain": [
+        1931482
+      ]
+    },
+    {
+      "committeeId": "C00913491",
+      "file": 1918483,
+      "form": "F3N",
+      "start": "2025-04-01",
+      "end": "2025-09-30",
+      "title": "OCT QUARTERLY",
+      "filedAt": "2025-10-10",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00913491/1918483/",
+      "amendmentChain": [
+        1918483
+      ]
+    },
+    {
+      "committeeId": "C00916288",
+      "file": 2027030,
+      "form": "F3N",
+      "start": "2026-07-01",
+      "end": "2026-09-30",
+      "title": "OCT QUARTERLY",
+      "filedAt": "2026-10-15",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00916288/2027030/",
+      "amendmentChain": [
+        2027030
+      ]
+    },
+    {
+      "committeeId": "C00916288",
+      "file": 1997409,
+      "form": "F3N",
+      "start": "2026-04-16",
+      "end": "2026-06-30",
+      "title": "JUL QUARTERLY",
+      "filedAt": "2026-07-15",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00916288/1997409/",
+      "amendmentChain": [
+        1997409
+      ]
+    },
+    {
+      "committeeId": "C00916288",
+      "file": 1971027,
+      "form": "F3N",
+      "start": "2026-04-01",
+      "end": "2026-04-15",
+      "title": "PRE-PRIMARY",
+      "filedAt": "2026-04-23",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00916288/1971027/",
+      "amendmentChain": [
+        1971027
+      ]
+    },
+    {
+      "committeeId": "C00916288",
+      "file": 1967034,
+      "form": "F3N",
+      "start": "2026-01-01",
+      "end": "2026-03-31",
+      "title": "APR QUARTERLY",
+      "filedAt": "2026-04-15",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00916288/1967034/",
+      "amendmentChain": [
+        1967034
+      ]
+    },
+    {
+      "committeeId": "C00916288",
+      "file": 1943525,
+      "form": "F3N",
+      "start": "2025-10-01",
+      "end": "2025-12-31",
+      "title": "YEAR-END",
+      "filedAt": "2026-01-31",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00916288/1943525/",
+      "amendmentChain": [
+        1943525
+      ]
+    },
+    {
+      "committeeId": "C00916288",
+      "file": 1921538,
+      "form": "F3N",
+      "start": "2025-08-11",
+      "end": "2025-09-30",
+      "title": "OCT QUARTERLY",
+      "filedAt": "2025-10-15",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00916288/1921538/",
+      "amendmentChain": [
+        1921538
+      ]
+    },
+    {
+      "committeeId": "C00918839",
+      "file": 2028005,
+      "form": "F3N",
+      "start": "2026-07-01",
+      "end": "2026-09-30",
+      "title": "OCT QUARTERLY",
+      "filedAt": "2026-10-15",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00918839/2028005/",
+      "amendmentChain": [
+        2028005
+      ]
+    },
+    {
+      "committeeId": "C00918839",
+      "file": 1995817,
+      "form": "F3N",
+      "start": "2026-04-16",
+      "end": "2026-06-30",
+      "title": "JUL QUARTERLY",
+      "filedAt": "2026-07-15",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00918839/1995817/",
+      "amendmentChain": [
+        1995817
+      ]
+    },
+    {
+      "committeeId": "C00918839",
+      "file": 1970967,
+      "form": "F3N",
+      "start": "2026-04-01",
+      "end": "2026-04-15",
+      "title": "PRE-PRIMARY",
+      "filedAt": "2026-04-23",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00918839/1970967/",
+      "amendmentChain": [
+        1970967
+      ]
+    },
+    {
+      "committeeId": "C00918839",
+      "file": 1962531,
+      "form": "F3N",
+      "start": "2026-01-01",
+      "end": "2026-03-31",
+      "title": "APR QUARTERLY",
+      "filedAt": "2026-04-14",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00918839/1962531/",
+      "amendmentChain": [
+        1962531
+      ]
+    },
+    {
+      "committeeId": "C00918839",
+      "file": 1951617,
+      "form": "F3A",
+      "start": "2025-10-01",
+      "end": "2025-12-31",
+      "title": "YEAR-END",
+      "filedAt": "2026-03-04",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00918839/1951617/",
+      "amendmentChain": [
+        1936120,
+        1951617
+      ]
+    },
+    {
+      "committeeId": "C00937300",
+      "file": 2025197,
+      "form": "F3N",
+      "start": "2026-07-01",
+      "end": "2026-09-30",
+      "title": "OCT QUARTERLY",
+      "filedAt": "2026-10-15",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00937300/2025197/",
+      "amendmentChain": [
+        2025197
+      ]
+    },
+    {
+      "committeeId": "C00937300",
+      "file": 1990465,
+      "form": "F3N",
+      "start": "2026-04-16",
+      "end": "2026-06-30",
+      "title": "JUL QUARTERLY",
+      "filedAt": "2026-07-11",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00937300/1990465/",
+      "amendmentChain": [
+        1990465
+      ]
+    },
+    {
+      "committeeId": "C00937300",
+      "file": 1970510,
+      "form": "F3N",
+      "start": "2026-04-01",
+      "end": "2026-04-15",
+      "title": "PRE-PRIMARY",
+      "filedAt": "2026-04-21",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00937300/1970510/",
+      "amendmentChain": [
+        1970510
+      ]
+    },
+    {
+      "committeeId": "C00937300",
+      "file": 1961942,
+      "form": "F3N",
+      "start": "2025-07-03",
+      "end": "2026-03-31",
+      "title": "APR QUARTERLY",
+      "filedAt": "2026-04-14",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00937300/1961942/",
+      "amendmentChain": [
+        1961942
+      ]
+    },
+    {
+      "committeeId": "C00938001",
+      "file": 2016915,
+      "form": "F3A",
+      "start": "2026-09-01",
+      "end": "2026-10-14",
+      "title": "PRE-GENERAL",
+      "filedAt": "2026-10-05",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00938001/2016915/",
+      "amendmentChain": [
+        2016905,
+        2016915
+      ]
+    },
+    {
+      "committeeId": "C00938001",
+      "file": 2016909,
+      "form": "F3N",
+      "start": "2026-01-01",
+      "end": "2026-03-31",
+      "title": "APR QUARTERLY",
+      "filedAt": "2026-10-05",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00938001/2016909/",
+      "amendmentChain": [
+        2016909
+      ]
+    }
+  ],
+  "supplementary": [
+    {
+      "committeeId": "C00507368",
+      "file": 1971864,
+      "form": "F6N",
+      "title": "",
+      "filedAt": "2026-04-30",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00507368/1971864/"
+    },
+    {
+      "committeeId": "C00507368",
+      "file": 1971433,
+      "form": "F6N",
+      "title": "",
+      "filedAt": "2026-04-27",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00507368/1971433/"
+    },
+    {
+      "committeeId": "C00507368",
+      "file": 1971271,
+      "form": "F6N",
+      "title": "",
+      "filedAt": "2026-04-26",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00507368/1971271/"
+    },
+    {
+      "committeeId": "C00507368",
+      "file": 1970585,
+      "form": "F6N",
+      "title": "",
+      "filedAt": "2026-04-21",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00507368/1970585/"
+    },
+    {
+      "committeeId": "C00779603",
+      "file": 1972386,
+      "form": "F6N",
+      "title": "",
+      "filedAt": "2026-05-03",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00779603/1972386/"
+    },
+    {
+      "committeeId": "C00779603",
+      "file": 1972165,
+      "form": "F6N",
+      "title": "",
+      "filedAt": "2026-05-01",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00779603/1972165/"
+    },
+    {
+      "committeeId": "C00779603",
+      "file": 1972051,
+      "form": "F6N",
+      "title": "",
+      "filedAt": "2026-05-01",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00779603/1972051/"
+    },
+    {
+      "committeeId": "C00779603",
+      "file": 1971889,
+      "form": "F6N",
+      "title": "",
+      "filedAt": "2026-04-30",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00779603/1971889/"
+    },
+    {
+      "committeeId": "C00779603",
+      "file": 1971615,
+      "form": "F6N",
+      "title": "",
+      "filedAt": "2026-04-29",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00779603/1971615/"
+    },
+    {
+      "committeeId": "C00779603",
+      "file": 1971349,
+      "form": "F6N",
+      "title": "",
+      "filedAt": "2026-04-27",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00779603/1971349/"
+    },
+    {
+      "committeeId": "C00779603",
+      "file": 1970848,
+      "form": "F6N",
+      "title": "",
+      "filedAt": "2026-04-23",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00779603/1970848/"
+    },
+    {
+      "committeeId": "C00779603",
+      "file": 1970506,
+      "form": "F6N",
+      "title": "",
+      "filedAt": "2026-04-21",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00779603/1970506/"
+    },
+    {
+      "committeeId": "C00779603",
+      "file": 1968726,
+      "form": "F6N",
+      "title": "",
+      "filedAt": "2026-04-17",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00779603/1968726/"
+    },
+    {
+      "committeeId": "C00896019",
+      "file": 1972319,
+      "form": "F6N",
+      "title": "",
+      "filedAt": "2026-05-03",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00896019/1972319/"
+    },
+    {
+      "committeeId": "C00896019",
+      "file": 1972223,
+      "form": "F6N",
+      "title": "",
+      "filedAt": "2026-05-02",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00896019/1972223/"
+    },
+    {
+      "committeeId": "C00896019",
+      "file": 1972032,
+      "form": "F6N",
+      "title": "",
+      "filedAt": "2026-05-01",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00896019/1972032/"
+    },
+    {
+      "committeeId": "C00896019",
+      "file": 1971825,
+      "form": "F6N",
+      "title": "",
+      "filedAt": "2026-04-30",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00896019/1971825/"
+    },
+    {
+      "committeeId": "C00896019",
+      "file": 1971622,
+      "form": "F6N",
+      "title": "",
+      "filedAt": "2026-04-29",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00896019/1971622/"
+    },
+    {
+      "committeeId": "C00896019",
+      "file": 1971480,
+      "form": "F6N",
+      "title": "",
+      "filedAt": "2026-04-28",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00896019/1971480/"
+    },
+    {
+      "committeeId": "C00896019",
+      "file": 1971338,
+      "form": "F6N",
+      "title": "",
+      "filedAt": "2026-04-27",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00896019/1971338/"
+    },
+    {
+      "committeeId": "C00896019",
+      "file": 1971278,
+      "form": "F6N",
+      "title": "",
+      "filedAt": "2026-04-26",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00896019/1971278/"
+    },
+    {
+      "committeeId": "C00896019",
+      "file": 1971223,
+      "form": "F6N",
+      "title": "",
+      "filedAt": "2026-04-25",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00896019/1971223/"
+    },
+    {
+      "committeeId": "C00896019",
+      "file": 1971094,
+      "form": "F6N",
+      "title": "",
+      "filedAt": "2026-04-24",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00896019/1971094/"
+    },
+    {
+      "committeeId": "C00896019",
+      "file": 1970881,
+      "form": "F6N",
+      "title": "",
+      "filedAt": "2026-04-23",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00896019/1970881/"
+    },
+    {
+      "committeeId": "C00896019",
+      "file": 1970670,
+      "form": "F6N",
+      "title": "",
+      "filedAt": "2026-04-22",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00896019/1970670/"
+    },
+    {
+      "committeeId": "C00896019",
+      "file": 1970592,
+      "form": "F6N",
+      "title": "",
+      "filedAt": "2026-04-21",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00896019/1970592/"
+    },
+    {
+      "committeeId": "C00896019",
+      "file": 1969616,
+      "form": "F6N",
+      "title": "",
+      "filedAt": "2026-04-20",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00896019/1969616/"
+    },
+    {
+      "committeeId": "C00896019",
+      "file": 1968824,
+      "form": "F6N",
+      "title": "",
+      "filedAt": "2026-04-18",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00896019/1968824/"
+    },
+    {
+      "committeeId": "C00896019",
+      "file": 1968677,
+      "form": "F6N",
+      "title": "",
+      "filedAt": "2026-04-17",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00896019/1968677/"
+    },
+    {
+      "committeeId": "C00913491",
+      "file": 1971450,
+      "form": "F6N",
+      "title": "",
+      "filedAt": "2026-04-27",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00913491/1971450/"
+    },
+    {
+      "committeeId": "C00913491",
+      "file": 1971247,
+      "form": "F6N",
+      "title": "",
+      "filedAt": "2026-04-25",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00913491/1971247/"
+    },
+    {
+      "committeeId": "C00913491",
+      "file": 1970987,
+      "form": "F6N",
+      "title": "",
+      "filedAt": "2026-04-23",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00913491/1970987/"
+    },
+    {
+      "committeeId": "C00913491",
+      "file": 1968912,
+      "form": "F6N",
+      "title": "",
+      "filedAt": "2026-04-18",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00913491/1968912/"
+    },
+    {
+      "committeeId": "C00916288",
+      "file": 2027261,
+      "form": "F3LN",
+      "title": "LOBBYIST BUNDLING REPORT - OCT QUARTERLY",
+      "filedAt": "2026-10-15",
+      "start": "2026-07-01",
+      "end": "2026-09-30",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00916288/2027261/"
+    },
+    {
+      "committeeId": "C00916288",
+      "file": 1997722,
+      "form": "F3LN",
+      "title": "LOBBYIST BUNDLING REPORT - JULY QUARTERLY / SEMI-ANNUAL",
+      "filedAt": "2026-07-15",
+      "start": "2026-04-16",
+      "end": "2026-06-30",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00916288/1997722/"
+    },
+    {
+      "committeeId": "C00916288",
+      "file": 1972288,
+      "form": "F6N",
+      "title": "",
+      "filedAt": "2026-05-02",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00916288/1972288/"
+    },
+    {
+      "committeeId": "C00916288",
+      "file": 1971992,
+      "form": "F6N",
+      "title": "",
+      "filedAt": "2026-04-30",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00916288/1971992/"
+    },
+    {
+      "committeeId": "C00916288",
+      "file": 1971586,
+      "form": "F6N",
+      "title": "",
+      "filedAt": "2026-04-28",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00916288/1971586/"
+    },
+    {
+      "committeeId": "C00916288",
+      "file": 1971322,
+      "form": "F6N",
+      "title": "",
+      "filedAt": "2026-04-26",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00916288/1971322/"
+    },
+    {
+      "committeeId": "C00916288",
+      "file": 1971136,
+      "form": "F6N",
+      "title": "",
+      "filedAt": "2026-04-24",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00916288/1971136/"
+    },
+    {
+      "committeeId": "C00916288",
+      "file": 1971030,
+      "form": "F3LN",
+      "title": "LOBBYIST BUNDLING REPORT - PRE-PRIMARY",
+      "filedAt": "2026-04-23",
+      "start": "2026-04-01",
+      "end": "2026-04-15",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00916288/1971030/"
+    },
+    {
+      "committeeId": "C00916288",
+      "file": 1970787,
+      "form": "F6N",
+      "title": "",
+      "filedAt": "2026-04-22",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00916288/1970787/"
+    },
+    {
+      "committeeId": "C00916288",
+      "file": 1970376,
+      "form": "F6N",
+      "title": "",
+      "filedAt": "2026-04-20",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00916288/1970376/"
+    },
+    {
+      "committeeId": "C00916288",
+      "file": 1968916,
+      "form": "F6N",
+      "title": "",
+      "filedAt": "2026-04-18",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00916288/1968916/"
+    },
+    {
+      "committeeId": "C00916288",
+      "file": 1967153,
+      "form": "F3LN",
+      "title": "LOBBYIST BUNDLING REPORT - APR QUARTERLY",
+      "filedAt": "2026-04-15",
+      "start": "2026-01-01",
+      "end": "2026-03-31",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00916288/1967153/"
+    },
+    {
+      "committeeId": "C00916288",
+      "file": 1943536,
+      "form": "F3LN",
+      "title": "LOBBYIST BUNDLING REPORT - QUARTERLY YEAR END / SEMI-ANNUAL",
+      "filedAt": "2026-01-31",
+      "start": "2025-10-01",
+      "end": "2025-12-31",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00916288/1943536/"
+    },
+    {
+      "committeeId": "C00916288",
+      "file": 1921601,
+      "form": "F3LN",
+      "title": "LOBBYIST BUNDLING REPORT - OCT QUARTERLY",
+      "filedAt": "2025-10-15",
+      "start": "2025-08-11",
+      "end": "2025-09-30",
+      "url": "https://docquery.fec.gov/cgi-bin/forms/C00916288/1921601/"
+    }
+  ],
+  "note": "Lobbyist-bundling disclosures and 48-hour contribution notices can describe amounts already included in the financial reports. These links are retained for context and are not additional receipts in the totals."
+}

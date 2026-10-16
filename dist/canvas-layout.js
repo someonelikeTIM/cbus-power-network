@@ -3,7 +3,7 @@ export const connectionGroups = [
   {id: 'money', label: 'Money & public decisions', types: ['money', 'funding', 'contract', 'influence']},
   {id: 'governance', label: 'Office & governance', types: ['leadership', 'board', 'control', 'candidacy']},
   {id: 'organizations', label: 'Organizations & affiliations', types: ['ownership', 'voting', 'affiliation', 'partnership', 'history']},
-  {id: 'politics', label: 'Lobbying & endorsements', types: ['lobbying', 'endorsement']},
+  {id: 'politics', label: 'Lobbying & campaign activity', types: ['lobbying', 'endorsement', 'opposition']},
   {id: 'media', label: 'Media & information', types: ['content', 'editorial']},
   {id: 'claims', label: 'Allegations', types: ['allegation']},
 ];

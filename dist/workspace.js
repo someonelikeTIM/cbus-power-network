@@ -179,6 +179,14 @@ window.addEventListener('message', event => {
   if (event.origin !== location.origin || event.data?.channel !== 'columbus-explorer') return;
   const entry = [...frames.entries()].find(([, entry]) => entry.frame.contentWindow === event.source); if (!entry) return;
   const [id, frame] = entry, view = views.find(view => view.id === id);
+  if(event.data.type==='download-campaign-money'){
+    const text=event.data.text,name=event.data.name;
+    if(typeof text!=='string'||text.length>128*1024*1024||typeof name!=='string'||!/^[a-zA-Z0-9_.-]{1,110}\.csv$/.test(name)){status('This campaign CSV could not be prepared.');return;}
+    let link=$('campaign-csv-download');
+    if(!link){link=document.createElement('a');link.id='campaign-csv-download';link.className='workspace-button';link.textContent='Save campaign CSV ↧';document.querySelector('.workspace-actions').prepend(link);}
+    if(link.href.startsWith('blob:'))URL.revokeObjectURL(link.href);
+    link.href=URL.createObjectURL(new Blob([text],{type:'text/csv;charset=utf-8'}));link.download=name;link.click();status('Campaign CSV prepared. Save campaign CSV keeps a downloadable copy above the explorer.');return;
+  }
   if(event.data.type==='download-research'){
     try{const file=event.data.file;researchSnapshot(file,{nodeIds:ids,edgeIds:new Set(edges.map(edge=>edge.id)),validateSnapshot:validateView});const value=JSON.stringify(file,null,2);if(value.length>2*1024*1024)throw Error('The research file is larger than 2 MB.');const url=URL.createObjectURL(new Blob([value],{type:'application/json'})),link=document.createElement('a');link.href=url;link.download=String(event.data.name||'research-path.json').replace(/[^a-zA-Z0-9_.-]/g,'-').slice(0,120);link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);status('Research path file prepared.');}catch(error){status(error.message);}return;
   }

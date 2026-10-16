@@ -5,6 +5,8 @@ const checks = [
   'check-release',
   'check-civic-enrichment',
   'check-donation-enrichment',
+  'check-campaigns-2026',
+  'check-campaign-ledgers',
   'check-exploration',
   'check-exploration-paths',
   'check-connection-distance',

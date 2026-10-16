@@ -16,6 +16,8 @@ The explorer provides record links, current-view downloads and evidence packets.
 
 ## Explorer views
 
+Search **2026 political campaigns** or choose it under Filters → Topic to explore the election-cycle records. Candidates and listed write-ins in the covered races come from the official September 22 roster. The filter includes earlier fundraising for 2026 elections, with dated background roles alongside. Candidate details open Campaign money inside the explorer: official filing totals, totals by reported name, individual transactions, source links and CSV exports. The local candidate contains 160 reports and 1,837,416 transaction, memo and balance rows across 29 committees for 2025–2026. Eight candidates still lack matched financial reports; the coverage list preserves those gaps instead of assigning zero fundraising. Outside spending remains a separate, selected collection. Campaign statements, filings, charitable gifts and endorsements retain separate meanings.
+
 New tab opens another independent exploration. Side by side keeps two views visible; Single view returns to one canvas. Each tab keeps its own search, tags, filters, pins, camera and entity positions. On narrow screens, two views stack vertically.
 
 The overview packs entities into bubbles sized by their recorded connections. Hover shows the complete name and connection count. Zoom enlarges the smaller bubbles and reveals their full names; the layout makes room for the growing bubbles and text. Entities stay separate, with the count showing how much of the current scope fits on screen.

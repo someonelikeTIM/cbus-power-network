@@ -15,6 +15,7 @@ import { trailChecks } from '../dist/trails.js';
 import { mediaChecks } from '../dist/media.js';
 import { civicChecks } from '../dist/civic-enrichment.js';
 import { donationChecks } from '../dist/donation-enrichment.js';
+import { campaignChecks } from '../dist/campaigns-2026.js';
 
 const checks = {
   mayor:['ginther','third term'], council:['hardin','rob dorans','bankston','district 9'],
@@ -40,7 +41,7 @@ const checks = {
   'redflex-plea':['june 19, 2015','karen','pleaded guilty','columbus','false invoices'],
   'redflex-npa':['raphael','pleaded guilty','non-prosecution'],
   'redflex-ginther':['ginther','21,000','ohio democratic party','twice asked'],
-  ...cityHallSourceChecks, ...enrichmentChecks, ...infrastructureChecks, ...politicalChecks, ...flowChecks, ...trailChecks, ...mediaChecks, ...civicChecks, ...donationChecks,
+  ...cityHallSourceChecks, ...enrichmentChecks, ...infrastructureChecks, ...politicalChecks, ...flowChecks, ...trailChecks, ...mediaChecks, ...civicChecks, ...donationChecks, ...campaignChecks,
   'city-lobbyists-2025':[...cityHallSourceChecks['city-lobbyists-2025'],...municipalInfrastructureChecks]
 };
 const records={...sourceArchives}, outcomes={};

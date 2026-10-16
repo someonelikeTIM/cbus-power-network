@@ -1,4 +1,5 @@
 import {nodes,edges,categories,relationships} from './data.js';
+import {campaign2026EdgeIds,campaign2026EntityIds} from './campaigns-2026.js';
 
 // Descriptive navigation labels derived from existing record fields. Raw records stay unchanged.
 const kinds={politician:'Official / candidate',person:'Person',corporation:'Corporation',institution:'Organization / committee',initiative:'Initiative',case:'Law / proceeding'};
@@ -12,6 +13,7 @@ const specific={
   campaign:{label:'Campaign / political committee',description:'Recorded campaign organizations and political committees.'},
   donations:{label:'Campaign donations',description:'Recorded contributions to campaigns or political committees. Each record retains its own recipient, dates and amount.'},
   spending:{label:'Campaign spending',description:'Records explicitly describing independent spending or campaign-supporting/opposition media payments.'},
+  'campaigns-2026':{label:'2026 political campaigns',description:'2026 election-cycle candidacies, committees, donations, self-financing, support and opposition. Earlier fundraising for these elections is included; dated background roles remain context.'},
   bidding:{label:'Waived competitive bidding',description:'Connections whose recorded label explicitly says bidding was waived.'},
   grants:{label:'Grants',description:'Records describing grant awards, commitments or payments. The individual record identifies which applies.'},
   incentives:{label:'Tax incentives',description:'Records explicitly describing tax credits or tax abatements.'},
@@ -21,7 +23,7 @@ const specific={
 export const tagDefinitions=Object.fromEntries([
   ...Object.keys(categories).map(id=>['entity-'+id,{label:kinds[id],recordKind:'entity',description:'Entities in the '+kinds[id].toLowerCase()+' category.'}]),
   ...Object.entries(relationships).map(([id,type])=>['connection-'+id,{label:type.label,recordKind:'connection',description:'Connections classified as '+type.label.toLowerCase()+' in this edition.'}]),
-  ...Object.entries(specific).map(([id,tag])=>['topic-'+id,{...tag,recordKind:id==='historical'?'both':['lobbyist','mayor','council','utility','media','education','campaign'].includes(id)?'entity':'connection'}])
+  ...Object.entries(specific).map(([id,tag])=>['topic-'+id,{...tag,recordKind:['historical','campaigns-2026'].includes(id)?'both':['lobbyist','mayor','council','utility','media','education','campaign'].includes(id)?'entity':'connection'}])
 ]);
 const nodeById=new Map(nodes.map(node=>[node.id,node]));
 const registeredAgents=new Set(edges.filter(edge=>edge.type==='lobbying'&&/registered.{0,50}agent/i.test(edge.label)).map(edge=>edge.target).filter(id=>['person','politician'].includes(nodeById.get(id)?.category)));
@@ -36,6 +38,7 @@ export function entityTags(node){
   if(!person&&/\buniversity\b|\bcollege\b/i.test(text))tags.push('topic-education');
   if(!person&&campaignRecipient(node))tags.push('topic-campaign');
   if(node.historical)tags.push('topic-historical');
+  if(campaign2026EntityIds.has(node.id))tags.push('topic-campaigns-2026');
   return tags;
 }
 export function connectionTags(edge){
@@ -47,6 +50,7 @@ export function connectionTags(edge){
   if(/tax.credit|tax abatement|property abatement/i.test(label))tags.push('topic-incentives');
   if(/\bappoint(?:s|ed|ment|ments)?\b/i.test(label))tags.push('topic-appointments');
   if(edge.historical)tags.push('topic-historical');
+  if(campaign2026EdgeIds.has(edge.id))tags.push('topic-campaigns-2026');
   return tags;
 }
 const entityIndex=new Map(nodes.map(node=>[node.id,entityTags(node)])),connectionIndex=new Map(edges.map(edge=>[edge.id,connectionTags(edge)]));

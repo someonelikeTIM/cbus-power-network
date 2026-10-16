@@ -1,5 +1,13 @@
 # Development
 
+## Refreshing campaign ledgers
+
+Normal builds and tests use the committed static ledger files and need no credentials or network requests. `python scripts/build-campaign-ledgers.py` is an optional data-refresh step. It reads official candidate registers, cover pages, 2025–2026 contribution/expenditure exports and original FEC electronic filings from ignored `artifacts/campaign-ledger/`. The source URLs and hashes are recorded in the public finance index. Franklin County's reduced transcription is reviewable in `content/campaigns/county-ledgers-2026.json`; original scans remain outside tracked files.
+
+The reviewed original FEC filing inventory is in `content/campaigns/federal-disclosure-index-2026.json`. After obtaining the listed original CSV files, `python scripts/read-fec-covers.py` derives summary metadata directly from their covers. The summary API can lag newly filed reports, so the original committee filing indexes determine the available-report inventory. Supplementary bundling and contribution-notice links stay separate from financial totals.
+
+The refresh writes compressed transaction files and reported-name summaries under `dist/finance/2026/`. A browser retrieves a file only when that view is opened and checks its hash before reading it. `scripts/check-campaign-ledgers.mjs` independently recalculates row totals and name summaries, checks source references and balances, and verifies that real repeated rows and blank summary fields survive. The privacy scan also inspects decompressed contents.
+
 The website is plain HTML, CSS and JavaScript. Node.js 24 or later runs the dependency-free build and test scripts. Python 3 is optional for source archiving tools; choose its executable with COLUMBUS_ARCHIVE_PYTHON if needed.
 
 ## Project layout

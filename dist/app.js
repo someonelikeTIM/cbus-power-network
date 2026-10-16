@@ -18,8 +18,12 @@ import {validateView} from './saved-views.js';
 import {semanticStyle,visibleEntities,overlaps,connectionRoute,packBubbleCloud,bubbleLabel,fullBubbleLabel,footprintsOverlap} from './semantic-map.js';
 import {emptyResearch,validateResearch,researchConnections} from './research-paths.js';
 import {mountResearchUI} from './research-ui.js';
+import {campaignRoster} from './campaigns-2026.js';
+import {campaignMoneyCard,mountCampaignMoney} from './campaign-finance-ui.js';
+import {campaignFinanceIndex} from './campaign-finance-index.js';
 
 const $ = id => document.getElementById(id);
+const campaignMoneyUI=mountCampaignMoney({openEntity:id=>{resetFilters(false);toggleNode(id);state.detailsOpen=true;render();}});
 const nodeById = new Map(nodes.map(n => [n.id, n]));
 const edgeById = new Map(edges.map(e => [e.id, e]));
 const sourceById = new Map(sources.map(s => [s.id, s]));
@@ -125,7 +129,7 @@ const initials = node => node.category === 'person' || node.category === 'politi
 const friendlyDate = date => !date ? 'Undated page' : date.length === 4 ? date : date.length===7?new Intl.DateTimeFormat('en-US',{month:'short',year:'numeric',timeZone:'UTC'}).format(new Date(date+'-01T12:00:00Z'))+' · month only':new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' }).format(new Date(date + 'T12:00:00Z'));
 const baseGraph = () => filterGraph({ ...state, query: '' });
 
-const topicRoots={all:'city',money:'city',cityhall:'city',jobsohio:'jobsohio',media:'wsyx',politics:'vivek',sports:'hsg',datacenters:'google',alpr:'flock',hb6:'aep',epstein:'les',redflex:'redflex'};
+const topicRoots={all:'city',money:'city',cityhall:'city',jobsohio:'jobsohio',media:'wsyx',politics:'vivek',campaigns2026:'ohio-governor-election',sports:'hsg',datacenters:'google',alpr:'flock',hb6:'aep',epstein:'les',redflex:'redflex'};
 function seedMap(preferred=state.exploreRoot){const seed=seedExploration(baseGraph(),preferred);state.exploreRoot=seed.root;state.explorationSeeds=new Set(seed.ids);state.openNodes=new Set();state.exploredIds=seed.ids;state.startingIds=new Set(seed.root?[seed.root]:[]);state.customStart=false;}
 function currentResearch(){return researchConnections(state.research.steps,{nodes,edges});}
 function syncResearchPins(){const path=currentResearch();state.pinnedIds=path.anchors;state.pinnedEdgeIds=path.pinnedEdges;}
@@ -198,6 +202,7 @@ function renderConnectionLegend(){
 function connectionModesForLegend(){return {ownership:['ownership','voting'],governance:['board','control'],leadership:['leadership'],money:['money','funding','contract','influence'],content:['content','affiliation','editorial']}[state.connectionMode]||null;}
 function renderConnectionKey(){const displayed=graph.edges.filter(edge=>semanticEdges.has(edge.id));$('legend-key').textContent=displayed.length?[displayed.some(edge=>edge.directional)?'Arrow = direction':'',displayed.some(edge=>edge.historical)?'Dashed = past':''].filter(Boolean).join(' · '):'Connections appear as you explore.';}
 function renderMapScope(){
+  renderCampaignCoverage();
   const available=baseGraph(),isSmall=state.mapMode==='explore'&&!state.query.trim(),anchor=expansionAnchor();
   $('map-scope').hidden=!!state.tags.size||!nodeById.has(anchor);$('map-scope').textContent=nodeById.has(anchor)?nodeById.get(anchor).name+' · Details':'';
   $('map-scope').setAttribute('aria-expanded',String(!$('inspector').hidden));
@@ -355,9 +360,9 @@ function compactConnectedLayout() {
 }
 function setCase(id) {
   startingSearchResults=[];$('starting-results').hidden=true;
-  state.customStart=false;
+  state.customStart=id==='campaigns2026';
   if(id==='media'&&state.caseId!=='media'){state.timelineScope='case';state.timelineEntity='wsyx';}
-  state.caseId = id; state.mapMode='explore';state.exploredIds=new Set();state.exploreRoot=topicRoots[id]||'city'; state.query = ''; $('search').value = ''; state.selected = null; state.path = null; state.focus = false;
+  state.caseId = id; state.mapMode=id==='campaigns2026'?'full':'explore';state.exploredIds=new Set();state.exploreRoot=topicRoots[id]||'city'; state.query = ''; $('search').value = ''; state.selected = null; state.path = null; state.focus = false;
   $('topic-select').value=id;
   $('graph-title').textContent = id === 'money' ? 'Money & control' : id === 'all' ? 'Columbus network' : cases[id].title;
   applyCaseLayout(); render(true);
@@ -808,7 +813,7 @@ function renderInspector() {
   }
   if (state.selected.kind === 'node') {
     const n = nodeById.get(state.selected.id); const links = adjacent(n.id); const count = degrees.get(n.id);const action=branchAction(n.id);
-    panel.innerHTML = `<div class="inspector-header"><span class="eyebrow">ENTITY</span>${close}</div>${tagButtons('entity',n.id)}<h2>${escape(n.name)}</h2><div class="entity-role">${escape(n.role)}</div>${caseNodes.has(n.id)?`<p>${escape(readerField(n,'description'))}</p>`:''}<div class="entity-metrics"><div><b>${count}</b><span>dataset links</span></div><div><b>${links.length}</b><span>visible links</span></div></div><button class="focus-button" data-expand-node="${n.id}" aria-expanded="${action.opened}" ${action.disabled?'disabled':''}>${action.label}</button><button class="timeline-entity-link" data-timeline-entity="${n.id}">Follow the money over time ↗</button><div class="subheading">RELATIONSHIPS</div>${links.length ? links.map(e => connectionRow(e, n.id)).join('') : '<p>No links match the filters.</p>'}<div class="subheading">SOURCES</div>${sourceLinks(n.sourceIds)}`;
+    panel.innerHTML = `<div class="inspector-header"><span class="eyebrow">ENTITY</span>${close}</div>${tagButtons('entity',n.id)}<h2>${escape(n.name)}</h2><div class="entity-role">${escape(n.role)}</div>${campaignFinanceHTML(n.id)}${caseNodes.has(n.id)?`<p>${escape(readerField(n,'description'))}</p>`:''}<div class="entity-metrics"><div><b>${count}</b><span>dataset links</span></div><div><b>${links.length}</b><span>visible links</span></div></div><button class="focus-button" data-expand-node="${n.id}" aria-expanded="${action.opened}" ${action.disabled?'disabled':''}>${action.label}</button><button class="timeline-entity-link" data-timeline-entity="${n.id}">Follow the money over time ↗</button><div class="subheading">RELATIONSHIPS</div>${links.length ? links.map(e => connectionRow(e, n.id)).join('') : '<p>No links match the filters.</p>'}<div class="subheading">SOURCES</div>${sourceLinks(n.sourceIds)}`;
   } else if (state.selected.kind === 'edge') {
     const e = edgeById.get(state.selected.id);
     panel.innerHTML = `<div class="inspector-header"><span class="eyebrow">RELATIONSHIP</span>${close}</div>${tagButtons('connection',e.id)}<h2>${escape(readerField(e,'label'))}</h2>${statusBadge(e)}<div class="edge-ends"><button data-node-detail="${e.source}">${escape(nodeById.get(e.source).name)} ↗</button><span class="link-between" aria-hidden="true">${e.directional?'↓':'↕'}</span><button data-node-detail="${e.target}">${escape(nodeById.get(e.target).name)} ↗</button></div><div class="period">${escape(e.period)}</div>${e.unit?`<div class="amount-unit">${escape(e.unit)}</div>`:''}<div class="evidence-box"><span class="eyebrow">EVIDENCE</span><p>${escape(readerField(e,'evidence'))}</p>${e.locator?`<small>${escape(e.locator)}</small>`:''}</div>${e.context?`<p class="record-context">${escape(readerField(e,'context'))}</p>`:''}<div class="subheading">SOURCES</div>${sourceLinks(e.sourceIds)}`;
@@ -911,6 +916,20 @@ function contributionDates(edge){
   if(!edge?.contributionBreakdown?.length)return '';
   const rows=edge.contributionBreakdown,total=rows.reduce((sum,row)=>sum+row.amount,0),currency=value=>value.toLocaleString('en-US',{style:'currency',currency:'USD'});
   return '<section class="contribution-dates"><h3>Reported contribution dates</h3><table aria-label="Reported contribution dates"><thead><tr><th scope="col">Date</th><th scope="col">Amount</th></tr></thead><tbody>'+rows.map(row=>'<tr><td>'+escape(friendlyDate(row.date))+'</td><td>'+escape(currency(row.amount))+'</td></tr>').join('')+'</tbody></table><p>These '+rows.length+' dates make up the reported '+escape(currency(total))+' total.</p></section>';
+}
+function renderCampaignCoverage(){
+  const panel=$('campaign-coverage');panel.hidden=state.caseId!=='campaigns2026'&&!state.tags.has('topic-campaigns-2026');if(panel.hidden)return;
+  const rows=campaignRoster.filter(row=>nodeById.has(row.id));
+  $('campaign-coverage-list').innerHTML=rows.map(row=>{const committees=campaignFinanceIndex.units.filter(unit=>unit.candidateIds.includes(row.id)),reports=committees.flatMap(unit=>unit.reportIds),label=reports.length?reports.length+' filing reports':'Filing ledger not yet matched';return '<li><button class="explore-button" data-campaign-money="'+row.id+'">'+escape(row.name)+' · campaign money →</button><span>'+escape(row.party+' · '+row.office)+(row.writeIn?' · write-in':'')+'</span><small>'+label+'</small></li>';}).join('');
+}
+function campaignFinanceHTML(id){
+  const ledger=campaignMoneyCard(id);if(ledger)return ledger;
+  const committees=nodes.filter(node=>node.id===id&&node.financeSummaries?.length||node.candidateIds?.includes(id));
+  return committees.map(committee=>(committee.financeSummaries||[]).map(summary=>{
+    const source=sourceById.get(summary.sourceId),period=summary.period.start&&summary.period.end?friendlyDate(summary.period.start)+' – '+friendlyDate(summary.period.end):'Reporting window not stated in announcement';
+    const amount=metric=>metric.qualifier==='more-than'?'> '+new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',notation:'compact',maximumFractionDigits:2}).format(metric.amount):metric.qualifier==='reported-rounded'?'~'+new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',notation:'compact',maximumFractionDigits:2}).format(metric.amount):new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(metric.amount);
+    return '<section class="campaign-finance"><h3>'+escape(committee.name)+'</h3><p>'+escape(summary.basis)+' · '+escape(period)+'</p><table><tbody>'+summary.metrics.map(metric=>'<tr><th scope="row">'+escape(metric.label)+'</th><td>'+escape(amount(metric))+'</td></tr>').join('')+'</tbody></table><p>'+escape(summary.note)+'</p>'+(source?'<a href="'+escape(source.archiveUrl||source.url)+'" target="_blank" rel="noopener noreferrer">'+escape(source.publisher)+' · source ↗</a>':'')+'</section>';
+  }).join('')).join('');
 }
 function decorateInspector(){
   if(!state.selected)return;

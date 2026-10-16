@@ -1,5 +1,15 @@
 # How to read the records
 
+## Campaign money
+
+The 2026 roster covers statewide executive offices, the U.S. Senate, OH-03/OH-15 and Franklin County auditor/commissioner races, including listed minor-party and write-in candidates. Financial coverage is checked against that same roster. Committee identities, available reports and unresolved matches remain separate; an unmatched candidate is not assigned zero fundraising.
+
+The ledgers cover available 2025–2026 reports. Ohio candidate bulk contributions, expenditures and covers are supplemented with loan schedules. Franklin County scans are transcribed with text recognition, page-image checks and cash-total reconciliation. Federal summaries are read from original electronic covers; the original committee filing indexes catch reports still awaiting summary processing. Current amendments replace superseded reports. Source-file hashes and locators accompany the records.
+
+Totals stay with their committee and reporting period. Contributions, borrowing, transfers, other receipts, refunds and spending have separate categories. A transfer can appear as one committee's payment and another's receipt. Committee totals therefore cannot be added into a unique total of election funding. Balances, outstanding loans, memo items and accounting carry-over subtotals are not new receipts. Federal totals follow the source's accounting basis and may include in-kind entries.
+
+Name groups summarize the wording reported in filings without resolving identities. Linking a donation to a contract or incentive requires separate evidence. Campaign statements, outside spending, charitable gifts, endorsements and candidate receipts retain their own meanings. The available candidate ledgers do not imply exhaustive coverage of outside spending, unfiled activity or later reports.
+
 Each connection is a narrow statement supported by cited material. Its direction, evidence status, relevant period and qualifications belong to that statement. The map's layout and a person's number of connections have no evidentiary meaning.
 
 ## Evidence and sources

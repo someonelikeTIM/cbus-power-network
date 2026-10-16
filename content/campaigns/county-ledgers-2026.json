@@ -1,0 +1,4463 @@
+[
+  {
+    "candidate": "michael-stinziano",
+    "title": "2026 Post-Primary",
+    "url": "https://campaignfinance.franklincountyohio.gov//TED/CampaignDocs/CampaignFinanceFiling//2026/Jun/MATTHEW_RUSHAY-2026-06-12-14-36-15.pdf",
+    "filedAt": "2026-06-12",
+    "sourceSha256": "61fcd4e36acfda5da0e496331c3c911b76247a7b11c65b4eca840fb41e30f1d9",
+    "metrics": {
+      "beginningCash": 621496,
+      "contributions": 1587500,
+      "otherReceipts": 0,
+      "disbursements": 306263,
+      "endingCash": 1902733,
+      "inKind": null
+    },
+    "rows": [
+      {
+        "page": 2,
+        "date": "4/16/2026",
+        "name": "Columbus Central Building and Construction Trades Council PCE",
+        "amountCents": 45000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "4/20/2026",
+        "name": "Michael Curtin",
+        "amountCents": 25000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "4/20/2026",
+        "name": "Pamela Conrad",
+        "amountCents": 50000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "4/20/2026",
+        "name": "Robert Stevenson",
+        "amountCents": 5000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "4/20/2026",
+        "name": "Thomas Workman",
+        "amountCents": 25000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "4/21/2026",
+        "name": "Sarah Bethel",
+        "amountCents": 2500,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "4/22/2026",
+        "name": "Deborah Roberts",
+        "amountCents": 2500,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "4/27/2026",
+        "name": "FOP Political Education Fund PCE",
+        "amountCents": 100000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "4/30/2026",
+        "name": "Heather Rice",
+        "amountCents": 50000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "5/4/2026",
+        "name": "Carol Ventresca",
+        "amountCents": 10000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "5/5/2026",
+        "name": "Don Casto Casto Family Funding LLC",
+        "amountCents": 50000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "5/5/2026",
+        "name": "Don Casto Columbus Realty Investment LTC",
+        "amountCents": 200000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "5/7/2026",
+        "name": "Gregory Zanetos",
+        "amountCents": 100000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "5/12/2026",
+        "name": "Bruce Warner",
+        "amountCents": 30000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "5/19/2026",
+        "name": "George McCue",
+        "amountCents": 100000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "5/19/2026",
+        "name": "Nate Knopp",
+        "amountCents": 10000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "5/20/2026",
+        "name": "John McNamee",
+        "amountCents": 50000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "5/20/2026",
+        "name": "Ellen French",
+        "amountCents": 2500,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "5/20/2026",
+        "name": "Jeff Ortega",
+        "amountCents": 2500,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "5/20/2026",
+        "name": "Roy Wentzel",
+        "amountCents": 5000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "5/20/2026",
+        "name": "Jonathan Keilholz",
+        "amountCents": 2500,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "5/21/2026",
+        "name": "Sarah Bethel",
+        "amountCents": 2500,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "5/22/2026",
+        "name": "Travis Irvine",
+        "amountCents": 2500,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "5/27/2026",
+        "name": "Joseph Petrelli",
+        "amountCents": 20000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "5/27/2026",
+        "name": "Gregory Kostelac",
+        "amountCents": 10000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "5/27/2026",
+        "name": "Larry Price",
+        "amountCents": 10000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "5/27/2026",
+        "name": "Gerald Maloney",
+        "amountCents": 20000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "5/27/2026",
+        "name": "Michael Silberstein",
+        "amountCents": 5000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "5/27/2026",
+        "name": "John Johnson · John P Johnson Law Office LLC",
+        "amountCents": 20000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "5/27/2026",
+        "name": "Charles Bluestone",
+        "amountCents": 50000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "5/27/2026",
+        "name": "Michael Sexton",
+        "amountCents": 10000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "5/27/2026",
+        "name": "IBEW Local Union PCE",
+        "amountCents": 100000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "5/27/2026",
+        "name": "Phyllis Elmo",
+        "amountCents": 10000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "5/27/2026",
+        "name": "Central Ohio Realtors PAC N/A - Local PAC",
+        "amountCents": 250000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "5/27/2026",
+        "name": "Vorys Sater Seymour and Pease LLP OH109",
+        "amountCents": 150000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "5/27/2026",
+        "name": "Lisa Stinziano",
+        "amountCents": 25000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "5/27/2026",
+        "name": "Robert Cody",
+        "amountCents": 10000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "5/31/2026",
+        "name": "Marie Keister",
+        "amountCents": 25000,
+        "form": "31A"
+      },
+      {
+        "page": 3,
+        "date": "4/28/2026",
+        "name": "McTigue & Colombo LLC",
+        "amountCents": 50000,
+        "form": "31B"
+      },
+      {
+        "page": 3,
+        "date": "5/4/2026",
+        "name": "RT Advisors",
+        "amountCents": 150000,
+        "form": "31B"
+      },
+      {
+        "page": 3,
+        "date": "5/6/2026",
+        "name": "Friends of Doo Dah",
+        "amountCents": 10100,
+        "form": "31B"
+      },
+      {
+        "page": 3,
+        "date": "5/12/2026",
+        "name": "Fifth Third",
+        "amountCents": 2500,
+        "form": "31B"
+      },
+      {
+        "page": 3,
+        "date": "5/19/2026",
+        "name": "McTigue & Colombo LLC",
+        "amountCents": 50000,
+        "form": "31B"
+      },
+      {
+        "page": 3,
+        "date": "5/19/2026",
+        "name": "Central Ohio Labor Council, AFL-CIO",
+        "amountCents": 25000,
+        "form": "31B"
+      },
+      {
+        "page": 3,
+        "date": "6/5/2026",
+        "name": "ActBlue",
+        "amountCents": 11272,
+        "form": "31B"
+      },
+      {
+        "page": 3,
+        "date": "6/5/2026",
+        "name": "Stripe",
+        "amountCents": 7391,
+        "form": "31B"
+      }
+    ],
+    "note": "Scanned original read with text recognition and page-image checks; all cash rows reconcile to the cover. Reported spelling and transaction dates are retained. Independent editorial review is pending."
+  },
+  {
+    "candidate": "michael-stinziano",
+    "title": "2026 Pre-Primary",
+    "url": "https://campaignfinance.franklincountyohio.gov//TED/CampaignDocs/CampaignFinanceFiling//2026/Apr/Monica_Debrock_-2026-04-23-14-18-46.pdf",
+    "filedAt": "2026-04-23",
+    "sourceSha256": "a353a7be29414fc221049b9023da4b43cb950b42246032a09fd2bdd1bdbd2141",
+    "metrics": {
+      "beginningCash": 1948914,
+      "contributions": 50000,
+      "otherReceipts": 0,
+      "disbursements": 1377418,
+      "endingCash": 621496,
+      "inKind": null
+    },
+    "rows": [
+      {
+        "page": 2,
+        "date": "4/10/2026",
+        "name": "Stanford Apseloff",
+        "amountCents": 50000,
+        "form": "31A"
+      },
+      {
+        "page": 3,
+        "date": "1/6/2026",
+        "name": "RT Advisors",
+        "amountCents": 150000,
+        "form": "31B"
+      },
+      {
+        "page": 3,
+        "date": "1/8/2026",
+        "name": "Franklin County Democratic Party",
+        "amountCents": 150000,
+        "form": "31B"
+      },
+      {
+        "page": 3,
+        "date": "1/12/2026",
+        "name": "Franklin County Board of Elections",
+        "amountCents": 8000,
+        "form": "31B"
+      },
+      {
+        "page": 3,
+        "date": "1/13/2026",
+        "name": "Fifth Third",
+        "amountCents": 2500,
+        "form": "31B"
+      },
+      {
+        "page": 3,
+        "date": "1/23/2026",
+        "name": "John Kulewicz for Ohio Attorney General",
+        "amountCents": 25000,
+        "form": "31B"
+      },
+      {
+        "page": 3,
+        "date": "1/23/2026",
+        "name": "McTigue & Colombo LLC",
+        "amountCents": 50000,
+        "form": "31B"
+      },
+      {
+        "page": 3,
+        "date": "2/9/2026",
+        "name": "RT Advisors",
+        "amountCents": 150000,
+        "form": "31B"
+      },
+      {
+        "page": 3,
+        "date": "2/9/2026",
+        "name": "RT Advisors",
+        "amountCents": 48462,
+        "form": "31B"
+      },
+      {
+        "page": 3,
+        "date": "2/6/2026",
+        "name": "O'Shaunessy Committee",
+        "amountCents": 25000,
+        "form": "31B"
+      },
+      {
+        "page": 3,
+        "date": "2/11/2026",
+        "name": "Fifth Third",
+        "amountCents": 2500,
+        "form": "31B"
+      },
+      {
+        "page": 3,
+        "date": "2/12/2026",
+        "name": "Huckleberry House",
+        "amountCents": 50000,
+        "form": "31B"
+      },
+      {
+        "page": 3,
+        "date": "2/12/2026",
+        "name": "Gladden Community House",
+        "amountCents": 50000,
+        "form": "31B"
+      },
+      {
+        "page": 3,
+        "date": "2/12/2026",
+        "name": "Lutheran Social Services",
+        "amountCents": 50000,
+        "form": "31B"
+      },
+      {
+        "page": 3,
+        "date": "2/12/2026",
+        "name": "YWCA",
+        "amountCents": 50000,
+        "form": "31B"
+      },
+      {
+        "page": 3,
+        "date": "2/12/2026",
+        "name": "Our Lady of Guadalupe Center St Catholic Social Services",
+        "amountCents": 50000,
+        "form": "31B"
+      },
+      {
+        "page": 3,
+        "date": "2/12/2026",
+        "name": "Central Ohio Labor Council, AFL-CIO",
+        "amountCents": 90000,
+        "form": "31B"
+      },
+      {
+        "page": 3,
+        "date": "2/26/2026",
+        "name": "McTigue & Colombo LLC",
+        "amountCents": 77880,
+        "form": "31B"
+      },
+      {
+        "page": 3,
+        "date": "3/6/2026",
+        "name": "RT Advisors",
+        "amountCents": 150000,
+        "form": "31B"
+      },
+      {
+        "page": 3,
+        "date": "3/11/2026",
+        "name": "Fifth Third",
+        "amountCents": 2500,
+        "form": "31B"
+      },
+      {
+        "page": 3,
+        "date": "3/13/2026",
+        "name": "Tigereye Promotions LLC",
+        "amountCents": 56948,
+        "form": "31B"
+      },
+      {
+        "page": 3,
+        "date": "3/19/2026",
+        "name": "McTigue & Colombo LLC",
+        "amountCents": 50000,
+        "form": "31B"
+      },
+      {
+        "page": 3,
+        "date": "4/2/2026",
+        "name": "RT Advisors",
+        "amountCents": 17880,
+        "form": "31B"
+      },
+      {
+        "page": 3,
+        "date": "4/7/2026",
+        "name": "St. Mary Magdalene Athletic Association",
+        "amountCents": 20000,
+        "form": "31B"
+      },
+      {
+        "page": 3,
+        "date": "4/10/2026",
+        "name": "Fifth Third",
+        "amountCents": 2500,
+        "form": "31B"
+      },
+      {
+        "page": 3,
+        "date": "4/15/2026",
+        "name": "ActBlue",
+        "amountCents": 750,
+        "form": "31B"
+      },
+      {
+        "page": 3,
+        "date": "4/15/2026",
+        "name": "Stripe",
+        "amountCents": 1123,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "1/6/2026",
+        "name": "RT Advisors",
+        "amountCents": 46375,
+        "form": "31F"
+      }
+    ],
+    "note": "Scanned original read with text recognition and page-image checks; all cash rows reconcile to the cover. Reported spelling and transaction dates are retained. Independent editorial review is pending."
+  },
+  {
+    "candidate": "michael-stinziano",
+    "title": "2025 Annual",
+    "url": "https://campaignfinance.franklincountyohio.gov//TED/CampaignDocs/CampaignFinanceFiling//2026/Jan/Monica_Debrock_-2026-01-21-09-47-53.pdf",
+    "filedAt": "2026-01-16",
+    "sourceSha256": "7181cc8762c0bab2acb9e7c11f96d393581092b0da40a4213f536e4927367934",
+    "metrics": {
+      "beginningCash": 1372379,
+      "contributions": 1045300,
+      "otherReceipts": 0,
+      "disbursements": 468765,
+      "endingCash": 1948914,
+      "inKind": null
+    },
+    "rows": [
+      {
+        "page": 4,
+        "date": "7/11/2025",
+        "name": "Fifth Third",
+        "amountCents": 2500,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "7/16/2025",
+        "name": "Central Ohio Labor Council, AFL-CIO",
+        "amountCents": 25000,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "7/21/2025",
+        "name": "Squarespace",
+        "amountCents": 1512,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "7/22/2025",
+        "name": "McTigue & Colombo LLC",
+        "amountCents": 45000,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "7/28/2025",
+        "name": "Friends of Shanette Strickland",
+        "amountCents": 25000,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "8/12/2025",
+        "name": "Fifth Third",
+        "amountCents": 2500,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "8/12/2025",
+        "name": "Columbus Piave Club",
+        "amountCents": 10000,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "8/15/2025",
+        "name": "McTigue & Colombo LLC",
+        "amountCents": 45000,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "8/21/2025",
+        "name": "Squarespace",
+        "amountCents": 1512,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "8/22/2025",
+        "name": "Friends of Ben Tracy",
+        "amountCents": 25000,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "9/11/2025",
+        "name": "Fifth Third",
+        "amountCents": 2500,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "9/15/2025",
+        "name": "McTigue & Colombo LLC",
+        "amountCents": 45000,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "9/22/2025",
+        "name": "Squarespace",
+        "amountCents": 1512,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "10/10/2025",
+        "name": "McTigue & Colombo LLC",
+        "amountCents": 45000,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "10/10/2025",
+        "name": "Fifth Third",
+        "amountCents": 2500,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "10/16/2025",
+        "name": "Friends Of Hykes",
+        "amountCents": 25000,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "10/21/2025",
+        "name": "Squarespace",
+        "amountCents": 1512,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "11/13/2025",
+        "name": "Fifth Third",
+        "amountCents": 2500,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "11/17/2025",
+        "name": "McTigue & Colombo LLC",
+        "amountCents": 95000,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "11/21/2025",
+        "name": "Squarespace",
+        "amountCents": 1512,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "12/10/2025",
+        "name": "Fifth Third",
+        "amountCents": 2500,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "12/18/2025",
+        "name": "McTigue & Colombo LLC",
+        "amountCents": 45000,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "12/22/2025",
+        "name": "Squarespace",
+        "amountCents": 1512,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "12/31/2025",
+        "name": "Stripe",
+        "amountCents": 8913,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "12/31/2025",
+        "name": "ActBlue",
+        "amountCents": 5780,
+        "form": "31B"
+      },
+      {
+        "page": 2,
+        "date": "7/11/2025",
+        "name": "Woolpert INC PAC",
+        "amountCents": 100000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "10/22/2025",
+        "name": "Pamela Conrad",
+        "amountCents": 25000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "10/23/2025",
+        "name": "Carol Ventresca",
+        "amountCents": 5000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "10/25/2025",
+        "name": "Joseph Erb",
+        "amountCents": 25000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "10/26/2025",
+        "name": "Michael Curtin",
+        "amountCents": 10000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "10/27/2025",
+        "name": "Robert Stevenson",
+        "amountCents": 4600,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "10/31/2025",
+        "name": "Stanford Apseloff",
+        "amountCents": 50000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "11/3/2025",
+        "name": "Sarah Bethel",
+        "amountCents": 25000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "11/3/2025",
+        "name": "Robert Cody",
+        "amountCents": 10000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "11/3/2025",
+        "name": "Thomas Workman",
+        "amountCents": 25000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "11/3/2025",
+        "name": "Kevin McCain",
+        "amountCents": 4600,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "11/17/2025",
+        "name": "Woolpert INC PAC",
+        "amountCents": 25000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "11/30/2025",
+        "name": "Jennifer Dunlap",
+        "amountCents": 5000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "12/2/2025",
+        "name": "Deborah Roberts",
+        "amountCents": 1500,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "12/5/2025",
+        "name": "Central Ohio Labor Council, AFL-CIO PCE",
+        "amountCents": 25000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "12/5/2025",
+        "name": "Pizzuti PAC",
+        "amountCents": 150000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "12/22/2025",
+        "name": "Gregory Zanetos",
+        "amountCents": 100000,
+        "form": "31A"
+      },
+      {
+        "page": 3,
+        "date": "11/4/2025",
+        "name": "Columbus Building and Construction Trades Council PCE",
+        "amountCents": 10000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "11/6/2025",
+        "name": "Joseph Petrelli",
+        "amountCents": 25000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "11/12/2025",
+        "name": "Nathaniel Knopp",
+        "amountCents": 10000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "11/12/2025",
+        "name": "Erik Greathouse",
+        "amountCents": 25000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "11/12/2025",
+        "name": "Bruce Warner",
+        "amountCents": 20000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "11/12/2025",
+        "name": "Anne Maynard",
+        "amountCents": 10000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "11/12/2025",
+        "name": "Jack Decker",
+        "amountCents": 4600,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "11/12/2025",
+        "name": "Maryellen O'Shaughnessy Committee",
+        "amountCents": 25000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "11/17/2025",
+        "name": "Jean Shephard Wentzel",
+        "amountCents": 5000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "11/17/2025",
+        "name": "David Corey",
+        "amountCents": 25000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "11/17/2025",
+        "name": "Michael Moses · Moses Law Offices, LLC",
+        "amountCents": 10000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "11/17/2025",
+        "name": "Mo Dioun",
+        "amountCents": 100000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "11/17/2025",
+        "name": "Kenneth Wightman",
+        "amountCents": 25000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "11/17/2025",
+        "name": "Lisa Stinziano",
+        "amountCents": 25000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "11/17/2025",
+        "name": "Ira Sully",
+        "amountCents": 10000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "11/17/2025",
+        "name": "Robert Behal",
+        "amountCents": 25000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "11/17/2025",
+        "name": "Gerald Maloney",
+        "amountCents": 25000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "11/17/2025",
+        "name": "Brenda Petruzzella",
+        "amountCents": 25000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "11/17/2025",
+        "name": "Jeff Rich · Rich & Gillis Law Group, LLC",
+        "amountCents": 50000,
+        "form": "31E"
+      }
+    ],
+    "note": "Scanned original read with text recognition and page-image checks; all cash rows reconcile to the cover. Reported spelling and transaction dates are retained. Independent editorial review is pending."
+  },
+  {
+    "candidate": "michael-stinziano",
+    "title": "2025 Semiannual",
+    "url": "https://campaignfinance.franklincountyohio.gov//TED/CampaignDocs/CampaignFinanceFiling//2025/Jul/Monica_Debrock_-2025-07-31-16-04-25.pdf",
+    "filedAt": "2025-07-31",
+    "sourceSha256": "f244d44eae5860c4ac5111077cc19fe1228ab8dd7b5cee80d08ff5af82da99ba",
+    "metrics": {
+      "beginningCash": 1140410,
+      "contributions": 1155000,
+      "otherReceipts": 0,
+      "disbursements": 923031,
+      "endingCash": 1372379,
+      "inKind": 9000
+    },
+    "rows": [
+      {
+        "page": 2,
+        "date": "5/6/2025",
+        "name": "Robert Cody",
+        "amountCents": 10000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "6/11/2025",
+        "name": "Phyllis Elmo",
+        "amountCents": 10000,
+        "form": "31A"
+      },
+      {
+        "page": 3,
+        "date": "5/7/2025",
+        "name": "Carol Ventresca",
+        "amountCents": 10000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/12/2025",
+        "name": "Don Casto Columbus Realty Investments LTD",
+        "amountCents": 200000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/12/2025",
+        "name": "Don Casto Casto Family Funding LLC",
+        "amountCents": 50000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/15/2025",
+        "name": "Joseph Petrelli",
+        "amountCents": 50000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/18/2025",
+        "name": "Heather Rice",
+        "amountCents": 25000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/19/2025",
+        "name": "Jacob Evans Lumpe Raber and Evans",
+        "amountCents": 10000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/19/2025",
+        "name": "Micheal Curtin",
+        "amountCents": 20000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/20/2025",
+        "name": "John Gilligan",
+        "amountCents": 25000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/20/2025",
+        "name": "Maryellen O'Shaughnessy Committee",
+        "amountCents": 25000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/22/2025",
+        "name": "Thomas Diamond",
+        "amountCents": 10000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/22/2025",
+        "name": "Joseph Erb",
+        "amountCents": 50000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/22/2025",
+        "name": "Mary Nordstrom",
+        "amountCents": 5000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/22/2025",
+        "name": "Donald McTigue McTigue & Colombo, LLC",
+        "amountCents": 10000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/22/2025",
+        "name": "Friends of Meredith Lawson-Rowe",
+        "amountCents": 10000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/22/2025",
+        "name": "Brian McCann",
+        "amountCents": 5000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/22/2025",
+        "name": "Barbara Herman",
+        "amountCents": 5000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/23/2025",
+        "name": "Pamela Conrad",
+        "amountCents": 20000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/27/2025",
+        "name": "Dickinson Wright PLLC Ohio PAC OH1892",
+        "amountCents": 50000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/29/2025",
+        "name": "P. Michael DeAngelo",
+        "amountCents": 10000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/29/2025",
+        "name": "Lisa Stinziano",
+        "amountCents": 25000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/29/2025",
+        "name": "Gerald Maloney",
+        "amountCents": 10000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/29/2025",
+        "name": "Lori Chrisman",
+        "amountCents": 30000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/29/2025",
+        "name": "Timothy Adams",
+        "amountCents": 10000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/29/2025",
+        "name": "Ira sully",
+        "amountCents": 10000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/29/2025",
+        "name": "Columbus Apartment Association PAC OH146",
+        "amountCents": 50000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/29/2025",
+        "name": "Columbus Building and Construction Trades Council LA1214",
+        "amountCents": 10000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/29/2025",
+        "name": "Vorys Sater Seymour and Pease LLP PAC OH109",
+        "amountCents": 200000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/29/2025",
+        "name": "Jeff Rich Rich & Gillis Law Group, LLC",
+        "amountCents": 50000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/29/2025",
+        "name": "Mark Gillis Rich & Gillis Law Group, LLC",
+        "amountCents": 50000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "6/9/2025",
+        "name": "FOP Political Education Fund LA198",
+        "amountCents": 100000,
+        "form": "31E"
+      },
+      {
+        "page": 4,
+        "date": "1/2/2025",
+        "name": "NGP Van Inc",
+        "amountCents": 2864,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "1/2/2025",
+        "name": "Google",
+        "amountCents": 2322,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "1/13/2025",
+        "name": "Fifth Third",
+        "amountCents": 2500,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "1/20/2025",
+        "name": "Stewart for Ohio Supreme Court",
+        "amountCents": 25000,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "1/21/2025",
+        "name": "Squarespace",
+        "amountCents": 1505,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "1/23/2025",
+        "name": "McTigue & Colombo LLC",
+        "amountCents": 45000,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "2/3/2025",
+        "name": "Google",
+        "amountCents": 2322,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "2/12/2025",
+        "name": "Fifth Third",
+        "amountCents": 2500,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "2/13/2025",
+        "name": "McTigue & Colombo LLC",
+        "amountCents": 46352,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "2/20/2025",
+        "name": "Central Ohio Labor Council, AFL-CIO",
+        "amountCents": 22000,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "2/20/2025",
+        "name": "Friends of Doo Dah",
+        "amountCents": 10100,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "2/20/2025",
+        "name": "Franklin County Democratic Party",
+        "amountCents": 150000,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "2/21/2025",
+        "name": "Squarespace",
+        "amountCents": 1505,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "3/3/2025",
+        "name": "Google",
+        "amountCents": 2322,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "3/12/2025",
+        "name": "Central Ohio Labor Council, AFL-CIO",
+        "amountCents": 20000,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "3/12/2025",
+        "name": "Fifth Third",
+        "amountCents": 2500,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "3/14/2025",
+        "name": "McTigue & Colombo LLC",
+        "amountCents": 45000,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "3/21/2025",
+        "name": "Squarespace",
+        "amountCents": 1505,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "4/2/2025",
+        "name": "Google",
+        "amountCents": 2322,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "4/10/2025",
+        "name": "Fifth Third",
+        "amountCents": 2500,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "4/11/2025",
+        "name": "St. Mary Magdalene Athletic Association",
+        "amountCents": 20000,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "4/16/2025",
+        "name": "McTigue & Colombo LLC",
+        "amountCents": 45000,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "4/21/2025",
+        "name": "Squarespace",
+        "amountCents": 1512,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "5/1/2025",
+        "name": "Friends of Trenton Weaver",
+        "amountCents": 50000,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "5/5/2025",
+        "name": "RT Advisors",
+        "amountCents": 6000,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "5/9/2025",
+        "name": "McTigue & Colombo LLC",
+        "amountCents": 45000,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "5/12/2025",
+        "name": "Fifth Third",
+        "amountCents": 2500,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "5/21/2025",
+        "name": "Squarespace",
+        "amountCents": 1512,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "6/11/2025",
+        "name": "Fifth Third",
+        "amountCents": 2500,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "6/17/2025",
+        "name": "McTigue & Colombo LLC",
+        "amountCents": 45000,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "6/23/2025",
+        "name": "Squarespace",
+        "amountCents": 1512,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "6/30/2025",
+        "name": "Humphrey for Ohio",
+        "amountCents": 25000,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "6/30/2025",
+        "name": "Stripe",
+        "amountCents": 4676,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "6/30/2025",
+        "name": "ActBlue",
+        "amountCents": 3000,
+        "form": "31B"
+      },
+      {
+        "page": 5,
+        "date": "5/12/2025",
+        "name": "Bill DeMora",
+        "amountCents": 45000,
+        "form": "31F"
+      },
+      {
+        "page": 5,
+        "date": "5/19/2025",
+        "name": "The Berwick",
+        "amountCents": 134700,
+        "form": "31F"
+      },
+      {
+        "page": 5,
+        "date": "6/2/2025",
+        "name": "RT Advisors",
+        "amountCents": 100000,
+        "form": "31F"
+      },
+      {
+        "page": 6,
+        "date": "5/24/2025",
+        "name": "Bill DeMora",
+        "amountCents": 9000,
+        "form": "31J1"
+      }
+    ],
+    "note": "Scanned original read with text recognition and page-image checks; all cash rows reconcile to the cover. Reported spelling and transaction dates are retained. Independent editorial review is pending."
+  },
+  {
+    "candidate": "crawley",
+    "title": "2026 Post-Primary",
+    "url": "https://campaignfinance.franklincountyohio.gov//TED/CampaignDocs/CampaignFinanceFiling//2026/Jul/Monica_Debrock_-2026-07-10-10-59-35.pdf",
+    "amended": true,
+    "filedAt": "2026-07-09",
+    "sourceSha256": "d26ffca8b15e50295d5ae124ebf016c675c042b62d611c16246ad0b456943b3e",
+    "metrics": {
+      "beginningCash": 4193014,
+      "contributions": 4029250,
+      "otherReceipts": 0,
+      "disbursements": 1770248,
+      "endingCash": 6452016,
+      "inKind": null
+    },
+    "rows": [
+      {
+        "page": 2,
+        "date": "4/23/2026",
+        "name": "Melissa Waugh Pannell",
+        "amountCents": 2500,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "4/23/2026",
+        "name": "Richard Fowler",
+        "amountCents": 1250,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "4/28/2026",
+        "name": "Janet Jackson",
+        "amountCents": 25000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "4/28/2026",
+        "name": "Sundeepti Jindal",
+        "amountCents": 10000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "4/29/2026",
+        "name": "Ruth Lawson",
+        "amountCents": 5000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "4/29/2026",
+        "name": "Andy Hardy",
+        "amountCents": 100000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "5/5/2026",
+        "name": "Donna James",
+        "amountCents": 250000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "5/7/2026",
+        "name": "Jacquelin Lewis",
+        "amountCents": 7500,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "5/7/2026",
+        "name": "Natasha Davis",
+        "amountCents": 20000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "5/7/2026",
+        "name": "The Isaac Wiles PAC CP1058",
+        "amountCents": 250000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "5/7/2026",
+        "name": "Central Ohio Realtors PAC C00165589",
+        "amountCents": 250000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "5/7/2026",
+        "name": "Vorys Sater Seymour & Pease LLP PAC OH109",
+        "amountCents": 100000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "5/7/2026",
+        "name": "Ohiohealth Star Corp PAC c00210617",
+        "amountCents": 50000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "5/7/2026",
+        "name": "Central Ohio Labor Council, AFL-CIO PCE",
+        "amountCents": 50000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "5/7/2026",
+        "name": "Mo Dioun",
+        "amountCents": 250000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "5/7/2026",
+        "name": "Mina Dioun",
+        "amountCents": 250000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "5/8/2026",
+        "name": "Political Education Patterns C00065870",
+        "amountCents": 250000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "5/15/2026",
+        "name": "Larry Price",
+        "amountCents": 10000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "5/15/2026",
+        "name": "IBEW Local Union 683 PCE",
+        "amountCents": 100000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "5/21/2026",
+        "name": "Brad DeHays Connect Realty LLC",
+        "amountCents": 250000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "6/1/2026",
+        "name": "Thompson Hine LLP Good Government Program OH428",
+        "amountCents": 100000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "6/3/2026",
+        "name": "Andrew Minton",
+        "amountCents": 125000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "6/3/2026",
+        "name": "Bill Byers",
+        "amountCents": 125000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "6/9/2026",
+        "name": "OAPSE Making a Difference PCE",
+        "amountCents": 250000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "6/10/2026",
+        "name": "OCSEA/AFSCME Local 11 Political Action Fund LA292",
+        "amountCents": 250000,
+        "form": "31A"
+      },
+      {
+        "page": 3,
+        "date": "4/23/2026",
+        "name": "Charity Martin-King",
+        "amountCents": 12500,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "4/26/2026",
+        "name": "Anita Smith",
+        "amountCents": 5000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "4/27/2026",
+        "name": "Lorina Wise",
+        "amountCents": 25000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "4/27/2026",
+        "name": "Letha Pugh",
+        "amountCents": 50000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "4/27/2026",
+        "name": "Keena Smith",
+        "amountCents": 25000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "4/28/2026",
+        "name": "Tim Robinson",
+        "amountCents": 15000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "4/28/2026",
+        "name": "Jeanine Hummer",
+        "amountCents": 5000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "4/29/2026",
+        "name": "Keith Key",
+        "amountCents": 250000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/1/2026",
+        "name": "Lee Smith",
+        "amountCents": 100000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/1/2026",
+        "name": "Mark Cain",
+        "amountCents": 150000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/1/2026",
+        "name": "Elizabeth Kessler",
+        "amountCents": 50000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/1/2026",
+        "name": "Tracey Sigers",
+        "amountCents": 5000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/1/2026",
+        "name": "Angela Mathews",
+        "amountCents": 5000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/2/2026",
+        "name": "Laverne Fisher",
+        "amountCents": 3000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/2/2026",
+        "name": "Jeanine Hummer",
+        "amountCents": 5000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/2/2026",
+        "name": "Charity Martin-King",
+        "amountCents": 5000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/2/2026",
+        "name": "Chanel Norton-Lee",
+        "amountCents": 10000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/2/2026",
+        "name": "Habiba Bankston",
+        "amountCents": 10000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/2/2026",
+        "name": "Christopher Acock",
+        "amountCents": 2500,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/2/2026",
+        "name": "Nick Bankston",
+        "amountCents": 10000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/2/2026",
+        "name": "Latasha Parks",
+        "amountCents": 5000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/2/2026",
+        "name": "Patrick Gamble",
+        "amountCents": 10000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/2/2026",
+        "name": "Sean Mentel",
+        "amountCents": 50000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/2/2026",
+        "name": "Brian Winston",
+        "amountCents": 5000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/2/2026",
+        "name": "William Bishop",
+        "amountCents": 5000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/2/2026",
+        "name": "Lawrence Lemon",
+        "amountCents": 10000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/2/2026",
+        "name": "Michael Bivens",
+        "amountCents": 50000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/2/2026",
+        "name": "Ransford Tetteh",
+        "amountCents": 10000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/2/2026",
+        "name": "Toni Cunningham",
+        "amountCents": 10000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/4/2026",
+        "name": "Humphrey for Ohio",
+        "amountCents": 15000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/4/2026",
+        "name": "Seleshi Ayalew",
+        "amountCents": 25000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/5/2026",
+        "name": "Barbara Motley",
+        "amountCents": 10000,
+        "form": "31E"
+      },
+      {
+        "page": 4,
+        "date": "4/30/2026",
+        "name": "McTigue & Colombo LLC",
+        "amountCents": 45000,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "5/4/2026",
+        "name": "Ian Alexander Photography",
+        "amountCents": 65000,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "5/5/2026",
+        "name": "Gen Murphy & Associates LLC",
+        "amountCents": 250000,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "5/7/2026",
+        "name": "Blu Note on Town",
+        "amountCents": 6790,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "5/19/2026",
+        "name": "McTigue & Colombo LLC",
+        "amountCents": 50000,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "5/19/2026",
+        "name": "Cap City Fine Diner and Bar",
+        "amountCents": 7452,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "5/21/2026",
+        "name": "Blue Grass Organizing & Consulting",
+        "amountCents": 250000,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "5/22/2026",
+        "name": "Bar Cicchetti",
+        "amountCents": 11072,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "6/2/2026",
+        "name": "Gen Murphy & Associates LLC",
+        "amountCents": 250000,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "6/3/2026",
+        "name": "Old Bag of Nails Pub",
+        "amountCents": 6257,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "6/5/2026",
+        "name": "Stripe",
+        "amountCents": 33281,
+        "form": "31B"
+      },
+      {
+        "page": 4,
+        "date": "6/5/2026",
+        "name": "ActBlue",
+        "amountCents": 22003,
+        "form": "31B"
+      },
+      {
+        "page": 5,
+        "date": "4/27/2026",
+        "name": "Blu Note on Town",
+        "amountCents": 3865,
+        "form": "31F"
+      },
+      {
+        "page": 5,
+        "date": "4/27/2026",
+        "name": "Blu Note on Town",
+        "amountCents": 6916,
+        "form": "31F"
+      },
+      {
+        "page": 5,
+        "date": "4/27/2026",
+        "name": "Blu Note on Town",
+        "amountCents": 54206,
+        "form": "31F"
+      },
+      {
+        "page": 5,
+        "date": "5/4/2026",
+        "name": "The Railhouse",
+        "amountCents": 499770,
+        "form": "31F"
+      },
+      {
+        "page": 5,
+        "date": "5/5/2026",
+        "name": "Gen Murphy & Associates LLC",
+        "amountCents": 208636,
+        "form": "31F"
+      }
+    ],
+    "note": "Scanned original read with text recognition and page-image checks; all cash rows reconcile to the cover. Reported spelling and transaction dates are retained. Independent editorial review is pending."
+  },
+  {
+    "candidate": "crawley",
+    "title": "2026 Pre-Primary",
+    "url": "https://campaignfinance.franklincountyohio.gov//TED/CampaignDocs/CampaignFinanceFiling//2026/Apr/Monica_Debrock_-2026-04-23-14-05-47.pdf",
+    "amended": false,
+    "filedAt": "2026-04-23",
+    "sourceSha256": "192f4ccdd70f75711cea584d1af02fca8be166e05f6e30e01904e9c8111f9043",
+    "metrics": {
+      "beginningCash": 7276621,
+      "contributions": 1095000,
+      "otherReceipts": 0,
+      "disbursements": 4178607,
+      "endingCash": 4193014,
+      "inKind": null
+    },
+    "rows": [
+      {
+        "page": 2,
+        "date": "1/4/2026",
+        "name": "Ramani Hunter",
+        "amountCents": 25000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "1/28/2026",
+        "name": "Central Ohio Labor Council AFL-CIO PCE",
+        "amountCents": 100000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "3/16/2026",
+        "name": "Friends for Bankston",
+        "amountCents": 50000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "4/4/2026",
+        "name": "Clarence Simmons",
+        "amountCents": 100000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "4/7/2026",
+        "name": "DLZ Corp Infrastructure Advocacy Ohio PAC",
+        "amountCents": 250000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "4/7/2026",
+        "name": "Desmond Bryant",
+        "amountCents": 25000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "4/8/2026",
+        "name": "Tanny Crane",
+        "amountCents": 100000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "4/9/2026",
+        "name": "Yvette McGee Brown",
+        "amountCents": 25000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "4/16/2026",
+        "name": "Robert Weiler",
+        "amountCents": 250000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "4/18/2026",
+        "name": "Christian Jackson",
+        "amountCents": 5000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "4/18/2026",
+        "name": "Emiliana Morales",
+        "amountCents": 10000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "4/20/2026",
+        "name": "Jim Weiler",
+        "amountCents": 50000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "4/20/2026",
+        "name": "Patty McClimon",
+        "amountCents": 25000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "4/20/2026",
+        "name": "Denise Zabawski",
+        "amountCents": 10000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "4/20/2026",
+        "name": "Maurice Womack",
+        "amountCents": 50000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "4/20/2026",
+        "name": "Donna Teach",
+        "amountCents": 10000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "4/20/2026",
+        "name": "Maitreya Coffey",
+        "amountCents": 10000,
+        "form": "31A"
+      },
+      {
+        "page": 3,
+        "date": "1/5/2026",
+        "name": "United Way of Central Ohio",
+        "amountCents": 52039,
+        "form": "31B",
+        "reference": "Donation"
+      },
+      {
+        "page": 3,
+        "date": "1/7/2026",
+        "name": "Gen Murphy & Associates LLC",
+        "amountCents": 150000,
+        "form": "31B",
+        "reference": "General campaign consulting"
+      },
+      {
+        "page": 3,
+        "date": "1/13/2026",
+        "name": "Franklin County Board of Elections",
+        "amountCents": 8000,
+        "form": "31B",
+        "reference": "Filing fee"
+      },
+      {
+        "page": 3,
+        "date": "1/14/2026",
+        "name": "Wing's Restaurant",
+        "amountCents": 12522,
+        "form": "31B",
+        "reference": "Meeting expense"
+      },
+      {
+        "page": 3,
+        "date": "1/16/2026",
+        "name": "Sidebar Columbus",
+        "amountCents": 19216,
+        "form": "31B",
+        "reference": "Meeting expense"
+      },
+      {
+        "page": 3,
+        "date": "1/23/2026",
+        "name": "McTigue & Colombo LLC",
+        "amountCents": 45000,
+        "form": "31B",
+        "reference": "Legal services"
+      },
+      {
+        "page": 3,
+        "date": "1/23/2026",
+        "name": "Kim Agyekum",
+        "amountCents": 300000,
+        "form": "31B",
+        "reference": "General campaign consulting"
+      },
+      {
+        "page": 3,
+        "date": "2/2/2026",
+        "name": "Columbus Museum of Art",
+        "amountCents": 26474,
+        "form": "31B",
+        "reference": "Event attendance"
+      },
+      {
+        "page": 3,
+        "date": "2/17/2026",
+        "name": "Beautifully Flawed",
+        "amountCents": 400000,
+        "form": "31B",
+        "reference": "Donation"
+      },
+      {
+        "page": 3,
+        "date": "2/17/2026",
+        "name": "Bold Girl Collective",
+        "amountCents": 400000,
+        "form": "31B",
+        "reference": "Donation"
+      },
+      {
+        "page": 3,
+        "date": "2/18/2026",
+        "name": "Mitchell's Fish Market",
+        "amountCents": 18613,
+        "form": "31B",
+        "reference": "Official meeting"
+      },
+      {
+        "page": 3,
+        "date": "2/18/2026",
+        "name": "Femergy",
+        "amountCents": 400000,
+        "form": "31B",
+        "reference": "Donation"
+      },
+      {
+        "page": 3,
+        "date": "2/20/2026",
+        "name": "Gen Murphy & Associates LLC",
+        "amountCents": 250000,
+        "form": "31B",
+        "reference": "General campaign consulting"
+      },
+      {
+        "page": 3,
+        "date": "2/23/2026",
+        "name": "Lyft",
+        "amountCents": 5985,
+        "form": "31B",
+        "reference": "Official travel"
+      },
+      {
+        "page": 3,
+        "date": "2/23/2026",
+        "name": "Hilton",
+        "amountCents": 13905,
+        "form": "31B",
+        "reference": "Official travel"
+      },
+      {
+        "page": 3,
+        "date": "2/24/2026",
+        "name": "Lyft",
+        "amountCents": 8688,
+        "form": "31B",
+        "reference": "Official travel"
+      },
+      {
+        "page": 3,
+        "date": "2/24/2026",
+        "name": "The Monocle Restaurant",
+        "amountCents": 90250,
+        "form": "31B",
+        "reference": "Official dinner"
+      },
+      {
+        "page": 3,
+        "date": "2/25/2026",
+        "name": "Founding Farmers",
+        "amountCents": 21707,
+        "form": "31B",
+        "reference": "Official dinner"
+      },
+      {
+        "page": 3,
+        "date": "2/26/2026",
+        "name": "Lyft",
+        "amountCents": 7448,
+        "form": "31B",
+        "reference": "Official travel"
+      },
+      {
+        "page": 3,
+        "date": "2/26/2026",
+        "name": "McTigue & Colombo LLC",
+        "amountCents": 49690,
+        "form": "31B",
+        "reference": "Legal services"
+      },
+      {
+        "page": 3,
+        "date": "2/26/2026",
+        "name": "Friends of John O'Grady",
+        "amountCents": 238500,
+        "form": "31B",
+        "reference": "Event attendance"
+      },
+      {
+        "page": 3,
+        "date": "3/4/2026",
+        "name": "Ohio Democratic Party",
+        "amountCents": 150000,
+        "form": "31B",
+        "reference": "Campaign software"
+      },
+      {
+        "page": 3,
+        "date": "3/5/2026",
+        "name": "Gen Murphy & Associates LLC",
+        "amountCents": 250000,
+        "form": "31B",
+        "reference": "General campaign consulting"
+      },
+      {
+        "page": 3,
+        "date": "3/7/2026",
+        "name": "Kim Agyekum",
+        "amountCents": 625000,
+        "form": "31B",
+        "reference": "Campaign management"
+      },
+      {
+        "page": 3,
+        "date": "3/11/2026",
+        "name": "The Guild House",
+        "amountCents": 10726,
+        "form": "31B",
+        "reference": "Meeting expense"
+      },
+      {
+        "page": 3,
+        "date": "3/20/2026",
+        "name": "McTigue & Colombo LLC",
+        "amountCents": 45000,
+        "form": "31B",
+        "reference": "Legal services"
+      },
+      {
+        "page": 3,
+        "date": "3/27/2026",
+        "name": "The Junto",
+        "amountCents": 10888,
+        "form": "31B",
+        "reference": "Meeting expense"
+      },
+      {
+        "page": 3,
+        "date": "4/1/2026",
+        "name": "Gen Murphy & Associates LLC",
+        "amountCents": 250000,
+        "form": "31B",
+        "reference": "General campaign consulting"
+      },
+      {
+        "page": 3,
+        "date": "4/2/2026",
+        "name": "Cento",
+        "amountCents": 29203,
+        "form": "31B",
+        "reference": "Meeting expense"
+      },
+      {
+        "page": 3,
+        "date": "4/8/2026",
+        "name": "Ohio Ethics Commission",
+        "amountCents": 6000,
+        "form": "31B",
+        "reference": "Filing fee"
+      },
+      {
+        "page": 3,
+        "date": "4/8/2026",
+        "name": "Lindey's",
+        "amountCents": 8912,
+        "form": "31B",
+        "reference": "Meeting expense"
+      },
+      {
+        "page": 3,
+        "date": "4/10/2026",
+        "name": "Lindey's",
+        "amountCents": 6914,
+        "form": "31B",
+        "reference": "Meeting expense"
+      },
+      {
+        "page": 3,
+        "date": "4/14/2026",
+        "name": "Cap City Fine Dine and Bar",
+        "amountCents": 7637,
+        "form": "31B",
+        "reference": "Meeting expense"
+      },
+      {
+        "page": 3,
+        "date": "4/15/2026",
+        "name": "Blue Grass Organizing & Consulting",
+        "amountCents": 250000,
+        "form": "31B",
+        "reference": "General campaign consulting"
+      },
+      {
+        "page": 3,
+        "date": "4/15/2026",
+        "name": "Stripe",
+        "amountCents": 6165,
+        "form": "31B",
+        "reference": "Merchant fees"
+      },
+      {
+        "page": 3,
+        "date": "4/15/2026",
+        "name": "ActBlue",
+        "amountCents": 4125,
+        "form": "31B",
+        "reference": "Merchant fees"
+      }
+    ],
+    "note": "Scanned original read with text recognition and page-image checks; all cash rows reconcile to the cover. Reported spelling and transaction dates are retained. Independent editorial review is pending."
+  },
+  {
+    "candidate": "crawley",
+    "title": "2025 Annual",
+    "url": "https://campaignfinance.franklincountyohio.gov//TED/CampaignDocs/CampaignFinanceFiling//2026/Jan/Monica_Debrock_-2026-01-30-15-55-12.pdf",
+    "amended": false,
+    "filedAt": "2026-01-30",
+    "sourceSha256": "5813de6518c0859d222e787e161cdebe80158f17d0769d97fe9b2b95b0118b93",
+    "metrics": {
+      "beginningCash": 3634049,
+      "contributions": 7456517,
+      "otherReceipts": 1743,
+      "disbursements": 3815688,
+      "endingCash": 7276621,
+      "inKind": null
+    },
+    "rows": [
+      {
+        "page": 5,
+        "date": "12/11/2025",
+        "name": "The Guild House",
+        "amountCents": 1743,
+        "form": "31A2"
+      },
+      {
+        "page": 6,
+        "date": "7/7/2025",
+        "name": "Gen Murphy & Associates LLC",
+        "amountCents": 150000,
+        "form": "31B"
+      },
+      {
+        "page": 6,
+        "date": "7/14/2025",
+        "name": "JW Marriott",
+        "amountCents": 37018,
+        "form": "31B"
+      },
+      {
+        "page": 6,
+        "date": "7/14/2025",
+        "name": "Gran Caffe L'Aquila",
+        "amountCents": 181152,
+        "form": "31B"
+      },
+      {
+        "page": 6,
+        "date": "7/15/2025",
+        "name": "Jack Duggan's Pub",
+        "amountCents": 4499,
+        "form": "31B"
+      },
+      {
+        "page": 6,
+        "date": "7/22/2025",
+        "name": "McTigue & Colombo LLC",
+        "amountCents": 45000,
+        "form": "31B"
+      },
+      {
+        "page": 6,
+        "date": "8/1/2025",
+        "name": "Gen Murphy & Associates LLC",
+        "amountCents": 7300,
+        "form": "31B"
+      },
+      {
+        "page": 6,
+        "date": "8/1/2025",
+        "name": "Gen Murphy & Associates LLC",
+        "amountCents": 150000,
+        "form": "31B"
+      },
+      {
+        "page": 6,
+        "date": "8/6/2025",
+        "name": "Lyft",
+        "amountCents": 6302,
+        "form": "31B"
+      },
+      {
+        "page": 6,
+        "date": "8/14/2025",
+        "name": "Lindey's",
+        "amountCents": 24960,
+        "form": "31B"
+      },
+      {
+        "page": 6,
+        "date": "8/15/2025",
+        "name": "McTigue & Colombo LLC",
+        "amountCents": 45000,
+        "form": "31B"
+      },
+      {
+        "page": 6,
+        "date": "8/27/2025",
+        "name": "Backswing Golf Events",
+        "amountCents": 10000,
+        "form": "31B"
+      },
+      {
+        "page": 6,
+        "date": "8/28/2025",
+        "name": "Friends of Favor",
+        "amountCents": 50000,
+        "form": "31B"
+      },
+      {
+        "page": 6,
+        "date": "8/29/2025",
+        "name": "Park Street Tavern",
+        "amountCents": 2072,
+        "form": "31B"
+      },
+      {
+        "page": 6,
+        "date": "9/2/2025",
+        "name": "Gen Murphy & Associates LLC",
+        "amountCents": 150000,
+        "form": "31B"
+      },
+      {
+        "page": 6,
+        "date": "9/4/2025",
+        "name": "Friends of Shannon Hardin",
+        "amountCents": 100000,
+        "form": "31B"
+      },
+      {
+        "page": 6,
+        "date": "9/5/2025",
+        "name": "Minuteman Press Dayton",
+        "amountCents": 19546,
+        "form": "31B"
+      },
+      {
+        "page": 6,
+        "date": "9/8/2025",
+        "name": "Fifth Third",
+        "amountCents": 5,
+        "form": "31B"
+      },
+      {
+        "page": 6,
+        "date": "9/8/2025",
+        "name": "Fifth Third",
+        "amountCents": 82,
+        "form": "31B"
+      },
+      {
+        "page": 6,
+        "date": "9/8/2025",
+        "name": "Fifth Third",
+        "amountCents": 132,
+        "form": "31B"
+      },
+      {
+        "page": 6,
+        "date": "9/8/2025",
+        "name": "Uber",
+        "amountCents": 2733,
+        "form": "31B"
+      },
+      {
+        "page": 6,
+        "date": "9/8/2025",
+        "name": "HALAL WAGYU RAMEN SHINJUKU-TEI",
+        "amountCents": 4396,
+        "form": "31B"
+      },
+      {
+        "page": 6,
+        "date": "9/9/2025",
+        "name": "Fifth Third",
+        "amountCents": 5,
+        "form": "31B"
+      },
+      {
+        "page": 6,
+        "date": "9/9/2025",
+        "name": "Fifth Third",
+        "amountCents": 49,
+        "form": "31B"
+      },
+      {
+        "page": 6,
+        "date": "9/9/2025",
+        "name": "Fifth Third",
+        "amountCents": 69,
+        "form": "31B"
+      },
+      {
+        "page": 6,
+        "date": "9/9/2025",
+        "name": "Fifth Third",
+        "amountCents": 740,
+        "form": "31B"
+      },
+      {
+        "page": 6,
+        "date": "9/9/2025",
+        "name": "Ashisuto",
+        "amountCents": 2316,
+        "form": "31B"
+      },
+      {
+        "page": 6,
+        "date": "9/9/2025",
+        "name": "Imperial Hotel Tokyo",
+        "amountCents": 24659,
+        "form": "31B"
+      },
+      {
+        "page": 6,
+        "date": "9/10/2025",
+        "name": "Fifth Third",
+        "amountCents": 87,
+        "form": "31B"
+      },
+      {
+        "page": 6,
+        "date": "9/10/2025",
+        "name": "A Happy Pancake Ginza",
+        "amountCents": 2915,
+        "form": "31B"
+      },
+      {
+        "page": 6,
+        "date": "9/11/2025",
+        "name": "Fifth Third",
+        "amountCents": 77,
+        "form": "31B"
+      },
+      {
+        "page": 6,
+        "date": "9/11/2025",
+        "name": "Osaka Marriott Miyako Hotel",
+        "amountCents": 2553,
+        "form": "31B"
+      },
+      {
+        "page": 6,
+        "date": "9/12/2025",
+        "name": "Fifth Third",
+        "amountCents": 81,
+        "form": "31B"
+      },
+      {
+        "page": 6,
+        "date": "9/12/2025",
+        "name": "Fifth Third",
+        "amountCents": 83,
+        "form": "31B"
+      },
+      {
+        "page": 6,
+        "date": "9/12/2025",
+        "name": "Fifth Third",
+        "amountCents": 210,
+        "form": "31B"
+      },
+      {
+        "page": 6,
+        "date": "9/12/2025",
+        "name": "Osaka Marriott Miyako Hotel",
+        "amountCents": 2712,
+        "form": "31B"
+      },
+      {
+        "page": 6,
+        "date": "9/12/2025",
+        "name": "Osaka Marriott Miyako Hotel",
+        "amountCents": 2774,
+        "form": "31B"
+      },
+      {
+        "page": 6,
+        "date": "9/12/2025",
+        "name": "Osaka Marriott Miyako Hotel",
+        "amountCents": 6997,
+        "form": "31B"
+      },
+      {
+        "page": 6,
+        "date": "9/15/2025",
+        "name": "LAZ Parking",
+        "amountCents": 1000,
+        "form": "31B"
+      },
+      {
+        "page": 6,
+        "date": "9/15/2025",
+        "name": "Le Méridien Columbus",
+        "amountCents": 3668,
+        "form": "31B"
+      },
+      {
+        "page": 6,
+        "date": "9/16/2025",
+        "name": "McTigue & Colombo LLC",
+        "amountCents": 45000,
+        "form": "31B"
+      },
+      {
+        "page": 6,
+        "date": "9/18/2025",
+        "name": "Proffessional Parking Services LLC",
+        "amountCents": 400,
+        "form": "31B"
+      },
+      {
+        "page": 6,
+        "date": "9/18/2025",
+        "name": "Be Louder Group",
+        "amountCents": 6810,
+        "form": "31B"
+      },
+      {
+        "page": 6,
+        "date": "9/22/2025",
+        "name": "Canopy By Hilton Columbus Downtown Short North",
+        "amountCents": 3200,
+        "form": "31B"
+      },
+      {
+        "page": 6,
+        "date": "9/24/2025",
+        "name": "The Blackwell Inn",
+        "amountCents": 2000,
+        "form": "31B"
+      },
+      {
+        "page": 6,
+        "date": "9/26/2025",
+        "name": "Lyft",
+        "amountCents": 5984,
+        "form": "31B"
+      },
+      {
+        "page": 6,
+        "date": "9/26/2025",
+        "name": "STK Steakhouse",
+        "amountCents": 17420,
+        "form": "31B"
+      },
+      {
+        "page": 7,
+        "date": "9/29/2025",
+        "name": "JW Marriott",
+        "amountCents": 2260,
+        "form": "31B"
+      },
+      {
+        "page": 7,
+        "date": "9/29/2025",
+        "name": "Lyft",
+        "amountCents": 2694,
+        "form": "31B"
+      },
+      {
+        "page": 7,
+        "date": "9/29/2025",
+        "name": "CHIRINGUITO, LLC",
+        "amountCents": 2780,
+        "form": "31B"
+      },
+      {
+        "page": 7,
+        "date": "9/29/2025",
+        "name": "Lyft",
+        "amountCents": 7574,
+        "form": "31B"
+      },
+      {
+        "page": 7,
+        "date": "9/29/2025",
+        "name": "JW Marriott",
+        "amountCents": 9970,
+        "form": "31B"
+      },
+      {
+        "page": 7,
+        "date": "9/29/2025",
+        "name": "Lyft",
+        "amountCents": 10580,
+        "form": "31B"
+      },
+      {
+        "page": 7,
+        "date": "10/2/2025",
+        "name": "Gen Murphy & Associates LLC",
+        "amountCents": 150000,
+        "form": "31B"
+      },
+      {
+        "page": 7,
+        "date": "10/14/2025",
+        "name": "Franlin County Democratic Party",
+        "amountCents": 250000,
+        "form": "31B"
+      },
+      {
+        "page": 7,
+        "date": "10/14/2025",
+        "name": "Lyft",
+        "amountCents": 3169,
+        "form": "31B"
+      },
+      {
+        "page": 7,
+        "date": "10/14/2025",
+        "name": "Lyft",
+        "amountCents": 5329,
+        "form": "31B"
+      },
+      {
+        "page": 7,
+        "date": "10/14/2025",
+        "name": "Saint Kate",
+        "amountCents": 5678,
+        "form": "31B"
+      },
+      {
+        "page": 7,
+        "date": "10/14/2025",
+        "name": "Humphrey for Ohio",
+        "amountCents": 25000,
+        "form": "31B"
+      },
+      {
+        "page": 7,
+        "date": "10/14/2025",
+        "name": "McTigue & Colombo LLC",
+        "amountCents": 95000,
+        "form": "31B"
+      },
+      {
+        "page": 7,
+        "date": "10/31/2025",
+        "name": "Gen Murphy & Associates LLC",
+        "amountCents": 150000,
+        "form": "31B"
+      },
+      {
+        "page": 7,
+        "date": "11/6/2025",
+        "name": "Hilton",
+        "amountCents": 2500,
+        "form": "31B"
+      },
+      {
+        "page": 7,
+        "date": "11/7/2025",
+        "name": "Greater Columbus Convention Center",
+        "amountCents": 400,
+        "form": "31B"
+      },
+      {
+        "page": 7,
+        "date": "11/18/2025",
+        "name": "McTigue & Colombo LLC",
+        "amountCents": 45000,
+        "form": "31B"
+      },
+      {
+        "page": 7,
+        "date": "11/24/2025",
+        "name": "The Junto",
+        "amountCents": 20914,
+        "form": "31B"
+      },
+      {
+        "page": 7,
+        "date": "11/25/2025",
+        "name": "Third & Hollywood",
+        "amountCents": 1050,
+        "form": "31B"
+      },
+      {
+        "page": 7,
+        "date": "12/8/2025",
+        "name": "The Guild House",
+        "amountCents": 43579,
+        "form": "31B"
+      },
+      {
+        "page": 7,
+        "date": "12/11/2025",
+        "name": "Gen Murphy & Associates LLC",
+        "amountCents": 150000,
+        "form": "31B"
+      },
+      {
+        "page": 7,
+        "date": "12/15/2025",
+        "name": "Lindey's",
+        "amountCents": 12368,
+        "form": "31B"
+      },
+      {
+        "page": 7,
+        "date": "12/18/2025",
+        "name": "McTigue & Colombo LLC",
+        "amountCents": 88250,
+        "form": "31B"
+      },
+      {
+        "page": 7,
+        "date": "12/18/2025",
+        "name": "Beatty for Congress",
+        "amountCents": 250000,
+        "form": "31B"
+      },
+      {
+        "page": 7,
+        "date": "12/31/2025",
+        "name": "Stripe",
+        "amountCents": 46076,
+        "form": "31B"
+      },
+      {
+        "page": 7,
+        "date": "12/31/2025",
+        "name": "ActBlue",
+        "amountCents": 30604,
+        "form": "31B"
+      },
+      {
+        "page": 8,
+        "date": "9/3/2025",
+        "name": "Butcher & Rose",
+        "amountCents": 90666,
+        "form": "31F"
+      },
+      {
+        "page": 8,
+        "date": "9/3/2025",
+        "name": "Butcher & Rose",
+        "amountCents": 179720,
+        "form": "31F"
+      },
+      {
+        "page": 8,
+        "date": "11/13/2025",
+        "name": "Genesis Downtown",
+        "amountCents": 100000,
+        "form": "31F"
+      },
+      {
+        "page": 8,
+        "date": "11/25/2025",
+        "name": "Off Da Grill Catering",
+        "amountCents": 350000,
+        "form": "31F"
+      },
+      {
+        "page": 8,
+        "date": "11/28/2025",
+        "name": "Genesis Downtown",
+        "amountCents": 276419,
+        "form": "31F"
+      },
+      {
+        "page": 8,
+        "date": "12/11/2025",
+        "name": "Genesis Downtown",
+        "amountCents": 94545,
+        "form": "31F"
+      },
+      {
+        "page": 8,
+        "date": "12/16/2025",
+        "name": "Diallo Wilkerson",
+        "amountCents": 60000,
+        "form": "31F"
+      },
+      {
+        "page": 8,
+        "date": "12/16/2025",
+        "name": "Genesis Downtown",
+        "amountCents": 131557,
+        "form": "31F"
+      },
+      {
+        "page": 2,
+        "date": "8/28/2025",
+        "name": "Jim Negron",
+        "amountCents": 250000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "8/29/2025",
+        "name": "Mark Wood",
+        "amountCents": 250000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "9/5/2025",
+        "name": "Jim Merkel · RB Founders LLC",
+        "amountCents": 1000000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "10/10/2025",
+        "name": "Larry James",
+        "amountCents": 250000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "10/17/2025",
+        "name": "Emmett Kelly",
+        "amountCents": 100000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "10/17/2025",
+        "name": "Frost Brown Todd LLC PAC",
+        "amountCents": 100000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "10/24/2025",
+        "name": "Charles Gehring",
+        "amountCents": 50000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "10/30/2025",
+        "name": "Lee Smith",
+        "amountCents": 100000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "10/30/2025",
+        "name": "Jevon Collins",
+        "amountCents": 2500,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "11/7/2025",
+        "name": "DLZ Corp Infrastructure Advocacy Ohio PAC",
+        "amountCents": 250000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "11/10/2025",
+        "name": "Boomer Schmidt",
+        "amountCents": 10000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "11/18/2025",
+        "name": "David Hetzler",
+        "amountCents": 100000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "11/22/2025",
+        "name": "Keena Smith",
+        "amountCents": 25000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "12/2/2025",
+        "name": "Iron Workers Local Union 172 PCE",
+        "amountCents": 50000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "12/2/2025",
+        "name": "Robert Ruscelli",
+        "amountCents": 50000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "12/2/2025",
+        "name": "Tasha Booker",
+        "amountCents": 10000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "12/2/2025",
+        "name": "Michael Jones",
+        "amountCents": 10000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "12/2/2025",
+        "name": "Oyauma Garrison",
+        "amountCents": 25000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "12/3/2025",
+        "name": "Aaron McDaniel",
+        "amountCents": 100000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "12/3/2025",
+        "name": "Conan Cupples",
+        "amountCents": 5000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "12/4/2025",
+        "name": "Michael O'Callaghan",
+        "amountCents": 25000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "12/4/2025",
+        "name": "Toni Cunningham",
+        "amountCents": 10000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "12/5/2025",
+        "name": "Frank Kass · Continental Development Ventures LLC",
+        "amountCents": 500000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "12/5/2025",
+        "name": "Reesie Wilson",
+        "amountCents": 10000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "12/6/2025",
+        "name": "Letha Pugh",
+        "amountCents": 50000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "12/7/2025",
+        "name": "Regina Rembert",
+        "amountCents": 5000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "12/8/2025",
+        "name": "Karen Williams",
+        "amountCents": 25000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "12/8/2025",
+        "name": "Ellen Vedra",
+        "amountCents": 2500,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "12/9/2025",
+        "name": "Jeff Edwards",
+        "amountCents": 661517,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "12/9/2025",
+        "name": "Political Education Patterns",
+        "amountCents": 250000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "12/9/2025",
+        "name": "Angela Matthews",
+        "amountCents": 2500,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "12/9/2025",
+        "name": "Catreann Cannon",
+        "amountCents": 10000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "12/9/2025",
+        "name": "Tanny Crane",
+        "amountCents": 50000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "12/9/2025",
+        "name": "Clarence Simmons",
+        "amountCents": 50000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "12/10/2025",
+        "name": "Elizabeth Kessler",
+        "amountCents": 50000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "12/10/2025",
+        "name": "Hal Keller",
+        "amountCents": 50000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "12/10/2025",
+        "name": "Tracey Sigers",
+        "amountCents": 2500,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "12/10/2025",
+        "name": "Christie Angel",
+        "amountCents": 10000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "12/10/2025",
+        "name": "George McCue",
+        "amountCents": 100000,
+        "form": "31A"
+      },
+      {
+        "page": 4,
+        "date": "9/5/2025",
+        "name": "Jeffrey Woda",
+        "amountCents": 250000,
+        "form": "31E"
+      },
+      {
+        "page": 4,
+        "date": "9/9/2025",
+        "name": "Brad DeHays · Connect Realty LLC",
+        "amountCents": 250000,
+        "form": "31E"
+      },
+      {
+        "page": 4,
+        "date": "9/9/2025",
+        "name": "Civil & Environmental Consultants Inc PAC",
+        "amountCents": 100000,
+        "form": "31E"
+      },
+      {
+        "page": 4,
+        "date": "9/9/2025",
+        "name": "Mo Dioun",
+        "amountCents": 500000,
+        "form": "31E"
+      },
+      {
+        "page": 4,
+        "date": "9/9/2025",
+        "name": "Don Casto · Columbus Realty Investments LTD",
+        "amountCents": 200000,
+        "form": "31E"
+      },
+      {
+        "page": 4,
+        "date": "9/9/2025",
+        "name": "Don Casto · Casto Family Funding LLC",
+        "amountCents": 50000,
+        "form": "31E"
+      },
+      {
+        "page": 4,
+        "date": "11/24/2025",
+        "name": "Ohiohealth Star Corp PAC",
+        "amountCents": 50000,
+        "form": "31E"
+      },
+      {
+        "page": 4,
+        "date": "11/24/2025",
+        "name": "Columbus Building and Construction Construction Trades Council PCE",
+        "amountCents": 50000,
+        "form": "31E"
+      },
+      {
+        "page": 4,
+        "date": "12/11/2025",
+        "name": "Robert Lee III",
+        "amountCents": 50000,
+        "form": "31E"
+      },
+      {
+        "page": 4,
+        "date": "12/11/2025",
+        "name": "Bharat Baste",
+        "amountCents": 100000,
+        "form": "31E"
+      },
+      {
+        "page": 4,
+        "date": "12/11/2025",
+        "name": "Niel Jurist",
+        "amountCents": 5000,
+        "form": "31E"
+      },
+      {
+        "page": 4,
+        "date": "12/11/2025",
+        "name": "Ciera Frazier",
+        "amountCents": 25000,
+        "form": "31E"
+      },
+      {
+        "page": 4,
+        "date": "12/11/2025",
+        "name": "Terry Arter",
+        "amountCents": 25000,
+        "form": "31E"
+      },
+      {
+        "page": 4,
+        "date": "12/11/2025",
+        "name": "Regina Rembert",
+        "amountCents": 10000,
+        "form": "31E"
+      },
+      {
+        "page": 4,
+        "date": "12/11/2025",
+        "name": "Mallory Donaldson",
+        "amountCents": 5000,
+        "form": "31E"
+      },
+      {
+        "page": 4,
+        "date": "12/11/2025",
+        "name": "Adrian McGee",
+        "amountCents": 25000,
+        "form": "31E"
+      },
+      {
+        "page": 4,
+        "date": "12/11/2025",
+        "name": "Mark Lechner",
+        "amountCents": 250000,
+        "form": "31E"
+      },
+      {
+        "page": 4,
+        "date": "12/11/2025",
+        "name": "Gloria Miller",
+        "amountCents": 20000,
+        "form": "31E"
+      },
+      {
+        "page": 4,
+        "date": "12/11/2025",
+        "name": "Jessica Sullivan",
+        "amountCents": 7500,
+        "form": "31E"
+      },
+      {
+        "page": 4,
+        "date": "12/11/2025",
+        "name": "Bhakti Bania",
+        "amountCents": 50000,
+        "form": "31E"
+      },
+      {
+        "page": 4,
+        "date": "12/11/2025",
+        "name": "Robert Chilton",
+        "amountCents": 10000,
+        "form": "31E"
+      },
+      {
+        "page": 4,
+        "date": "12/11/2025",
+        "name": "Ruth Lawson",
+        "amountCents": 2500,
+        "form": "31E"
+      },
+      {
+        "page": 4,
+        "date": "12/11/2025",
+        "name": "Lawrence Lemon",
+        "amountCents": 25000,
+        "form": "31E"
+      },
+      {
+        "page": 4,
+        "date": "12/11/2025",
+        "name": "Ruth Lawson",
+        "amountCents": 2500,
+        "form": "31E"
+      },
+      {
+        "page": 4,
+        "date": "12/11/2025",
+        "name": "Alonzo Edmundo",
+        "amountCents": 25000,
+        "form": "31E"
+      },
+      {
+        "page": 4,
+        "date": "12/11/2025",
+        "name": "Ransford Tetteh",
+        "amountCents": 25000,
+        "form": "31E"
+      },
+      {
+        "page": 4,
+        "date": "12/11/2025",
+        "name": "Chris Acock",
+        "amountCents": 2500,
+        "form": "31E"
+      },
+      {
+        "page": 4,
+        "date": "12/12/2025",
+        "name": "Angela Mitchell",
+        "amountCents": 10000,
+        "form": "31E"
+      },
+      {
+        "page": 4,
+        "date": "12/12/2025",
+        "name": "Charity Harrison",
+        "amountCents": 5000,
+        "form": "31E"
+      },
+      {
+        "page": 4,
+        "date": "12/12/2025",
+        "name": "Maurice Womack",
+        "amountCents": 50000,
+        "form": "31E"
+      },
+      {
+        "page": 4,
+        "date": "12/12/2025",
+        "name": "Michael Sexton",
+        "amountCents": 25000,
+        "form": "31E"
+      },
+      {
+        "page": 4,
+        "date": "12/12/2025",
+        "name": "Molly Thrasher",
+        "amountCents": 10000,
+        "form": "31E"
+      },
+      {
+        "page": 4,
+        "date": "12/12/2025",
+        "name": "Patrick Gamble",
+        "amountCents": 10000,
+        "form": "31E"
+      },
+      {
+        "page": 4,
+        "date": "12/16/2025",
+        "name": "Michael Silberstein",
+        "amountCents": 5000,
+        "form": "31E"
+      },
+      {
+        "page": 4,
+        "date": "12/16/2025",
+        "name": "Cash Canfield",
+        "amountCents": 25000,
+        "form": "31E"
+      },
+      {
+        "page": 4,
+        "date": "12/16/2025",
+        "name": "Mo Dioun",
+        "amountCents": 250000,
+        "form": "31E"
+      },
+      {
+        "page": 4,
+        "date": "12/16/2025",
+        "name": "Huntington Bancshares Inc. PAC",
+        "amountCents": 100000,
+        "form": "31E"
+      },
+      {
+        "page": 4,
+        "date": "12/16/2025",
+        "name": "Ice Miller PAC",
+        "amountCents": 250000,
+        "form": "31E"
+      }
+    ],
+    "note": "Scanned original read with text recognition and page-image checks; all cash rows reconcile to the cover. Reported spelling and transaction dates are retained. Independent editorial review is pending."
+  },
+  {
+    "candidate": "crawley",
+    "title": "2025 Semiannual",
+    "url": "https://campaignfinance.franklincountyohio.gov//TED/CampaignDocs/CampaignFinanceFiling//2025/Jul/Monica_Debrock_-2025-07-31-15-46-55.pdf",
+    "amended": false,
+    "filedAt": "2025-07-31",
+    "sourceSha256": "cc63eaa1ca176b9bf8533494c7d3e2285285579c8ea7454fee44d21db9f34bea",
+    "metrics": {
+      "beginningCash": 534278,
+      "contributions": 5623500,
+      "otherReceipts": 107618,
+      "disbursements": 2631347,
+      "endingCash": 3634049,
+      "inKind": null
+    },
+    "rows": [
+      {
+        "page": 2,
+        "date": "1/8/2025",
+        "name": "Timothy Robinson",
+        "amountCents": 15000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "2/20/2025",
+        "name": "Samantha Scherger",
+        "amountCents": 5000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "3/28/2025",
+        "name": "Tracey Sigers",
+        "amountCents": 5000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "3/30/2025",
+        "name": "Angela Chapman",
+        "amountCents": 10000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "4/2/2025",
+        "name": "Citizens for Lori Tyack",
+        "amountCents": 10000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "4/11/2025",
+        "name": "Anita Smith",
+        "amountCents": 10000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "4/12/2025",
+        "name": "Matt Scantland",
+        "amountCents": 250000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "4/14/2025",
+        "name": "DeShawna Wilson",
+        "amountCents": 10000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "4/15/2025",
+        "name": "Clarence Simmons",
+        "amountCents": 100000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "4/17/2025",
+        "name": "Kristen Muenster",
+        "amountCents": 50000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "4/21/2025",
+        "name": "DLZ Ohio PAC CP1891",
+        "amountCents": 250000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "4/23/2025",
+        "name": "Christie Angel",
+        "amountCents": 25000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "4/23/2025",
+        "name": "Keith Key",
+        "amountCents": 100000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "4/24/2025",
+        "name": "Trudy Bartley",
+        "amountCents": 100000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "4/25/2025",
+        "name": "Friends of Shannon Hardin",
+        "amountCents": 100000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "4/25/2025",
+        "name": "Pizzuti PAC OH1260",
+        "amountCents": 250000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "4/25/2025",
+        "name": "George McCue",
+        "amountCents": 250000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "4/30/2025",
+        "name": "Richard Neal Jr",
+        "amountCents": 10000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "5/28/2025",
+        "name": "Huntington Bancshares lnc PAC C00165589",
+        "amountCents": 250000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "6/3/2025",
+        "name": "Nelson Weichold",
+        "amountCents": 10000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "6/3/2025",
+        "name": "Patty McClimon",
+        "amountCents": 25000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "6/4/2025",
+        "name": "Sean Mentel",
+        "amountCents": 100000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "6/9/2025",
+        "name": "Rhonda Comer",
+        "amountCents": 10000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "6/19/2025",
+        "name": "Oluyinka Olutoye",
+        "amountCents": 25000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "6/20/2025",
+        "name": "Tim Robinson",
+        "amountCents": 25000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "6/20/2025",
+        "name": "Carl Campbell",
+        "amountCents": 50000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "6/23/2025",
+        "name": "Gayle Saunders",
+        "amountCents": 20000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "6/26/2025",
+        "name": "Robert Zimmerman Benesch, Friedlander, Coplan & Aronoff LLP",
+        "amountCents": 25000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "6/27/2025",
+        "name": "Jeff Edwards",
+        "amountCents": 1000000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "7/21/2025",
+        "name": "Nationwide Insurance Company PAC C00076174",
+        "amountCents": 250000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "7/28/2025",
+        "name": "Vorys Sater Seymour and Pease LLP OH109",
+        "amountCents": 100000,
+        "form": "31A"
+      },
+      {
+        "page": 3,
+        "date": "5/1/2025",
+        "name": "Keena Smith",
+        "amountCents": 10000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/1/2025",
+        "name": "James Weiler",
+        "amountCents": 50000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/1/2025",
+        "name": "Jennifer Walton",
+        "amountCents": 10000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/1/2025",
+        "name": "Amy O'Grady",
+        "amountCents": 5000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/2/2025",
+        "name": "Charlie Solley",
+        "amountCents": 10000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/2/2025",
+        "name": "Lee Ann Wallace",
+        "amountCents": 10000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/2/2025",
+        "name": "Mo Dioun",
+        "amountCents": 250000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/2/2025",
+        "name": "Eileen Paley",
+        "amountCents": 5000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/2/2025",
+        "name": "Richard Miller",
+        "amountCents": 25000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/2/2025",
+        "name": "Demia Kandi",
+        "amountCents": 10000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/2/2025",
+        "name": "Chris Acock",
+        "amountCents": 1500,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/3/2025",
+        "name": "Shanette Strickland",
+        "amountCents": 10000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/3/2025",
+        "name": "Louis Capobianco",
+        "amountCents": 250000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/3/2025",
+        "name": "Seleshi Asfaw",
+        "amountCents": 25000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/3/2025",
+        "name": "Home lampkin",
+        "amountCents": 25000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/3/2025",
+        "name": "Tomeka Hawthorne",
+        "amountCents": 5000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/3/2025",
+        "name": "Monique Russell",
+        "amountCents": 15000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/3/2025",
+        "name": "Pamela Gregory",
+        "amountCents": 50000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/3/2025",
+        "name": "Dana Lavender",
+        "amountCents": 5000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/3/2025",
+        "name": "Friends of Meredith Lawson-Rowe",
+        "amountCents": 5000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/3/2025",
+        "name": "Ransford Tetteh",
+        "amountCents": 50000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/3/2025",
+        "name": "Brian Winston",
+        "amountCents": 2000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/3/2025",
+        "name": "Mallory Donaldson",
+        "amountCents": 10000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/3/2025",
+        "name": "Dez Bryant",
+        "amountCents": 25000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/3/2025",
+        "name": "Toni Cunningham",
+        "amountCents": 15000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/3/2025",
+        "name": "Dorothy Malone",
+        "amountCents": 5000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/3/2025",
+        "name": "Maurice Womack",
+        "amountCents": 50000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/3/2025",
+        "name": "Tasha Parks",
+        "amountCents": 5000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/3/2025",
+        "name": "Jodi Blacksher",
+        "amountCents": 5000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/3/2025",
+        "name": "Lakeysha Scott",
+        "amountCents": 10000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/3/2025",
+        "name": "Friends for Bankston",
+        "amountCents": 25000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/3/2025",
+        "name": "Shannon Isom",
+        "amountCents": 50000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/3/2025",
+        "name": "Tasha Booker",
+        "amountCents": 10000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/4/2025",
+        "name": "Guadalupe Velasquez",
+        "amountCents": 10000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/5/2025",
+        "name": "Isaac Wiles PAC CP1058",
+        "amountCents": 100000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/7/2025",
+        "name": "Robert Chilton",
+        "amountCents": 10000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/8/2025",
+        "name": "Larry Price",
+        "amountCents": 50000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/8/2025",
+        "name": "Mary Katzenmeyer",
+        "amountCents": 100000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/8/2025",
+        "name": "Bhakti Bania",
+        "amountCents": 50000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/8/2025",
+        "name": "Columbus Franklin County AFL-CIO PCE",
+        "amountCents": 50000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/8/2025",
+        "name": "Janet Jackson",
+        "amountCents": 50000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/8/2025",
+        "name": "Central Ohio Realtors PAC N/A - Local PAC",
+        "amountCents": 250000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/8/2025",
+        "name": "Ice Miller PAC OH1755",
+        "amountCents": 150000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/8/2025",
+        "name": "Richard Crockett",
+        "amountCents": 250000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "5/20/2025",
+        "name": "Friends of Favor",
+        "amountCents": 50000,
+        "form": "31E"
+      },
+      {
+        "page": 3,
+        "date": "6/9/2025",
+        "name": "Columbus Building and Construction Construction Trades Council PCE",
+        "amountCents": 25000,
+        "form": "31E"
+      },
+      {
+        "page": 4,
+        "date": "1/13/2025",
+        "name": "American Airlines",
+        "amountCents": 7618,
+        "form": "31A2"
+      },
+      {
+        "page": 4,
+        "date": "2/19/2025",
+        "name": "Gen Murphy & Associates",
+        "amountCents": 100000,
+        "form": "31A2"
+      },
+      {
+        "page": 5,
+        "date": "1/2/2025",
+        "name": "Ohio Ethics Commission",
+        "amountCents": 31000,
+        "form": "31B"
+      },
+      {
+        "page": 5,
+        "date": "1/8/2025",
+        "name": "American Airlines",
+        "amountCents": 5995,
+        "form": "31B"
+      },
+      {
+        "page": 5,
+        "date": "1/8/2025",
+        "name": "Mitchell's Steakhouse",
+        "amountCents": 9454,
+        "form": "31B"
+      },
+      {
+        "page": 5,
+        "date": "1/9/2025",
+        "name": "Bar Cicchetti",
+        "amountCents": 7406,
+        "form": "31B"
+      },
+      {
+        "page": 5,
+        "date": "1/13/2025",
+        "name": "American Airlines",
+        "amountCents": 86256,
+        "form": "31B"
+      },
+      {
+        "page": 5,
+        "date": "1/17/2025",
+        "name": "American Airlines",
+        "amountCents": 4799,
+        "form": "31B"
+      },
+      {
+        "page": 5,
+        "date": "1/17/2025",
+        "name": "OSU Board of Trustees",
+        "amountCents": 282000,
+        "form": "31B"
+      },
+      {
+        "page": 5,
+        "date": "1/21/2025",
+        "name": "The Junto",
+        "amountCents": 1000,
+        "form": "31B"
+      },
+      {
+        "page": 5,
+        "date": "1/21/2025",
+        "name": "The Junto",
+        "amountCents": 4041,
+        "form": "31B"
+      },
+      {
+        "page": 5,
+        "date": "1/29/2025",
+        "name": "McTigue & Colombo LLC",
+        "amountCents": 45000,
+        "form": "31B"
+      },
+      {
+        "page": 5,
+        "date": "1/30/2025",
+        "name": "Starbucks",
+        "amountCents": 1410,
+        "form": "31B"
+      },
+      {
+        "page": 5,
+        "date": "2/10/2025",
+        "name": "American Airlines",
+        "amountCents": 5995,
+        "form": "31B"
+      },
+      {
+        "page": 5,
+        "date": "2/13/2025",
+        "name": "Lindey's",
+        "amountCents": 8204,
+        "form": "31B"
+      },
+      {
+        "page": 5,
+        "date": "2/14/2025",
+        "name": "McTigue & Colombo LLC",
+        "amountCents": 47433,
+        "form": "31B"
+      },
+      {
+        "page": 5,
+        "date": "2/19/2025",
+        "name": "Gen Murphy & Associates LLC",
+        "amountCents": 100000,
+        "form": "31B"
+      },
+      {
+        "page": 5,
+        "date": "2/21/2025",
+        "name": "Gen Murphy & Associates LLC",
+        "amountCents": 876,
+        "form": "31B"
+      },
+      {
+        "page": 5,
+        "date": "2/21/2025",
+        "name": "Gen Murphy & Associates LLC",
+        "amountCents": 100000,
+        "form": "31B"
+      },
+      {
+        "page": 5,
+        "date": "3/3/2025",
+        "name": "Hilton",
+        "amountCents": 12890,
+        "form": "31B"
+      },
+      {
+        "page": 5,
+        "date": "3/10/2025",
+        "name": "American Airlines",
+        "amountCents": 5995,
+        "form": "31B"
+      },
+      {
+        "page": 5,
+        "date": "3/14/2025",
+        "name": "McTigue & Colombo LLC",
+        "amountCents": 45000,
+        "form": "31B"
+      },
+      {
+        "page": 5,
+        "date": "3/31/2025",
+        "name": "Flowerama",
+        "amountCents": 10044,
+        "form": "31B"
+      },
+      {
+        "page": 5,
+        "date": "4/8/2025",
+        "name": "American Airlines",
+        "amountCents": 5995,
+        "form": "31B"
+      },
+      {
+        "page": 5,
+        "date": "4/16/2025",
+        "name": "Yard Bird Table & Bar",
+        "amountCents": 12306,
+        "form": "31B"
+      },
+      {
+        "page": 5,
+        "date": "4/16/2025",
+        "name": "JW Marriott",
+        "amountCents": 23280,
+        "form": "31B"
+      },
+      {
+        "page": 5,
+        "date": "4/17/2025",
+        "name": "Lyft",
+        "amountCents": 1851,
+        "form": "31B"
+      },
+      {
+        "page": 5,
+        "date": "4/17/2025",
+        "name": "McTigue & Colombo LLC",
+        "amountCents": 45000,
+        "form": "31B"
+      },
+      {
+        "page": 5,
+        "date": "4/22/2025",
+        "name": "LAZ Parking",
+        "amountCents": 500,
+        "form": "31B"
+      },
+      {
+        "page": 5,
+        "date": "4/22/2025",
+        "name": "The Top Steak House",
+        "amountCents": 18500,
+        "form": "31B"
+      },
+      {
+        "page": 5,
+        "date": "5/6/2025",
+        "name": "Brassica",
+        "amountCents": 3741,
+        "form": "31B"
+      },
+      {
+        "page": 5,
+        "date": "5/8/2025",
+        "name": "American Airlines",
+        "amountCents": 5995,
+        "form": "31B"
+      },
+      {
+        "page": 5,
+        "date": "5/9/2025",
+        "name": "McTigue & Colombo LLC",
+        "amountCents": 45000,
+        "form": "31B"
+      },
+      {
+        "page": 5,
+        "date": "5/9/2025",
+        "name": "Gen Murphy & Associates LLC",
+        "amountCents": 225000,
+        "form": "31B"
+      },
+      {
+        "page": 5,
+        "date": "5/22/2025",
+        "name": "Ohio Ethics Commission",
+        "amountCents": 11000,
+        "form": "31B"
+      },
+      {
+        "page": 5,
+        "date": "5/28/2025",
+        "name": "Gen Murphy & Associates LLC",
+        "amountCents": 150000,
+        "form": "31B"
+      },
+      {
+        "page": 5,
+        "date": "6/4/2025",
+        "name": "Beatty for Congress",
+        "amountCents": 100000,
+        "form": "31B"
+      },
+      {
+        "page": 5,
+        "date": "6/12/2025",
+        "name": "Alley Burger",
+        "amountCents": 7677,
+        "form": "31B"
+      },
+      {
+        "page": 5,
+        "date": "6/18/2025",
+        "name": "McTigue & Colombo LLC",
+        "amountCents": 45000,
+        "form": "31B"
+      },
+      {
+        "page": 5,
+        "date": "6/30/2025",
+        "name": "Stripe",
+        "amountCents": 45585,
+        "form": "31B"
+      },
+      {
+        "page": 6,
+        "date": "6/30/2025",
+        "name": "ActBlue",
+        "amountCents": 30203,
+        "form": "31B"
+      },
+      {
+        "page": 7,
+        "date": "5/2/2025",
+        "name": "Ian Alexander Photography",
+        "amountCents": 62100,
+        "form": "31F"
+      },
+      {
+        "page": 7,
+        "date": "5/5/2025",
+        "name": "Canopy By Hilton Columbus Downtown Short North",
+        "amountCents": 477816,
+        "form": "31F"
+      },
+      {
+        "page": 7,
+        "date": "5/5/2025",
+        "name": "Canopy By Hilton Columbus Downtown Short North",
+        "amountCents": 500000,
+        "form": "31F"
+      }
+    ],
+    "note": "Scanned original read with text recognition and page-image checks; all cash rows reconcile to the cover. Reported spelling and transaction dates are retained. Independent editorial review is pending."
+  }
+]

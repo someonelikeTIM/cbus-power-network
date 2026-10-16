@@ -2,6 +2,7 @@
 import { relationshipMatches } from './search.js';
 export const timelineLanes = {
   campaign: {label:'Campaign money',color:'#ac4933',description:'Contributions and outside political groups'},
+  civic: {label:'Civic & charitable',color:'#677b72',description:'Charitable gifts and civic organizations, separate from campaign money'},
   lobbying: {label:'Lobbying',color:'#775882',description:'Registrations and documented activity'},
   contracts: {label:'Contracts & grants',color:'#416d82',description:'Also financing, incentives and borrowing'},
   oversight: {label:'Oversight',color:'#678373',description:'Audits, findings and recovery reviews'},
@@ -19,6 +20,7 @@ export const moneyKinds = {
   finding:{label:'Documentation finding',group:'other'}, none:{label:'No transfer amount stated',group:'other'},
   interest:{label:'Disclosed financial interest',group:'other'}, 'income-source':{label:'Income source disclosed',group:'other'},
   'gift-source':{label:'Personal gift source disclosed',group:'other'},
+  'charitable-gift':{label:'Charitable gift announced',group:'commitments'},
   'recognized-revenue':{label:'Recognized funding revenue',group:'other'},
   'transaction-value':{label:'Asset purchase price disclosed',group:'other'}
 };

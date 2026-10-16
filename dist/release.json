@@ -1,15 +1,31 @@
 {
   "release": {
     "schemaVersion": "1.0.0",
-    "releaseId": "2026-10-15-2",
-    "status": "published",
+    "releaseId": "2026-10-15-campaigns-rc1",
+    "status": "local-candidate",
     "preparedOn": "2026-10-15",
-    "publishedAt": "2026-10-16T01:13:54Z",
-    "dataRevision": 12,
+    "publishedAt": null,
+    "dataRevision": 13,
     "codeLicense": "MIT",
     "dataLicense": "CC-BY-4.0",
-    "sourceCheckIds": []
+    "sourceCheckIds": [
+      "pc26-ballot",
+      "pc26-acton-bio",
+      "pc26-pepper-bio",
+      "pc26-acton-support",
+      "pc26-acton-finance",
+      "pc26-vivek-finance",
+      "pc26-rapid5-gift",
+      "pc26-brown-committee",
+      "pc26-husted-committee",
+      "pc26-redpath-committee",
+      "pc26-aep-pac",
+      "pc26-kidspac",
+      "pc26-brown-joint",
+      "pc26-aep-filing",
+      "pc26-kidspac-filing"
+    ]
   },
-  "inputFingerprint": "7d0728b4a16768dad3637fc94838e1a6c734df58ecbcbf98ce703dbe5ea8a3f4",
-  "manifest": "downloads/2026-10-15-2/manifest.json"
+  "inputFingerprint": "d93353c02190b1bc49ec533a26dbf185796b57d2a6f6e9570a2ed73b957e50de",
+  "manifest": "downloads/2026-10-15-campaigns-rc1/manifest.json"
 }
