@@ -23,6 +23,12 @@ export function frameNetwork(ids,positions,{width,height,padding=55}={}){
   const z=Math.max(.04,Math.min(2,(width-padding*2)/Math.max(100,right-left),(height-padding*2)/Math.max(100,bottom-top)));
   return {z,x:width/2-(left+right)/2*z,y:height/2-(top+bottom)/2*z};
 }
+// A record click always leaves the overview at a readable scale. Preserve a
+// closer manual zoom and move only the camera, centered in the available space.
+export function entityFocusCamera(point,current,viewport){
+  const z=Math.max(1,current.z);
+  return {z,x:viewport.left+viewport.width/2-point.x*z,y:viewport.top+viewport.height/2-point.y*z};
+}
 export function networkStyle(degree,zoom,{selected=false}={}){
   return {detail:selected||zoom>.5?1:0,bubble:false,cloud:false,opacity:1,threshold:0,font:selected?13:12,radius:selected?18:Math.max(6,Math.min(15,6+Math.sqrt(degree||0)*1.5)*Math.min(1.3,Math.sqrt(zoom/.25)))};
 }
@@ -94,7 +100,9 @@ export function flyoutPlacement({width,height,size,preferred,obstacles=[],points
     const panels=obstacles.reduce((sum,b)=>sum+Math.max(0,Math.min(box.right,b.right)-Math.max(box.left,b.left))*Math.max(0,Math.min(box.bottom,b.bottom)-Math.max(box.top,b.top)),0);
     return hits*1e10+pathHits*1e7+panels*.02+Math.hypot(p.left-preferred.left,p.top-preferred.top);
   };
-  const best=choices.sort((a,b)=>score(a)-score(b))[0];return {...best,right:best.left+w,bottom:best.top+h};
+  let best=choices[0],bestScore=Infinity;
+  for(const choice of choices){const value=score(choice);if(value<bestScore){best=choice;bestScore=value;}}
+  return {...best,right:best.left+w,bottom:best.top+h};
 }
 export function explorationSpace(width,height,obstacles=[]){
   let spaces=[{left:18,top:70,right:width-18,bottom:height-56}];

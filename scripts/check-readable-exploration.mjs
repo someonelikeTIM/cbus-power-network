@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import {nodes,edges} from '../dist/data.js';
-import {connectedCanvas,labelPlacements,appendWalk,networkStyle,networkPositions,orbitalBranch,flyoutPlacement,explorationSpace,clearNodeCamera} from '../dist/desktop-network.js';
+import {connectedCanvas,labelPlacements,appendWalk,networkStyle,networkPositions,orbitalBranch,flyoutPlacement,explorationSpace,clearNodeCamera,entityFocusCamera} from '../dist/desktop-network.js';
 import {validateView} from '../dist/saved-views.js';
 
 const fixture={nodes:['a','b','c','orphan'].map(id=>({id})),edges:[{id:'ab',source:'a',target:'b',type:'one'},{id:'bc',source:'b',target:'c',type:'two'}]};
@@ -42,6 +42,14 @@ for(const [id,p]of frozen)assert.deepEqual(world.get(id),p,'Expanding the next p
 const geometry={width:1200,height:700,size:{width:300,height:400},preferred:{left:420,top:100},points:[{x:500,y:300,r:30}],segments:[[{x:300,y:300},{x:650,y:300}]]};
 const windowBox=flyoutPlacement(geometry);assert.ok(windowBox.right<300||windowBox.left>650||windowBox.bottom<288||windowBox.top>312,'The flyout clears the active entity and path');
 const space=explorationSpace(1200,700,[{left:800,right:1180,top:60,bottom:650},{left:490,right:790,top:70,bottom:520}]);assert.ok(space.right<=474&&space.width>=400);
+const focusPoint={x:2442.38,y:692.45},unchangedPoint={...focusPoint};
+for(const zoom of [.195,.4,.65,1,1.8]){
+  const focused=entityFocusCamera(focusPoint,{x:0,y:0,z:zoom},space);
+  assert.equal(focused.z,Math.max(1,zoom),'An entity click focuses at readable scale, including after an earlier click');
+  assert.ok(Math.abs(focused.x+focusPoint.x*focused.z-(space.left+space.width/2))<1e-9);
+  assert.ok(Math.abs(focused.y+focusPoint.y*focused.z-(space.top+space.height/2))<1e-9);
+}
+assert.deepEqual(focusPoint,unchangedPoint,'Click focus changes only the camera');
 const windowState={manual:true,left:750,top:90,width:340,height:380};
 const saved=validateView({...snapshot,interaction:{walk,showDirect:true,orbitIds:[...first.placed],flyout:windowState}},entityIds);
 assert.deepEqual(saved.interaction.orbitIds,[...first.placed]);assert.deepEqual(saved.interaction.flyout,windowState);
@@ -50,4 +58,4 @@ assert.throws(()=>validateView({...snapshot,interaction:{flyout:{...windowState,
 const cameraPoints=new Map([['sun',{x:0,y:0}],['up',{x:0,y:-240}],['down',{x:0,y:240}]]),controls=[{left:0,right:220,top:500,bottom:680},{left:0,right:320,top:10,bottom:120}];
 const clear=clearNodeCamera({x:240,y:340,z:1},cameraPoints.keys(),cameraPoints,{width:1200,height:700,obstacles:controls});
 for(const p of cameraPoints.values()){const x=p.x*clear.z+clear.x,y=p.y*clear.z+clear.y;assert.ok(x>=26&&x<=1174&&y>=26&&y<=674);for(const b of controls){const px=Math.max(b.left,Math.min(x,b.right)),py=Math.max(b.top,Math.min(y,b.bottom));assert.ok(Math.hypot(x-px,y-py)>=24,'Camera framing keeps direct entities clear of controls');}}
-console.log('PASS readable exploration: orphan filtering, nonoverlapping labels, minimum node sizes, explicit source-linked traversal, and saved origin/path state.');
+console.log('PASS readable exploration: click-to-focus camera, orphan filtering, nonoverlapping labels, minimum node sizes, explicit source-linked traversal, and saved origin/path state.');

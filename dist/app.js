@@ -23,7 +23,7 @@ import {campaignMoneyCard,mountCampaignMoney} from './campaign-finance-ui.js';
 import {campaignFinanceIndex} from './campaign-finance-index.js';
 import {connectionSummary,focusFlight,extendTrail} from './focused-explorer.js';
 import {bucketLayout,selectionGraph,segmentInBox,circleInBox,dollarLabel} from './map-actions.js';
-import {networkPositions,frameNetwork,networkStyle,showNetworkLabel,connectedCanvas,directConnections,labelPlacements,appendWalk,orbitalBranch,flyoutPlacement,explorationSpace,clearNodeCamera} from './desktop-network.js';
+import {networkPositions,frameNetwork,entityFocusCamera,networkStyle,showNetworkLabel,connectedCanvas,directConnections,labelPlacements,appendWalk,orbitalBranch,flyoutPlacement,explorationSpace,clearNodeCamera} from './desktop-network.js';
 
 const $ = id => document.getElementById(id);
 const campaignMoneyUI=mountCampaignMoney({openEntity:id=>{resetFilters(false);toggleNode(id);state.detailsOpen=true;render();}});
@@ -398,6 +398,7 @@ $('active-filters').addEventListener('click',event=>{
 
 function svgEl(tag, attributes = {}) { const el = document.createElementNS(svgNS, tag); for (const [key, value] of Object.entries(attributes)) el.setAttribute(key, value); return el; }
 function emphasizeConnection(id,event){
+  if(id&&(drag||cameraMotion))return;
   const previous=hoveredEdge;hoveredEdge=id;
   if(previous&&previous!==id){edgeEls.get(previous)?.group.classList.remove('hovered');connectionIcons.get(previous)?.group.classList.remove('hovered');}
   if(!id){$('connection-tooltip').hidden=true;raisePathForeground();return;}
@@ -619,7 +620,7 @@ function fitGraph() {
 }
 function stopCameraMotion(){if(cameraMotion){cancelAnimationFrame(cameraMotion.frame);cameraMotion=null;}}
 function moveCamera(target){
-  stopCameraMotion();if(matchMedia('(prefers-reduced-motion:reduce)').matches){camera=target;positionGraph();scheduleWorkspaceState();return;}
+  stopCameraMotion();emphasizeConnection(null);hideEntityTooltip();if(matchMedia('(prefers-reduced-motion:reduce)').matches){camera=target;positionGraph();scheduleWorkspaceState();return;}
   const start={...camera},began=performance.now(),motion={frame:null};cameraMotion=motion;
   const step=now=>{if(cameraMotion!==motion)return;const t=Math.min(1,(now-began)/180),ease=1-(1-t)**3;
     camera={x:start.x+(target.x-start.x)*ease,y:start.y+(target.y-start.y)*ease,z:start.z*Math.pow(target.z/start.z,ease)};positionGraph();
@@ -637,11 +638,18 @@ function explorationViewport(){
   return explorationSpace(dimensions.width,dimensions.height,blocks);
 }
 function focusExploration(id,direct=false){
-  if(state.bucketMode||state.view!=='network')return;const viewport=explorationViewport(),p=positions.get(id);if(!p)return;
+  if(state.view!=='network')return;
+  // Opening docked Details changes the canvas synchronously. Use its new size
+  // now so ResizeObserver does not cancel this flight on the following frame.
+  const bounds=$('canvas-area').getBoundingClientRect();if(bounds.width&&bounds.height)dimensions={width:bounds.width,height:bounds.height};
+  const viewport=explorationViewport(),p=positions.get(id);if(!p)return;
   let target,focusIds=new Set([id]);if(direct){const ids=directConnections(graph,id,state.focusType).nodes,previous=state.walk.at(-1)?.id===id&&state.walk.at(-1)?.via?state.walk.at(-2)?.id:null;if(previous&&positions.has(previous))ids.add(previous);focusIds=ids;const fit=frameNetwork(ids,positions,{width:viewport.width,height:viewport.height,padding:75}),z=Math.min(state.orbitIds.size?1.1:.85,fit.z),cx=(viewport.width/2-fit.x)/fit.z,cy=(viewport.height/2-fit.y)/fit.z;target={z,x:viewport.width/2-cx*z,y:viewport.height/2-cy*z};}
-  else{const z=Math.max(camera.z,.4);target={z,x:viewport.width*.43-p.x*z,y:viewport.height*.46-p.y*z};}
-  target.x+=viewport.left;target.y+=viewport.top;const blocks=mapObstacles();if(recordMenuOpen){const p=flyoutPreferredBox();blocks.push({...p,right:p.left+p.width,bottom:p.top+p.height});}
-  moveCamera(clearNodeCamera(target,focusIds,positions,{...dimensions,obstacles:blocks,center:{x:viewport.left+viewport.width/2,y:viewport.top+viewport.height/2}}));
+  else target=entityFocusCamera(p,camera,viewport);
+  if(direct){target.x+=viewport.left;target.y+=viewport.top;}
+  const blocks=mapObstacles();if(recordMenuOpen){const p=flyoutPreferredBox();blocks.push({...p,right:p.left+p.width,bottom:p.top+p.height});}
+  // The selected record already fits the open space; do not let branch fitting
+  // dilute a plain click's focus zoom. Only expanded branches need that fitting.
+  moveCamera(direct?clearNodeCamera(target,focusIds,positions,{...dimensions,obstacles:blocks,center:{x:viewport.left+viewport.width/2,y:viewport.top+viewport.height/2}}):target);
 }
 function centerOnEntity(id){focusExploration(id,true);}
 
@@ -797,7 +805,7 @@ function renderWalk(){
 }
 
 
-function renderGraph() {
+function renderGraph(position=true) {
   document.body.dataset.grouped=String(state.bucketMode);
   const center=focusEntityId();document.body.dataset.focusScene='false';document.body.dataset.nodeFocus=String(!!center);document.body.dataset.focusMenu=String(!!center&&recordMenuOpen);
   const shownNodes = new Set(graph.nodes.map(n => n.id)), shownEdges = new Set(graph.edges.map(e => e.id));
@@ -859,7 +867,7 @@ function renderGraph() {
   $('selection-chip').hidden = !state.focus && !state.path;
   if (state.path) $('selection-chip').innerHTML = `<span>${state.path.edges.length} sourced link${state.path.edges.length === 1 ? '' : 's'} in this path</span><button data-clear-highlight aria-label="Clear highlighted path">×</button>`;
   else if (center) $('selection-chip').innerHTML = `<span>${nodeNeighborhood(graph,center).edges.size} direct connections · ${escape(nodeById.get(center).name)}</span><button data-clear-highlight aria-label="Clear neighborhood focus">×</button>`;
-  positionGraph();
+  if(position)positionGraph();
 }
 
 function selectionCount(){return state.multiNodes.size+state.multiEdges.size;}
@@ -1058,7 +1066,7 @@ function render(refit = false) {
     state.multiEdges=new Set([...state.multiEdges].filter(id=>graph.edges.some(edge=>edge.id===id)));
   }
   if(state.view==='timeline'){prepareTimeline();renderTimeline();}
-  renderIndirectRoutes();renderGraph(); renderInspector(); decorateInspector();renderMapScope();renderQuickMenu();
+  renderIndirectRoutes();renderGraph(false); renderInspector(); decorateInspector();renderMapScope();renderQuickMenu();
   if (state.view === 'directory') renderDirectory();
   if (state.view === 'relations') renderRelations();
   if (state.view === 'sources') renderSources();
