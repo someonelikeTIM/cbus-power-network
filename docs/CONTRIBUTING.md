@@ -1,4 +1,4 @@
-# Contribute to Columbus Power Network
+# Contribute to CBUS Power
 
 Found a missing connection, a better source or a mistake? [Open an issue](https://github.com/someonelikeTIM/cbus-power-network/issues/new/choose). Questions and general feedback also go through [GitHub issues](https://github.com/someonelikeTIM/cbus-power-network/issues).
 

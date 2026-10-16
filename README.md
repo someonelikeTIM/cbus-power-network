@@ -1,6 +1,6 @@
-# Columbus Power Network
+# CBUS Power
 
-[Explore the map](https://someoneliketim.github.io/cbus-power-network/) · [Suggest a correction](https://github.com/someonelikeTIM/cbus-power-network/issues/new?template=evidence-correction.yml) · [Contribute](docs/CONTRIBUTING.md)
+[Explore cbuspower.org](https://cbuspower.org/) · [Suggest a correction](https://github.com/someonelikeTIM/cbus-power-network/issues/new?template=evidence-correction.yml) · [Contribute](docs/CONTRIBUTING.md)
 
 An independent, source-linked map of the people, organizations, money and public decisions that shape Columbus and Ohio. Inspired by [TheyRule](https://theyrule.net/), the project aims to make Columbus politics easier to explore and understand.
 
@@ -12,13 +12,13 @@ Evidence labels distinguish reporting, allegations, findings, registrations and 
 
 ## Data and citations
 
-The explorer provides record links, current-view downloads and evidence packets. [Versioned JSON/CSV tables, schemas and checksums](https://someoneliketim.github.io/cbus-power-network/downloads/2026-10-15/manifest.json) are in `dist/downloads/`. Join records using stable IDs and cite the edition. See the [data dictionary](docs/DATA-DICTIONARY.md).
+The explorer provides record links, current-view downloads and evidence packets. [Versioned JSON/CSV tables, schemas and checksums](https://cbuspower.org/downloads/2026-10-15/manifest.json) are in `dist/downloads/`. Join records using stable IDs and cite the edition. See the [data dictionary](docs/DATA-DICTIONARY.md).
 
 ## Explorer views
 
 New tab opens another independent exploration. Side by side keeps two views visible; Single view returns to one canvas. Each tab keeps its own search, tags, filters, pins, camera and entity positions. On narrow screens, two views stack vertically.
 
-The overview is a word cloud: larger names have more recorded connections. Lower-priority entities stay out of view until zoom and available space allow them to appear. Visible names and bubbles have separate footprints; an entity that cannot fit stays hidden rather than overlapping another. The count explains how much of the current scope is visible. Zoom brings additional layers into focus.
+The overview packs entities into bubbles sized by their recorded connections. Hover shows the complete name and connection count. Zoom enlarges the smaller bubbles and reveals their full names; the layout makes room for the growing bubbles and text. Entities stay separate, with the count showing how much of the current scope fits on screen.
 
 Choose an entity to move into a small neighborhood and open its Pin and Details menu. Details opens the evidence window when you want it. Explore connections provides a searchable guide to every matching connection, including records currently outside the visible map. Choosing a next entity starts a fresh focused neighborhood while keeping your research anchors.
 

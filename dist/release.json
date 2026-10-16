@@ -1,15 +1,15 @@
 {
   "release": {
     "schemaVersion": "1.0.0",
-    "releaseId": "2026-10-15-ui3",
-    "status": "local-candidate",
+    "releaseId": "2026-10-15-2",
+    "status": "published",
     "preparedOn": "2026-10-15",
-    "publishedAt": null,
+    "publishedAt": "2026-10-16T01:13:54Z",
     "dataRevision": 12,
     "codeLicense": "MIT",
     "dataLicense": "CC-BY-4.0",
     "sourceCheckIds": []
   },
-  "inputFingerprint": "6c20eaff10dd04a09a1a5eeb3fca17488899363285eb95e198aec361325f64ba",
-  "manifest": "downloads/2026-10-15-ui3/manifest.json"
+  "inputFingerprint": "7d0728b4a16768dad3637fc94838e1a6c734df58ecbcbf98ce703dbe5ea8a3f4",
+  "manifest": "downloads/2026-10-15-2/manifest.json"
 }

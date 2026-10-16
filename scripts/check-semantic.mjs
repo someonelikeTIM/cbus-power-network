@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import {mkdir,writeFile} from 'node:fs/promises';
 import {nodes,edges} from '../dist/data.js';
-import {visibleEntities,semanticStyle,overlaps,connectionRoute,packBubbleCloud,footprintsOverlap,bubbleLabel} from '../dist/semantic-map.js';
+import {visibleEntities,semanticStyle,overlaps,connectionRoute,packBubbleCloud,footprintsOverlap,bubbleLabel,fullBubbleLabel} from '../dist/semantic-map.js';
 import {arrangeCanvas} from '../dist/canvas-layout.js';
 import {researchConnections,validateResearch,researchFile,researchSnapshot} from '../dist/research-paths.js';
 import {validateView,workspaceFile,parseWorkspace} from '../dist/saved-views.js';
@@ -31,6 +31,15 @@ for(const [width,height]of [[1240,540],[1080,700],[350,650]]){
   const small=candidates.filter(item=>item.degree<=4);assert.ok(small.some(item=>candidates.filter(other=>other.id!==item.id&&Math.hypot(item.circle.x-other.circle.x,item.circle.y-other.circle.y)<item.circle.r+other.circle.r+3.1).length>=2),'A small bubble nests between at least two neighboring bubbles');
 }
 assert.ok(bubbleLabel('Columbus Partnership',65,16).join(' ').includes('Columbus'));
+for(const degree of [1,2,4,9,16,32]){
+  let previous=0;
+  for(const zoom of [.72,.9,1.125,1.4,1.75,2.2,3.5]){const style=semanticStyle(degree,zoom,{cloud:true});assert.ok(style.bubble,'The overview retains bubbles at every zoom');assert.ok(style.radius>previous,'Zoom enlarges bubbles instead of shrinking them');previous=style.radius;assert.equal(style.fullName,zoom>=1.4);}
+}
+for(const node of nodes)for(const font of [12,16,22]){
+  const full=fullBubbleLabel(node.name,font);
+  assert.equal(full.lines.join(' '),node.name.trim().replace(/\s+/g,' '),'Every entity name can be displayed without initials or truncation');
+  full.lines.forEach((line,index)=>{const y=(index-(full.lines.length-1)/2)*font*1.12;assert.ok(Math.hypot(line.length*font*.54/2,Math.abs(y)+font*.58)<full.radius,'Full labels fit inside their bubble');});
+}
 const compact={nodes:[{id:'a',name:'American Electric Power'},{id:'b',name:'City of Columbus'},{id:'c',name:'Bill Byers'}],edges:[]};
 const compactSizes=new Map([['a',{left:-70,right:70,top:-34,bottom:74}],['b',{left:-63,right:63,top:-35,bottom:60}],['c',{left:-43,right:43,top:-32,bottom:55}]]);
 const compactObstacles=[{left:0,top:0,right:340,bottom:200},{left:140,top:390,right:340,bottom:530},{left:0,top:520,right:220,bottom:608},{left:200,top:560,right:340,bottom:608}];
@@ -56,7 +65,9 @@ assert.throws(()=>researchSnapshot({...file,version:99},{nodeIds,edgeIds,validat
 const restored=parseWorkspace(workspaceFile([{id:'one',name:'Research',snapshot}],'one',null,'test-edition'),nodeIds);
 assert.deepEqual(restored.views[0].snapshot.research,research,'Notes and the step order survive workspace export/import');
 assert.equal(validateView({...snapshot,mapLayout:'bubble-cloud-v1'},nodeIds).mapLayout,'bubble-cloud-v1','Saved packed views retain their layout instead of migrating again');
+const detailedSnapshot=validateView({...snapshot,mapLayout:'bubble-cloud-v2',overviewIds:['city']},nodeIds);assert.deepEqual(detailedSnapshot.overviewIds,['city']);assert.equal(detailedSnapshot.mapLayout,'bubble-cloud-v2');
+for(const overviewIds of [['unknown'],['city','city'],42])assert.throws(()=>validateView({...snapshot,overviewIds},nodeIds));
 const defaults={categories:new Set(),relationships:new Set(),connectionDistance:1,pinnedIds:new Set(['city']),research};
 const query=encodeState('https://example.test/',defaults,'test-edition');assert.deepEqual(decodeState(query,defaults).requestedResearch,research.steps.map(step=>({...step,note:''})), 'Shared research URLs retain record IDs while notes stay in saved artifacts');
-const result={presentation:'Eight zoom levels: collision-free visible footprints, bounds and floating-window clearance',overview:'Packed degree-sized bubbles with small gap fillers; exact circular clearance at desktop and phone sizes',layers:'Degree threshold, size priority, gradual opacity and persistent research anchors',research:'Ordered entity/connection pins, sourced connecting routes, honest gaps and notes',artifacts:'Research and workspace round trips; embedded facts never imported'};
+const result={presentation:'Eight zoom levels: collision-free visible footprints, bounds and floating-window clearance',overview:'Packed degree-sized bubbles with small gap fillers; exact circular clearance at desktop and phone sizes',zoom:'Monotonic bubble growth and complete contained names for all 316 entities at three font sizes',layers:'Degree threshold, size priority, gradual opacity and persistent research anchors',research:'Ordered entity/connection pins, sourced connecting routes, honest gaps and notes',artifacts:'Research and workspace round trips, including visible overview IDs; embedded facts never imported'};
 await mkdir('artifacts',{recursive:true});await writeFile('artifacts/semantic-checks.json',JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify(result));

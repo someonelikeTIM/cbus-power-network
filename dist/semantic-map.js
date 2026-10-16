@@ -1,15 +1,16 @@
 // Zoom changes presentation, never the underlying records.
 export const smooth = value => { const t=Math.max(0,Math.min(1,value));return t*t*(3-2*t); };
-export function semanticStyle(degree,zoom,{protectedNode=false,small=false}={}){
+export function semanticStyle(degree,zoom,{protectedNode=false,small=false,cloud=false}={}){
   const detail=smooth((zoom-.85)/.55);
   const threshold=Math.max(1,Math.ceil(4/Math.pow(Math.max(.2,zoom),2.5)));
   const revealAt=(protectedNode||small) ? .35 : Math.max(.32,Math.min(2.8,Math.pow(4/(Math.max(0,degree)+1),.4)));
   const opacity=protectedNode||small?1:smooth((zoom-revealAt+.12)/.28);
   const importance=Math.sqrt(Math.max(0,degree));
   const font=(18+Math.min(25,importance*2))*(1-detail)+(13+Math.min(7,importance*.55))*detail;
-  const bubble=detail<.5;
+  const bubble=cloud||detail<.5;
   const overviewRadius=7+Math.pow(Math.max(0,degree),.85)*4.1;
-  return {detail,bubble,threshold,opacity,font:(bubble?11+Math.min(11,importance*1.4):font)*(protectedNode?1.08:1),radius:(overviewRadius*(1-detail)+(17+Math.min(20,importance*2))*detail)*(protectedNode?1.2:1)};
+  const growth=Math.max(0,zoom-.72),radius=cloud?overviewRadius+growth*Math.max(16,44-degree):((overviewRadius*(1-detail)+(17+Math.min(20,importance*2))*detail)*Math.max(1,Math.pow(zoom/1.4,.55)));
+  return {detail,bubble,cloud,fullName:cloud&&zoom>=1.4,readability:smooth((zoom-.72)/.68),threshold,opacity,font:(bubble?11+Math.min(11,importance*1.4)+growth*1.6:font*Math.max(1,Math.pow(zoom/1.4,.2)))*(protectedNode?1.08:1),radius:radius*(protectedNode?1.2:1)};
 }
 export const overlaps=(a,b,gap=8)=>a.left<b.right+gap&&a.right>b.left-gap&&a.top<b.bottom+gap&&a.bottom>b.top-gap;
 export function footprintsOverlap(a,b,gap=0){
@@ -73,6 +74,12 @@ export function bubbleLabel(name,radius,font,measure=text=>text.length*font*.54)
     const y=(index-(shown.length-1)/2)*font*1.12,halfHeight=font*.58,chord=2*Math.sqrt(Math.max(0,(radius-6)**2-(Math.abs(y)+halfHeight)**2));
     let value=line;while(value.length>1&&measure(value)>chord)value=value.replace(/…$/,'').slice(0,-1)+'…';return value;
   });
+}
+
+export function fullBubbleLabel(name,font,measure=text=>text.length*font*.54){
+  const full=name.trim().replace(/\s+/g,' ');
+  for(let radius=20;radius<=400;radius+=2){const lines=bubbleLabel(full,radius,font,measure);if(lines.join(' ')===full)return {radius:radius+2,lines};}
+  return {radius:measure(full)/2+font+12,lines:[full]};
 }
 
 export function connectionRoute(start,end,{obstacles=[],bend=0,width=Infinity,height=Infinity}={}){

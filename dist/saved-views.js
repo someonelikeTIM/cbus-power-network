@@ -13,12 +13,13 @@ export function validateView(value, entityIds) {
   for (const key of ['pins', 'starts', 'seeded', 'expanded', 'explored', 'anchor', 'center']) for (const id of (query.get(key) || '').split(',').filter(Boolean)) if (!entityIds.has(id)) throw Error('This view references an entity that is unavailable in this edition.');
   if (!Array.isArray(value.positions) || value.positions.length > entityIds.size || value.positions.some(row => !Array.isArray(row) || row.length !== 3 || !entityIds.has(row[0]) || !finite(row[1]) || !finite(row[2]))) throw Error('This file contains invalid entity positions.');
   if (new Set(value.positions.map(row => row[0])).size !== value.positions.length) throw Error('This file repeats an entity position.');
+  if(value.overviewIds&&(!Array.isArray(value.overviewIds)||value.overviewIds.length>entityIds.size||value.overviewIds.some(id=>!entityIds.has(id))||new Set(value.overviewIds).size!==value.overviewIds.length))throw Error('This file contains invalid overview entities.');
   const camera = value.camera;
   if (!camera || !finite(camera.x) || !finite(camera.y) || !finite(camera.z) || camera.z < .02 || camera.z > 4) throw Error('This file contains an invalid map zoom.');
   const size = value.dimensions || {};
   const dimensions = {width: finite(size.width) && size.width > 0 ? size.width : 800, height: finite(size.height) && size.height > 0 ? size.height : 570};
   const details = value.details || {};
-  return {query: value.query, ...(value.mapLayout==='bubble-cloud-v1'?{mapLayout:value.mapLayout}:{}), positions: value.positions.map(row => [...row]), camera: {x:camera.x,y:camera.y,z:camera.z}, dimensions, scale:finite(value.scale)&&value.scale>=.3&&value.scale<=1?value.scale:1, details: {open: details.open !== false, docked: details.docked === true, width: finite(details.width) ? Math.max(180, Math.min(900, details.width)) : 420},...(value.research?{research:validateResearch(value.research,entityIds,relationshipIds)}:{})};
+  return {query: value.query, ...(['bubble-cloud-v1','bubble-cloud-v2'].includes(value.mapLayout)?{mapLayout:value.mapLayout}:{}),...(value.overviewIds?{overviewIds:[...value.overviewIds]}:{}), positions: value.positions.map(row => [...row]), camera: {x:camera.x,y:camera.y,z:camera.z}, dimensions, scale:finite(value.scale)&&value.scale>=.3&&value.scale<=1?value.scale:1, details: {open: details.open !== false, docked: details.docked === true, width: finite(details.width) ? Math.max(180, Math.min(900, details.width)) : 420},...(value.research?{research:validateResearch(value.research,entityIds,relationshipIds)}:{})};
 }
 
 export function parseWorkspace(value, entityIds) {

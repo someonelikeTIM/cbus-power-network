@@ -12,7 +12,7 @@ import { mediaSources, mediaRelease, mediaCase } from './media.js';
 import { civicSources, civicRelease } from './civic-enrichment.js';
 import { donationSources, donationRelease } from './donation-enrichment.js';
 export const meta = {
-  title: 'Columbus power network', reviewed: '2026-10-15', version: 12,
+  title: 'CBUS Power', reviewed: '2026-10-15', version: 12,
   scope: 'Columbus and Ohio: money, control, public corruption, civic affiliations, and media ownership, governance, funding and information supply.',
   limitations: 'Selected records, not complete coverage. Evidence status, source date, and direction are attached to each case relationship. Assets, cash transfers, and penalties are identified separately.'
 };

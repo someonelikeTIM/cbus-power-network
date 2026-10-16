@@ -66,3 +66,4 @@ body[data-view=network] #connection-legend .legend-show{opacity:1;min-height:24p
 @media(prefers-reduced-motion:reduce){#graph .graph-node{transition:none}}
 @media(max-width:650px){#entity-popover{width:136px;min-width:136px}.record-popover-actions button{min-height:46px}#guided-open{font-size:10px}body[data-view=network] #guided-panel,body[data-view=network] #research-panel{top:auto;bottom:10px;max-height:45%}body[data-view=network] #map-status #map-small{display:none}body[data-view=network] #map-status .map-exploration-controls{display:none}}
 @media(max-width:720px){body[data-view=network] #connection-legend{max-height:calc(100% - 180px)}}
+@media(max-width:650px){body[data-view=network] #map-status{width:calc(100% - 170px);max-width:190px;min-width:0}}

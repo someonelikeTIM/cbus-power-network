@@ -1,0 +1,395 @@
+{
+  "release": {
+    "schemaVersion": "1.0.0",
+    "releaseId": "2026-10-15-2",
+    "status": "published",
+    "preparedOn": "2026-10-15",
+    "publishedAt": "2026-10-16T01:13:54Z",
+    "dataRevision": 12,
+    "codeLicense": "MIT",
+    "dataLicense": "CC-BY-4.0",
+    "sourceCheckIds": []
+  },
+  "meta": {
+    "title": "CBUS Power",
+    "reviewed": "2026-10-15",
+    "version": 12,
+    "scope": "Columbus and Ohio: money, control, public corruption, civic affiliations, and media ownership, governance, funding and information supply.",
+    "limitations": "Selected records, not complete coverage. Evidence status, source date, and direction are attached to each case relationship. Assets, cash transfers, and penalties are identified separately.",
+    "enrichmentState": "complete",
+    "pendingSourceIds": [],
+    "infrastructureState": "complete",
+    "politicalState": "complete",
+    "flowState": "complete",
+    "trailState": "complete",
+    "mediaState": "complete",
+    "civicState": "complete",
+    "donationState": "complete"
+  },
+  "entities": [
+    {
+      "id": "city",
+      "name": "City of Columbus",
+      "category": "institution",
+      "role": "Municipal government",
+      "description": "",
+      "x": 250,
+      "y": 350,
+      "sourceIds": [
+        "mayor",
+        "council",
+        "linkus"
+      ],
+      "historical": false,
+      "externalIdentifiers": [],
+      "publicationState": "accepted",
+      "claimReview": {
+        "status": "legacy-unrecorded",
+        "reviewedAt": null,
+        "reviewer": {
+          "type": "unknown",
+          "identity": null
+        },
+        "note": "Inherited curated record. Previous substantive review identity and claim-level date were not recorded; source content checks are separate. Independent editorial review is pending."
+      }
+    },
+    {
+      "id": "flock",
+      "name": "Flock Safety",
+      "category": "corporation",
+      "role": "ALPR vendor / registered municipal lobbying client",
+      "sourceIds": [
+        "city-lobbyists-2025",
+        "flock-contract-2024"
+      ],
+      "description": "",
+      "x": 3000,
+      "y": 2000,
+      "historical": false,
+      "aliases": [
+        "Flock Group, Inc.",
+        "Flock Group Inc"
+      ],
+      "externalIdentifiers": [],
+      "publicationState": "accepted",
+      "claimReview": {
+        "status": "legacy-unrecorded",
+        "reviewedAt": null,
+        "reviewer": {
+          "type": "unknown",
+          "identity": null
+        },
+        "note": "Inherited curated record. Previous substantive review identity and claim-level date were not recorded; source content checks are separate. Independent editorial review is pending."
+      }
+    }
+  ],
+  "relationships": [
+    {
+      "id": "e179",
+      "source": "city",
+      "target": "flock",
+      "type": "contract",
+      "label": "$228,000 camera lease; bidding waived",
+      "evidence": "Council authorized 38 fixed readers for a two-year term.",
+      "sourceIds": [
+        "flock-contract-2024"
+      ],
+      "period": "Approved December 9, 2024",
+      "caseId": "alpr",
+      "historical": true,
+      "status": "authorized",
+      "directional": true,
+      "amount": 228000,
+      "amountIsUpperBound": true,
+      "amountLabel": "Up to $228k",
+      "unit": "USD two-year contract authorization ceiling",
+      "readerCount": 38,
+      "existingReaderCount": 32,
+      "termYears": 2,
+      "locator": "3181-2024, Background and §§1–5",
+      "context": "City cited compatibility with 32 existing Flock cameras. Term starts when the purchase order is certified; actual spending is not shown.",
+      "publicationState": "accepted",
+      "claimReview": {
+        "status": "legacy-unrecorded",
+        "reviewedAt": null,
+        "reviewer": {
+          "type": "unknown",
+          "identity": null
+        },
+        "note": "Inherited curated record. Previous substantive review identity and claim-level date were not recorded; source content checks are separate. Independent editorial review is pending."
+      },
+      "validity": {
+        "start": null,
+        "end": null,
+        "startPrecision": "unknown",
+        "endPrecision": "unknown",
+        "certainty": "unknown",
+        "note": "Relationship validity not established. Event, source and observation dates do not establish a term."
+      },
+      "evidenceStatus": {
+        "code": "authorized",
+        "label": "Public authorization"
+      },
+      "evidenceEntries": [
+        {
+          "sourceId": "flock-contract-2024",
+          "role": "support",
+          "locator": "3181-2024, Background and §§1–5",
+          "excerpt": null,
+          "note": "Inherited source reference; see qualification text."
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "mayor",
+      "title": "About Mayor Andrew J. Ginther",
+      "publisher": "City of Columbus",
+      "date": null,
+      "note": "Official biography; also documents his 2007–2015 Council service.",
+      "reviewed": "2026-10-11",
+      "kind": "Primary source",
+      "archiveTimestamp": "20261009001948",
+      "archiveStatus": "pinned",
+      "liveVerified": false,
+      "sourceFormat": "archive",
+      "contentCheckedAt": "2026-10-12T05:56:23.453Z",
+      "url": "https://web.archive.org/web/20261009001948/https://www.columbus.gov/Government/Mayors-Office/About-Mayor-Andrew-J.-Ginther",
+      "publicationDate": {
+        "value": null,
+        "precision": "unknown"
+      },
+      "contentCheck": {
+        "verified": true,
+        "checkedAt": "2026-10-12T05:56:23.453Z",
+        "method": "Archived content retrieval with source-specific checks",
+        "reviewer": {
+          "type": "unknown",
+          "identity": null
+        },
+        "sha256": "cb3b2e60e2ae8c3149c7700a9d42b301e07da71899be012d386f6bf198da719b",
+        "checks": [
+          "ginther",
+          "third term"
+        ],
+        "note": "Initial review attribution is unavailable. Content availability / matching is separate from claim review."
+      },
+      "archiveCapture": "20261009001948"
+    },
+    {
+      "id": "council",
+      "title": "Columbus City Council directory",
+      "publisher": "City of Columbus",
+      "date": null,
+      "note": "Official directory identifying Council members and their roles.",
+      "reviewed": "2026-10-11",
+      "kind": "Primary source",
+      "archiveTimestamp": "20260324015654",
+      "archiveStatus": "pinned",
+      "liveVerified": false,
+      "sourceFormat": "archive",
+      "contentCheckedAt": "2026-10-12T05:56:23.453Z",
+      "url": "https://web.archive.org/web/20260324015654/https://www.columbus.gov/Government/City-Council/Directory",
+      "publicationDate": {
+        "value": null,
+        "precision": "unknown"
+      },
+      "contentCheck": {
+        "verified": true,
+        "checkedAt": "2026-10-12T05:56:23.453Z",
+        "method": "Archived content retrieval with source-specific checks",
+        "reviewer": {
+          "type": "unknown",
+          "identity": null
+        },
+        "sha256": "b7bdf88cc69c5013cc9379d30272df163e10af197eecdb87dcc9d72f92cd5fef",
+        "checks": [
+          "hardin",
+          "rob dorans",
+          "bankston",
+          "district 9"
+        ],
+        "note": "Initial review attribution is unavailable. Content availability / matching is separate from claim review."
+      },
+      "archiveCapture": "20260324015654"
+    },
+    {
+      "id": "linkus",
+      "title": "LinkUS breaks ground on sidewalks, bikeways and trails",
+      "publisher": "COTA",
+      "date": "2026-06-15",
+      "note": "Names the regional partners, COTA CEO, MORPC director and Commissioner Crawley.",
+      "reviewed": "2026-10-11",
+      "kind": "Primary source",
+      "archiveTimestamp": "20260712180536",
+      "archiveStatus": "pinned",
+      "liveVerified": false,
+      "sourceFormat": "archive",
+      "contentCheckedAt": "2026-10-12T05:56:23.453Z",
+      "url": "https://web.archive.org/web/20260712180536/https://www.cota.com/blog/linkus-moves-forward-with-groundbreaking-to-celebrate-new-sidewalks-bikeways-and-trails/",
+      "publicationDate": {
+        "value": "2026-06-15",
+        "precision": "day"
+      },
+      "contentCheck": {
+        "verified": true,
+        "checkedAt": "2026-10-12T05:56:23.453Z",
+        "method": "Archived content retrieval with source-specific checks",
+        "reviewer": {
+          "type": "unknown",
+          "identity": null
+        },
+        "sha256": "434540b15f1619dd4e928e2a6c8cad1ce4f4573bc52ca3d631d68104de5ec104",
+        "checks": [
+          "monica",
+          "tellez",
+          "murdock",
+          "crawley",
+          "columbus partnership"
+        ],
+        "note": "Initial review attribution is unavailable. Content availability / matching is separate from claim review."
+      },
+      "archiveCapture": "20260712180536"
+    },
+    {
+      "id": "city-lobbyists-2025",
+      "title": "City lobbyists and utility-rate hearing — November 15, 2025",
+      "publisher": "City of Columbus",
+      "date": "2025-11-15",
+      "note": "Registered city lobbyists and clients; utility hearing pp. 51–53 discusses proposed rates for large water users.",
+      "reviewed": "2026-10-12",
+      "kind": "Primary source",
+      "archiveTimestamp": "20260827204416",
+      "archiveStatus": "pinned",
+      "liveVerified": false,
+      "sourceFormat": "archive",
+      "contentCheckedAt": "2026-10-12T19:05:00.315Z",
+      "url": "https://web.archive.org/web/20260827204416/https://www.columbus.gov/files/sharedassets/city/v/1/city-council/documents/city-bulletins/2025/bulletin20251115.pdf",
+      "publicationDate": {
+        "value": "2025-11-15",
+        "precision": "day"
+      },
+      "contentCheck": {
+        "verified": true,
+        "checkedAt": "2026-10-12T19:05:00.315Z",
+        "method": "SHA256-matched archived PDF cache",
+        "reviewer": {
+          "type": "unknown",
+          "identity": null
+        },
+        "sha256": "70526b55026e4cc0938f1a37ccea8cea44ecd8732f141c84f51dea879b0ce4b1",
+        "checks": [
+          "november 15, 2025",
+          "george mccue",
+          "pizzuti solutions",
+          "the pizzuti companies",
+          "louis capobianco",
+          "flock safety",
+          "verizon communications",
+          "stanley e. gates ii",
+          "google llc",
+          "jon lee",
+          "data centers",
+          "commercial rates",
+          "2027",
+          "cp hardin"
+        ],
+        "note": "Initial review attribution is unavailable. Content availability / matching is separate from claim review."
+      },
+      "archiveCapture": "20260827204416"
+    },
+    {
+      "id": "flock-contract-2024",
+      "title": "3181-2024: Flock camera lease and bid waiver",
+      "publisher": "City of Columbus",
+      "date": "2024-12-11",
+      "note": "38 fixed readers; two-year $228,000 authorization; compatibility with 32 existing cameras cited for bidding waiver.",
+      "reviewed": "2026-10-13",
+      "kind": "Primary source",
+      "archiveTimestamp": null,
+      "archiveStatus": "pending",
+      "liveVerified": true,
+      "sourceFormat": "original",
+      "contentCheckedAt": "2026-10-13T00:49:17.350Z",
+      "url": "https://columbus.legistar.com/LegislationDetail.aspx?From=RSS&FullText=1&GUID=76B3DB80-9EF4-4657-A21F-24773FB0E5DD&ID=7043675",
+      "publicationDate": {
+        "value": "2024-12-11",
+        "precision": "day"
+      },
+      "contentCheck": {
+        "verified": true,
+        "checkedAt": "2026-10-13T00:49:17.350Z",
+        "method": "Original content fetch",
+        "reviewer": {
+          "type": "unknown",
+          "identity": null
+        },
+        "sha256": "7cb0766a65e2606aaac85ad7925aa6c27326828193a3c4d3d2e505bf527a9178",
+        "checks": [
+          "3181-2024",
+          "passed",
+          "38 fixed",
+          "32 flock",
+          "228,000",
+          "two years",
+          "competitive bidding",
+          "office of criminal justice services"
+        ],
+        "note": "Initial review attribution is unavailable. Content availability / matching is separate from claim review."
+      },
+      "archiveCapture": null
+    }
+  ],
+  "events": [
+    {
+      "id": "flock-city-authorization",
+      "edgeIds": [
+        "e179"
+      ],
+      "primaryEdgeId": "e179",
+      "title": "Columbus Flock lease authorized",
+      "date": {
+        "precision": "day",
+        "start": "2024-12-09",
+        "end": "2024-12-09",
+        "role": "Lease spending authorized",
+        "note": ""
+      },
+      "moneyKind": "authorization",
+      "lane": "contracts",
+      "actorIds": [
+        "city",
+        "flock"
+      ],
+      "sourceIds": [
+        "flock-contract-2024"
+      ],
+      "amount": 228000,
+      "amountLabel": "Up to $228k",
+      "unit": "USD two-year contract authorization ceiling",
+      "metric": null,
+      "amountIsUpperBound": true,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    }
+  ],
+  "leads": [],
+  "relatedLeadIds": [
+    "lead-media-06"
+  ],
+  "externalRelationshipReferences": [],
+  "corrections": [],
+  "limitations": [
+    "Selected records, not complete coverage. Evidence status, source date, and direction are attached to each case relationship. Assets, cash transfers, and penalties are identified separately.",
+    "Claim-level review metadata is incomplete for inherited records.",
+    "Dates usually describe events or observations; relationship validity is largely unknown.",
+    "Filtered packets include complete lead records only when all their entities are present; relatedLeadIds and externalRelationshipReferences refer to the full release."
+  ],
+  "selection": {
+    "kind": "edge",
+    "id": "e179"
+  },
+  "packetType": "evidence",
+  "thirdPartyDocumentsIncluded": false
+}

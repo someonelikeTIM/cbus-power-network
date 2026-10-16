@@ -1,6 +1,6 @@
 # Releases and deployment
 
-GitHub Pages hosts the static dist/ directory at https://someoneliketim.github.io/cbus-power-network/. The deployment workflow validates the committed build before publishing it. Pull requests run checks without deployment; a push to main or a manual workflow run publishes a passing build.
+GitHub Pages hosts the static dist/ directory at https://cbuspower.org/. The custom domain and HTTPS are configured in the repository's Pages settings; public-release.config.json records the canonical URL and root base path. The deployment workflow validates the committed build before publishing it. Pull requests run checks without deployment; a push to main or a manual workflow run publishes a passing build.
 
 ## Prepare an edition
 

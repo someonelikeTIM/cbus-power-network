@@ -1,8 +1,10 @@
 # Changelog
 
-## Unreleased — explorer workspaces
+## 2026-10-15 — CBUS Power and explorer workspaces
 
 A tightly packed bubble overview and zoom-dependent detail replace the dense all-at-once map. Bubbles scale with connection counts, with smaller entities filling gaps between larger ones. Visible entity footprints remain separate; lower-priority entities are withheld until there is room. Selecting an entity moves into a small neighborhood with a Pin/Details pop-out. Guided exploration lists the matching connections without filling the canvas. Visible distance controls the available scope, while zoom reveals finer layers.
+
+CBUS Power now lives at cbuspower.org. Zoom enlarges the smaller overview bubbles and reveals their full names, while the layout separates growing circles and labels. Saved views keep the overview's visible entities and camera across tabs and reloads.
 
 Entity and connection pins form an ordered research path with notes, documented connecting routes and explicit gaps. Paths can be saved locally, exported as identifiable research artifacts and imported into new tabs with their original record IDs and source references. Notes remain distinct from the dataset. Map windows make room for one another, and Undo restores research-step edits.
 
