@@ -31,6 +31,7 @@ export function encodeState(base,state,releaseId) {
   const tags=normalizeTags(state.tags??state.tag);if(state.view==='network'&&tags.length){if(tags.length===1)values.tag=tags[0];else values.tags=tags.join(',');}
   if(state.selected)values.record=`${recordKind(state.selected.kind)}:${state.selected.id}`;
   if(state.path)values.path=state.path.edges.join(',');
+  if(state.bucketMode)values.group='type';if(state.showAmounts)values.amounts='1';
   for(const [key,value]of Object.entries(values))if(value!==''&&value!=null)p.set(key,value);
   if(state.startingIds&&!state.startingIds.size)p.set('starts','');
   return url.href;
@@ -44,6 +45,7 @@ export function decodeState(base,defaults) {
   state.requestedResearch=(p.get('research')||'').split('|').filter(Boolean).map(value=>{const split=value.indexOf(':');return {kind:value.slice(0,split),id:value.slice(split+1),note:''};});
   state.focusEntity=p.get('center')||'';
   state.focusType=Object.hasOwn(relationships,p.get('focusType'))?p.get('focusType'):'';
+  state.bucketMode=p.get('group')==='type';state.showAmounts=p.get('amounts')==='1';
   state.trailNodes=new Set((p.get('trail')||'').split(',').filter(Boolean));state.trailEdges=new Set((p.get('trailEdges')||'').split(',').filter(Boolean));state.collapsedNodes=new Set((p.get('collapsed')||'').split(',').filter(Boolean));
   state.tags=new Set(normalizeTags(p.has('tags')?p.get('tags'):p.get('tag')));
   if(['explore','full'].includes(p.get('map')))state.mapMode=p.get('map');

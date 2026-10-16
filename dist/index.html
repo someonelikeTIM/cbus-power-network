@@ -74,12 +74,18 @@
       <div id="media-overview" class="media-overview" hidden></div>
       <div class="workspace" data-current-view="network">
         <div id="network-view" class="network-view view-panel">
+          <section id="quick-menu" class="quick-menu" aria-label="Map quick menu" hidden>
+            <div class="quick-title"><strong id="quick-title">Quick menu</strong><button id="quick-minimize" type="button" aria-expanded="true">Minimize</button></div>
+            <div class="quick-controls"><button id="group-connections" type="button" aria-pressed="false">Sort by connection type</button><button id="toggle-amounts" type="button" aria-pressed="false">Show dollar amounts</button><button id="selection-mode" type="button" aria-pressed="true">Drag to select</button></div>
+            <div class="quick-context"><strong id="quick-selection" aria-live="polite">Explore the map</strong><div id="quick-actions"></div></div>
+            <p id="quick-hint">Drag empty space to select. Ctrl/Cmd-click adds or removes a record. Space-drag pans.</p>
+          </section>
           <div id="map-status" class="map-status"><div class="graph-heading"><div><span id="graph-title" class="eyebrow">Columbus network</span><button id="map-scope" class="node-details-link" aria-controls="inspector"></button></div><span id="visible-count" aria-live="polite"></span><small id="semantic-summary"></small></div><div class="map-exploration-controls"><button id="map-small" class="explore-button">Start small</button><button id="map-full" class="explore-button">Browse network overview</button></div></div>
           <p id="starting-summary" class="starting-summary" role="status"></p>
           <p class="exploration-hint">Choose an entity to explore its connections. Follow a path and keep earlier steps in view. Pin records to save them in your research path.</p>
           <section id="connection-legend" class="connection-legend floating-panel" aria-label="Connection types currently shown"><div class="floating-panel-header" tabindex="0"><h2>Connections shown</h2><button data-close-floating="connection-legend" aria-label="Close legend">×</button></div><ul id="legend-types"></ul><p id="legend-key"></p><p id="indirect-key" hidden><span class="indirect-swatch" aria-hidden="true"></span>Dotted line: indirect route · select it to reveal the recorded links.</p><p id="legend-context">Other visible nodes stay clickable at 50% opacity.</p></section>
           <div id="graph-stage" class="graph-stage">
-            <div id="canvas-area"><svg id="graph" aria-label="Interactive map of documented Columbus relationships" role="group" tabindex="0"><g id="graph-world"><g id="edge-layer"></g><g id="route-layer"></g><g id="connection-icon-layer"></g><g id="node-layer"></g></g></svg>
+            <div id="canvas-area"><svg id="graph" aria-label="Interactive map of documented Columbus relationships" role="group" tabindex="0"><g id="graph-world"><g id="bucket-layer" aria-label="Connection type buckets"></g><g id="edge-layer"></g><g id="route-layer"></g><g id="connection-icon-layer"></g><g id="node-layer"></g></g><rect id="selection-box" hidden x="0" y="0" width="0" height="0"/></svg>
             <div id="connection-tooltip" role="tooltip" hidden></div>
             <div id="entity-tooltip" role="tooltip" hidden><strong></strong><span></span></div>
             <div id="graph-empty" class="graph-empty" hidden><span aria-hidden="true">⌕</span><h2>No entities found</h2><p>Try a different search or reset the filters.</p><button id="empty-reset" class="primary-button">Reset the map</button></div>
@@ -90,7 +96,7 @@
             <div class="graph-controls" aria-label="Map controls"><button id="zoom-in" title="Zoom in" aria-label="Zoom in">+</button><button id="zoom-out" title="Zoom out" aria-label="Zoom out">−</button><span></span><button id="fit" title="Fit all visible nodes" aria-label="Fit the network"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4H4v5m11-5h5v5M4 15v5h5m11-5v5h-5"/></svg></button><button id="reset-layout" title="Arrange entities in the available canvas" aria-label="Arrange entities">↺</button></div>
           </div>
           </div>
-          <div class="graph-footer"><span>Select for evidence <span class="hint-separator">·</span> Drag to pan · Ctrl/Cmd-scroll to zoom</span><button id="label-toggle" class="text-button" aria-label="Cycle node labels" title="Cycle automatic labels, all labels, and labels off">Labels auto</button></div>
+          <div class="graph-footer"><span>Select for evidence <span class="hint-separator">·</span> Drag to select · Space-drag to pan · Ctrl/Cmd-scroll to zoom</span><button id="label-toggle" class="text-button" aria-label="Cycle node labels" title="Cycle automatic labels, all labels, and labels off">Labels auto</button></div>
         </div>
 
         <section id="timeline-view" class="timeline-view view-panel" aria-label="Follow the money timeline" hidden>

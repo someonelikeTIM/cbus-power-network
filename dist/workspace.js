@@ -10,7 +10,7 @@ const sessionKey = 'columbus-network:workspace-v1';
 const frames = new Map();
 const captures = new Map();
 let captureSerial = 0;
-const emptySnapshot = () => ({query: '', positions: [], camera: {x: 0, y: 0, z: 1}, dimensions: {width: 800, height: 570}, details: {open: false, docked: false, width: 420}});
+const emptySnapshot = () => ({query: '', positions: [], camera: {x: 0, y: 0, z: 1}, dimensions: {width: 800, height: 570}, details: {open: true, docked: false, width: 420}});
 let serial = 1;
 let views = [{id: 'view-1', name: 'View 1', snapshot: {...emptySnapshot(), query: location.search}}];
 let activeId = 'view-1', primaryId = activeId, secondaryId = null;

@@ -19,7 +19,10 @@ export function validateView(value, entityIds) {
   const size = value.dimensions || {};
   const dimensions = {width: finite(size.width) && size.width > 0 ? size.width : 800, height: finite(size.height) && size.height > 0 ? size.height : 570};
   const details = value.details || {};
-  return {query: value.query, ...(['bubble-cloud-v1','bubble-cloud-v2'].includes(value.mapLayout)?{mapLayout:value.mapLayout}:{}),...(value.overviewIds?{overviewIds:[...value.overviewIds]}:{}), positions: value.positions.map(row => [...row]), camera: {x:camera.x,y:camera.y,z:camera.z}, dimensions, scale:finite(value.scale)&&value.scale>=.3&&value.scale<=1?value.scale:1, details: {open: details.open !== false, docked: details.docked === true, width: finite(details.width) ? Math.max(180, Math.min(900, details.width)) : 420},...(value.research?{research:validateResearch(value.research,entityIds,relationshipIds)}:{})};
+  const interaction=value.interaction||{};
+  for(const [key,allowed]of [['entities',entityIds],['connections',relationshipIds],['bucketIds',entityIds]])if(interaction[key]&&(!Array.isArray(interaction[key])||interaction[key].some(id=>!allowed.has(id))||interaction[key].length>allowed.size))throw Error('This view contains an invalid map selection.');
+  const mapInteraction={entities:[...(interaction.entities||[])],connections:[...(interaction.connections||[])],bucketIds:interaction.bucketIds?[...interaction.bucketIds]:null};
+  return {query: value.query,...(value.interaction?{interaction:mapInteraction}:{}), ...(['bubble-cloud-v1','bubble-cloud-v2'].includes(value.mapLayout)?{mapLayout:value.mapLayout}:{}),...(value.overviewIds?{overviewIds:[...value.overviewIds]}:{}), positions: value.positions.map(row => [...row]), camera: {x:camera.x,y:camera.y,z:camera.z}, dimensions, scale:finite(value.scale)&&value.scale>=.3&&value.scale<=1?value.scale:1, details: {open: details.open !== false, docked: details.docked === true, width: finite(details.width) ? Math.max(180, Math.min(900, details.width)) : 420},...(value.research?{research:validateResearch(value.research,entityIds,relationshipIds)}:{})};
 }
 
 export function parseWorkspace(value, entityIds) {

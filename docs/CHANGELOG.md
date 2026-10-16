@@ -2,6 +2,8 @@
 
 ## Unreleased — Guided exploration and record context
 
+A floating quick menu adds connection-type buckets, qualified dollar labels, rectangle selection and Ctrl/Cmd selection of entities and connections. Context actions support exploration, timelines, two-entity paths, endpoint selection, pinning, isolation and evidence-preserving selection export. Selections, grouping and amount visibility survive saved-view round trips. Entity and connection details open automatically; the connection-type legend is substantially larger and remains above the canvas.
+
 The first visit now explains what the explorer covers and offers three concrete starting points. The network overview action describes its readable subset instead of suggesting that every entity and connection appears at once. Narrow network details use a wider record sheet with the record type, qualification and first cited source visible before the longer evidence.
 
 Entity timelines start with direct records. The connected scope explains its two-link inclusion rule, and indirect cards identify the recorded route that brings them into view. Switching to a view that cannot show the selected record closes its inspector. Path finding no longer preselects an unrelated destination and uses a single link's recorded period instead of a shared-range warning.
