@@ -1,0 +1,637 @@
+{
+  "release": {
+    "schemaVersion": "1.0.0",
+    "releaseId": "2026-10-17",
+    "status": "published",
+    "preparedOn": "2026-10-17",
+    "publishedAt": "2026-10-17T06:13:04Z",
+    "dataRevision": 15,
+    "codeLicense": "MIT",
+    "dataLicense": "CC-BY-4.0",
+    "sourceCheckIds": [
+      "ep26-osu-review",
+      "ep26-osu-initial",
+      "ep26-osu-agreement",
+      "ep26-osu-giving",
+      "ep26-house-deposition",
+      "rf26-ordinance-2013",
+      "rf26-amendment-2013",
+      "rf26-waiver-2013",
+      "rf26-raphael-sentence",
+      "rf26-finley-sentence"
+    ]
+  },
+  "meta": {
+    "title": "CBUS Power",
+    "reviewed": "2026-10-17",
+    "version": 15,
+    "scope": "Columbus and Ohio: money, control, public corruption, civic affiliations, and media ownership, governance, funding and information supply.",
+    "limitations": "Selected records, not complete coverage. Evidence status, source date, and direction are attached to each case relationship. Assets, cash transfers, and penalties are identified separately.",
+    "enrichmentState": "complete",
+    "pendingSourceIds": [],
+    "infrastructureState": "complete",
+    "politicalState": "complete",
+    "flowState": "complete",
+    "trailState": "complete",
+    "mediaState": "complete",
+    "civicState": "complete",
+    "donationState": "complete",
+    "campaign2026State": "source-checked subset",
+    "campaign2026Coverage": "Official roster for selected statewide and Franklin County races; selected financial filings and campaign statements, with incomplete donor and outside-spending ledgers.",
+    "epsteinState": "complete",
+    "redflexState": "complete"
+  },
+  "entities": [
+    {
+      "id": "city",
+      "name": "City of Columbus",
+      "category": "institution",
+      "role": "Municipal government",
+      "description": "",
+      "x": 250,
+      "y": 350,
+      "sourceIds": [
+        "mayor",
+        "council",
+        "linkus"
+      ],
+      "historical": false,
+      "externalIdentifiers": [],
+      "publicationState": "accepted",
+      "claimReview": {
+        "status": "legacy-unrecorded",
+        "reviewedAt": null,
+        "reviewer": {
+          "type": "unknown",
+          "identity": null
+        },
+        "note": "Inherited curated record. Previous substantive review identity and claim-level date were not recorded; source content checks are separate. Independent editorial review is pending."
+      }
+    },
+    {
+      "id": "bill-byers",
+      "name": "Bill Byers",
+      "category": "person",
+      "role": "Lobbyist / Byers Minton principal",
+      "sourceIds": [
+        "bma-team",
+        "byers-register"
+      ],
+      "x": 1700,
+      "y": 1750,
+      "description": "",
+      "historical": false,
+      "aliases": [
+        "William L. Byers IV",
+        "William L Byers, IV"
+      ],
+      "externalIdentifiers": [],
+      "publicationState": "accepted",
+      "claimReview": {
+        "status": "legacy-unrecorded",
+        "reviewedAt": null,
+        "reviewer": {
+          "type": "unknown",
+          "identity": null
+        },
+        "note": "Inherited curated record. Previous substantive review identity and claim-level date were not recorded; source content checks are separate. Independent editorial review is pending."
+      }
+    },
+    {
+      "id": "anduril",
+      "name": "Anduril Industries",
+      "category": "corporation",
+      "role": "Arsenal-1 developer / JobsOhio grant recipient",
+      "sourceIds": [
+        "flow-anduril-grant",
+        "flow-anduril-ohio"
+      ],
+      "description": "",
+      "x": 3000,
+      "y": 2000,
+      "historical": false,
+      "externalIdentifiers": [],
+      "publicationState": "accepted",
+      "claimReview": {
+        "status": "legacy-unrecorded",
+        "reviewedAt": null,
+        "reviewer": {
+          "type": "unknown",
+          "identity": null
+        },
+        "note": "Inherited curated record. Previous substantive review identity and claim-level date were not recorded; source content checks are separate. Independent editorial review is pending."
+      }
+    }
+  ],
+  "relationships": [
+    {
+      "id": "e103",
+      "source": "city",
+      "target": "bill-byers",
+      "type": "lobbying",
+      "label": "Registered lobbying agent",
+      "evidence": "Register lists Byers for this employer.",
+      "sourceIds": [
+        "byers-register"
+      ],
+      "period": "Register capture May 19, 2026",
+      "caseId": "cityhall",
+      "historical": false,
+      "status": "registered",
+      "directional": true,
+      "locator": "OLAC employer roster for William L. Byers IV",
+      "publicationState": "accepted",
+      "claimReview": {
+        "status": "legacy-unrecorded",
+        "reviewedAt": null,
+        "reviewer": {
+          "type": "unknown",
+          "identity": null
+        },
+        "note": "Inherited curated record. Previous substantive review identity and claim-level date were not recorded; source content checks are separate. Independent editorial review is pending."
+      },
+      "validity": {
+        "start": null,
+        "end": null,
+        "startPrecision": "unknown",
+        "endPrecision": "unknown",
+        "certainty": "unknown",
+        "note": "Relationship validity not established. Event, source and observation dates do not establish a term."
+      },
+      "evidenceStatus": {
+        "code": "registered",
+        "label": "Lobbying registration"
+      },
+      "evidenceEntries": [
+        {
+          "sourceId": "byers-register",
+          "role": "support",
+          "locator": "OLAC employer roster for William L. Byers IV",
+          "excerpt": null,
+          "note": "Inherited source reference; see qualification text."
+        }
+      ]
+    },
+    {
+      "id": "j59",
+      "source": "anduril",
+      "target": "bill-byers",
+      "type": "lobbying",
+      "label": "Registered state legislative / executive agent",
+      "evidence": "State employer roster.",
+      "sourceIds": [
+        "flow-anduril-agents"
+      ],
+      "period": "Roster checked October 12, 2026",
+      "historical": false,
+      "directional": true,
+      "status": "registered",
+      "caseId": "jobsohio",
+      "context": "Registration only; fees, individual official contacts and policy outcomes are not established.",
+      "registeredBranches": [
+        "legislative",
+        "executive"
+      ],
+      "publicationState": "accepted",
+      "claimReview": {
+        "status": "legacy-unrecorded",
+        "reviewedAt": null,
+        "reviewer": {
+          "type": "unknown",
+          "identity": null
+        },
+        "note": "Inherited curated record. Previous substantive review identity and claim-level date were not recorded; source content checks are separate. Independent editorial review is pending."
+      },
+      "validity": {
+        "start": null,
+        "end": null,
+        "startPrecision": "unknown",
+        "endPrecision": "unknown",
+        "certainty": "unknown",
+        "note": "Relationship validity not established. Event, source and observation dates do not establish a term."
+      },
+      "evidenceStatus": {
+        "code": "registered",
+        "label": "Lobbying registration"
+      },
+      "evidenceEntries": [
+        {
+          "sourceId": "flow-anduril-agents",
+          "role": "support",
+          "locator": null,
+          "excerpt": null,
+          "note": "Precise locator not recorded; follow-up needed."
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "mayor",
+      "title": "About Mayor Andrew J. Ginther",
+      "publisher": "City of Columbus",
+      "date": null,
+      "note": "Official biography; also documents his 2007–2015 Council service.",
+      "reviewed": "2026-10-11",
+      "kind": "Primary source",
+      "archiveTimestamp": "20261009001948",
+      "archiveStatus": "pinned",
+      "liveVerified": false,
+      "sourceFormat": "archive",
+      "contentCheckedAt": "2026-10-12T05:56:23.453Z",
+      "url": "https://web.archive.org/web/20261009001948/https://www.columbus.gov/Government/Mayors-Office/About-Mayor-Andrew-J.-Ginther",
+      "publicationDate": {
+        "value": null,
+        "precision": "unknown"
+      },
+      "contentCheck": {
+        "verified": true,
+        "checkedAt": "2026-10-12T05:56:23.453Z",
+        "method": "Archived content retrieval with source-specific checks",
+        "reviewer": {
+          "type": "unknown",
+          "identity": null
+        },
+        "sha256": "cb3b2e60e2ae8c3149c7700a9d42b301e07da71899be012d386f6bf198da719b",
+        "checks": [
+          "ginther",
+          "third term"
+        ],
+        "note": "Initial review attribution is unavailable. Content availability / matching is separate from claim review."
+      },
+      "archiveCapture": "20261009001948"
+    },
+    {
+      "id": "council",
+      "title": "Columbus City Council directory",
+      "publisher": "City of Columbus",
+      "date": null,
+      "note": "Official directory identifying Council members and their roles.",
+      "reviewed": "2026-10-11",
+      "kind": "Primary source",
+      "archiveTimestamp": "20260324015654",
+      "archiveStatus": "pinned",
+      "liveVerified": false,
+      "sourceFormat": "archive",
+      "contentCheckedAt": "2026-10-12T05:56:23.453Z",
+      "url": "https://web.archive.org/web/20260324015654/https://www.columbus.gov/Government/City-Council/Directory",
+      "publicationDate": {
+        "value": null,
+        "precision": "unknown"
+      },
+      "contentCheck": {
+        "verified": true,
+        "checkedAt": "2026-10-12T05:56:23.453Z",
+        "method": "Archived content retrieval with source-specific checks",
+        "reviewer": {
+          "type": "unknown",
+          "identity": null
+        },
+        "sha256": "b7bdf88cc69c5013cc9379d30272df163e10af197eecdb87dcc9d72f92cd5fef",
+        "checks": [
+          "hardin",
+          "rob dorans",
+          "bankston",
+          "district 9"
+        ],
+        "note": "Initial review attribution is unavailable. Content availability / matching is separate from claim review."
+      },
+      "archiveCapture": "20260324015654"
+    },
+    {
+      "id": "linkus",
+      "title": "LinkUS breaks ground on sidewalks, bikeways and trails",
+      "publisher": "COTA",
+      "date": "2026-06-15",
+      "note": "Names the regional partners, COTA CEO, MORPC director and Commissioner Crawley.",
+      "reviewed": "2026-10-11",
+      "kind": "Primary source",
+      "archiveTimestamp": "20260712180536",
+      "archiveStatus": "pinned",
+      "liveVerified": false,
+      "sourceFormat": "archive",
+      "contentCheckedAt": "2026-10-12T05:56:23.453Z",
+      "url": "https://web.archive.org/web/20260712180536/https://www.cota.com/blog/linkus-moves-forward-with-groundbreaking-to-celebrate-new-sidewalks-bikeways-and-trails/",
+      "publicationDate": {
+        "value": "2026-06-15",
+        "precision": "day"
+      },
+      "contentCheck": {
+        "verified": true,
+        "checkedAt": "2026-10-12T05:56:23.453Z",
+        "method": "Archived content retrieval with source-specific checks",
+        "reviewer": {
+          "type": "unknown",
+          "identity": null
+        },
+        "sha256": "434540b15f1619dd4e928e2a6c8cad1ce4f4573bc52ca3d631d68104de5ec104",
+        "checks": [
+          "monica",
+          "tellez",
+          "murdock",
+          "crawley",
+          "columbus partnership"
+        ],
+        "note": "Initial review attribution is unavailable. Content availability / matching is separate from claim review."
+      },
+      "archiveCapture": "20260712180536"
+    },
+    {
+      "id": "bma-team",
+      "title": "Byers Minton principals and prior public-policy roles",
+      "publisher": "Byers, Minton & Associates",
+      "date": null,
+      "note": "Bill Byers and Andrew Minton, principals; Byers’s prior Nationwide Children’s role.",
+      "reviewed": "2026-10-12",
+      "kind": "Primary source",
+      "archiveTimestamp": "20250915123207",
+      "archiveStatus": "pinned",
+      "liveVerified": false,
+      "sourceFormat": "archive",
+      "contentCheckedAt": "2026-10-12T07:29:38.886Z",
+      "url": "https://web.archive.org/web/20250915123207/https://www.byersminton.com/our-team/",
+      "publicationDate": {
+        "value": null,
+        "precision": "unknown"
+      },
+      "contentCheck": {
+        "verified": true,
+        "checkedAt": "2026-10-12T07:29:38.886Z",
+        "method": "Archived content retrieval with source-specific checks",
+        "reviewer": {
+          "type": "unknown",
+          "identity": null
+        },
+        "sha256": "4d69f4f8a38d60c126e1cd0d7f8cff9644dff9dd4833b9cac2ab7a433f94c7d1",
+        "checks": [
+          "bill byers",
+          "andrew minton",
+          "principal",
+          "nationwide children"
+        ],
+        "note": "Initial review attribution is unavailable. Content availability / matching is separate from claim review."
+      },
+      "archiveCapture": "20250915123207"
+    },
+    {
+      "id": "byers-register",
+      "title": "Ohio lobbyist register: William L. Byers IV",
+      "publisher": "Ohio Legislative Inspector General / OLAC",
+      "date": null,
+      "note": "Named employers in the dated roster; terminated engagements are excluded.",
+      "reviewed": "2026-10-12",
+      "kind": "Primary source",
+      "archiveTimestamp": "20260519002613",
+      "archiveStatus": "pinned",
+      "liveVerified": false,
+      "sourceFormat": "archive",
+      "contentCheckedAt": "2026-10-12T08:44:46.823Z",
+      "url": "https://web.archive.org/web/20260519002613/https://www2.jlec-olig.state.oh.us/OLAC/Reports/Agents/1276/Employers",
+      "publicationDate": {
+        "value": null,
+        "precision": "unknown"
+      },
+      "contentCheck": {
+        "verified": true,
+        "checkedAt": "2026-10-12T08:44:46.823Z",
+        "method": "Archived content retrieval with source-specific checks",
+        "reviewer": {
+          "type": "unknown",
+          "identity": null
+        },
+        "sha256": "cc332231063e22cc12f7c89c433d8ffc7e5898e40c18b4cfd9009cc3cd489771",
+        "checks": [
+          "employers for william",
+          "american electric power",
+          "charter communications operating",
+          "city of columbus",
+          "the columbus partnership",
+          "new albany company",
+          "central ohio transit authority",
+          "battelle",
+          "nationwide children",
+          "columbus state community college",
+          "columbus crew sc",
+          "cleveland browns"
+        ],
+        "note": "Initial review attribution is unavailable. Content availability / matching is separate from claim review."
+      },
+      "archiveCapture": "20260519002613"
+    },
+    {
+      "id": "flow-anduril-grant",
+      "title": "JobsOhio executes conditional $310m Anduril grant",
+      "publisher": "JobsOhio",
+      "date": "2025-07-09",
+      "kind": "Issuer statement",
+      "note": "Payable over ten years; obligations continue through the 30-year deal. Actual payments not disclosed.",
+      "reviewed": "2026-10-13",
+      "archiveTimestamp": null,
+      "archiveStatus": "pending",
+      "liveVerified": true,
+      "sourceFormat": "original",
+      "contentCheckedAt": "2026-10-13T01:21:00.555Z",
+      "url": "https://www.jobsohio.com/newsroom/news-press/anduril-drone-manufacturer-investment-in-ohio",
+      "publicationDate": {
+        "value": "2025-07-09",
+        "precision": "day"
+      },
+      "contentCheck": {
+        "verified": true,
+        "checkedAt": "2026-10-13T01:21:00.555Z",
+        "method": "Original content fetch",
+        "reviewer": {
+          "type": "unknown",
+          "identity": null
+        },
+        "sha256": "1a27c96062b452c2a144a2c04940af98890ff3b3f9ef115692bc9ff64bcd284c",
+        "checks": [
+          "july 09, 2025",
+          "310 million",
+          "ten years",
+          "30-year",
+          "4,008",
+          "910.5"
+        ],
+        "note": "Initial review attribution is unavailable. Content availability / matching is separate from claim review."
+      },
+      "archiveCapture": null
+    },
+    {
+      "id": "flow-anduril-ohio",
+      "title": "DeWine, Husted and regional partners announce Arsenal-1",
+      "publisher": "JobsOhio",
+      "date": "2025-01-16",
+      "kind": "Issuer statement",
+      "note": "Pickaway facility, One Columbus support and announced capital investment.",
+      "reviewed": "2026-10-13",
+      "archiveTimestamp": null,
+      "archiveStatus": "pending",
+      "liveVerified": true,
+      "sourceFormat": "original",
+      "contentCheckedAt": "2026-10-13T01:21:00.611Z",
+      "url": "https://www.jobsohio.com/newsroom/news-press/anduril-ohio-partner-together-to-rebuild-the-arsenal-for-essential-national-security-needs",
+      "publicationDate": {
+        "value": "2025-01-16",
+        "precision": "day"
+      },
+      "contentCheck": {
+        "verified": true,
+        "checkedAt": "2026-10-13T01:21:00.611Z",
+        "method": "Original content fetch",
+        "reviewer": {
+          "type": "unknown",
+          "identity": null
+        },
+        "sha256": "d62d846c4ad49fce21bb1245ae5a1636be0513fee529deb4a862256aae600c2d",
+        "checks": [
+          "january 16, 2025",
+          "dewine",
+          "husted",
+          "one columbus",
+          "pickaway",
+          "kenny mcdonald"
+        ],
+        "note": "Initial review attribution is unavailable. Content availability / matching is separate from claim review."
+      },
+      "archiveCapture": null
+    },
+    {
+      "id": "flow-anduril-agents",
+      "title": "Anduril Ohio lobbying roster",
+      "publisher": "Ohio JLEC / OLAC",
+      "date": null,
+      "note": "Byers and Minton listed for legislative and executive branches.",
+      "reviewed": "2026-10-13",
+      "kind": "Primary source",
+      "archiveTimestamp": null,
+      "archiveStatus": "pending",
+      "liveVerified": true,
+      "sourceFormat": "original",
+      "contentCheckedAt": "2026-10-13T01:21:02.671Z",
+      "url": "https://www2.jlec-olig.state.oh.us/OLAC/Reports/Employers/12144/Agents",
+      "publicationDate": {
+        "value": null,
+        "precision": "unknown"
+      },
+      "contentCheck": {
+        "verified": true,
+        "checkedAt": "2026-10-13T01:21:02.671Z",
+        "method": "Original content fetch",
+        "reviewer": {
+          "type": "unknown",
+          "identity": null
+        },
+        "sha256": "457db950be0f9c976acde14c85ecb65676b750e9840fe900a0ed39f4dde6b3c2",
+        "checks": [
+          "anduril industries",
+          "william l byers",
+          "andrew minton",
+          "current engagements"
+        ],
+        "note": "Initial review attribution is unavailable. Content availability / matching is separate from claim review."
+      },
+      "archiveCapture": null
+    }
+  ],
+  "events": [
+    {
+      "id": "event-e103",
+      "edgeIds": [
+        "e103"
+      ],
+      "primaryEdgeId": "e103",
+      "lane": "lobbying",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Engagement start",
+        "note": "Start date not established",
+        "observedOn": "2026-05-19",
+        "observationRole": "Snapshot captured"
+      },
+      "title": "Registered lobbying agent",
+      "moneyKind": "none",
+      "actorIds": [
+        "city",
+        "bill-byers"
+      ],
+      "sourceIds": [
+        "byers-register"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    },
+    {
+      "id": "event-j59",
+      "edgeIds": [
+        "j59"
+      ],
+      "primaryEdgeId": "j59",
+      "lane": "lobbying",
+      "date": {
+        "precision": "unknown",
+        "start": null,
+        "end": null,
+        "role": "Engagement start",
+        "note": "Start date not established",
+        "observedOn": "2026-10-13",
+        "observationRole": "Roster checked"
+      },
+      "title": "Registered state legislative / executive agent",
+      "moneyKind": "none",
+      "actorIds": [
+        "anduril",
+        "bill-byers"
+      ],
+      "sourceIds": [
+        "flow-anduril-agents"
+      ],
+      "amount": null,
+      "amountLabel": "",
+      "unit": "",
+      "metric": null,
+      "amountIsUpperBound": false,
+      "amountIsLowerBound": false,
+      "amountIncludedIn": null
+    }
+  ],
+  "leads": [],
+  "relatedLeadIds": [
+    "lead-media-06"
+  ],
+  "externalRelationshipReferences": [],
+  "corrections": [],
+  "limitations": [
+    "Selected records, not complete coverage. Evidence status, source date, and direction are attached to each case relationship. Assets, cash transfers, and penalties are identified separately.",
+    "Claim-level review metadata is incomplete for inherited records.",
+    "Dates usually describe events or observations; relationship validity is largely unknown.",
+    "Filtered packets include complete lead records only when all their entities are present; relatedLeadIds and externalRelationshipReferences refer to the full release."
+  ],
+  "selection": {
+    "kind": "path",
+    "nodes": [
+      "anduril",
+      "bill-byers",
+      "city"
+    ],
+    "edges": [
+      "j59",
+      "e103"
+    ],
+    "dates": {
+      "start": null,
+      "end": null,
+      "status": "overlap-unknown",
+      "note": "A path joins separate records; it does not establish causation, wrongdoing or story control."
+    }
+  },
+  "packetType": "evidence",
+  "thirdPartyDocumentsIncluded": false
+}

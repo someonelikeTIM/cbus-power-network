@@ -8,13 +8,13 @@ Start anywhere: search a person, organization or tag, or browse the whole networ
 
 Selecting an entity opens a flyout with connection counts and types. Show direct connections places new neighbors in nearby rings once. The anchor and previously placed entities stay fixed when expanding or filtering a branch. Type buttons narrow the highlighted connections, and choosing a connection follows it to the next entity. Short camera moves frame the active branch clear of controls. A persistent Origin trail and network overview retain the wider context. Labels avoid one another and reveal more detail with zoom. Orphans are excluded from the canvas after filters are applied; the source data and entity directory retain their records.
 
-The current edition, **2026-10-16**, contains **377 entities, 541 relationships, 175 sources and 209 timeline events**. Coverage includes campaign contributions, public contracts, tax incentives, lobbying, civic affiliations and media ownership. This is a selected collection, not a complete register.
+The current edition, **2026-10-17**, contains **390 entities, 566 relationships, 185 sources and 225 timeline events**. It expands the Wexner–Epstein and Redflex topics with Ohio State gift records, congressional deposition context, Columbus procurement documents and Ohio legal outcomes. Coverage includes campaign contributions, public contracts, tax incentives, lobbying, civic affiliations and media ownership. This is a selected collection, not a complete register.
 
 Evidence labels distinguish reporting, allegations, findings, registrations and authorizations. A connection alone establishes neither wrongdoing nor causation. Donation totals may summarize several reported receipts; spending ceilings are different from payments. Details preserve those distinctions and explain missing dates or records. See [methodology](docs/METHODOLOGY.md).
 
 ## Data and citations
 
-The explorer provides record links, current-view downloads and evidence packets. [Versioned JSON/CSV tables, schemas and checksums](https://cbuspower.org/downloads/2026-10-16/manifest.json) are in `dist/downloads/`. Join records using stable IDs and cite the edition. See the [data dictionary](docs/DATA-DICTIONARY.md).
+The explorer provides record links, current-view downloads and evidence packets. [Versioned JSON/CSV tables, schemas and checksums](https://cbuspower.org/downloads/2026-10-17/manifest.json) are in `dist/downloads/`. Join records using stable IDs and cite the edition. See the [data dictionary](docs/DATA-DICTIONARY.md).
 
 ## Explorer views
 

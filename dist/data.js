@@ -12,8 +12,10 @@ import { mediaSources, mediaRelease, mediaCase } from './media.js';
 import { civicSources, civicRelease } from './civic-enrichment.js';
 import { donationSources, donationRelease } from './donation-enrichment.js';
 import { campaignSources,campaignRelease,applyCampaignUpdates,campaignCase } from './campaigns-2026.js';
+import { epsteinSources,epsteinRelease } from './epstein-enrichment.js';
+import { redflexSources,redflexRelease } from './redflex-enrichment.js';
 export const meta = {
-  title: 'CBUS Power', reviewed: '2026-10-15', version: 13,
+  title: 'CBUS Power', reviewed: '2026-10-17', version: 15,
   scope: 'Columbus and Ohio: money, control, public corruption, civic affiliations, and media ownership, governance, funding and information supply.',
   limitations: 'Selected records, not complete coverage. Evidence status, source date, and direction are attached to each case relationship. Assets, cash transfers, and penalties are identified separately.'
 };
@@ -86,7 +88,7 @@ export const allDeclaredSources = [
   {id:'redflex-plea',title:'Finley guilty plea: camera-contract bribery scheme',publisher:'U.S. Department of Justice',url:'https://www.justice.gov/archives/opa/pr/former-ceo-pleads-guilty-bribery-and-fraud-scheme-involving-red-light-camera-contracts',date:'2015-06-19',note:'Finley admitted conduit contributions, false invoices, and contracts in Columbus and Cincinnati.'},
   {id:'redflex-npa',title:'Redflex non-prosecution agreement; Raphael extortion plea',publisher:'U.S. Department of Justice',url:'https://www.justice.gov/usao-sdoh/pr/redflex-traffic-systems-enters-non-prosecution-agreement-united-states',date:'2016-12-27',note:'DOJ identifies John Raphael and his guilty plea; corporate non-prosecution agreement.'},
   {id:'redflex-ginther',title:'Ginther campaign donation crosscheck and response',publisher:'WOSU Public Media',url:'https://www.wosu.org/news/2015-06-22/ginther-im-not-a-target-of-a-redflex-investigation',date:'2015-06-22',kind:'Reporting / campaign-finance crosscheck',note:'Reported $21,000 ODP contribution in 2011. Ginther denied requesting that contribution; acknowledged asking Redflex for support. Court record did not name him.'},
-  ...cityHallSources, ...enrichmentSources, ...infrastructureSources, ...politicalSources, ...flowSources, ...trailSources, ...mediaSources, ...civicSources, ...donationSources, ...campaignSources
+  ...cityHallSources, ...enrichmentSources, ...infrastructureSources, ...politicalSources, ...flowSources, ...trailSources, ...mediaSources, ...civicSources, ...donationSources, ...campaignSources, ...epsteinSources, ...redflexSources
 ].map((s,index) => {
   const archived = sourceArchives[s.id];
   const pinned = archived?.contentVerified === true && archived.originalUrl === s.url && /^\d{14}$/.test(archived.timestamp || '') && archived.url?.startsWith(`https://web.archive.org/web/${archived.timestamp}/`);
@@ -99,7 +101,7 @@ export const sources=allDeclaredSources.filter(s=>s.archiveUrl||s.liveVerified);
 const verifiedSourceIds=new Set(sources.map(s=>s.id));
 const release=enrichmentRelease(verifiedSourceIds);
 meta.enrichmentState=release.complete?'complete':'verified subset';
-meta.pendingSourceIds=[...enrichmentSources,...infrastructureSources,...politicalSources,...flowSources,...trailSources,...mediaSources,...civicSources,...donationSources].filter(s=>!verifiedSourceIds.has(s.id)).map(s=>s.id);
+meta.pendingSourceIds=[...enrichmentSources,...infrastructureSources,...politicalSources,...flowSources,...trailSources,...mediaSources,...civicSources,...donationSources,...epsteinSources,...redflexSources].filter(s=>!verifiedSourceIds.has(s.id)).map(s=>s.id);
 const capitalReady=verifiedSourceIds.has('city-capital-2025');
 
 // Positions are an editorial layout only; distance does not encode relationship strength.
@@ -277,6 +279,12 @@ const campaigns=campaignRelease(verifiedSourceIds,nodes.map(node=>node.id));
 nodes.push(...campaigns.nodes);edges.push(...campaigns.edges);applyCampaignUpdates(nodes,verifiedSourceIds);
 meta.campaign2026State=campaigns.complete?'source-checked subset':'partially source-checked';
 meta.campaign2026Coverage='Official roster for selected statewide and Franklin County races; selected financial filings and campaign statements, with incomplete donor and outside-spending ledgers.';
+const epsteinIntake=epsteinRelease(verifiedSourceIds,nodes.map(node=>node.id));
+nodes.push(...epsteinIntake.nodes);edges.push(...epsteinIntake.edges);
+meta.epsteinState=epsteinIntake.complete?'complete':'verified subset';
+const redflexIntake=redflexRelease(verifiedSourceIds,nodes.map(node=>node.id));
+nodes.push(...redflexIntake.nodes);edges.push(...redflexIntake.edges);
+meta.redflexState=redflexIntake.complete?'complete':'verified subset';
 if(verifiedSourceIds.has('flow-jobs-finance')){
  const record=nodes.find(n=>n.id==='jobsohio');
  const extraIds=['flow-jobs-finance','flow-jobs-audit','flow-podcast'].filter(id=>verifiedSourceIds.has(id));
@@ -297,6 +305,15 @@ export const cases = {
 cases.datacenters.contextEdgeIds=[...new Set([...(cases.datacenters.contextEdgeIds||[]),'d26-05','d26-06','d26-07','d26-08','d26-09'])];
 cases.politics.contextEdgeIds=[...new Set([...cases.politics.contextEdgeIds,...campaigns.edges.map(edge=>edge.id)])];
 const caseFact=(sourceId,caseId,text)=>{if(verifiedSourceIds.has(sourceId))cases[caseId].outcomes.push(text);};
+if(epsteinIntake.edges.length)cases.epstein.summary='Financial authority, charitable-fund transfers, Ohio State gift records and congressional testimony.';
+caseFact('ep26-osu-review','epstein','Ohio State’s review traced its $2.5m COUQ gift to Wexner funds. A further $75,000 historical pledge was not confirmed received.');
+caseFact('ep26-house-deposition','epstein','Wexner gave a House Oversight deposition February 18, 2026; testimony is not a finding of wrongdoing.');
+if(redflexIntake.edges.length)cases.redflex.summary='Columbus camera procurement, campaign conduits, individual Ohio convictions and separate corporate restitution obligations.';
+caseFact('rf26-ordinance-2013','redflex','2013: extension authorized with bidding waived and no new appropriation. Authorization is separate from contract execution.');
+caseFact('rf26-amendment-2013','redflex','Attached modification: $29.74 per paid citation; vendor signed, city execution fields blank. The rate is not a payment total.');
+caseFact('rf26-raphael-sentence','redflex','Raphael: 15-month Ohio sentence imposed June 8, 2016.');
+caseFact('rf26-finley-sentence','redflex','Finley: 14-month Ohio sentence reported in October 2016; exact sentencing day not verified.');
+if(redflexIntake.complete)caseFact('redflex-npa','redflex','Corporate agreement: $100,000 Columbus restitution obligation; completed payment and final discharge not verified.');
 for(const edge of trails.edges)for(const id of edge.relatedCases||[]){
   if(cases[id])cases[id].contextEdgeIds=[...new Set([...(cases[id].contextEdgeIds||[]),edge.id])];
 }

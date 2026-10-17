@@ -1,4 +1,4 @@
-// Dated captures with source-specific checks. archiveLookup preserves the earlier lookup run.
+// Dated captures checked against the cited source facts.
 export const sourceArchives = {
   "les-letter": {
     "originalUrl": "https://www.wexnerfoundation.org/letter-from-les/",
@@ -1109,17 +1109,80 @@ export const sourceArchives = {
       "identity": "Unattributed initial review"
     },
     "contentCheckNote": "Dated roster capture checked; original roster also checked October 15, 2026. Engagement start not established."
+  },
+  "ep26-osu-review": {
+    "originalUrl": "https://news.osu.edu/statement-from-the-ohio-state-university-regarding-completion-of-jeffrey-epstein-review/",
+    "url": "https://web.archive.org/web/20260522185414/https://news.osu.edu/statement-from-the-ohio-state-university-regarding-completion-of-jeffrey-epstein-review/",
+    "timestamp": "20260522185414",
+    "contentVerified": true,
+    "checkedAt": "2026-10-17T05:37:19.610Z",
+    "cdxDigest": "4MPTJUBENEDJ25LG3P6O74LTEEJY6H6C",
+    "mime": "text/html",
+    "sha256": "57f7b7d7db3877d02c5aafdd9f74d7959232ccdf1b6fbb1bd0dca859c73c8975",
+    "contentCheckMethod": "Archived content fetch",
+    "contentChecks": [
+      "09",
+      "April",
+      "2020",
+      "EY",
+      "260,000",
+      "75,000",
+      "336,000",
+      "Wexner Children",
+      "Leslie H. Wexner Charitable Fund",
+      "not from Jeffrey Epstein"
+    ],
+    "missingChecks": []
+  },
+  "rf26-raphael-sentence": {
+    "originalUrl": "https://www.justice.gov/usao-sdoh/pr/ohio-lobbyist-sentenced-15-months-extortionate-role-conduit-campaign-contribution",
+    "url": "https://web.archive.org/web/20260525001404/https://www.justice.gov/usao-sdoh/pr/ohio-lobbyist-sentenced-15-months-extortionate-role-conduit-campaign-contribution",
+    "timestamp": "20260525001404",
+    "contentVerified": true,
+    "checkedAt": "2026-10-17T05:49:24.771Z",
+    "cdxDigest": "CLFP26LXNUFY7YL2AS2MOO6TH6GTHOII",
+    "mime": "text/html",
+    "sha256": "c2b64a1124fcb7c83d44ce1ffed024ccd1df353c6dbd844b0af9367c479217c2",
+    "contentCheckMethod": "Archived content fetch",
+    "contentChecks": [
+      "June 8, 2016",
+      "15 months",
+      "Oct. 15, 2015",
+      "Hobbs Act",
+      "over $70,000",
+      "Columbus and Cincinnati"
+    ],
+    "missingChecks": []
+  },
+  "rf26-finley-sentence": {
+    "originalUrl": "https://www.justice.gov/usao-sdoh/pr/former-ceo-sentenced-bribery-and-fraud-scheme-involving-red-light-camera-contracts",
+    "url": "https://web.archive.org/web/20260524175722/https://www.justice.gov/usao-sdoh/pr/former-ceo-sentenced-bribery-and-fraud-scheme-involving-red-light-camera-contracts",
+    "timestamp": "20260524175722",
+    "contentVerified": true,
+    "checkedAt": "2026-10-17T05:49:24.771Z",
+    "cdxDigest": "OIDDFK7INWGVX2NISYWLAWMV4IOFIQAX",
+    "mime": "text/html",
+    "sha256": "6675fa6ff705546007156d89bfd1a299a1bddfb1951551e124ce4ea94943a36d",
+    "contentCheckMethod": "Archived content fetch",
+    "contentChecks": [
+      "October 28, 2016",
+      "14 months",
+      "June 19, 2015",
+      "Michael H. Watson",
+      "false invoices"
+    ],
+    "missingChecks": []
   }
 };
 export const archiveLookup = {
-  "checkedAt": "2026-10-14T17:14:07.284Z",
+  "checkedAt": "2026-10-17T05:49:24.771Z",
   "method": "Wayback CDX + content checks",
   "state": "complete",
-  "verified": 60,
+  "verified": 65,
   "outcomes": {
-    "media-smith": "no-capture",
-    "media-kimmel": "verified",
-    "media-close": "lookup-failed",
-    "media-wosu-finance": "lookup-failed"
+    "rf26-ordinance-2013": "no-capture",
+    "rf26-waiver-2013": "no-capture",
+    "rf26-raphael-sentence": "verified",
+    "rf26-finley-sentence": "verified"
   }
 };

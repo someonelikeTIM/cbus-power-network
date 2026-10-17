@@ -9,7 +9,7 @@ import { acceptedCorrections } from './corrections.js';
 import { inheritedEntityIds,inheritedRelationshipIds } from './inherited.js';
 import { validISO } from './timeline.js';
 
-export const release = { schemaVersion:'1.0.0',releaseId:'2026-10-16',status:'published',preparedOn:'2026-10-16',publishedAt:'2026-10-16T06:08:17Z',dataRevision:meta.version,codeLicense:'MIT',dataLicense:'CC-BY-4.0',sourceCheckIds:[] };
+export const release = { schemaVersion:'1.0.0',releaseId:'2026-10-17',status:'published',preparedOn:'2026-10-17',publishedAt:'2026-10-17T06:13:04Z',dataRevision:meta.version,codeLicense:'MIT',dataLicense:'CC-BY-4.0',sourceCheckIds:['ep26-osu-review','ep26-osu-initial','ep26-osu-agreement','ep26-osu-giving','ep26-house-deposition','rf26-ordinance-2013','rf26-amendment-2013','rf26-waiver-2013','rf26-raphael-sentence','rf26-finley-sentence'] };
 export const reviewFor = record => record.claimReview || { status:'legacy-unrecorded',reviewedAt:null,reviewer:{type:'unknown',identity:null},note:'Inherited curated record. Previous substantive review identity and claim-level date were not recorded; source content checks are separate. Independent editorial review is pending.' };
 export function publicSource(source) {
   const {url,archiveUrl,archiveBrowseUrl,...record}=source;

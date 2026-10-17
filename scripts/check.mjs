@@ -11,6 +11,8 @@ import {mediaNodes,mediaEdges,mediaSources,mediaRelease,mediaProfiles} from '../
 import {civicNodes,civicEdges,civicRelease} from '../dist/civic-enrichment.js';
 import {donationRelease} from '../dist/donation-enrichment.js';
 import {campaignRelease} from '../dist/campaigns-2026.js';
+import {epsteinRelease} from '../dist/epstein-enrichment.js';
+import {redflexRelease} from '../dist/redflex-enrichment.js';
 import { buildTimelineEvents, filterTimelineEvents, validateEventDate, validISO, sortTimelineEvents } from '../dist/timeline.js';
 import { filterGraph, shortestPath, matches } from '../dist/core.js';
 
@@ -25,7 +27,7 @@ const full = filterGraph(options); assert.ok(full.nodes.length>=104); assert.ok(
 const infrastructurePublished=infrastructureRelease(sourceIds,nodeIds);
 const politicalPublished=politicalRelease(sourceIds,nodes.filter(n=>!politicalNodes.some(p=>p.id===n.id)).map(n=>n.id));
 const flowsPublished=flowRelease(sourceIds,nodeIds);
-if(meta.enrichmentState==='complete'){assert.equal(full.edges.length,170+infrastructurePublished.edges.length+politicalPublished.edges.length+flowsPublished.edges.length+trailRelease(sourceIds,nodeIds).edges.length+mediaRelease(sourceIds,nodeIds).edges.length+civicRelease(sourceIds,nodeIds).edges.length+donationRelease(sourceIds,nodeIds).edges.length+campaignRelease(sourceIds,nodeIds).edges.length);}
+if(meta.enrichmentState==='complete'){assert.equal(full.edges.length,170+infrastructurePublished.edges.length+politicalPublished.edges.length+flowsPublished.edges.length+trailRelease(sourceIds,nodeIds).edges.length+mediaRelease(sourceIds,nodeIds).edges.length+civicRelease(sourceIds,nodeIds).edges.length+donationRelease(sourceIds,nodeIds).edges.length+campaignRelease(sourceIds,nodeIds).edges.length+epsteinRelease(sourceIds,nodeIds).edges.length+redflexRelease(sourceIds,nodeIds).edges.length);}
 const current = filterGraph({ ...options, history: false }); assert.ok(current.edges.every(e => !e.historical)); assert.ok(!current.nodes.some(n => ['abigail', 'foundation', 'lbrands'].includes(n.id)));assert.ok(current.nodes.some(n=>n.id==='les'));
 const search = filterGraph({ ...options, query: 'Ginther' }); assert.deepEqual(search.matches, ['ginther','ginther-campaign','ginther-fund']); assert.ok(search.nodes.some(n => n.id === 'city')); assert.ok(!search.nodes.some(n => n.id === 'les'));
 assert.equal(filterGraph({ ...options, query: 'not-an-entity-xyz' }).nodes.length, 0);
@@ -36,7 +38,7 @@ assert.deepEqual(shortestPath(full, 'city', 'city'), { nodes: ['city'], edges: [
 const officials = filterGraph({ ...options, categories: new Set(['politician']) }); assert.ok(officials.nodes.length>=6); assert.ok(officials.nodes.every(node=>node.category==='politician'));assert.ok(officials.edges.every(edge=>officials.nodes.some(node=>node.id===edge.source)&&officials.nodes.some(node=>node.id===edge.target))); assert.equal(shortestPath(officials, 'ginther', 'hardin'), null);
 const money=filterGraph({...options,caseId:'money'}); assert.ok(money.nodes.length>=77); assert.ok(money.edges.length>=108);
 const hb6=filterGraph({...options,caseId:'hb6'}); assert.equal(hb6.edges.length,17); assert.ok(hb6.edges.every(e=>e.caseId==='hb6'));
-const epstein=filterGraph({...options,caseId:'epstein'}); assert.equal(epstein.edges.length,9); assert.ok(!epstein.nodes.some(n=>n.id==='aep'));
+const epstein=filterGraph({...options,caseId:'epstein'}); assert.equal(epstein.edges.length,9+epsteinRelease(sourceIds,nodeIds).edges.length); assert.ok(!epstein.nodes.some(n=>n.id==='aep'));
 assert.ok(matches(nodes.find(n=>n.id==='aep'),'AEP'));
 const moneyTrail=shortestPath(hb6,'aep','hb6',{directed:true}); assert.deepEqual(moneyTrail.nodes,['aep','empowering','generation-now','hb6']);
 assert.equal(shortestPath(hb6,'sec','aep',{directed:true}),null);
@@ -104,7 +106,7 @@ assert.equal(infrastructureEdges.find(e=>e.id==='e186').amount,275000000);assert
 assert.ok(infrastructureEdges.filter(e=>/^e(18[7-9]|19[0-6])$/.test(e.id)).every(e=>!e.amount));
 assert.equal(edges.find(e=>e.id==='e59').amount+edges.find(e=>e.id==='e60').amount,46657998);
 assert.equal(edges.find(e=>e.id==='e62').status,'allegation'); assert.equal(edges.find(e=>e.id==='e49').status,'finding');
-const redflex=filterGraph({...options,caseId:'redflex'});assert.equal(redflex.edges.length,7);assert.deepEqual(shortestPath(redflex,'redflex','ginther-campaign',{directed:true}).nodes,['redflex','raphael','ohio-democrats','ginther-campaign']);
+const redflex=filterGraph({...options,caseId:'redflex'});assert.equal(redflex.edges.length,7+redflexRelease(sourceIds,nodeIds).edges.length);assert.deepEqual(shortestPath(redflex,'redflex','ginther-campaign',{directed:true}).nodes,['redflex','raphael','ohio-democrats','ginther-campaign']);
 assert.equal(edges.find(e=>e.id==='e73').status,'reported');assert.ok(edges.find(e=>e.id==='e73').context.includes('did not name him'));
 assert.ok(edges.find(e=>e.id==='e49').context.includes('without admitting or denying'));
 const html = readFileSync('dist/index.html', 'utf8'); const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map(m => m[1]); assert.equal(new Set(ids).size, ids.length);

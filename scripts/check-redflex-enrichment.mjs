@@ -1,0 +1,46 @@
+import assert from 'node:assert/strict';
+import {readFile,writeFile,mkdir} from 'node:fs/promises';
+import {nodes,edges,sources,categories,relationships,meta} from '../dist/data.js';
+import {redflexNodes,redflexEdges,redflexSources,redflexRelease} from '../dist/redflex-enrichment.js';
+import {datasetFor,evidencePacket,validateDataset,release} from '../dist/contract.js';
+import {filterGraph,shortestPath} from '../dist/core.js';
+import {buildTimelineEvents,moneyKinds} from '../dist/timeline.js';
+
+const verified=new Set(sources.map(source=>source.id)),ids=new Set(nodes.map(node=>node.id));
+assert.equal(meta.redflexState,'complete');assert.ok(redflexSources.every(source=>verified.has(source.id)));
+assert.equal(redflexRelease(verified,ids).edges.length,13);
+const withoutScan=new Set([...verified].filter(id=>id!=='rf26-amendment-2013'));
+const gated=redflexRelease(withoutScan,nodes.filter(node=>!redflexNodes.some(added=>added.id===node.id)).map(node=>node.id));
+assert.equal(gated.complete,false);
+assert.ok(!gated.edges.some(edge=>['rf26-01','rf26-02','rf26-03','rf26-04','rf26-05'].includes(edge.id)),'Missing scanned evidence blocks affected claims');
+const byId=new Map(edges.map(edge=>[edge.id,edge])),eventByEdge=new Map(buildTimelineEvents(edges,sources).map(event=>[event.primaryEdgeId,event]));
+const extension=byId.get('rf26-02'),rate=byId.get('rf26-03');
+assert.equal(extension.status,'authorized');assert.equal(extension.biddingWaived,true);assert.equal(extension.modifiesRelationshipId,'rf26-01');
+assert.equal(extension.amount,undefined,'No appropriation is different from a free contract');
+assert.equal(extension.authorizedTerm.start,'2013-06-04');assert.equal(rate.proposedEffectiveDate,'2013-06-01','Conflicting start fields remain distinct');
+assert.equal(extension.evidenceEntries.find(entry=>entry.sourceId==='rf26-amendment-2013').role,'qualify');
+assert.equal(rate.rate.value,29.74);assert.equal(rate.rate.basis,'Each paid citation, fixed or mobile camera');
+assert.equal(rate.amount,undefined,'A unit rate is not exported as a total payment');assert.equal(eventByEdge.get(rate.id).amount,null);assert.equal(eventByEdge.get(rate.id).date.precision,'unknown');
+assert.equal(byId.get('rf26-08').amount,100000);assert.equal(eventByEdge.get('rf26-08').moneyKind,'commitment');assert.equal(moneyKinds[eventByEdge.get('rf26-08').moneyKind].group,'commitments');
+assert.equal(byId.get('rf26-09').status,'acknowledged','A company NPA is not an individual conviction');
+assert.equal(byId.get('rf26-11').sentenceMonths,15);assert.equal(eventByEdge.get('rf26-11').date.start,'2016-06-08');
+assert.equal(byId.get('rf26-12').sentenceMonths,14);assert.equal(eventByEdge.get('rf26-12').date.precision,'month');
+assert.equal(byId.get('rf26-13').status,'conviction');assert.equal(eventByEdge.get('rf26-13').date.start,'2015-06-19');
+assert.equal(byId.get('e73').amount,21000);assert.equal(byId.get('e73').status,'reported');assert.ok(byId.get('e73').context.includes('denied'));
+assert.equal(byId.get('e71').amount,undefined,'The scheme-wide lower bound does not become an extra transfer');
+assert.ok(redflexEdges.every(edge=>edge.amount===undefined||edge.id==='rf26-08'));
+const graph=filterGraph({categories:new Set(Object.keys(categories)),relationships:new Set(Object.keys(relationships)),history:true,caseId:'redflex'});
+assert.equal(graph.nodes.length,14);assert.equal(graph.edges.length,20);
+assert.deepEqual(shortestPath(graph,'redflex','ginther-campaign',{directed:true}).nodes,['redflex','raphael','ohio-democrats','ginther-campaign']);
+const packet=evidencePacket({kind:'edge',id:'rf26-02'});validateDataset(packet);
+assert.ok(packet.externalRelationshipReferences.some(reference=>reference.id==='rf26-01'&&reference.role==='modified-contract'));
+assert.equal(packet.relationships[0].claimReview.reviewer.type,'unknown');
+assert.ok(['local-candidate','published'].includes(release.status));
+if(release.status==='published')assert.ok(Number.isFinite(Date.parse(release.publishedAt)),'Published editions require a publication timestamp');else assert.equal(release.publishedAt,null);
+const data=datasetFor();
+try{
+  const before=JSON.parse(await readFile('artifacts/redflex-enrichment/baseline.json','utf8'));
+  for(const name of ['entities','relationships','sources','events'])for(const old of before[name])assert.deepEqual(data[name].find(record=>record.id===old.id),old,`${name}: preserve ${old.id}`);
+}catch(error){if(error.code!=='ENOENT')throw error;}
+const result={edition:release.releaseId,added:{entities:redflexNodes.length,relationships:redflexEdges.length,sources:redflexSources.length,events:buildTimelineEvents(redflexEdges,sources).length},case:{entities:graph.nodes.length,relationships:graph.edges.length,sources:new Set(graph.edges.flatMap(edge=>edge.sourceIds)).size},distinctions:['Authorization versus bilateral execution','Unit rate versus payment total','Different proposed and authorized start dates','Restitution obligation versus completed payment','Individual convictions versus corporate NPA','Sentence imposed versus time served','Scheme-wide amounts versus named campaign receipts'],publicationPerformed:false};
+await mkdir('artifacts/redflex-enrichment',{recursive:true});await writeFile('artifacts/redflex-enrichment/checks.json',JSON.stringify(result,null,2)+'\n');console.log('PASS Redflex enrichment: '+JSON.stringify(result));

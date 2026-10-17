@@ -1,5 +1,25 @@
 # Changelog
 
+## 2026-10-17 — Published enrichment edition
+
+Edition 2026-10-17 combines the Wexner–Epstein and Redflex batches below. It contains 390 entities, 566 relationships, 185 sources and 225 timeline events: thirteen entities, twenty-five relationships, ten sources and sixteen events added since the preceding published edition. Earlier public download editions remain available. Source-support checks are separate from independent human editorial review.
+
+## 2026-10-17 — Redflex enrichment
+
+After the Wexner–Epstein enrichment, Redflex had the narrowest relationship and source coverage: seven relationships citing three sources. This batch adds six entities, thirteen relationships, five checked primary sources and nine timeline events. The topic now has fourteen entities and twenty relationships citing eight sources. The preceding batch’s records remain intact.
+
+Columbus ordinance 1440-2013 and its attachments add contract history, the bid-waiver justification, named signature-block roles and proposed compensation of $29.74 per paid citation. The vendor-signed copy has blank city execution fields; its proposed June 1 effective date differs from the ordinance’s June 4 term start. No new appropriation, executed agreement or total payment is inferred from these documents.
+
+The Ohio legal records add Raphael’s guilty plea and 15-month sentence and Finley’s guilty plea and reported 14-month sentence. Exact sentencing-day precision is withheld for Finley. The company’s conditional non-prosecution agreement, historical parent and $100,000 Columbus restitution obligation remain separate from individual convictions, campaign receipts and completed payments. Human editorial review remains pending.
+
+## 2026-10-17 — Wexner–Epstein enrichment
+
+The Wexner–Epstein topic had the narrowest relationship-source coverage: nine relationships citing two sources. This batch adds seven entities, twelve relationships and five checked primary sources, including university statements, released gift records and a congressional release. The topic now has fifteen entities and twenty-one relationships citing seven sources.
+
+Ohio State’s records distinguish $260,000 in historical foundation gifts, a separate $1,000 membership gift and an unconfirmed $75,000 pledge. Two $2.5 million checks supported the football-complex addition; the university’s later review traced the COUQ-routed gift to Wexner funds. Origin links have no extra transfer amounts. Gift recognition, check dates, receipt periods, an announced remedial contribution and the date of Wexner’s deposition retain their distinct meanings.
+
+The batch adds seven timeline events and preserves earlier records. Source checks retain hashes, locators and verification methods; the scanned agreement was reviewed as rendered pages. Human editorial review remains pending.
+
 ## Unreleased — Fixed orbital branches and movable flyouts
 
 Show direct connections arranges each branch once into nearby rings around its existing anchor. Following a neighbor places only its newly revealed neighbors; all previously placed entities stay fixed. Type changes and repeated expansion never rerun the layout. Placed entities and their positions survive saved-view reloads. Explicit grouping or position reset starts a new arrangement.

@@ -2000,5 +2000,199 @@ export const sourceLiveEvidence = {
       "5000.00"
     ],
     "missingChecks": []
+  },
+  "ep26-house-deposition": {
+    "originalUrl": "https://oversight.house.gov/release/oversight-committee-releases-les-wexner-deposition-video/",
+    "finalUrl": "https://oversight.house.gov/release/oversight-committee-releases-les-wexner-deposition-video/",
+    "contentVerified": true,
+    "checkedAt": "2026-10-17T05:36:54.672Z",
+    "sha256": "13b6e646bde04f32a6f8c5c123d14d14b935a83cb51db10f04009265eca7cb06",
+    "contentCheckMethod": "Original content fetch",
+    "contentChecks": [
+      "Feb 19, 2026",
+      "Les Wexner",
+      "February 18, 2026",
+      "Ohio"
+    ],
+    "missingChecks": []
+  },
+  "ep26-osu-review": {
+    "originalUrl": "https://news.osu.edu/statement-from-the-ohio-state-university-regarding-completion-of-jeffrey-epstein-review/",
+    "finalUrl": "https://news.osu.edu/statement-from-the-ohio-state-university-regarding-completion-of-jeffrey-epstein-review/",
+    "checkedAt": "2026-10-17T05:37:12.660789+00:00",
+    "sha256": "d19b83151a24cbf7d43aef1beb510f8837f79b606998d35e58a8c5bf69eeb0bd",
+    "bytes": 89299,
+    "textCharacters": 58371,
+    "contentCheckMethod": "Original request with browser-compatible headers; PDF text extraction where applicable",
+    "contentVerified": true,
+    "contentChecks": [
+      "09",
+      "April",
+      "2020",
+      "EY",
+      "260,000",
+      "75,000",
+      "336,000",
+      "Wexner Children",
+      "Leslie H. Wexner Charitable Fund",
+      "not from Jeffrey Epstein"
+    ],
+    "missingChecks": []
+  },
+  "ep26-osu-initial": {
+    "originalUrl": "https://news.osu.edu/epstein-gifts/",
+    "finalUrl": "https://news.osu.edu/epstein-gifts/",
+    "checkedAt": "2026-10-17T05:37:12.658386+00:00",
+    "sha256": "bd0b6baeb1aa5d0f343122f60adfe18b2e45170b490ae3943ee3883fffd2dba6",
+    "bytes": 85319,
+    "textCharacters": 56122,
+    "contentCheckMethod": "Original request with browser-compatible headers; PDF text extraction where applicable",
+    "contentVerified": true,
+    "contentChecks": [
+      "1990",
+      "1,000",
+      "May 2007",
+      "2.5 million",
+      "Leslie H. Wexner Charitable Fund",
+      "Les Wexner Football Complex"
+    ],
+    "missingChecks": []
+  },
+  "ep26-osu-agreement": {
+    "originalUrl": "https://news.osu.edu/download/841591/2007giftagreement.pdf",
+    "finalUrl": "https://news.osu.edu/download/841591/2007giftagreement.pdf",
+    "checkedAt": "2026-10-17T05:37:12.906383+00:00",
+    "sha256": "a36f0019181d57bd0a31cc20717bcf2debb8f16812c722a597ba88b25396084d",
+    "bytes": 270251,
+    "textCharacters": 4,
+    "contentCheckMethod": "Original PDF retrieved; all five rendered pages visually reviewed",
+    "contentVerified": true,
+    "contentChecks": [
+      "5,000,000",
+      "Woody Hayes Athletic Center",
+      "06-04-07",
+      "5/2/2007",
+      "2,500,000",
+      "September 13, 2007",
+      "gift recognition credit to Abigail Wexner"
+    ],
+    "missingChecks": [],
+    "contentCheckNote": "No extractable text. PDF p.1: $5m addition agreement; p.2: university signatures in September 2005, donor date not used; p.3: two $2.5m checks dated June 4 and May 2, 2007; p.4: processing correspondence; p.5: September 13, 2007 recognition-credit instruction. Account details remain only in the ignored source cache."
+  },
+  "ep26-osu-giving": {
+    "originalUrl": "https://news.osu.edu/download/97a6c377-59a6-410b-9c98-c830bbc79e88/givingrecords1.pdf",
+    "finalUrl": "https://news.osu.edu/download/97a6c377-59a6-410b-9c98-c830bbc79e88/givingrecords1.pdf",
+    "checkedAt": "2026-10-17T05:37:13.641529+00:00",
+    "sha256": "5a53f377adab99e2d061cb18adb671188aa555bb24d0c987e90da4c4b6c60334",
+    "bytes": 1423237,
+    "textCharacters": 44297,
+    "contentCheckMethod": "Original request with browser-compatible headers; PDF text extraction where applicable",
+    "contentVerified": true,
+    "contentChecks": [
+      "VENDOR YEARLY GIFT REPORT",
+      "1-16-2000",
+      "J. Epstein Foundation",
+      "97 PAID",
+      "96 PAID",
+      "100,000",
+      "75,000",
+      "50,000",
+      "25,000",
+      "10,000"
+    ],
+    "missingChecks": []
+  },
+  "rf26-ordinance-2013": {
+    "originalUrl": "https://columbus.legistar.com/LegislationDetail.aspx?FullText=1&GUID=3403B804-10AE-49CB-8604-C4F518AED39E&ID=1456651&Options=&Search=",
+    "finalUrl": "https://columbus.legistar.com/LegislationDetail.aspx?FullText=1&GUID=3403B804-10AE-49CB-8604-C4F518AED39E&ID=1456651&Options=&Search=",
+    "contentVerified": true,
+    "checkedAt": "2026-10-17T05:49:16.831Z",
+    "sha256": "9e4bf59cfd7858436514d550c56f567b46809aae5c03f3e93c0f2bab06798788",
+    "contentChecks": [
+      "1440-2013",
+      "7/22/2013",
+      "7/24/2013",
+      "7/25/2013",
+      "June 4, 2013",
+      "June 3rd, 2017",
+      "does not authorize an expenditure",
+      "329.06"
+    ],
+    "missingChecks": [],
+    "contentCheckMethod": "Original request with browser-compatible headers; text and layout checked"
+  },
+  "rf26-amendment-2013": {
+    "originalUrl": "https://columbus.legistar.com/View.ashx?M=F&ID=2566901&GUID=F0563D37-C072-4A11-8E3B-D65AD501C27A",
+    "finalUrl": "https://columbus.legistar.com/View.ashx?M=F&ID=2566901&GUID=F0563D37-C072-4A11-8E3B-D65AD501C27A",
+    "contentVerified": true,
+    "checkedAt": "2026-10-17T05:49:16.831Z",
+    "sha256": "684c16c637f1fbb597c6073331da93f6d6d847ad669aeff7ad3a99007bf8e28b",
+    "contentChecks": [
+      "December 16, 2005",
+      "1st day of June",
+      "3rd day of June 2017",
+      "29.74",
+      "Mitchell J. Brown",
+      "Robert DeVincenzi",
+      "CEO",
+      "38%",
+      "36.10"
+    ],
+    "missingChecks": [],
+    "contentCheckMethod": "Original scanned PDF retrieved; all three rendered pages visually reviewed",
+    "contentCheckNote": "PDF p.1: original agreement recital, proposed June 1 effective date, June 3, 2017 expiry and $29.74 per paid citation; p.2: vendor signature and blank city, city-attorney and signature-date fields; p.3: prior pricing schedules. Authorization in the ordinance starts June 4, not June 1. Full bilateral execution and payments are unverified."
+  },
+  "rf26-waiver-2013": {
+    "originalUrl": "https://columbus.legistar.com/View.ashx?M=F&ID=2566900&GUID=4CEFD8B4-77F6-41DD-8FDF-BEE9F3408B8E",
+    "finalUrl": "https://columbus.legistar.com/View.ashx?M=F&ID=2566900&GUID=4CEFD8B4-77F6-41DD-8FDF-BEE9F3408B8E",
+    "contentVerified": true,
+    "checkedAt": "2026-10-17T05:49:16.832Z",
+    "sha256": "cb989154ffc9bde768519f4975b4b9eb0685397b17c73caabac40ef7c9a86492",
+    "contentChecks": [
+      "1440-2013",
+      "need to extend an existing contract",
+      "negotiations",
+      "expensive to replace",
+      "continuity"
+    ],
+    "missingChecks": [],
+    "contentCheckMethod": "Original request with browser-compatible headers; text and layout checked"
+  },
+  "rf26-raphael-sentence": {
+    "originalUrl": "https://www.justice.gov/usao-sdoh/pr/ohio-lobbyist-sentenced-15-months-extortionate-role-conduit-campaign-contribution",
+    "finalUrl": "https://www.justice.gov/usao-sdoh/pr/ohio-lobbyist-sentenced-15-months-extortionate-role-conduit-campaign-contribution",
+    "contentVerified": true,
+    "checkedAt": "2026-10-17T05:49:16.832Z",
+    "sha256": null,
+    "contentChecks": [
+      "June 8, 2016",
+      "15 months",
+      "Oct. 15, 2015",
+      "Hobbs Act",
+      "over $70,000",
+      "Columbus and Cincinnati"
+    ],
+    "missingChecks": [],
+    "contentCheckMethod": "Official release read through web reader",
+    "contentCheckNote": "Direct original request returned an access-challenge page, which is not treated as evidence. The official release content was checked through the web reader; original document byte hash is unavailable.",
+    "observedTextSha256": "ffc642f532f221a6ee4fb5043950676612ab35204abde7f1250a1d813557b8ae"
+  },
+  "rf26-finley-sentence": {
+    "originalUrl": "https://www.justice.gov/usao-sdoh/pr/former-ceo-sentenced-bribery-and-fraud-scheme-involving-red-light-camera-contracts",
+    "finalUrl": "https://www.justice.gov/usao-sdoh/pr/former-ceo-sentenced-bribery-and-fraud-scheme-involving-red-light-camera-contracts",
+    "contentVerified": true,
+    "checkedAt": "2026-10-17T05:49:16.833Z",
+    "sha256": null,
+    "contentChecks": [
+      "October 28, 2016",
+      "14 months",
+      "June 19, 2015",
+      "Michael H. Watson",
+      "false invoices"
+    ],
+    "missingChecks": [],
+    "contentCheckMethod": "Official release read through web reader",
+    "contentCheckNote": "Direct original request returned an access-challenge page, which is not treated as evidence. The official release content was checked through the web reader; original document byte hash is unavailable.",
+    "observedTextSha256": "ffc642f532f221a6ee4fb5043950676612ab35204abde7f1250a1d813557b8ae"
   }
 };
