@@ -10,6 +10,7 @@
     "dev": "node scripts/serve.mjs",
     "build": "node scripts/build-release.mjs",
     "check": "node scripts/check.mjs",
+    "refresh": "node scripts/refresh-data.mjs",
     "test": "node scripts/test.mjs",
     "check:release": "node scripts/check-release.mjs",
     "check:privacy": "node scripts/check-public-files.mjs",

@@ -1,5 +1,20 @@
 # Development
 
+## Weekly maintenance
+
+Run `npm run refresh` (or `node scripts/refresh-data.mjs`). It fetches current original URLs, including originals whose citations use archives, with three workers and a 20-second request timeout. To check a few sources, pass IDs: `node scripts/refresh-data.mjs mayor council burger`.
+
+Read `artifacts/data-refresh/latest.json`. It lists baseline responses, unchanged responses, content changes and failed retrievals, alongside the edition's campaign coverage gaps. HTML comparisons omit scripts, markup and whitespace; other files use byte hashes. Dated reports retain earlier results. Failed requests preserve the last successful observation. Everything stays in ignored artifacts; the command never edits evidence, changes dates in the dataset or publishes anything. Changes can be routine page changes; an unchanged page can still describe an outdated role. These are review signals, not factual verification.
+
+Once a week:
+
+1. Review changed or failed sources, starting with prominent current roles and active projects. Use a browser when a publisher blocks scripted retrieval. Keep supported historical evidence when a current page disappears.
+2. Check the official FEC committee filing indexes, Ohio report listings and Franklin County filings for new reports or amendments. Start with the eight unresolved candidate coverage gaps. Check again after major filing deadlines; a missing report is not zero fundraising. The source checker does not discover filings.
+3. Investigate one manageable question: campaign coverage first, then executed contracts/actual payments, ownership/lobbying, or media ownership. Use the same evidence standards across people and organizations. Add only what the checked material establishes; retain unresolved questions as leads.
+4. Record the result and the next question in an ignored `artifacts/data-refresh/notes.md`. Carry unresolved changes forward so later unchanged checks do not bury them. Prioritize corrections before expanding coverage. Once a month, use this pass for a broader enrichment batch if maintenance is caught up.
+
+For accepted factual updates, follow the existing edition/build/test process below. Keep claim review separate from source retrieval, preserve stable IDs and qualifications, and retain old editions. Publication remains a separate step. No additional service, database or review system is needed.
+
 ## Refreshing campaign ledgers
 
 Normal builds and tests use the committed static ledger files and need no credentials or network requests. `python scripts/build-campaign-ledgers.py` is an optional data-refresh step. It reads official candidate registers, cover pages, 2025–2026 contribution/expenditure exports and original FEC electronic filings from ignored `artifacts/campaign-ledger/`. The source URLs and hashes are recorded in the public finance index. Franklin County's reduced transcription is reviewable in `content/campaigns/county-ledgers-2026.json`; original scans remain outside tracked files.

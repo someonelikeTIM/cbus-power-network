@@ -7,6 +7,7 @@ const checks = [
   'check-donation-enrichment',
   'check-campaigns-2026',
   'check-campaign-ledgers',
+  'check-data-refresh',
   'check-exploration',
   'check-exploration-paths',
   'check-connection-distance',
