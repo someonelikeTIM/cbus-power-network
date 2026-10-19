@@ -1,6 +1,6 @@
 {
-  "asOf": "2026-10-15",
-  "basis": "Original FEC committee filing indexes, read October 16. Current financial versions selected by committee and reporting window; earlier versions retained in amendment-chain metadata.",
+  "asOf": "2026-10-19",
+  "basis": "Original FEC committee filing indexes read October 16, with a targeted October 19 supplement from official OpenFEC filing metadata and ten checked original electronic files. Two financial reports and eight 48-hour notices were added; earlier original-index records and amendment chains were retained. Current original index pages returned HTTP 403; one older committee API request was rate-limited. Ohio and county ledger inputs remain the October 15 baseline; this is not a comprehensive refresh of every jurisdiction.",
   "financialFilingIds": [
     2020004,
     1994422,
@@ -57,7 +57,9 @@
     1970510,
     1961942,
     2016915,
-    2016909
+    2016909,
+    2028279,
+    2028594
   ],
   "financialFilings": [
     {
@@ -796,6 +798,32 @@
       "amendmentChain": [
         2016909
       ]
+    },
+    {
+      "committeeId": "C00937300",
+      "file": 2028279,
+      "start": "2026-10-01",
+      "end": "2026-10-14",
+      "filedAt": "2026-10-16",
+      "form": "F3N",
+      "title": "PRE-GENERAL",
+      "url": "https://docquery.fec.gov/csv/279/2028279.csv",
+      "amendmentChain": [
+        2028279
+      ]
+    },
+    {
+      "committeeId": "C00938001",
+      "file": 2028594,
+      "start": "2026-04-01",
+      "end": "2026-06-30",
+      "filedAt": "2026-10-16",
+      "form": "F3N",
+      "title": "JUL QUARTERLY",
+      "url": "https://docquery.fec.gov/csv/594/2028594.csv",
+      "amendmentChain": [
+        2028594
+      ]
     }
   ],
   "supplementary": [
@@ -1268,7 +1296,112 @@
       "start": "2025-08-11",
       "end": "2025-09-30",
       "url": "https://docquery.fec.gov/cgi-bin/forms/C00916288/1921601/"
+    },
+    {
+      "committeeId": "C00507368",
+      "file": 2028495,
+      "filedAt": "2026-10-16",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/csv/495/2028495.csv",
+      "sha256": "c36e9b9bd14d9c19ab7d12ee3b30bff461d6222b968600188e729806ddccd0e5",
+      "bytes": 1786,
+      "form": "F6N",
+      "title": "48-hour contribution notice",
+      "checkedAt": "2026-10-19T13:11:56.678248+00:00"
+    },
+    {
+      "committeeId": "C00779603",
+      "file": 2029197,
+      "filedAt": "2026-10-17",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/csv/197/2029197.csv",
+      "sha256": "d2403df4fd231d8d8eaac2eb4af4fbf47f6940d7154fa9cac235055a1c30d67a",
+      "bytes": 1416,
+      "form": "F6N",
+      "title": "48-hour contribution notice",
+      "checkedAt": "2026-10-19T13:11:56.678264+00:00"
+    },
+    {
+      "committeeId": "C00896019",
+      "file": 2029856,
+      "filedAt": "2026-10-18",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/csv/856/2029856.csv",
+      "sha256": "42223afc2ac6dbd461d0eb3489a11a7bec4799bbb018fd1b13a2e7f3fb40b5f4",
+      "bytes": 398,
+      "form": "F6N",
+      "title": "48-hour contribution notice",
+      "checkedAt": "2026-10-19T13:11:56.678266+00:00"
+    },
+    {
+      "committeeId": "C00896019",
+      "file": 2029144,
+      "filedAt": "2026-10-17",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/csv/144/2029144.csv",
+      "sha256": "6a95d09c998ee071372eb162b6dff4c1c6aef60c7865b81c09cf7c82364e78f2",
+      "bytes": 2314,
+      "form": "F6N",
+      "title": "48-hour contribution notice",
+      "checkedAt": "2026-10-19T13:11:56.678268+00:00"
+    },
+    {
+      "committeeId": "C00896019",
+      "file": 2028667,
+      "filedAt": "2026-10-16",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/csv/667/2028667.csv",
+      "sha256": "73ac307a8abf69a89dfb2d2a479f08aa884369ca56ee513765845b7811459602",
+      "bytes": 6526,
+      "form": "F6N",
+      "title": "48-hour contribution notice",
+      "checkedAt": "2026-10-19T13:11:56.678269+00:00"
+    },
+    {
+      "committeeId": "C00913491",
+      "file": 2029779,
+      "filedAt": "2026-10-18",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/csv/779/2029779.csv",
+      "sha256": "15a49a803fe1347416f3f41585af6b595f392c42b918cbdad07b705f88f15caa",
+      "bytes": 928,
+      "form": "F6N",
+      "title": "48-hour contribution notice",
+      "checkedAt": "2026-10-19T13:11:56.678271+00:00"
+    },
+    {
+      "committeeId": "C00913491",
+      "file": 2028308,
+      "filedAt": "2026-10-16",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/csv/308/2028308.csv",
+      "sha256": "b36cd6a4e0f73ca76e0fedf4742d0fd17b7106c9074663faeb38d7efde0be6a0",
+      "bytes": 573,
+      "form": "F6N",
+      "title": "48-hour contribution notice",
+      "checkedAt": "2026-10-19T13:11:56.678272+00:00"
+    },
+    {
+      "committeeId": "C00916288",
+      "file": 2029677,
+      "filedAt": "2026-10-17",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/csv/677/2029677.csv",
+      "sha256": "58077e91fb89699f1f9cd0a49324b5ee9400decc489511cabab5f998590ca2b3",
+      "bytes": 11232,
+      "form": "F6N",
+      "title": "48-hour contribution notice",
+      "checkedAt": "2026-10-19T13:11:56.678273+00:00"
     }
   ],
-  "note": "Lobbyist-bundling disclosures and 48-hour contribution notices can describe amounts already included in the financial reports. These links are retained for context and are not additional receipts in the totals."
+  "note": "Lobbyist-bundling disclosures and 48-hour contribution notices can describe amounts already included in the financial reports. These links are retained for context and are not additional receipts in the totals.",
+  "freshnessNote": "Targeted federal additions checked October 19. State and county ledger inputs retain their October 15 baseline; unresolved filing gaps remain unknown."
 }

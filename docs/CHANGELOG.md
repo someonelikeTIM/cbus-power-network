@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-19 — Published campaign-finance edition
+
+Two checked original FEC financial reports extend the ledgers: Redpath's October 1–14 pre-general report, filed October 16, and Ronan's April 1–June 30 report, also filed October 16. Redpath reports $1,207.77 in contributions and $5,000 in borrowing, totaling $6,207.77 in receipts, with $6,070.11 in disbursements. Ronan reports no receipts, $1,000 in disbursements and negative beginning/end cash balances; those reported balances are preserved. Filing dates remain separate from activity periods.
+
+Eight new 48-hour contribution-notice links are supplementary disclosures, excluded from receipt totals. Earlier report IDs and amendment selections remain intact. This is a targeted federal update: Ohio's bulk endpoint served a maintenance page, the old federal committee's API was rate-limited, and the eight unresolved candidate coverage gaps remain unknown. County source-check dates remain October 15. The new snapshot date does not imply every source was rechecked substantively. Edition 2026-10-19 is published; independent editorial review remains pending.
+
 ## 2026-10-17 — Published enrichment edition
 
 Edition 2026-10-17 combines the Wexner–Epstein and Redflex batches below. It contains 390 entities, 566 relationships, 185 sources and 225 timeline events: thirteen entities, twenty-five relationships, ten sources and sixteen events added since the preceding published edition. Earlier public download editions remain available. Source-support checks are separate from independent human editorial review.

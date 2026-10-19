@@ -15,7 +15,7 @@ for item in inventory['financialFilings']:
     assert cover[0] in ['F3N','F3A','F3T'] and cover[1]==item['committeeId']
     date=lambda value:datetime.datetime.strptime(value,'%Y%m%d').strftime('%Y-%m-%d')
     assert date(cover[15])==item['start'] and date(cover[16])==item['end']
-    record={'file_number':item['file'],'committee_id':item['committeeId'],'committee_name':cover[2],'coverage_start_date':item['start'],'coverage_end_date':item['end'],'receipt_date':item['filedAt'],'csv_url':f"https://docquery.fec.gov/csv/{str(item['file'])[-3:]}/{item['file']}.csv",'report_year':int(item['end'][:4]),'document_description':item['title']+' '+item['end'][:4],'amendment_chain':[str(number) for number in item['amendmentChain']],'is_amended':False,'most_recent':True,'metadataBasis':'Original electronic F3 cover and original filing index'}
+    record={'file_number':item['file'],'committee_id':item['committeeId'],'committee_name':cover[2],'coverage_start_date':item['start'],'coverage_end_date':item['end'],'receipt_date':item['filedAt'],'csv_url':f"https://docquery.fec.gov/csv/{str(item['file'])[-3:]}/{item['file']}.csv",'report_year':int(item['end'][:4]),'document_description':item['title']+' '+item['end'][:4],'amendment_chain':[str(number) for number in item['amendmentChain']],'is_amended':False,'most_recent':True,'metadataBasis':'Original electronic F3 cover and reviewed filing inventory'}
     for field,position in fields.items():record[field]=cover[position] or '0'
     number=lambda key:decimal.Decimal(record[key])
     assert number('cash_on_hand_beginning_period')+number('total_receipts_period')-number('total_disbursements_period')==number('cash_on_hand_end_period')

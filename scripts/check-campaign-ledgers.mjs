@@ -46,11 +46,26 @@ for(const unit of catalog.units){
 assert.equal(catalog.reports.filter(r=>r.unitId==='C00916288'&&r.period.end<='2026-06-30').reduce((n,r)=>n+r.metrics.receipts,0),3856623410,'Brown current committee total');
 assert.equal(catalog.reports.filter(r=>r.unitId==='C00896019'&&r.period.end<='2026-06-30').reduce((n,r)=>n+r.metrics.receipts,0),1435062446,'Husted principal committee total');
 const originalIndex=JSON.parse(await readFile('content/campaigns/federal-disclosure-index-2026.json','utf8'));
+assert.equal(catalog.freshnessNote,originalIndex.freshnessNote,'The partial-refresh qualification must travel with the snapshot');
 assert.deepEqual(catalog.reports.filter(r=>r.id.startsWith('fec-')).map(r=>Number(r.reportKey)).sort((a,b)=>a-b),[...originalIndex.financialFilingIds].sort((a,b)=>a-b),'Original financial filing inventory incomplete');
 assert.equal(catalog.reports.find(r=>r.id==='fec-2027030').period.end,'2026-09-30','API processing lag must not omit original third-quarter reports');
 assert.equal(catalog.reports.filter(r=>r.unitId==='C00916288').reduce((n,r)=>n+r.metrics.receipts,0),6168681969);
 assert.equal(catalog.reports.filter(r=>r.unitId==='C00896019').reduce((n,r)=>n+r.metrics.receipts,0),1919936015);
-assert.equal(catalog.supplementaryDisclosures.length,47);
+assert.equal(catalog.supplementaryDisclosures.length,originalIndex.supplementary.length);
+const redpathNew=reports.get('fec-2028279'),ronanLate=reports.get('fec-2028594');
+assert.equal(redpathNew.metrics.contributions,120777);
+assert.equal(redpathNew.metrics.loans,500000,'Redpath borrowing is separate from contributions');
+assert.equal(redpathNew.metrics.receipts,620777);
+assert.equal(ronanLate.period.end,'2026-06-30','Late filing date must not become the activity period');
+assert.equal(ronanLate.filedAt,'2026-10-16');
+assert.equal(ronanLate.metrics.beginningCash,-885666,'Preserve the negative balance reported on the original cover');
+assert.equal(ronanLate.metrics.disbursements,100000);
+assert.equal(ronanLate.metrics.endingCash,-985666);
+for(const file of [2028495,2029197,2029856,2029144,2028667,2029779,2028308,2029677]) {
+  assert.ok(catalog.supplementaryDisclosures.some(item=>item.file===file));
+  assert.ok(!reports.has('fec-'+file),'New 48-hour notices are not extra financial reports');
+}
+assert.ok(catalog.sources.filter(source=>source.id.startsWith('finance-franklin-')).every(source=>source.checkedAt==='2026-10-15'),'A targeted federal update must not redate the county source checks');
 for(const disclosure of catalog.supplementaryDisclosures){assert.ok(/^https:\/\/docquery.fec.gov\//.test(disclosure.url));assert.ok(!reports.has('fec-'+disclosure.file),'Supplementary disclosures were counted as financial reports');}
 assert.ok(catalog.units.some(u=>u.id==='C00895276'),'Authorized nominee committee omitted');
 assert.ok(!catalog.units.some(u=>u.id==='C00264697'),'Former Brown committee is not the current campaign');

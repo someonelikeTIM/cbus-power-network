@@ -9,7 +9,7 @@ import codecs, collections, csv, datetime, decimal, gzip, hashlib, json, pathlib
 ROOT = pathlib.Path('artifacts/campaign-ledger')
 OUT = pathlib.Path('dist/finance/2026')
 OUT.mkdir(parents=True, exist_ok=True)
-ASOF = '2026-10-15'
+ASOF = json.loads(pathlib.Path('content/campaigns/federal-disclosure-index-2026.json').read_text(encoding='utf-8'))['asOf']
 COLUMNS = ['id','date','category','name','amountCents','memo','form','employer','occupation','reference','election','locator']
 D = decimal.Decimal
 def cents(value):
@@ -100,7 +100,7 @@ for (kind,year),downloadId in bulkIds.items():
 # Report-level loan schedules are absent from Ohio's bulk contribution files.
 # OTHER is cross-checked; loan rows are recorded from 31-C once, and balances
 # stay separate from new cash, so carried loans never become new donations.
-supplements=json.loads((ROOT/'ohio-supplements.json').read_text())
+supplements=json.loads((ROOT/'ohio-supplements.json').read_text(encoding='utf-8'))
 for entry in supplements:
     key,kind=entry['id'].split('-');rep=ohReports[key];path=ROOT/'supplements'/(entry['id']+'.csv')
     sid=source('finance-oh-'+entry['id'].lower(),path,entry['url'],'Ohio Secretary of State',rep['title']+' · '+kind)
@@ -123,12 +123,12 @@ for rep in ohReports.values():
 # Federal financial reports, including authorized nominee committees. Only the
 # latest non-superseded report in each amendment chain is included.
 candidateMap={'S6OH00163':'sherrod-brown','S6OH00304':'husted','S6OH00429':'william-redpath','S6OH00395':'greg-levy','S8OH00144':'stephen-faris','S6OH00437':'anthony-holliman','H6OH15138':'brennan-barrington','H2OH03125':'beatty','H2OH15228':'carey','H0OH03137':'cleophus-dulaney','H6OH15112':'don-leonard','H6OH01088':'samuel-ronan'}
-committees=json.loads((ROOT/'fec-committees.json').read_text())['results']+json.loads((ROOT/'fec-ronan-committees.json').read_text())['results']
+committees=json.loads((ROOT/'fec-committees.json').read_text(encoding='utf-8'))['results']+json.loads((ROOT/'fec-ronan-committees.json').read_text(encoding='utf-8'))['results']
 for r in committees:
     if r['designation'] not in ['A','P']:continue
     newunit(r['committee_id'],r['name'],[candidateMap[x] for x in r['candidate_ids'] if x in candidateMap],'Federal filings')
     units[r['committee_id']]['designation']=r['designation']
-fecReports=json.loads((ROOT/'fec-selected-reports.json').read_text())
+fecReports=json.loads((ROOT/'fec-selected-reports.json').read_text(encoding='utf-8'))
 receiptFields={'contributions':'total_contributions_period','transfers':'transfers_from_other_authorized_committee_period','loans':'total_loans_received_period','offsets':'offsets_to_operating_expenditures_period','otherReceipts':'other_receipts_period','receipts':'total_receipts_period','disbursements':'total_disbursements_period','refunds':'total_contribution_refunds_period','beginningCash':'cash_on_hand_beginning_period','endingCash':'cash_on_hand_end_period','unitemizedIndividuals':'individual_unitemized_contributions_period','debtsAndLoansOutstanding':'debts_owed_by_committee'}
 for r in fecReports:
     file=str(r['file_number']);path=ROOT/'fec'/(file+'.csv');sid=source('finance-fec-'+file,path,r['csv_url'],'Federal Election Commission',r['committee_name']+' · '+r['document_description'])
@@ -168,7 +168,7 @@ county=json.loads(pathlib.Path('content/campaigns/county-ledgers-2026.json').rea
 for candidate,name in [('michael-stinziano','Citizens for Stinziano'),('crawley','Friends of Erica Crawley')]:newunit('franklin-'+candidate,name,[candidate],'Franklin County filings')
 for index,entry in enumerate(county):
     sid='finance-franklin-'+entry['candidate']+'-'+entry['title'].lower().replace(' ','-')
-    sources[sid]={'id':sid,'url':entry['url'],'publisher':'Franklin County Board of Elections','title':entry['title']+' · '+entry['candidate'],'sha256':entry['sourceSha256'],'checkedAt':ASOF,'method':'Scanned original, text recognition and page-image checks; cash rows reconcile to the cover.'}
+    sources[sid]={'id':sid,'url':entry['url'],'publisher':'Franklin County Board of Elections','title':entry['title']+' · '+entry['candidate'],'sha256':entry['sourceSha256'],'checkedAt':entry['checkedAt'],'method':'Scanned original, text recognition and page-image checks; cash rows reconcile to the cover.'}
     rep=newreport('franklin-'+entry['candidate']+'-'+entry['title'].lower().replace(' ','-'),'franklin-'+entry['candidate'],entry['title'],sid,filed=entry['filedAt'])
     rep['year']=int(entry['title'][:4]);rep['metrics']=entry['metrics'];rep['reportKey']=rep['id'];rep['notes']=[entry['note'],'Accounting carry-over subtotals between forms are not additional transactions. Dates are retained as filed, including rows dated after the nominal reporting period. Blank summary fields remain blank.']
     if entry.get('amended'):rep['notes'].append('July 9 amendment replaces the original June 12 report; the original is not added to totals.')
@@ -205,7 +205,7 @@ for unitId,groups in nameGroups.items():
 roster=json.loads((ROOT/'roster.json').read_text(encoding='utf-8'))
 coverage=[{'candidateId':r['id'],'unitIds':[u['id'] for u in units.values() if r['id'] in u['candidateIds']],'status':'Filings indexed' if any(r['id'] in u['candidateIds'] and u['reportIds'] for u in units.values()) else 'Committee identified; no financial report in retrieved listing' if any(r['id'] in u['candidateIds'] for u in units.values()) else 'No matching current financial report in the checked federal, state or county listings; unresolved coverage, not zero fundraising'} for r in roster]
 disclosureIndex=json.loads(pathlib.Path('content/campaigns/federal-disclosure-index-2026.json').read_text(encoding='utf-8'))
-catalog={'schemaVersion':1,'asOf':ASOF,'activityStart':'2025-01-01','electionCycle':2026,'columns':COLUMNS,'units':list(units.values()),'reports':reports,'sources':list(sources.values()),'candidateCoverage':coverage,'supplementaryDisclosures':disclosureIndex['supplementary'],'filingInventoryBasis':disclosureIndex['basis'],'scope':'Available 2025–2026 candidate committee filings for the covered 2026 races. Committee ledgers are separate from outside spending and the curated graph. Shared tickets use one ledger. Reporting dates, blank fields and filing gaps remain visible.','complete':False,'gaps':['Six listed candidates do not yet have matched financial reports. Two identified federal committees have no financial report in the retrieved listing. Missing filings, blank summaries and money not itemized in a source are not treated as zero.','Outside-group support, independent expenditures and joint fundraising committees are separate from candidate receipts. Their selected records remain on the map; this is not an exhaustive outside-spending ledger.']}
+catalog={'schemaVersion':1,'asOf':ASOF,'freshnessNote':disclosureIndex.get('freshnessNote',''),'activityStart':'2025-01-01','electionCycle':2026,'columns':COLUMNS,'units':list(units.values()),'reports':reports,'sources':list(sources.values()),'candidateCoverage':coverage,'supplementaryDisclosures':disclosureIndex['supplementary'],'filingInventoryBasis':disclosureIndex['basis'],'scope':'Available 2025–2026 candidate committee filings for the covered 2026 races. Committee ledgers are separate from outside spending and the curated graph. Shared tickets use one ledger. Reporting dates, blank fields and filing gaps remain visible.','complete':False,'gaps':['Six listed candidates do not yet have matched financial reports. Two identified federal committees have no financial report in the retrieved listing. Missing filings, blank summaries and money not itemized in a source are not treated as zero.','Outside-group support, independent expenditures and joint fundraising committees are separate from candidate receipts. Their selected records remain on the map; this is not an exhaustive outside-spending ledger.']}
 dump(OUT/'index.json',catalog)
 pathlib.Path('dist/campaign-finance-index.js').write_bytes(('// Generated by scripts/build-campaign-ledgers.py. Transaction files load on demand.\nexport const campaignFinanceIndex='+json.dumps(catalog,ensure_ascii=False,separators=(',',':'))+';\n').encode('utf-8'))
 print(json.dumps({'units':len(units),'reports':len(reports),'rows':sum(x['rowCount'] for x in reports),'compressedBytes':sum(x['bytes'] for x in reports),'sources':len(sources)}))

@@ -1,26 +1,15 @@
 {
   "release": {
     "schemaVersion": "1.0.0",
-    "releaseId": "2026-10-17",
+    "releaseId": "2026-10-19",
     "status": "published",
-    "preparedOn": "2026-10-17",
-    "publishedAt": "2026-10-17T06:13:04Z",
-    "dataRevision": 15,
+    "preparedOn": "2026-10-19",
+    "publishedAt": "2026-10-19T18:37:42Z",
+    "dataRevision": 16,
     "codeLicense": "MIT",
     "dataLicense": "CC-BY-4.0",
-    "sourceCheckIds": [
-      "ep26-osu-review",
-      "ep26-osu-initial",
-      "ep26-osu-agreement",
-      "ep26-osu-giving",
-      "ep26-house-deposition",
-      "rf26-ordinance-2013",
-      "rf26-amendment-2013",
-      "rf26-waiver-2013",
-      "rf26-raphael-sentence",
-      "rf26-finley-sentence"
-    ]
+    "sourceCheckIds": []
   },
-  "inputFingerprint": "75cc13b351b3eb1e41755bc5a0156abbdaa421f3acba3412928e0dcfeadb9bc7",
-  "manifest": "downloads/2026-10-17/manifest.json"
+  "inputFingerprint": "c1ce4c6f800cc3bf17be5c54c3cf0488130202193229029af171f7d20111c8bc",
+  "manifest": "downloads/2026-10-19/manifest.json"
 }
