@@ -134,6 +134,8 @@ for r in fecReports:
     file=str(r['file_number']);path=ROOT/'fec'/(file+'.csv');sid=source('finance-fec-'+file,path,r['csv_url'],'Federal Election Commission',r['committee_name']+' · '+r['document_description'])
     rep=newreport('fec-'+file,r['committee_id'],r['document_description'],sid,r['coverage_start_date'][:10],r['coverage_end_date'][:10],r['receipt_date'])
     rep['reportKey']=file;rep['year']=r['report_year'];rep['amendmentChain']=[str(x) for x in r['amendment_chain']];rep['metrics']={k:cents(r.get(v)) for k,v in receiptFields.items()};rep['notes'].append('Memo rows explain transactions and are excluded from cash totals. Prior versions in the amendment chain are excluded. Itemized payee and donor names are reported identities, not independently resolved people.')
+    if r['document_description'].startswith('TERMINATION REPORT'):
+        rep['notes'].append('Termination is reported for this committee only; it does not establish that another committee or the candidate\'s campaign ended.')
     with path.open(encoding='utf-8-sig',newline='') as f:
         reader=csv.reader(f);header=next(reader);assert header[0]=='HDR' and header[2] in ['8.4','8.5']
         for index,x in enumerate(reader,start=2):

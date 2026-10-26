@@ -15,7 +15,7 @@ import { campaignSources,campaignRelease,applyCampaignUpdates,campaignCase } fro
 import { epsteinSources,epsteinRelease } from './epstein-enrichment.js';
 import { redflexSources,redflexRelease } from './redflex-enrichment.js';
 export const meta = {
-  title: 'CBUS Power', reviewed: '2026-10-19', version: 16,
+  title: 'CBUS Power', reviewed: '2026-10-26', version: 17,
   scope: 'Columbus and Ohio: money, control, public corruption, civic affiliations, and media ownership, governance, funding and information supply.',
   limitations: 'Selected records, not complete coverage. Evidence status, source date, and direction are attached to each case relationship. Assets, cash transfers, and penalties are identified separately.'
 };

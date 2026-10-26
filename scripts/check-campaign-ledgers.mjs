@@ -49,8 +49,16 @@ const originalIndex=JSON.parse(await readFile('content/campaigns/federal-disclos
 assert.equal(catalog.freshnessNote,originalIndex.freshnessNote,'The partial-refresh qualification must travel with the snapshot');
 assert.deepEqual(catalog.reports.filter(r=>r.id.startsWith('fec-')).map(r=>Number(r.reportKey)).sort((a,b)=>a-b),[...originalIndex.financialFilingIds].sort((a,b)=>a-b),'Original financial filing inventory incomplete');
 assert.equal(catalog.reports.find(r=>r.id==='fec-2027030').period.end,'2026-09-30','API processing lag must not omit original third-quarter reports');
-assert.equal(catalog.reports.filter(r=>r.unitId==='C00916288').reduce((n,r)=>n+r.metrics.receipts,0),6168681969);
-assert.equal(catalog.reports.filter(r=>r.unitId==='C00896019').reduce((n,r)=>n+r.metrics.receipts,0),1919936015);
+assert.equal(catalog.reports.filter(r=>r.unitId==='C00916288'&&r.period.end<='2026-09-30').reduce((n,r)=>n+r.metrics.receipts,0),6168681969);
+assert.equal(catalog.reports.filter(r=>r.unitId==='C00896019'&&r.period.end<='2026-09-30').reduce((n,r)=>n+r.metrics.receipts,0),1919936015);
+const brownPreGeneral=reports.get('fec-2039016'),hustedPreGeneral=reports.get('fec-2036208');
+assert.equal(brownPreGeneral.metrics.receipts,672238016);
+assert.equal(brownPreGeneral.metrics.disbursements,713102877);
+assert.equal(hustedPreGeneral.metrics.receipts,68602272);
+assert.equal(hustedPreGeneral.metrics.disbursements,533021943);
+assert.equal(reports.get('fec-2039939').unitId,'C00895276','Nominee-fund termination remains separate from the principal campaign');
+assert.equal(reports.get('fec-2039939').metrics.receipts,0);
+assert.ok(!reports.has('fec-2039214'),'Bundling disclosure is not another financial receipt report');
 assert.equal(catalog.supplementaryDisclosures.length,originalIndex.supplementary.length);
 const redpathNew=reports.get('fec-2028279'),ronanLate=reports.get('fec-2028594');
 assert.equal(redpathNew.metrics.contributions,120777);

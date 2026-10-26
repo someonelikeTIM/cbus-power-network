@@ -1,6 +1,6 @@
 {
-  "asOf": "2026-10-19",
-  "basis": "Original FEC committee filing indexes read October 16, with a targeted October 19 supplement from official OpenFEC filing metadata and ten checked original electronic files. Two financial reports and eight 48-hour notices were added; earlier original-index records and amendment chains were retained. Current original index pages returned HTTP 403; one older committee API request was rate-limited. Ohio and county ledger inputs remain the October 15 baseline; this is not a comprehensive refresh of every jurisdiction.",
+  "asOf": "2026-10-26",
+  "basis": "Original FEC index inventory and October 19 additions retained. Targeted October 26 refresh checked recent official OpenFEC filing metadata for eleven of twelve covered federal committees and checked nine new original financial files plus twenty-six supplementary files. Original committee index retrievals returned 403; Ronan API retrieval was rate-limited, so its earlier inventory was retained. Older pages were not exhaustively rechecked. Ohio bulk retrieval met a security challenge; newly listed county reports await transcription. State/county ledger inputs retain their October 15 baseline.",
   "financialFilingIds": [
     2020004,
     1994422,
@@ -59,7 +59,16 @@
     2016915,
     2016909,
     2028279,
-    2028594
+    2028594,
+    2034448,
+    2040048,
+    2037258,
+    2039939,
+    2039931,
+    2036208,
+    2038041,
+    2039016,
+    2039763
   ],
   "financialFilings": [
     {
@@ -824,6 +833,123 @@
       "amendmentChain": [
         2028594
       ]
+    },
+    {
+      "committeeId": "C00507368",
+      "file": 2034448,
+      "start": "2026-10-01",
+      "end": "2026-10-14",
+      "filedAt": "2026-10-21",
+      "form": "F3N",
+      "title": "PRE-GENERAL",
+      "url": "https://docquery.fec.gov/csv/448/2034448.csv",
+      "amendmentChain": [
+        2034448
+      ]
+    },
+    {
+      "committeeId": "C00688465",
+      "file": 2040048,
+      "start": "2026-10-01",
+      "end": "2026-10-14",
+      "filedAt": "2026-10-22",
+      "form": "F3N",
+      "title": "PRE-GENERAL",
+      "url": "https://docquery.fec.gov/csv/048/2040048.csv",
+      "amendmentChain": [
+        2040048
+      ]
+    },
+    {
+      "committeeId": "C00779603",
+      "file": 2037258,
+      "start": "2026-10-01",
+      "end": "2026-10-14",
+      "filedAt": "2026-10-22",
+      "form": "F3N",
+      "title": "PRE-GENERAL",
+      "url": "https://docquery.fec.gov/csv/258/2037258.csv",
+      "amendmentChain": [
+        2037258
+      ]
+    },
+    {
+      "committeeId": "C00895276",
+      "file": 2039939,
+      "start": "2026-10-15",
+      "end": "2026-10-22",
+      "filedAt": "2026-10-22",
+      "form": "F3T",
+      "title": "TERMINATION REPORT",
+      "url": "https://docquery.fec.gov/csv/939/2039939.csv",
+      "amendmentChain": [
+        2039939
+      ]
+    },
+    {
+      "committeeId": "C00895276",
+      "file": 2039931,
+      "start": "2026-10-01",
+      "end": "2026-10-14",
+      "filedAt": "2026-10-22",
+      "form": "F3N",
+      "title": "PRE-GENERAL",
+      "url": "https://docquery.fec.gov/csv/931/2039931.csv",
+      "amendmentChain": [
+        2039931
+      ]
+    },
+    {
+      "committeeId": "C00896019",
+      "file": 2036208,
+      "start": "2026-10-01",
+      "end": "2026-10-14",
+      "filedAt": "2026-10-22",
+      "form": "F3N",
+      "title": "PRE-GENERAL",
+      "url": "https://docquery.fec.gov/csv/208/2036208.csv",
+      "amendmentChain": [
+        2036208
+      ]
+    },
+    {
+      "committeeId": "C00913491",
+      "file": 2038041,
+      "start": "2026-10-01",
+      "end": "2026-10-14",
+      "filedAt": "2026-10-22",
+      "form": "F3N",
+      "title": "PRE-GENERAL",
+      "url": "https://docquery.fec.gov/csv/041/2038041.csv",
+      "amendmentChain": [
+        2038041
+      ]
+    },
+    {
+      "committeeId": "C00916288",
+      "file": 2039016,
+      "start": "2026-10-01",
+      "end": "2026-10-14",
+      "filedAt": "2026-10-22",
+      "form": "F3N",
+      "title": "PRE-GENERAL",
+      "url": "https://docquery.fec.gov/csv/016/2039016.csv",
+      "amendmentChain": [
+        2039016
+      ]
+    },
+    {
+      "committeeId": "C00918839",
+      "file": 2039763,
+      "start": "2026-10-01",
+      "end": "2026-10-14",
+      "filedAt": "2026-10-22",
+      "form": "F3N",
+      "title": "PRE-GENERAL",
+      "url": "https://docquery.fec.gov/csv/763/2039763.csv",
+      "amendmentChain": [
+        2039763
+      ]
     }
   ],
   "supplementary": [
@@ -1400,8 +1526,350 @@
       "form": "F6N",
       "title": "48-hour contribution notice",
       "checkedAt": "2026-10-19T13:11:56.678273+00:00"
+    },
+    {
+      "committeeId": "C00507368",
+      "file": 2041207,
+      "filedAt": "2026-10-24",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/csv/207/2041207.csv",
+      "sha256": "2c73db21a63d32cd4d14c77fa5e270996ba90fb112152130aa2e957141021147",
+      "bytes": 1023,
+      "checkedAt": "2026-10-26T13:08:21.824354+00:00",
+      "form": "F6N",
+      "title": "48-hour contribution notice"
+    },
+    {
+      "committeeId": "C00507368",
+      "file": 2034203,
+      "filedAt": "2026-10-21",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/csv/203/2034203.csv",
+      "sha256": "2052eb89fa6d2d45ba0eb879a4cdd1d96c3a774a3536bfa86d22b2e6a3b74bf9",
+      "bytes": 1375,
+      "checkedAt": "2026-10-26T13:08:22.225378+00:00",
+      "form": "F6N",
+      "title": "48-hour contribution notice"
+    },
+    {
+      "committeeId": "C00507368",
+      "file": 2031057,
+      "filedAt": "2026-10-19",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/csv/057/2031057.csv",
+      "sha256": "671d1100055c969255139eaf7ab5125643f8738efde0a69039b1db4d034067e1",
+      "bytes": 568,
+      "checkedAt": "2026-10-26T13:08:22.685474+00:00",
+      "form": "F6N",
+      "title": "48-hour contribution notice"
+    },
+    {
+      "committeeId": "C00779603",
+      "file": 2040712,
+      "filedAt": "2026-10-23",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/csv/712/2040712.csv",
+      "sha256": "a011c89e5a779cd3e61f2658ec4338e8ea9cb27fa4196c48abec96ad7de8a045",
+      "bytes": 3443,
+      "checkedAt": "2026-10-26T13:08:23.208279+00:00",
+      "form": "F6N",
+      "title": "48-hour contribution notice"
+    },
+    {
+      "committeeId": "C00779603",
+      "file": 2035279,
+      "filedAt": "2026-10-21",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/csv/279/2035279.csv",
+      "sha256": "d146473bf4bb7742778d49378c3c86136cfdd1bb26340e0c93853f147971ad51",
+      "bytes": 2673,
+      "checkedAt": "2026-10-26T13:08:23.737694+00:00",
+      "form": "F6N",
+      "title": "48-hour contribution notice"
+    },
+    {
+      "committeeId": "C00779603",
+      "file": 2030931,
+      "filedAt": "2026-10-19",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/csv/931/2030931.csv",
+      "sha256": "6c8d92e06743dc08730140e12409f5988e90b1277ae423ef241046b49b377ed1",
+      "bytes": 413,
+      "checkedAt": "2026-10-26T13:08:24.030489+00:00",
+      "form": "F6N",
+      "title": "48-hour contribution notice"
+    },
+    {
+      "committeeId": "C00896019",
+      "file": 2041588,
+      "filedAt": "2026-10-25",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/csv/588/2041588.csv",
+      "sha256": "28549e179be34f0dbc01887ec778ce8f1e756f52ebc0ac0b3203cd882a55ccc9",
+      "bytes": 7442,
+      "checkedAt": "2026-10-26T13:08:24.746607+00:00",
+      "form": "F6A",
+      "title": "Amended 48-hour contribution notice",
+      "note": "Amendment link retained as a disclosure; neither it nor its prior version is added to financial totals.",
+      "amendmentHeaderReferences": [
+        "FEC-2041039"
+      ]
+    },
+    {
+      "committeeId": "C00896019",
+      "file": 2041605,
+      "filedAt": "2026-10-25",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/csv/605/2041605.csv",
+      "sha256": "d8c1796d22de242b1384970d09fc2023d55853b9b231bf5c5718395bddb9636e",
+      "bytes": 898,
+      "checkedAt": "2026-10-26T13:08:24.954567+00:00",
+      "form": "F6N",
+      "title": "48-hour contribution notice"
+    },
+    {
+      "committeeId": "C00896019",
+      "file": 2041151,
+      "filedAt": "2026-10-24",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/csv/151/2041151.csv",
+      "sha256": "6e798faac733c6e0b65eb6719981316c519f1656a95f38c5926228131ff17dfe",
+      "bytes": 2874,
+      "checkedAt": "2026-10-26T13:08:25.184946+00:00",
+      "form": "F6N",
+      "title": "48-hour contribution notice"
+    },
+    {
+      "committeeId": "C00896019",
+      "file": 2041039,
+      "filedAt": "2026-10-23",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/csv/039/2041039.csv",
+      "sha256": "ed50757607c6b20b95d782095cdf8c870c91a44b2bf82e0cf398f55968fc2c92",
+      "bytes": 7260,
+      "checkedAt": "2026-10-26T13:08:25.501632+00:00",
+      "form": "F6N",
+      "title": "48-hour contribution notice"
+    },
+    {
+      "committeeId": "C00896019",
+      "file": 2039439,
+      "filedAt": "2026-10-22",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/csv/439/2039439.csv",
+      "sha256": "1d05b296a55d55c047988e952320a5081f144be3b4d31f6b3b9e220513421b1e",
+      "bytes": 11297,
+      "checkedAt": "2026-10-26T13:08:25.760615+00:00",
+      "form": "F6N",
+      "title": "48-hour contribution notice"
+    },
+    {
+      "committeeId": "C00896019",
+      "file": 2033954,
+      "filedAt": "2026-10-21",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/csv/954/2033954.csv",
+      "sha256": "218aa33c159825dc452958d7d1e01d095a3c79ebf06682356cf2ab1ef78baaa0",
+      "bytes": 3013,
+      "checkedAt": "2026-10-26T13:08:26.531338+00:00",
+      "form": "F6N",
+      "title": "48-hour contribution notice"
+    },
+    {
+      "committeeId": "C00896019",
+      "file": 2033319,
+      "filedAt": "2026-10-20",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/csv/319/2033319.csv",
+      "sha256": "3b7ebf97535db820fd36b697d722088193c3b2aa41a881729d733a5cc7644b78",
+      "bytes": 3961,
+      "checkedAt": "2026-10-26T13:08:26.819788+00:00",
+      "form": "F6N",
+      "title": "48-hour contribution notice"
+    },
+    {
+      "committeeId": "C00896019",
+      "file": 2030838,
+      "filedAt": "2026-10-19",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/csv/838/2030838.csv",
+      "sha256": "49db2b06617f8199a8efc5b7add1798bc9d150f9132de9ddfc93fc1789ef41ef",
+      "bytes": 2346,
+      "checkedAt": "2026-10-26T13:08:27.090555+00:00",
+      "form": "F6N",
+      "title": "48-hour contribution notice"
+    },
+    {
+      "committeeId": "C00913491",
+      "file": 2041809,
+      "filedAt": "2026-10-25",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/csv/809/2041809.csv",
+      "sha256": "8e2c9e166eaf9e9ad8af070ea441f84eda5624add5c8bdf4c41e9016991d6609",
+      "bytes": 697,
+      "checkedAt": "2026-10-26T13:08:27.285796+00:00",
+      "form": "F6N",
+      "title": "48-hour contribution notice"
+    },
+    {
+      "committeeId": "C00913491",
+      "file": 2040385,
+      "filedAt": "2026-10-23",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/csv/385/2040385.csv",
+      "sha256": "40c009848f234992c186198b7de868cc7fe619001613eecbbe1082449f5ca131",
+      "bytes": 721,
+      "checkedAt": "2026-10-26T13:08:27.541257+00:00",
+      "form": "F6N",
+      "title": "48-hour contribution notice"
+    },
+    {
+      "committeeId": "C00913491",
+      "file": 2040391,
+      "filedAt": "2026-10-23",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/csv/391/2040391.csv",
+      "sha256": "ebc825d17e1d8d8da746894f2822c12ea6d8cd357ea51963ea31a0aa5b4ca306",
+      "bytes": 544,
+      "checkedAt": "2026-10-26T13:08:27.818342+00:00",
+      "form": "F6N",
+      "title": "48-hour contribution notice"
+    },
+    {
+      "committeeId": "C00913491",
+      "file": 2034339,
+      "filedAt": "2026-10-21",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/csv/339/2034339.csv",
+      "sha256": "a27a30012f62950ab81cb9bfca171a372770885f5443457b92afb4476fba17de",
+      "bytes": 542,
+      "checkedAt": "2026-10-26T13:08:28.561064+00:00",
+      "form": "F6N",
+      "title": "48-hour contribution notice"
+    },
+    {
+      "committeeId": "C00913491",
+      "file": 2032549,
+      "filedAt": "2026-10-20",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/csv/549/2032549.csv",
+      "sha256": "f107aa62fababea25d50199c4e67ac5f91445d72f6fe1a30d40308ecdce867ac",
+      "bytes": 548,
+      "checkedAt": "2026-10-26T13:08:28.849377+00:00",
+      "form": "F6N",
+      "title": "48-hour contribution notice"
+    },
+    {
+      "committeeId": "C00913491",
+      "file": 2030513,
+      "filedAt": "2026-10-19",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/csv/513/2030513.csv",
+      "sha256": "cf616d2337cd3d30a2fbca9a0d7148b954c108b57913f449f767d2cfff889975",
+      "bytes": 534,
+      "checkedAt": "2026-10-26T13:08:29.191767+00:00",
+      "form": "F6N",
+      "title": "48-hour contribution notice"
+    },
+    {
+      "committeeId": "C00916288",
+      "file": 2041694,
+      "filedAt": "2026-10-25",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/csv/694/2041694.csv",
+      "sha256": "79a6cfa22c20739c86f3458ebf9e249ee9d59280d641b117ea2e603afe2e4e3f",
+      "bytes": 3487,
+      "checkedAt": "2026-10-26T13:08:29.384108+00:00",
+      "form": "F6N",
+      "title": "48-hour contribution notice"
+    },
+    {
+      "committeeId": "C00916288",
+      "file": 2040927,
+      "filedAt": "2026-10-23",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/csv/927/2040927.csv",
+      "sha256": "80c46e2996bb9f9fa71ad3bd94c59fb1d3dae23dd1ad4e2440d17e5abb86f43a",
+      "bytes": 20635,
+      "checkedAt": "2026-10-26T13:08:29.659147+00:00",
+      "form": "F6N",
+      "title": "48-hour contribution notice"
+    },
+    {
+      "committeeId": "C00916288",
+      "file": 2039214,
+      "filedAt": "2026-10-22",
+      "start": "2026-10-01",
+      "end": "2026-10-14",
+      "url": "https://docquery.fec.gov/csv/214/2039214.csv",
+      "sha256": "6e2ed02dfa06c84aa1b5a87fac5ca765dc051239ece67a11d1ceab2390ed4149",
+      "bytes": 244,
+      "checkedAt": "2026-10-26T13:08:32.595022+00:00",
+      "form": "F3LN",
+      "title": "Lobbyist bundling disclosure \u00b7 pre-general"
+    },
+    {
+      "committeeId": "C00916288",
+      "file": 2034984,
+      "filedAt": "2026-10-21",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/csv/984/2034984.csv",
+      "sha256": "f7c215a4256a64c2a1e4dfb57ee3340fc903148ed91e27dba2dbdd7c046705bb",
+      "bytes": 42229,
+      "checkedAt": "2026-10-26T13:08:32.908104+00:00",
+      "form": "F6N",
+      "title": "48-hour contribution notice"
+    },
+    {
+      "committeeId": "C00916288",
+      "file": 2031215,
+      "filedAt": "2026-10-19",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/csv/215/2031215.csv",
+      "sha256": "65af32866619de9dfb071c01b30bd1bbe8392ce80643abadff8ed9f99ceecba8",
+      "bytes": 14728,
+      "checkedAt": "2026-10-26T13:08:33.193741+00:00",
+      "form": "F6N",
+      "title": "48-hour contribution notice"
+    },
+    {
+      "committeeId": "C00937300",
+      "file": 2036918,
+      "filedAt": "2026-10-22",
+      "start": null,
+      "end": null,
+      "url": "https://docquery.fec.gov/csv/918/2036918.csv",
+      "sha256": "1446e78079ddeef6a8396daee874013c36b29d9bf8a75c4843e8234ad0a2de48",
+      "bytes": 423,
+      "checkedAt": "2026-10-26T13:08:33.714651+00:00",
+      "form": "F6N",
+      "title": "48-hour contribution notice"
     }
   ],
   "note": "Lobbyist-bundling disclosures and 48-hour contribution notices can describe amounts already included in the financial reports. These links are retained for context and are not additional receipts in the totals.",
-  "freshnessNote": "Targeted federal additions checked October 19. State and county ledger inputs retain their October 15 baseline; unresolved filing gaps remain unknown."
+  "freshnessNote": "Federal additions checked October 26 for eleven covered committees. Ronan retains its earlier inventory; state and county ledger inputs retain their October 15 baseline. New county filings await transcription, and unresolved filing gaps remain unknown."
 }

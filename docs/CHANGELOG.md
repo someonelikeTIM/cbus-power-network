@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-10-26 — Published weekly federal filing refresh
+
+Nine checked original FEC financial reports extend the ledger: eight pre-general reports for October 1–14 and an October 15–22 termination report for Husted’s authorized nominee fund. The termination belongs to that fund and does not establish the end of his principal campaign. The ledger now contains 171 reports and 1,913,651 transaction, memo and balance rows across the same 29 committees. Prior transaction payloads, identifiers and source-check dates are retained. Termination reports explicitly limit that status to the named committee.
+
+Twenty-five contribution notices, including one amendment, and one lobbyist-bundling disclosure bring supplementary links to 81. They remain excluded from financial receipt totals. Reporting periods, filing dates, cash balances, borrowing and transfers retain separate meanings; committee totals are not summed across candidates.
+
+This is a targeted federal refresh. Ronan’s API listing was rate-limited and its earlier inventory was retained. Ohio bulk retrieval met a security challenge. New county filings were observed but await transcription, so state/county ledger inputs retain their October 15 baseline. Eight candidate coverage gaps remain unknown. Source checking is separate from independent editorial review. Edition 2026-10-26 is published; independent editorial review remains pending.
+
 ## 2026-10-19 — Published campaign-finance edition
 
 Two checked original FEC financial reports extend the ledgers: Redpath's October 1–14 pre-general report, filed October 16, and Ronan's April 1–June 30 report, also filed October 16. Redpath reports $1,207.77 in contributions and $5,000 in borrowing, totaling $6,207.77 in receipts, with $6,070.11 in disbursements. Ronan reports no receipts, $1,000 in disbursements and negative beginning/end cash balances; those reported balances are preserved. Filing dates remain separate from activity periods.
