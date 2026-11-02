@@ -73,7 +73,15 @@ for(const file of [2028495,2029197,2029856,2029144,2028667,2029779,2028308,20296
   assert.ok(catalog.supplementaryDisclosures.some(item=>item.file===file));
   assert.ok(!reports.has('fec-'+file),'New 48-hour notices are not extra financial reports');
 }
-assert.ok(catalog.sources.filter(source=>source.id.startsWith('finance-franklin-')).every(source=>source.checkedAt==='2026-10-15'),'A targeted federal update must not redate the county source checks');
+const stinzianoCounty=reports.get('franklin-michael-stinziano-2026-pre-general');
+assert.equal(stinzianoCounty.filedAt,'2026-10-22','Filing date remains separate from the November source check');
+assert.equal(stinzianoCounty.rowCount,59);
+assert.deepEqual(stinzianoCounty.metrics,{beginningCash:1902733,contributions:870000,otherReceipts:8000,disbursements:1366080,endingCash:1414653,inKind:9800},'County cash and in-kind categories retain their distinct cover amounts');
+assert.equal(sources.get(stinzianoCounty.sourceId).checkedAt,'2026-11-02');
+assert.equal(sources.get(stinzianoCounty.sourceId).sha256,'269560f683f22df27ae0565e71c990dfa1cfc31d3f0e9d8891448fc6c7280ca1');
+const priorCountySources=catalog.sources.filter(source=>source.id.startsWith('finance-franklin-')&&source.id!==stinzianoCounty.sourceId);
+assert.equal(priorCountySources.length,8);
+assert.ok(priorCountySources.every(source=>source.checkedAt==='2026-10-15'),'A county addition must not redate earlier source checks');
 for(const disclosure of catalog.supplementaryDisclosures){assert.ok(/^https:\/\/docquery.fec.gov\//.test(disclosure.url));assert.ok(!reports.has('fec-'+disclosure.file),'Supplementary disclosures were counted as financial reports');}
 assert.ok(catalog.units.some(u=>u.id==='C00895276'),'Authorized nominee committee omitted');
 assert.ok(!catalog.units.some(u=>u.id==='C00264697'),'Former Brown committee is not the current campaign');

@@ -4467,5 +4467,466 @@
     ],
     "note": "Scanned original read with text recognition and page-image checks; all cash rows reconcile to the cover. Reported spelling and transaction dates are retained. Independent editorial review is pending.",
     "checkedAt": "2026-10-15"
+  },
+  {
+    "candidate": "michael-stinziano",
+    "title": "2026 Pre-General",
+    "url": "https://campaignfinance.franklincountyohio.gov//TED/CampaignDocs/CampaignFinanceFiling//2026/Oct/DEBORAH_A._CURRY-2026-10-22-16-31-39.pdf",
+    "filedAt": "2026-10-22",
+    "sourceSha256": "269560f683f22df27ae0565e71c990dfa1cfc31d3f0e9d8891448fc6c7280ca1",
+    "metrics": {
+      "beginningCash": 1902733,
+      "contributions": 870000,
+      "otherReceipts": 8000,
+      "disbursements": 1366080,
+      "endingCash": 1414653,
+      "inKind": 9800
+    },
+    "rows": [
+      {
+        "page": 2,
+        "date": "6/21/2026",
+        "name": "Sarah Bethel",
+        "amountCents": 2500,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "7/9/2026",
+        "name": "G Thomas Worley",
+        "amountCents": 50000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "7/21/2026",
+        "name": "Sarah Bethel",
+        "amountCents": 2500,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "7/27/2026",
+        "name": "Robert Stevenson",
+        "amountCents": 5000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "7/27/2026",
+        "name": "James Bishop",
+        "amountCents": 5000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "7/30/2026",
+        "name": "Michael Curtin",
+        "amountCents": 10000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "8/3/2026",
+        "name": "Orlando Alonzo",
+        "amountCents": 25000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "8/3/2026",
+        "name": "Jeffrey Rich Rich & Gillis Law Group, LLC",
+        "amountCents": 100000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "8/5/2026",
+        "name": "FOP Political Education Fund PCE",
+        "amountCents": 100000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "8/21/2026",
+        "name": "Sarah Bethel",
+        "amountCents": 2500,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "8/25/2026",
+        "name": "Karen Kostelac",
+        "amountCents": 10000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "8/25/2026",
+        "name": "Erik Greathouse",
+        "amountCents": 10000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "8/25/2026",
+        "name": "Joseph Erb",
+        "amountCents": 25000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "8/25/2026",
+        "name": "Laura Comek",
+        "amountCents": 50000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "8/26/2026",
+        "name": "Robert Cody",
+        "amountCents": 10000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "8/27/2026",
+        "name": "Lucy Wolfe",
+        "amountCents": 10000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "8/31/2026",
+        "name": "Pamela Conrad",
+        "amountCents": 25000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "8/31/2026",
+        "name": "Phyllis Elmo",
+        "amountCents": 10000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "8/31/2026",
+        "name": "Timothy Adams",
+        "amountCents": 10000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "8/31/2026",
+        "name": "Peter Deangelo",
+        "amountCents": 10000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "8/31/2026",
+        "name": "Lisa Stinziano",
+        "amountCents": 20000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "8/31/2026",
+        "name": "Lori Chrisman",
+        "amountCents": 50000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "8/31/2026",
+        "name": "Ira Sully",
+        "amountCents": 10000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "8/31/2026",
+        "name": "Jack Decker",
+        "amountCents": 5000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "8/31/2026",
+        "name": "Woolpart, Inc PAC",
+        "amountCents": 25000,
+        "form": "31A",
+        "reference": "PAC C00479899; spelling retained as filed"
+      },
+      {
+        "page": 2,
+        "date": "9/1/2026",
+        "name": "Joseph Petrelli",
+        "amountCents": 10000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "9/4/2026",
+        "name": "Tim Maglione",
+        "amountCents": 5000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "9/8/2026",
+        "name": "Maryellen O'Shaughnessy",
+        "amountCents": 25000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "9/9/2026",
+        "name": "Kegler Brown Hill & Ritter PAC",
+        "amountCents": 25000,
+        "form": "31A",
+        "reference": "PAC CP648"
+      },
+      {
+        "page": 2,
+        "date": "9/11/2026",
+        "name": "Columbus Central Ohio Building and Construction Trades Council PCE",
+        "amountCents": 10000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "9/21/2026",
+        "name": "Sarah Bethel",
+        "amountCents": 2500,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "9/28/2026",
+        "name": "Marian Lupo",
+        "amountCents": 10000,
+        "form": "31A"
+      },
+      {
+        "page": 2,
+        "date": "10/2/2026",
+        "name": "Vorys Sater Seymour and Pease LLP PAC",
+        "amountCents": 150000,
+        "form": "31A",
+        "reference": "PAC OH109"
+      },
+      {
+        "page": 2,
+        "date": "10/5/2026",
+        "name": "Nicholas Kontras",
+        "amountCents": 50000,
+        "form": "31A"
+      },
+      {
+        "page": 3,
+        "date": "8/11/2026",
+        "name": "Franklin County Board of Elections",
+        "amountCents": 8000,
+        "form": "31A2",
+        "reference": "Type VO as filed"
+      },
+      {
+        "page": 4,
+        "date": "6/10/2026",
+        "name": "RT Advisors",
+        "amountCents": 45518,
+        "form": "31B",
+        "reference": "Consulting"
+      },
+      {
+        "page": 4,
+        "date": "6/10/2026",
+        "name": "Fifth Third",
+        "amountCents": 2500,
+        "form": "31B",
+        "reference": "Bank Fee"
+      },
+      {
+        "page": 4,
+        "date": "6/16/2026",
+        "name": "RT Advisors",
+        "amountCents": 222173,
+        "form": "31B",
+        "reference": "Consulting"
+      },
+      {
+        "page": 4,
+        "date": "6/17/2026",
+        "name": "McTigue & Colombo LLC",
+        "amountCents": 50000,
+        "form": "31B",
+        "reference": "Legal Services"
+      },
+      {
+        "page": 4,
+        "date": "7/7/2026",
+        "name": "RT Advisors",
+        "amountCents": 25559,
+        "form": "31B",
+        "reference": "Consulting"
+      },
+      {
+        "page": 4,
+        "date": "7/7/2026",
+        "name": "RT Advisors",
+        "amountCents": 27500,
+        "form": "31B",
+        "reference": "Consulting"
+      },
+      {
+        "page": 4,
+        "date": "7/7/2026",
+        "name": "RT Advisors",
+        "amountCents": 67475,
+        "form": "31B",
+        "reference": "Consulting"
+      },
+      {
+        "page": 4,
+        "date": "7/10/2026",
+        "name": "Fifth Third",
+        "amountCents": 2500,
+        "form": "31B",
+        "reference": "Bank Fee"
+      },
+      {
+        "page": 4,
+        "date": "7/16/2026",
+        "name": "Franklin County Democratic Party",
+        "amountCents": 75000,
+        "form": "31B",
+        "reference": "Contribution"
+      },
+      {
+        "page": 4,
+        "date": "7/15/2026",
+        "name": "Bill DeMora",
+        "amountCents": 45000,
+        "form": "31B",
+        "reference": "Event Attendence; item 2111"
+      },
+      {
+        "page": 4,
+        "date": "7/16/2026",
+        "name": "McTigue & Colombo LLC",
+        "amountCents": 50000,
+        "form": "31B",
+        "reference": "Legal Services"
+      },
+      {
+        "page": 4,
+        "date": "8/5/2026",
+        "name": "RT Advisors",
+        "amountCents": 217475,
+        "form": "31B",
+        "reference": "Consulting"
+      },
+      {
+        "page": 4,
+        "date": "8/14/2026",
+        "name": "Fifth Third",
+        "amountCents": 2500,
+        "form": "31B",
+        "reference": "Bank Fee"
+      },
+      {
+        "page": 4,
+        "date": "8/17/2026",
+        "name": "McTigue & Colombo LLC",
+        "amountCents": 50000,
+        "form": "31B",
+        "reference": "Legal Services"
+      },
+      {
+        "page": 4,
+        "date": "8/21/2026",
+        "name": "The Berwick",
+        "amountCents": 134700,
+        "form": "31B",
+        "reference": "Event Food and Drink"
+      },
+      {
+        "page": 4,
+        "date": "9/11/2026",
+        "name": "Fifth Third",
+        "amountCents": 3800,
+        "form": "31B",
+        "reference": "Bank Fee"
+      },
+      {
+        "page": 4,
+        "date": "9/17/2026",
+        "name": "Keep Keith Auditor",
+        "amountCents": 25000,
+        "form": "31B",
+        "reference": "Contribution; item 2112"
+      },
+      {
+        "page": 4,
+        "date": "9/17/2026",
+        "name": "Franklin County Board of Elections",
+        "amountCents": 8000,
+        "form": "31B",
+        "reference": "Filing Fee; item 2113"
+      },
+      {
+        "page": 4,
+        "date": "9/22/2026",
+        "name": "McTigue & Colombo LLC",
+        "amountCents": 50000,
+        "form": "31B",
+        "reference": "Legal Services"
+      },
+      {
+        "page": 4,
+        "date": "9/25/2026",
+        "name": "Franklin County Democratic Party",
+        "amountCents": 250000,
+        "form": "31B",
+        "reference": "Contribution"
+      },
+      {
+        "page": 4,
+        "date": "10/14/2026",
+        "name": "Fifth Third",
+        "amountCents": 2500,
+        "form": "31B",
+        "reference": "Bank Fee"
+      },
+      {
+        "page": 4,
+        "date": "10/14/2026",
+        "name": "ActBlue",
+        "amountCents": 3452,
+        "form": "31B",
+        "reference": "Merchant Fees"
+      },
+      {
+        "page": 4,
+        "date": "10/14/2026",
+        "name": "Stripe",
+        "amountCents": 5428,
+        "form": "31B",
+        "reference": "Merchant Fees"
+      },
+      {
+        "page": 5,
+        "date": "8/25/2026",
+        "name": "William Demora",
+        "amountCents": 9800,
+        "form": "31J1",
+        "reference": "Food and Drink; employer/occupation as filed: Strategies Unlimited, Consultant"
+      }
+    ],
+    "note": "Reduced transcription of the five-page original, checked against every page image. The cover is marked pre-general and not amended, received October 22. The scan includes 34 contribution rows, one other-income row, 23 expenditure rows and one in-kind row. Printed schedule totals and the cash balance reconcile to the cover. The $98 in-kind receipt stays separate from cash; the $80 other-income receipt is not a contribution. Reported names retain separate individual and entity text where both appear, without resolving their identities.",
+    "checkedAt": "2026-11-02",
+    "method": "Scanned original; every page image checked and manually transcribed; category totals and cash balance reconcile to the cover."
   }
 ]

@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-11-02 — Weekly county filing addition
+
+Citizens for Stinziano’s 2026 pre-general report, filed October 22, adds 59 transcribed rows: 34 contributions totaling $8,700, one $80 other-income receipt, 23 expenditures totaling $13,660.80 and one $98 in-kind contribution. Each original page image was checked, schedule totals reconcile, and the cash balance is $14,146.53. In-kind support stays separate from cash and other income stays separate from contributions. Names are reported identities, without independent identity resolution; postal/contact details are omitted.
+
+The ledger now contains 172 reports and 1,913,710 transaction, memo and balance rows across the same 29 committees, plus the existing 81 supplementary disclosures. All earlier report payloads, stable IDs, source-check dates and editions are retained. The new source records November 2 page-image transcription rather than human editorial approval.
+
+This is a county-only addition. Other county/state ledger inputs retain their October 15 baseline; Crawley’s pre-general report awaits transcription. The targeted October 26 federal inventory and Ronan’s earlier inventory are retained. Ohio bulk retrieval still meets a security challenge. Eight candidate coverage gaps remain unknown. Edition 2026-11-02 is published; independent editorial review remains pending.
+
 ## 2026-10-26 — Published weekly federal filing refresh
 
 Nine checked original FEC financial reports extend the ledger: eight pre-general reports for October 1–14 and an October 15–22 termination report for Husted’s authorized nominee fund. The termination belongs to that fund and does not establish the end of his principal campaign. The ledger now contains 171 reports and 1,913,651 transaction, memo and balance rows across the same 29 committees. Prior transaction payloads, identifiers and source-check dates are retained. Termination reports explicitly limit that status to the named committee.

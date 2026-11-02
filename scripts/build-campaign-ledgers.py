@@ -36,6 +36,11 @@ def readcsv(path):
     with path.open(encoding='utf-8-sig',errors='campaign_legacy',newline='') as f:yield from csv.DictReader(f)
 def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 def dump(path,value):path.write_bytes((json.dumps(value,ensure_ascii=False,separators=(',',':'))+'\n').encode('utf-8'))
+def compress(data):
+    # Python 3.12 delegates the gzip OS byte to zlib. Keep published bytes
+    # stable across Windows and other Python/platform combinations.
+    encoded=gzip.compress(data,compresslevel=9,mtime=0)
+    return encoded[:9]+b'\xff'+encoded[10:]
 sources={};units={};reports=[]
 def source(id,path,url,publisher,title):
     sources[id]={'id':id,'url':url,'publisher':publisher,'title':title,'sha256':sha(path),'checkedAt':datetime.datetime.fromtimestamp(path.stat().st_mtime,datetime.timezone.utc).isoformat(),'bytes':path.stat().st_size}
@@ -170,7 +175,7 @@ county=json.loads(pathlib.Path('content/campaigns/county-ledgers-2026.json').rea
 for candidate,name in [('michael-stinziano','Citizens for Stinziano'),('crawley','Friends of Erica Crawley')]:newunit('franklin-'+candidate,name,[candidate],'Franklin County filings')
 for index,entry in enumerate(county):
     sid='finance-franklin-'+entry['candidate']+'-'+entry['title'].lower().replace(' ','-')
-    sources[sid]={'id':sid,'url':entry['url'],'publisher':'Franklin County Board of Elections','title':entry['title']+' · '+entry['candidate'],'sha256':entry['sourceSha256'],'checkedAt':entry['checkedAt'],'method':'Scanned original, text recognition and page-image checks; cash rows reconcile to the cover.'}
+    sources[sid]={'id':sid,'url':entry['url'],'publisher':'Franklin County Board of Elections','title':entry['title']+' · '+entry['candidate'],'sha256':entry['sourceSha256'],'checkedAt':entry['checkedAt'],'method':entry.get('method','Scanned original, text recognition and page-image checks; cash rows reconcile to the cover.')}
     rep=newreport('franklin-'+entry['candidate']+'-'+entry['title'].lower().replace(' ','-'),'franklin-'+entry['candidate'],entry['title'],sid,filed=entry['filedAt'])
     rep['year']=int(entry['title'][:4]);rep['metrics']=entry['metrics'];rep['reportKey']=rep['id'];rep['notes']=[entry['note'],'Accounting carry-over subtotals between forms are not additional transactions. Dates are retained as filed, including rows dated after the nominal reporting period. Blank summary fields remain blank.']
     if entry.get('amended'):rep['notes'].append('July 9 amendment replaces the original June 12 report; the original is not added to totals.')
@@ -187,7 +192,7 @@ def finish_report(rep):
     rows=rep.pop('_rows');rep.pop('_ids');rep['rowCount']=len(rows);rep['memoRows']=sum(x[5] for x in rows)
     payload={'schemaVersion':1,'reportId':rep['id'],'sourceId':rep['sourceId'],'columns':COLUMNS,'rows':rows}
     data=json.dumps(payload,ensure_ascii=False,separators=(',',':')).encode('utf-8')
-    name=rep['id']+'.json.gz';encoded=gzip.compress(data,mtime=0);(OUT/name).write_bytes(encoded)
+    name=rep['id']+'.json.gz';encoded=compress(data);(OUT/name).write_bytes(encoded)
     rep['path']=name;rep['sha256']=hashlib.sha256(encoded).hexdigest();rep['bytes']=len(encoded)
     rep['datesInRows']={'start':min((x[1] for x in rows if x[1]),default=None),'end':max((x[1] for x in rows if x[1]),default=None)}
 nameGroups=collections.defaultdict(dict)
@@ -201,7 +206,7 @@ for rep in reports:
     finish_report(rep)
 for unitId,groups in nameGroups.items():
     payload={'columns':['name','category','reportId','amountCents','transactionCount'],'rows':list(groups.values())}
-    encoded=gzip.compress(json.dumps(payload,ensure_ascii=False,separators=(',',':')).encode('utf-8'),mtime=0)
+    encoded=compress(json.dumps(payload,ensure_ascii=False,separators=(',',':')).encode('utf-8'))
     name='names-'+unitId+'.json.gz';(OUT/name).write_bytes(encoded)
     units[unitId]['nameGroups']={'path':name,'sha256':hashlib.sha256(encoded).hexdigest(),'bytes':len(encoded),'rows':len(groups),'basis':'Groups of identical reported names; not resolved individual identities. Memo and balance rows excluded.'}
 roster=json.loads((ROOT/'roster.json').read_text(encoding='utf-8'))

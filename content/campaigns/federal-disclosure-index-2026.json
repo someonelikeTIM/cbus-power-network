@@ -1,6 +1,6 @@
 {
-  "asOf": "2026-10-26",
-  "basis": "Original FEC index inventory and October 19 additions retained. Targeted October 26 refresh checked recent official OpenFEC filing metadata for eleven of twelve covered federal committees and checked nine new original financial files plus twenty-six supplementary files. Original committee index retrievals returned 403; Ronan API retrieval was rate-limited, so its earlier inventory was retained. Older pages were not exhaustively rechecked. Ohio bulk retrieval met a security challenge; newly listed county reports await transcription. State/county ledger inputs retain their October 15 baseline.",
+  "asOf": "2026-11-02",
+  "basis": "Original FEC index inventory and October 19 additions retained. Targeted October 26 refresh checked recent official OpenFEC filing metadata for eleven of twelve covered federal committees and checked nine new original financial files plus twenty-six supplementary files. Original committee index retrievals returned 403; Ronan API retrieval was rate-limited, so its earlier inventory was retained. Older pages were not exhaustively rechecked. Ohio bulk retrieval met a security challenge; newly listed county reports await transcription. State/county ledger inputs retain their October 15 baseline. November 2 county addition: Citizens for Stinziano 2026 pre-general original scan, filed October 22, transcribed from all five page images and reconciled to the cover. All earlier federal inventory entries and state/county inputs remain unchanged. This is not a comprehensive November 2 filing refresh.",
   "financialFilingIds": [
     2020004,
     1994422,
@@ -1871,5 +1871,5 @@
     }
   ],
   "note": "Lobbyist-bundling disclosures and 48-hour contribution notices can describe amounts already included in the financial reports. These links are retained for context and are not additional receipts in the totals.",
-  "freshnessNote": "Federal additions checked October 26 for eleven covered committees. Ronan retains its earlier inventory; state and county ledger inputs retain their October 15 baseline. New county filings await transcription, and unresolved filing gaps remain unknown."
+  "freshnessNote": "Stinziano’s pre-general county report checked November 2. Other county and state ledger inputs retain their October 15 baseline; Crawley’s new county report awaits transcription. Federal additions retain the October 26 targeted inventory and Ronan’s earlier inventory. Unresolved filing gaps remain unknown."
 }
