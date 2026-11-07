@@ -8,6 +8,7 @@ const checks = [
   'check-epstein-enrichment',
   'check-redflex-enrichment',
   'check-campaigns-2026',
+  'check-election-results',
   'check-campaign-ledgers',
   'check-data-refresh',
   'check-exploration',

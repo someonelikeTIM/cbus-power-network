@@ -2194,5 +2194,55 @@ export const sourceLiveEvidence = {
     "contentCheckMethod": "Official release read through web reader",
     "contentCheckNote": "Direct original request returned an access-challenge page, which is not treated as evidence. The official release content was checked through the web reader; original document byte hash is unavailable.",
     "observedTextSha256": "ffc642f532f221a6ee4fb5043950676612ab35204abde7f1250a1d813557b8ae"
+  },
+  "er26-ohio-results": {
+    "originalUrl": "https://liveresults.ohiosos.gov/Api/v1/download?filename=VSSC1622XmlFileBlob",
+    "finalUrl": "https://liveresults.ohiosos.gov/Api/v1/download?filename=VSSC1622XmlFileBlob",
+    "contentVerified": true,
+    "checkedAt": "2026-11-07T21:35:47.803506+00:00",
+    "sha256": "d1ba1c4eb9a3cf0f1f47b48df804ad3d35401d45c118eda036883846a8bb3833",
+    "contentCheckMethod": "Official XML parsed; each selected jurisdiction total reconciled against distinct county counts. Candidate identities, write-in flags and report status inspected.",
+    "contentChecks": [
+      "2026-11-03",
+      "UnofficialPartial",
+      "2404178",
+      "2301042",
+      "149287"
+    ],
+    "missingChecks": [],
+    "contentCheckNote": "Automated source check; independent human editorial review is not claimed. Source snapshot dates remain separate from the check date."
+  },
+  "er26-franklin-results": {
+    "originalUrl": "https://vote.franklincountyohio.gov/getmedia/7b784f15-62ce-4f9d-93ba-bed82b23e779/Franklin-County-Only-Group-Detail",
+    "finalUrl": "https://vote.franklincountyohio.gov/getmedia/7b784f15-62ce-4f9d-93ba-bed82b23e779/Franklin-County-Only-Group-Detail",
+    "contentVerified": true,
+    "checkedAt": "2026-11-07T21:35:47.803506+00:00",
+    "sha256": "b3f74e41eb7bba4ad98f68ac78e4c5088a68c723fe84275e991038eb8ed9b6f6",
+    "contentCheckMethod": "Original PDF retrieved; page 8 rendered and visually checked for candidate totals, election date, county scope and unofficial status.",
+    "contentChecks": [
+      "UNOFFICIAL RESULTS",
+      "November 3, 2026",
+      "338,919",
+      "88,274",
+      "367,794",
+      "889 of 889"
+    ],
+    "missingChecks": [],
+    "contentCheckNote": "Automated source check; independent human editorial review is not claimed. Source snapshot dates remain separate from the check date."
+  },
+  "er26-results-notice": {
+    "originalUrl": "https://liveresults.ohiosos.gov/",
+    "finalUrl": "https://liveresults.ohiosos.gov/",
+    "contentVerified": true,
+    "checkedAt": "2026-11-07T21:35:47.803506+00:00",
+    "sha256": "03f7fb342a67ad373cea01e53e9551341643cc29f414ac97fac7d953aa3c5d20",
+    "contentCheckMethod": "Original publisher notice read; unofficial status and outstanding-ballot qualifications checked separately from candidate totals.",
+    "contentChecks": [
+      "Results are unofficial until",
+      "Secretary of State certifies",
+      "provisional ballots"
+    ],
+    "missingChecks": [],
+    "contentCheckNote": "Automated source check; independent human editorial review is not claimed. Source snapshot dates remain separate from the check date."
   }
 };

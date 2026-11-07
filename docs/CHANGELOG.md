@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-11-07 — Post-election results
+
+The November 3 election has been held. All ten covered races now have checked unofficial returns: eight statewide/full congressional-district totals from the Secretary of State XML generated November 4 at 09:06:14 UTC, and the two county offices from Franklin County’s November 4 12:13PM summary, visually checked on page 8. Candidate details show the source snapshot date, jurisdiction, vote count and certification qualification. Forty candidate records and the ten contest records retain their stable IDs and positions.
+
+Ten new result links and election timeline entries identify the leaders in those unofficial returns. No certified victory, new term of office or completed canvass is asserted. Governor and lieutenant-governor candidates share one ticket selection. Ron Ula and Michael Lehnerd have no separate row in the retrieved return and retain unknown totals. Gary Josephson is classified as a write-in in the official return; the September roster snapshot is retained. OH-15 uses the full district count rather than Franklin County’s partial geography. Votes are not financial amounts.
+
+The graph contains 390 entities, 576 relationships, 188 sources and 235 timeline events. Prior relationships, source-check records and published editions remain intact. Campaign-finance files retain their November 2 snapshot and narrower source dates, including the eight unresolved coverage gaps; they are not complete election-cycle totals. Maintenance now prioritizes certification, corrections and post-general reports. Edition 2026-11-07 is published; independent human editorial review remains pending.
+
 ## 2026-11-02 — Weekly county filing addition
 
 Citizens for Stinziano’s 2026 pre-general report, filed October 22, adds 59 transcribed rows: 34 contributions totaling $8,700, one $80 other-income receipt, 23 expenditures totaling $13,660.80 and one $98 in-kind contribution. Each original page image was checked, schedule totals reconcile, and the cash balance is $14,146.53. In-kind support stays separate from cash and other income stays separate from contributions. Names are reported identities, without independent identity resolution; postal/contact details are omitted.

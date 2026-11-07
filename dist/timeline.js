@@ -1,6 +1,7 @@
 // Event dates are curated separately from source publication and capture dates.
 import { relationshipMatches } from './search.js';
 export const timelineLanes = {
+  elections: {label:'Election results',color:'#9d7852',description:'Election dates and qualified results, separate from campaign money'},
   campaign: {label:'Campaign money',color:'#ac4933',description:'Contributions and outside political groups'},
   civic: {label:'Civic & charitable',color:'#677b72',description:'Charitable gifts and civic organizations, separate from campaign money'},
   lobbying: {label:'Lobbying',color:'#775882',description:'Registrations and documented activity'},

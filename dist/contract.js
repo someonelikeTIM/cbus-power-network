@@ -9,7 +9,7 @@ import { acceptedCorrections } from './corrections.js';
 import { inheritedEntityIds,inheritedRelationshipIds } from './inherited.js';
 import { validISO } from './timeline.js';
 
-export const release = { schemaVersion:'1.0.0',releaseId:'2026-11-02',status:'published',preparedOn:'2026-11-02',publishedAt:'2026-11-02T21:52:18Z',dataRevision:meta.version,codeLicense:'MIT',dataLicense:'CC-BY-4.0',sourceCheckIds:[] };
+export const release = { schemaVersion:'1.0.0',releaseId:'2026-11-07',status:'published',preparedOn:'2026-11-07',publishedAt:'2026-11-07T21:35:47.803506+00:00',dataRevision:meta.version,codeLicense:'MIT',dataLicense:'CC-BY-4.0',sourceCheckIds:[] };
 export const reviewFor = record => record.claimReview || { status:'legacy-unrecorded',reviewedAt:null,reviewer:{type:'unknown',identity:null},note:'Inherited curated record. Previous substantive review identity and claim-level date were not recorded; source content checks are separate. Independent editorial review is pending.' };
 export function publicSource(source) {
   const {url,archiveUrl,archiveBrowseUrl,...record}=source;

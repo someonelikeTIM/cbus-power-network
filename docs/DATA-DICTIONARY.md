@@ -45,3 +45,7 @@ Event date precision is day, month, year, period or unknown. date.role identifie
 Current-view exports include filters, viewURL and matching records. tagSelection lists active tags, matching entity/relationship IDs and separate connectorRelationshipIds for contextual links. Connected mixed-tag searches span up to two recorded links. Matching relationships and context connectors are disjoint. Presentation-only dotted path guides are absent from factual relationship exports.
 
 Research leads are open questions. Filtered packets contain a complete lead only when all its entities are present; relatedLeadIds can refer back to the full edition. Source documents themselves are not included.
+
+## Election results
+
+Candidate entities can include `electionResult`: race ID, election date, unofficial/certified status, standing in the retrieved return, votes, shared selection candidate IDs, write-in classification, geographic scope, original source ID, source snapshot time, check date and locator. A null vote count means the candidate is not separately reported in that snapshot. Governor/lieutenant-governor members share one ticket count; do not sum their duplicated entity references. `officeAssumed: false` records that this result establishes no new term. New result relationships use `voteCount`, never a monetary `amount`. The election timeline keeps election dates separate from report/check dates. Earlier candidacy, source and finance records remain dated.

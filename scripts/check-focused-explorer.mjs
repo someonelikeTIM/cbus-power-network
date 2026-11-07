@@ -4,7 +4,7 @@ import {nodes,edges,categories,relationships} from '../dist/data.js';
 import {connectionSummary,focusedStyle,extendTrail} from '../dist/focused-explorer.js';
 import {encodeState,decodeState} from '../dist/routing.js';
 const graph={nodes,edges},amy=connectionSummary(graph,'amy-acton');
-assert.equal(amy.links.length,15);assert.equal(amy.neighbors.size,15);
+assert.equal(amy.links.length,16);assert.equal(amy.neighbors.size,15,'The new result and earlier candidacy share the same election neighbor');
 assert.equal(amy.types.find(item=>item.type==='endorsement').count,6);
 assert.equal(amy.types.reduce((sum,item)=>sum+item.count,0),amy.links.length);
 for(const degree of [0,1,3,40,100])assert.equal(focusedStyle(degree).opacity,1,'Direct neighbors have no overview degree threshold');

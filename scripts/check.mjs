@@ -13,6 +13,7 @@ import {donationRelease} from '../dist/donation-enrichment.js';
 import {campaignRelease} from '../dist/campaigns-2026.js';
 import {epsteinRelease} from '../dist/epstein-enrichment.js';
 import {redflexRelease} from '../dist/redflex-enrichment.js';
+import {electionResults} from '../dist/election-results-2026.js';
 import { buildTimelineEvents, filterTimelineEvents, validateEventDate, validISO, sortTimelineEvents } from '../dist/timeline.js';
 import { filterGraph, shortestPath, matches } from '../dist/core.js';
 
@@ -27,7 +28,7 @@ const full = filterGraph(options); assert.ok(full.nodes.length>=104); assert.ok(
 const infrastructurePublished=infrastructureRelease(sourceIds,nodeIds);
 const politicalPublished=politicalRelease(sourceIds,nodes.filter(n=>!politicalNodes.some(p=>p.id===n.id)).map(n=>n.id));
 const flowsPublished=flowRelease(sourceIds,nodeIds);
-if(meta.enrichmentState==='complete'){assert.equal(full.edges.length,170+infrastructurePublished.edges.length+politicalPublished.edges.length+flowsPublished.edges.length+trailRelease(sourceIds,nodeIds).edges.length+mediaRelease(sourceIds,nodeIds).edges.length+civicRelease(sourceIds,nodeIds).edges.length+donationRelease(sourceIds,nodeIds).edges.length+campaignRelease(sourceIds,nodeIds).edges.length+epsteinRelease(sourceIds,nodeIds).edges.length+redflexRelease(sourceIds,nodeIds).edges.length);}
+if(meta.enrichmentState==='complete'){assert.equal(full.edges.length,170+infrastructurePublished.edges.length+politicalPublished.edges.length+flowsPublished.edges.length+trailRelease(sourceIds,nodeIds).edges.length+mediaRelease(sourceIds,nodeIds).edges.length+civicRelease(sourceIds,nodeIds).edges.length+donationRelease(sourceIds,nodeIds).edges.length+campaignRelease(sourceIds,nodeIds).edges.length+epsteinRelease(sourceIds,nodeIds).edges.length+redflexRelease(sourceIds,nodeIds).edges.length+electionResults.races.filter(race=>sourceIds.has(race.sourceId)&&sourceIds.has('er26-results-notice')).length);}
 const current = filterGraph({ ...options, history: false }); assert.ok(current.edges.every(e => !e.historical)); assert.ok(!current.nodes.some(n => ['abigail', 'foundation', 'lbrands'].includes(n.id)));assert.ok(current.nodes.some(n=>n.id==='les'));
 const search = filterGraph({ ...options, query: 'Ginther' }); assert.deepEqual(search.matches, ['ginther','ginther-campaign','ginther-fund']); assert.ok(search.nodes.some(n => n.id === 'city')); assert.ok(!search.nodes.some(n => n.id === 'les'));
 assert.equal(filterGraph({ ...options, query: 'not-an-entity-xyz' }).nodes.length, 0);
