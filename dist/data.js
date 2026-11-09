@@ -16,7 +16,7 @@ import { epsteinSources,epsteinRelease } from './epstein-enrichment.js';
 import { redflexSources,redflexRelease } from './redflex-enrichment.js';
 import { electionResultSources,applyElectionResults } from './election-results-2026.js';
 export const meta = {
-  title: 'CBUS Power', reviewed: '2026-11-07', version: 19,
+  title: 'CBUS Power', reviewed: '2026-11-09', version: 20,
   scope: 'Columbus and Ohio: money, control, public corruption, civic affiliations, and media ownership, governance, funding and information supply.',
   limitations: 'Selected records, not complete coverage. Evidence status, source date, and direction are attached to each case relationship. Assets, cash transfers, and penalties are identified separately.'
 };
@@ -277,6 +277,7 @@ const donations=donationRelease(verifiedSourceIds,nodes.map(node=>node.id));
 nodes.push(...donations.nodes);edges.push(...donations.edges);
 meta.donationState=donations.complete?'complete':'verified subset';
 const campaigns=campaignRelease(verifiedSourceIds,nodes.map(node=>node.id));
+if(verifiedSourceIds.has('trail-microsoft-oct2026')){const project=nodes.find(node=>node.id==='microsoft-new-albany');if(project)Object.assign(project,{role:'Early works completed · October 2026 update',description:'Microsoft says early construction works are complete and community engagement has returned to Microsoft. Limited fall/winter maintenance may continue; an operational start is not established. The earlier July status remains on its dated relationship.',sourceIds:[...new Set([...project.sourceIds,'trail-microsoft-oct2026'])],claimReview:{"status": "reviewed", "reviewedAt": "2026-11-09", "reviewer": {"type": "unknown", "identity": "Unattributed automated source check"}, "note": "Automated source-supported maintenance update. Company statement read and phase/operation distinctions checked; independent human editorial review is not recorded."}});}
 nodes.push(...campaigns.nodes);edges.push(...campaigns.edges);applyCampaignUpdates(nodes,verifiedSourceIds);
 applyElectionResults(nodes,edges,verifiedSourceIds);
 meta.election2026Phase='Election held November 3; unofficial November 4 returns checked November 7; certification pending';
@@ -327,6 +328,7 @@ caseFact('trail-vpac-q2','politics','Original FEC records date four billionaire 
 caseFact('trail-vivek-fds','jobsohio','Ramaswamy’s 2025 disclosure lists Narya Fund I interests, 8VC Fund III income and former JobsOhio head Mark Kvamme as a gift source.');
 caseFact('trail-intel-plan','jobsohio','Intel: up to $150m planned JobsOhio assistance in January 2022; payments not established by that announcement.');
 caseFact('trail-state-compliance','jobsohio','Separate state-award review: 39 of 60 recipients noncompliant; this is not an individual JobsOhio / Anduril finding.');
+caseFact('trail-microsoft-oct2026','datacenters','Microsoft October 2026 update: early works complete, limited maintenance may continue; operation and payment remain unverified.');
 caseFact('trail-microsoft-ohio','datacenters','Microsoft names Ames as New Albany contractor; July 2026 site-preparation update does not establish operation.');
 caseFact('trail-oshp-flock','alpr','Highway Patrol: $90k FY2024 plus $90k FY2025 Flock ceiling approved; actual payments remain unverified.');
 caseFact('trail-vance-oge','jobsohio','Vance’s 2025 annual disclosure reports Narya interests and an LLC cash account at Huntington; ranges are not transfers.');

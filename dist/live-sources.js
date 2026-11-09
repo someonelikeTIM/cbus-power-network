@@ -2244,5 +2244,20 @@ export const sourceLiveEvidence = {
     ],
     "missingChecks": [],
     "contentCheckNote": "Automated source check; independent human editorial review is not claimed. Source snapshot dates remain separate from the check date."
+  },
+  "trail-microsoft-oct2026": {
+    "originalUrl": "https://local.microsoft.com/blog/newalbany-datacenter-construction-update/",
+    "finalUrl": "https://local.microsoft.com/blog/newalbany-datacenter-construction-update/",
+    "contentVerified": true,
+    "checkedAt": "2026-11-09T14:11:00.234138+00:00",
+    "sha256": "1aea1efee86d1b732c32ad000bd44c71dcb56ee36bb602a7ba48befc0803076b",
+    "contentCheckMethod": "Original company page read through web reader and raw HTML; October update, phase completion, engagement transition and limited maintenance checked.",
+    "contentChecks": [
+      "Construction update October 2026",
+      "Early construction works",
+      "maintenance work"
+    ],
+    "missingChecks": [],
+    "contentCheckNote": "Phase completion is not operation. Earlier source-check records retained; independent human editorial review is not claimed."
   }
 };

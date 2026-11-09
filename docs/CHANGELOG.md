@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-11-09 — Federal notices and construction-phase update
+
+Added 23 checked original 48-hour contribution notices, including one amendment, for five covered federal committees. The original committee IDs, F6N/F6A forms, filing dates and file hashes were checked. These links bring supplementary disclosures to 104 and remain excluded from financial receipt totals. The amended notice remains labelled; its exact prior notice chain has not been independently resolved, and historical notice links remain available.
+
+All 172 financial reports, 1,913,710 transaction/memo/balance rows, 29 committees, 100 financial source records and 81 earlier supplementary records are unchanged. The snapshot date identifies this notice-only addition. Earlier financial source-check dates and incomplete state/county coverage remain explicit. No newly indexed post-general financial report or completed-cycle fundraising total is asserted.
+
+The November 4 official election XML is unchanged and still marked unofficial; county general-election links still identify unofficial returns. The November 7 election snapshot is retained without advancing check dates or officeholding. Eight finance gaps remain unknown. Graph totals are 390 entities, 577 relationships, 189 sources and 236 timeline events. Edition 2026-11-09 is published; independent human editorial review remains pending.
+
+Microsoft’s October 2026 New Albany update adds one dated phase-status relationship: early construction works are complete, community engagement has returned to Microsoft, and limited fall/winter maintenance may continue. The July record and its source check are retained. This company statement establishes no full-facility completion, operational start or actual payment. A new source-check record preserves the later evidence without replacing the earlier snapshot.
+
 ## 2026-11-07 — Post-election results
 
 The November 3 election has been held. All ten covered races now have checked unofficial returns: eight statewide/full congressional-district totals from the Secretary of State XML generated November 4 at 09:06:14 UTC, and the two county offices from Franklin County’s November 4 12:13PM summary, visually checked on page 8. Candidate details show the source snapshot date, jurisdiction, vote count and certification qualification. Forty candidate records and the ten contest records retain their stable IDs and positions.
