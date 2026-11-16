@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-11-16 — Financial-report coverage clarification
+
+Identified and checked three earlier F3X originals for C00895276 that are absent from the current F3-only financial parser: filing 1907547 covers January 10–June 30, 2025; 1936961 covers July 1–December 31, 2025; and 1960721 covers January 1–March 31, 2026. The finance index now lists their committee ID, filing/activity dates, source links, hashes and unparsed status. A visible coverage note explains that these periods are incomplete and that exclusion does not mean zero receipts or spending. Historical committee designation and full F3X ingestion remain pending; current committee classification is not applied retrospectively.
+
+These are financial reports, not supplementary contribution notices. All 172 indexed financial reports, 1,913,710 transaction/memo/balance rows, 100 earlier financial source records, 29 committees and 104 supplementary disclosures remain unchanged. No money from the unparsed files was extracted or added to totals. Subsequent full ledger builds retain the new coverage qualification.
+
+The November 13 statewide feed is marked UnofficialComplete but has identical counts, leaders and write-in selections for the eight covered state/district races. It does not establish certification. The county original is byte-identical, so the explicitly dated November 4 election snapshot and existing officeholding remain unchanged. Graph totals remain 390 entities, 577 relationships, 189 sources and 236 timeline events. Edition 2026-11-16 is published; independent human editorial review remains pending.
+
 ## 2026-11-09 — Federal notices and construction-phase update
 
 Added 23 checked original 48-hour contribution notices, including one amendment, for five covered federal committees. The original committee IDs, F6N/F6A forms, filing dates and file hashes were checked. These links bring supplementary disclosures to 104 and remain excluded from financial receipt totals. The amended notice remains labelled; its exact prior notice chain has not been independently resolved, and historical notice links remain available.

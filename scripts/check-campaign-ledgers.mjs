@@ -47,6 +47,9 @@ assert.equal(catalog.reports.filter(r=>r.unitId==='C00916288'&&r.period.end<='20
 assert.equal(catalog.reports.filter(r=>r.unitId==='C00896019'&&r.period.end<='2026-06-30').reduce((n,r)=>n+r.metrics.receipts,0),1435062446,'Husted principal committee total');
 const originalIndex=JSON.parse(await readFile('content/campaigns/federal-disclosure-index-2026.json','utf8'));
 assert.equal(catalog.freshnessNote,originalIndex.freshnessNote,'The partial-refresh qualification must travel with the snapshot');
+assert.deepEqual(catalog.unindexedFinancialFilings,originalIndex.unindexedFinancialFilings);
+for(const item of catalog.unindexedFinancialFilings){assert.equal(item.coverageStatus,'unparsed');assert.equal(item.form,'F3XN');assert.ok(!reports.has('fec-'+item.file),'Unparsed financial reports are neither zero-valued reports nor supplementary receipts');assert.ok(!catalog.supplementaryDisclosures.some(disclosure=>disclosure.file===item.file));assert.ok(/^https:\/\/docquery\.fec\.gov\/csv\//.test(item.url));assert.ok(/^[a-f0-9]{64}$/.test(item.sha256));}
+assert.ok(catalog.gaps.includes(originalIndex.coverageNotes[0]));
 assert.deepEqual(catalog.reports.filter(r=>r.id.startsWith('fec-')).map(r=>Number(r.reportKey)).sort((a,b)=>a-b),[...originalIndex.financialFilingIds].sort((a,b)=>a-b),'Original financial filing inventory incomplete');
 assert.equal(catalog.reports.find(r=>r.id==='fec-2027030').period.end,'2026-09-30','API processing lag must not omit original third-quarter reports');
 assert.equal(catalog.reports.filter(r=>r.unitId==='C00916288'&&r.period.end<='2026-09-30').reduce((n,r)=>n+r.metrics.receipts,0),6168681969);

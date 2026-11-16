@@ -1,6 +1,6 @@
 {
-  "asOf": "2026-11-09",
-  "basis": "Original FEC inventory, October 19/26 financial additions and November 2 county transcription retained. November 9 official OpenFEC filing metadata checked for all twelve covered federal committees; no new financial F3 report appeared in those retrieved listings. Twenty-three new original F6 notices, including one amendment, were checked for committee identity and form and remain supplementary only. Original indexes for the two unresolved federal committees returned HTTP 403; Ohio bulk access met a security challenge. County report retrieval remains incomplete. Prior financial input dates are retained; this is not a synchronized full financial refresh.",
+  "asOf": "2026-11-16",
+  "basis": "Original FEC inventory, October 19/26 financial additions and November 2 county transcription retained. November 9 official OpenFEC filing metadata checked for all twelve covered federal committees; no new financial F3 report appeared in those retrieved listings. Twenty-three new original F6 notices, including one amendment, were checked for committee identity and form and remain supplementary only. Original indexes for the two unresolved federal committees returned HTTP 403; Ohio bulk access met a security challenge. County report retrieval remains incomplete. Prior financial input dates are retained; this is not a synchronized full financial refresh. November 16 coverage review identified and checked three earlier C00895276 F3X originals that the current F3-only financial parser does not ingest. They are listed separately as unparsed financial filings, excluded from totals and supplementary-notice counts; historical committee designation and full ingestion remain pending.",
   "financialFilingIds": [
     2020004,
     1994422,
@@ -2171,5 +2171,52 @@
     }
   ],
   "note": "Lobbyist-bundling disclosures and 48-hour contribution notices can describe amounts already included in the financial reports. These links are retained for context and are not additional receipts in the totals.",
-  "freshnessNote": "Notice-only federal additions checked November 9. Financial inputs retain the October 26 targeted federal inventory (Ronan earlier), Stinziano's November 2 check, and October 15 state/other-county baselines. New notices are supplementary, not extra receipts; incomplete filing coverage remains unknown."
+  "freshnessNote": "Notice-only federal additions checked November 9. Financial inputs retain the October 26 targeted federal inventory (Ronan earlier), Stinziano's November 2 check, and October 15 state/other-county baselines. New notices are supplementary, not extra receipts; incomplete filing coverage remains unknown. Coverage clarification November 16: three earlier C00895276 F3X financial reports remain unparsed and excluded; financial totals and prior source dates are unchanged.",
+  "unindexedFinancialFilings": [
+    {
+      "committeeId": "C00895276",
+      "file": 1907547,
+      "form": "F3XN",
+      "filedAt": "2025-07-30",
+      "start": "2025-01-10",
+      "end": "2025-06-30",
+      "url": "https://docquery.fec.gov/csv/547/1907547.csv",
+      "sha256": "ca4c31ed33b7f1cb8fc7c9c30dbd9728b2dafefc31bd2aef77742071c9624d27",
+      "bytes": 8875,
+      "checkedAt": "2026-11-16T14:08:25.305319+00:00",
+      "coverageStatus": "unparsed",
+      "note": "Financial F3X report, excluded from this ledger pending ingestion and historical committee-designation review. Amounts are not treated as zero. This is not a supplementary contribution notice."
+    },
+    {
+      "committeeId": "C00895276",
+      "file": 1936961,
+      "form": "F3XN",
+      "filedAt": "2026-01-28",
+      "start": "2025-07-01",
+      "end": "2025-12-31",
+      "url": "https://docquery.fec.gov/csv/961/1936961.csv",
+      "sha256": "0e620fa5174119885303aceaacc7bcf7bf4f1f6f76f040aec0a51cea47fb34b4",
+      "bytes": 8701,
+      "checkedAt": "2026-11-16T14:08:25.305319+00:00",
+      "coverageStatus": "unparsed",
+      "note": "Financial F3X report, excluded from this ledger pending ingestion and historical committee-designation review. Amounts are not treated as zero. This is not a supplementary contribution notice."
+    },
+    {
+      "committeeId": "C00895276",
+      "file": 1960721,
+      "form": "F3XN",
+      "filedAt": "2026-04-13",
+      "start": "2026-01-01",
+      "end": "2026-03-31",
+      "url": "https://docquery.fec.gov/csv/721/1960721.csv",
+      "sha256": "494665d0617ca6a5231f5f7f0eb11720ecbf70103fa687aba81bfda4453985fd",
+      "bytes": 1289,
+      "checkedAt": "2026-11-16T14:08:25.305319+00:00",
+      "coverageStatus": "unparsed",
+      "note": "Financial F3X report, excluded from this ledger pending ingestion and historical committee-designation review. Amounts are not treated as zero. This is not a supplementary contribution notice."
+    }
+  ],
+  "coverageNotes": [
+    "Three earlier financial F3X reports for C00895276 are not yet included: January 10–June 30, 2025; July 1–December 31, 2025; and January 1–March 31, 2026. Their originals are listed as unparsed financial filings. Exclusion is not zero receipts or spending; this ledger is incomplete for those periods, and committee totals must not be aggregated with the principal campaign."
+  ]
 }
