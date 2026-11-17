@@ -186,3 +186,18 @@ body[data-view=network][data-has-tags=true] #graph-stage[data-compact=true] #fil
 
 
 #graph-stage[data-compact=true] #filters,#graph-stage[data-compact=true] #path-dialog{top:110px;left:10px;right:auto;width:calc(100% - 20px)}
+
+/* Canvas controls stay in the legend and do not change entity positions. */
+body[data-view=network] #connection-legend{width:292px}
+#legend-controls{margin-bottom:14px;border-bottom:1px solid var(--line);padding-bottom:12px}
+#legend-controls .distance-control{margin:0 0 12px;padding:0 0 12px}
+.visibility-heading{display:flex;justify-content:space-between;gap:10px;font:600 12px var(--sans);margin-bottom:8px}
+.visibility-heading output{font-weight:400;color:var(--muted)}
+#connection-distance{width:100%;margin:0;accent-color:var(--rust);min-height:26px;cursor:pointer}
+.distance-ticks{display:flex;justify-content:space-between;margin:0 2px 8px;font:10px var(--mono);color:var(--muted)}
+#distance-show-all{border:1px solid var(--line);border-radius:4px;padding:5px 9px;font:12px var(--sans)}
+.canvas-color-control{display:grid;gap:7px;font:600 12px var(--sans)}
+.canvas-color-control select{width:100%;max-width:none;min-height:34px;font-weight:400}
+.party-swatches{display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:12px;font:11px var(--sans)}
+.party-swatches span{display:flex;align-items:center;gap:6px}.party-swatches i{width:10px;height:10px;border-radius:50%;background:var(--color)}
+body[data-canvas-colors=party] #legend-types .legend-line{border-color:#747b80}

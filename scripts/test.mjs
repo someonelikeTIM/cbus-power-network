@@ -14,6 +14,7 @@ const checks = [
   'check-exploration',
   'check-exploration-paths',
   'check-connection-distance',
+  'check-party-colors',
   'check-explorer-ui',
   'check-tags-path-focus',
   'check-correction-workflow',

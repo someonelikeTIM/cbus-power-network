@@ -2,6 +2,7 @@ import { categories,relationships,cases } from './data.js';
 import { connectionModes,validateRange } from './reporting.js';
 import { normalizeConnectionDistance } from './exploration.js';
 import {normalizeTags} from './tags.js';
+import {normalizeColorMode} from './party-colors.js';
 const views=['network','timeline','relations','directory','sources'];
 const kinds={entity:'node',relationship:'edge',source:'source',event:'event'};
 export const recordKind = kind => ({node:'entity',edge:'relationship',source:'source',event:'event'})[kind];
@@ -21,6 +22,7 @@ export function encodeState(base,state,releaseId) {
   if(state.startingIds?.size)values.starts=[...state.startingIds].join(',');
   if(state.customStart)values.startOnly='1';
   if(state.connectionDistance!=null)values.distance=normalizeConnectionDistance(state.connectionDistance);
+  values.colors=normalizeColorMode(state.colorMode);
   if(state.pinnedIds?.size)values.pins=[...state.pinnedIds].sort().join(',');
   if(state.research?.steps.length)values.research=state.research.steps.map(step=>step.kind+':'+step.id).join('|');
   if(state.focus&&state.focusEntity&&(state.selected?.kind!=='node'||state.selected.id!==state.focusEntity))values.center=state.focusEntity;
@@ -41,6 +43,7 @@ export function decodeState(base,defaults) {
   const list=(key,allowed,original)=>p.has(key)?new Set(p.get(key).split(',').filter(v=>Object.hasOwn(allowed,v))):new Set(original);
   const state={...defaults,categories:list('categories',categories,defaults.categories),relationships:list('relationships',relationships,defaults.relationships)};
   state.connectionDistance=normalizeConnectionDistance(p.has('distance')?p.get('distance'):defaults.connectionDistance);
+  state.colorMode=normalizeColorMode(p.has('colors')?p.get('colors'):defaults.colorMode);
   state.pinnedIds=new Set((p.get('pins')||'').split(',').filter(Boolean));
   state.requestedResearch=(p.get('research')||'').split('|').filter(Boolean).map(value=>{const split=value.indexOf(':');return {kind:value.slice(0,split),id:value.slice(split+1),note:''};});
   state.focusEntity=p.get('center')||'';

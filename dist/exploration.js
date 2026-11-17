@@ -16,7 +16,7 @@ export function exploredGraph(graph,ids){
 export function normalizeConnectionDistance(value,fallback=6){
   if(value==='all')return 'all';
   const distance=Number(value);
-  return Number.isInteger(distance)&&distance>=1&&distance<=12?distance:fallback;
+  return Number.isInteger(distance)&&distance>=1&&distance<=6?distance:fallback;
 }
 // Distance is the shortest number of recorded links, regardless of their direction.
 // Restrict presentation only; the original graph and exploration history remain intact.
@@ -24,18 +24,20 @@ export function connectionNeighborhood(graph,id,limit=6){
   const distance=normalizeConnectionDistance(limit);
   if(distance==='all')return graph;
   const neighbors=new Map(graph.nodes.map(node=>[node.id,new Set()]));
-  if(!neighbors.has(id))return exploredGraph(graph,new Set());
+  const roots=(typeof id==='string'?[id]:[...id]).filter(root=>neighbors.has(root));
+  if(!roots.length)return exploredGraph(graph,new Set());
   for(const edge of graph.edges){
     if(!neighbors.has(edge.source)||!neighbors.has(edge.target))continue;
     neighbors.get(edge.source).add(edge.target);neighbors.get(edge.target).add(edge.source);
   }
-  const visible=new Set([id]);let frontier=[id];
+  const visible=new Set(roots),depth=new Map(roots.map(root=>[root,0]));let frontier=[...visible];
   for(let step=0;step<distance&&frontier.length;step++){
     const next=[];
-    for(const current of frontier)for(const neighbor of neighbors.get(current))if(!visible.has(neighbor)){visible.add(neighbor);next.push(neighbor);}
+    for(const current of frontier)for(const neighbor of neighbors.get(current))if(!visible.has(neighbor)){visible.add(neighbor);depth.set(neighbor,step+1);next.push(neighbor);}
     frontier=next;
   }
-  return exploredGraph(graph,visible);
+  const result=exploredGraph(graph,visible);
+  return {...result,edges:result.edges.filter(edge=>depth.get(edge.source)<distance||depth.get(edge.target)<distance)};
 }
 // Starting records and explored anchors stay; each open branch also keeps its neighbors.
 export function branchExploration(graph,seeds,opened){

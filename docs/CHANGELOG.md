@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-11-16 — Canvas party colors and connection visibility
+
+Legend now offers optional political party coloring: blue for recorded Democratic affiliations, red for Republican affiliations, and gray for other or unrecorded affiliations. Connections use the known endpoint's party; connections between different parties stay gray. Coloring never assigns an affiliation to an unknown endpoint.
+
+Canvas visibility offers one through six connection steps plus Show all. One step draws only the selected entity's direct links; each additional step reveals the next layer in the filtered network. Existing entity positions stay fixed. The settings support Undo, shared links and saved views. Fit frames the visible network without changing the chosen depth. Source records and source-check dates are unchanged by these interface changes.
+
 ## 2026-11-16 — Financial-report coverage clarification
 
 Identified and checked three earlier F3X originals for C00895276 that are absent from the current F3-only financial parser: filing 1907547 covers January 10–June 30, 2025; 1936961 covers July 1–December 31, 2025; and 1960721 covers January 1–March 31, 2026. The finance index now lists their committee ID, filing/activity dates, source links, hashes and unparsed status. A visible coverage note explains that these periods are incomplete and that exclusion does not mean zero receipts or spending. Historical committee designation and full F3X ingestion remain pending; current committee classification is not applied retrospectively.

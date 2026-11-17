@@ -1,6 +1,7 @@
 import { meta, nodes, edges, sources, categories, relationships, cases, evidenceStatuses } from './data.js';
 import { filterGraph, shortestPath, matches, normalize } from './core.js';
-import { seedExploration,exploredGraph,branchExploration,nodeNeighborhood,transitionCamera,normalizeConnectionDistance } from './exploration.js';
+import { seedExploration,exploredGraph,branchExploration,nodeNeighborhood,transitionCamera,normalizeConnectionDistance,connectionNeighborhood } from './exploration.js';
+import {partyColors,knownParty,connectionParty,normalizeColorMode} from './party-colors.js';
 import { repositoryURL } from './project-links.js';
 import { startingConnections,pathForeground,revealedPathPositions } from './exploration-paths.js';
 import { buildTimelineEvents, filterTimelineEvents, formatEventDate, timelineYear, timelineLanes, moneyKinds } from './timeline.js';
@@ -50,6 +51,9 @@ Object.assign(state,{connectionMode:'all',from:'',to:'',includeUncertain:true,ma
 state.pinnedIds=new Set();state.pinnedEdgeIds=new Set();state.research=emptyResearch();
 state.trailNodes=new Set();state.trailEdges=new Set();state.collapsedNodes=new Set();
 state.walk=[];state.showDirect=false;state.orbitIds=new Set();
+state.colorMode='type';
+const colorPreferenceKey='cbus-power:canvas-colors';
+try{state.colorMode=normalizeColorMode(localStorage.getItem(colorPreferenceKey));}catch{}
 state.multiNodes=new Set();state.multiEdges=new Set();state.bucketMode=false;state.bucketIds=null;state.showAmounts=false;
 let boxSelectMode=false,spaceToPan=false;
 let quickCollapsed=true;
@@ -102,6 +106,7 @@ function applyUndoSnapshot(previous,keepFrame=false){
   const currentPositions=keepFrame?new Map(positions):null,currentCamera={...camera};Object.assign(state,copyViewState(previous.state));focusDensity=previous.focusDensity||1;compactFocusNames=!!previous.compactFocusNames;focusPorts=new Map(previous.focusPorts||[]);focusMenuRect=previous.focusMenuRect;recordMenuOpen=previous.recordMenuOpen;positions.clear();previous.positions.forEach((p,id)=>positions.set(id,{...(currentPositions?.get(id)||p)}));hoveredNode=null;hoveredEdge=null;edgeEls.forEach(({group})=>group.classList.remove('hovered'));connectionIcons.forEach(({group})=>group.classList.remove('hovered'));
   $('search').value=state.query;$('topic-select').value=state.caseId;syncReportingControls();$('history').checked=state.history;
   defaults.connectionDistance=state.connectionDistance;try{localStorage.setItem(distancePreferenceKey,String(state.connectionDistance));}catch{}
+  defaults.colorMode=state.colorMode;try{localStorage.setItem(colorPreferenceKey,state.colorMode);}catch{}
   $('filters').querySelectorAll('[data-category]').forEach(input=>input.checked=state.categories.has(input.dataset.category));$('filters').querySelectorAll('[data-relationship]').forEach(input=>input.checked=state.relationships.has(input.dataset.relationship));
   cloudSceneIds=new Set(previous.overviewIds||[]);renderEntitySearch();render();const bounds=$('canvas-area').getBoundingClientRect();dimensions={width:bounds.width,height:bounds.height};camera=keepFrame?currentCamera:Math.abs(dimensions.width-previous.dimensions.width)<1&&Math.abs(dimensions.height-previous.dimensions.height)<1?previous.camera:fittedCamera();positionGraph();$('undo-map').disabled=!explorationHistory.length;document.body.dataset.canUndo=String(!!explorationHistory.length);syncURL();toast('Previous map restored');
 }
@@ -146,14 +151,17 @@ function syncResearchPins(){const path=currentResearch();state.pinnedIds=path.an
 function networkGraph(){
   const available=connectedCanvas(filterGraph(state));let result=available;
   if(state.path){const ids=new Set(state.path.nodes);result={...available,nodes:available.nodes.filter(node=>ids.has(node.id)),edges:available.edges.filter(edge=>state.path.edges.includes(edge.id))};}
-  else if(state.showDirect&&state.orbitIds.size){
-    const ids=new Set(state.orbitIds);for(const edge of available.edges)if(state.orbitIds.has(edge.source)||state.orbitIds.has(edge.target)){ids.add(edge.source);ids.add(edge.target);}
-    result={...available,nodes:available.nodes.filter(node=>ids.has(node.id)),edges:available.edges.filter(edge=>ids.has(edge.source)&&ids.has(edge.target))};
-  }else if(state.tags.size)result=taggedGraph(available,state.tags);
-  hiddenByDistance=0;
+  else if(state.tags.size)result=taggedGraph(available,state.tags);
+  const roots=visibilityRoots();hiddenByDistance=0;
+  if(!state.path&&roots.length){
+    // Depth spans the filtered dataset, not only previously opened branches.
+    if(!state.tags.size)result=available;
+    const before=result.nodes.length;result=connectionNeighborhood(result,roots,state.connectionDistance);hiddenByDistance=before-result.nodes.length;
+  }
   if(state.bucketMode&&state.bucketIds){const ids=state.bucketIds;result={...result,nodes:result.nodes.filter(node=>ids.has(node.id)),edges:result.edges.filter(edge=>ids.has(edge.source)&&ids.has(edge.target))};}
   return {...connectedCanvas(result),totalEntities:available.nodes.length};
 }
+function visibilityRoots(){if(state.multiNodes.size>1)return [...state.multiNodes];const center=focusEntityId();return center?[center]:[...state.startingIds].filter(id=>nodeById.has(id));}
 function prepareOrbitalBranch(id){
   if(state.bucketMode)return;const parent=state.walk.at(-1)?.id===id&&state.walk.at(-1)?.via?state.walk.at(-2)?.id:'';
   const branch=orbitalBranch(connectedCanvas(baseGraph()),id,positions,state.orbitIds,{parent});
@@ -175,7 +183,7 @@ function toggleNode(id,{from='',via='',resume=false}={}){
 }
 function showDirectConnections(type=state.focusType||''){
   const id=state.selected?.kind==='node'?state.selected.id:focusEntityId();if(!id)return;
-  rememberView();state.focus=true;state.focusEntity=id;state.focusType=type;state.showDirect=true;recordMenuOpen=true;
+  rememberView();state.focus=true;state.focusEntity=id;state.focusType=type;state.showDirect=true;state.connectionDistance=1;recordMenuOpen=true;
   state.walk=appendWalk(state.walk,id,{edges});state.trailNodes.add(id);prepareOrbitalBranch(id);render();focusExploration(id,true);
 }
 
@@ -236,10 +244,16 @@ function renderMapScope(){
   $('map-full').hidden=!isSmall||graph.nodes.length===available.nodes.length;
   $('map-full').textContent=state.caseId==='all'?'Browse network overview':'Browse topic overview';
   $('map-small').hidden=false;$('map-small').textContent='New search';
-  const center=focusEntityId(),focused=!!center;document.querySelector('.distance-control').hidden=true;
-  $('distance-summary').textContent=focused?(state.connectionDistance==='all'?'All connected entities':'Connections up to '+state.connectionDistance+' step'+(state.connectionDistance===1?'':'s'))+' from '+nodeById.get(center).name+(state.pinnedIds.size?'. Pinned research stays alongside.':'.'):'Choose an entity, then adjust the distance to reveal its neighborhood. Pins stay visible.';
+  const roots=visibilityRoots();document.querySelector('.distance-control').hidden=false;
+  $('connection-distance').disabled=!!state.path||!roots.length;
+  $('connection-distance').value=state.connectionDistance==='all'?'7':String(state.connectionDistance);
+  $('connection-distance').setAttribute('aria-valuetext',state.connectionDistance==='all'?'Show all':state.connectionDistance+' connection step'+(state.connectionDistance===1?'':'s'));
+  $('distance-value').textContent=state.connectionDistance==='all'?'Show all':state.connectionDistance===1?'1 · Direct links':state.connectionDistance+' steps';
+  $('distance-summary').textContent=state.path?'Showing the selected path. Choose an entity to adjust visibility.':roots.length?(state.connectionDistance==='all'?'All entities in the current filters.':state.connectionDistance+' connection step'+(state.connectionDistance===1?'':'s')+' from '+roots.map(id=>nodeById.get(id).name).join(' + ')+'.')+' '+graph.nodes.length+' entities shown.':'Choose an entity to adjust visibility, or show all.';
+  $('canvas-color-mode').value=state.colorMode;$('party-color-key').hidden=state.colorMode!=='party';
+  document.body.dataset.canvasColors=state.colorMode;
   $('legend-context').textContent=focusEntityId()||state.path?'Select a connection on the map or in Details to read its evidence.':semanticEdges.size?'Only connections between visible entities are drawn.':'Overview: choose an entity to explore its connections.';
-  $('connection-legend').querySelector('h2').textContent='Connection types';
+  $('connection-legend').querySelector('h2').textContent='Legend & visibility';
   $('fit').title='Fit the current network without rearranging entities';$('fit').setAttribute('aria-label','Fit the network');
   renderConnectionLegend();renderPins();syncFilterGroups();
   renderConnectionKey();
@@ -314,7 +328,8 @@ function mountCanvasWindows(){
   const stage=$('graph-stage'),workspace=document.querySelector('.workspace'),explorer=$('explorer');
   document.body.dataset.view=state.view;document.documentElement.style.setProperty('--masthead-height',document.querySelector('.masthead').getBoundingClientRect().height+'px');
   document.querySelector('.secondary-actions>div').append($('map-full'),$('map-small'));explorer.append($('media-overview'));
-  $('search-window').append(document.querySelector('.distance-control'),$('pinned-anchors'));
+  $('search-window').append($('pinned-anchors'));
+  $('legend-controls').prepend(document.querySelector('.distance-control'));
   if(state.view==='network'){
     [ $('search-window'),document.querySelector('.exploration-tools'),$('quick-menu'),$('filters'),$('connection-legend'),$('map-status'),$('active-filters'),$('path-dialog') ].forEach(element=>$('canvas-area').append(element));stage.append($('inspector'));
   }else{
@@ -443,6 +458,10 @@ function buildGraph() {
   for (const [id, relation] of Object.entries(relationships)) {
     const marker = svgEl('marker', {id:`arrow-${id}`, viewBox:'0 0 8 8', refX:'8', refY:'4', markerUnits:'userSpaceOnUse', orient:'auto'});
     marker.append(svgEl('path',{d:'M0,0 L8,4 L0,8 Z',fill:relation.color})); defs.append(marker); markerEls.set(id,marker);
+  }
+  for(const [id,color] of Object.entries(partyColors)){
+    const marker=svgEl('marker',{id:'arrow-party-'+id,viewBox:'0 0 8 8',refX:'8',refY:'4',markerUnits:'userSpaceOnUse',orient:'auto'});
+    marker.append(svgEl('path',{d:'M0,0 L8,4 L0,8 Z',fill:color}));defs.append(marker);markerEls.set('party-'+id,marker);
   }
   $('graph').prepend(defs);
   edges.forEach(e => {
@@ -783,7 +802,7 @@ function positionRecordMenu(){
   const box=flyoutPlacement({...dimensions,size:{width:menu.offsetWidth,height:menu.offsetHeight},preferred:p,obstacles:mapObstacles(),points,segments});
   menu.style.left=box.left+'px';menu.style.top=box.top+'px';return box;
 }
-function showWholeNetwork(){state.showDirect=false;state.focusType='';render();fitGraph();}
+function showWholeNetwork(){state.showDirect=false;state.connectionDistance='all';state.focusType='';render();fitGraph();}
 function renderOverview(){
   const canvas=$('network-overview'),signature=[state.caseId,[...state.categories].join(','),[...state.relationships].join(','),state.connectionMode,state.history,state.from,state.to,state.includeUncertain,state.bucketMode?graph.nodes.map(n=>n.id).join(','):'network'].join('|');
   if(signature!==miniSignature){miniSignature=signature;const overview=state.bucketMode?graph:connectedCanvas(baseGraph()),w=184,h=96,ctx=canvas.getContext('2d'),fit=frameNetwork(overview.nodes.map(n=>n.id),positions,{width:w,height:h,padding:7});overviewTransform=fit;canvas.width=w;canvas.height=h;ctx.clearRect(0,0,w,h);
@@ -821,6 +840,9 @@ function renderGraph(position=true) {
   } else if (state.selected?.kind === 'edge') { const e = edgeById.get(state.selected.id);pairedRelationships(graph.edges,e).forEach(edge=>highlightedEdges.add(edge.id));highlightedNodes.add(e.source);highlightedNodes.add(e.target); }
   else if (state.query) graph.matches.forEach(id => highlightedNodes.add(id));
   nodeEls.forEach(({ group, core,label,pin }, id) => {
+    const node=nodeById.get(id),party=knownParty(node);
+    group.style.setProperty('--color',state.colorMode==='party'?(partyColors[party]||partyColors.neutral):categories[node.category].color);
+    core.setAttribute('aria-label','Explore '+node.name+(state.colorMode==='party'?' · '+(party||node.party||'Party not recorded'):''));
     const visible = shownNodes.has(id);
     group.style.display = visible ? '' : 'none';
     group.classList.toggle('context-node',!foreground.nodes.has(id)&&!state.pinnedIds.has(id)&&!state.trailNodes.has(id));group.classList.toggle('trail-node',state.trailNodes.has(id)||explored.nodes.has(id));
@@ -835,6 +857,10 @@ function renderGraph(position=true) {
     label.style.display = state.labels === 'off' ? 'none' : '';
   });
   edgeEls.forEach(({ group, line, label }, id) => {
+    const edge=edgeById.get(id),party=connectionParty(edge,nodeById),color=state.colorMode==='party'?(partyColors[party]||partyColors.neutral):relationships[edge.type].color;
+    line.setAttribute('stroke',color);label.style.fill=color;
+    if(edge.directional)line.setAttribute('marker-end','url(#arrow-'+(state.colorMode==='party'?'party-'+(party||'neutral'):edge.type)+')');
+    connectionIcons.get(id).group.style.setProperty('--connection-color',color);
     delete label.dataset.badgeAnchored;
     group.style.display = shownEdges.has(id) ? '' : 'none';
     group.classList.toggle('context-link',!foreground.edges.has(id)&&!state.trailEdges.has(id));group.classList.toggle('trail-link',explored.edges.has(id));group.classList.toggle('selected-connection',selectedConnections.has(id)||state.multiEdges.has(id));
@@ -1251,7 +1277,7 @@ $('reset-filters').addEventListener('click', () => resetFilters());
 $('empty-reset').addEventListener('click', () => resetFilters());
 $('mobile-filters').addEventListener('click',()=>{floatingPanelOpen('filters')?closeFloatingPanel('filters'):openFloatingPanel('filters');});
 $('legend-open').addEventListener('click',()=>{quickCollapsed=true;renderQuickMenu();floatingPanelOpen('connection-legend')?closeFloatingPanel('connection-legend'):openFloatingPanel('connection-legend');});
-$('zoom-in').addEventListener('click', () => zoom(1.25)); $('zoom-out').addEventListener('click', () => zoom(.8)); $('fit').addEventListener('click',showWholeNetwork);
+$('zoom-in').addEventListener('click', () => zoom(1.25)); $('zoom-out').addEventListener('click', () => zoom(.8)); $('fit').addEventListener('click',()=>fitGraph());
 $('reset-layout').addEventListener('click',()=>{state.orbitIds=new Set();state.showDirect=false;state.bucketMode=false;state.bucketIds=null;naturalLayout.forEach((p,id)=>positions.set(id,{...p}));miniSignature='';render(true);toast('Original network positions restored');});
 $('label-toggle').addEventListener('click', () => { state.labels = state.labels === 'auto' ? 'all' : state.labels === 'all' ? 'off' : 'auto'; $('label-toggle').textContent = state.labels === 'auto' ? 'Labels auto' : state.labels === 'all' ? 'More labels' : 'Labels off'; renderGraph(); });
 document.addEventListener('click', event => {
@@ -1328,7 +1354,7 @@ function currentExport() {
   const output = { meta, view:state.view,case:state.caseId, filters:{categories:[...state.categories],relationships:[...state.relationships],includeHistory:state.history,query:state.query,...(state.view==='timeline'?{timelineEntity:state.timelineEntity,timelineScope:state.timelineScope,moneyStatus:state.timelineMoney,includeUndated:state.timelineUndated}:{})},...(state.view==='timeline'?{events:shownTimelineEvents}:{}),...(state.caseId==='media'?{outletProfiles:mediaProfiles.filter(p=>[p.outlet,...p.authority,...p.affiliations].every(id=>exported.nodes.some(n=>n.id===id))),researchLeads:mediaLeads}:{}),nodes:exported.nodes,edges:exported.edges,sources:sources.filter(s=>sourceIds.has(s.id)).map(({url,archiveUrl,archiveBrowseUrl,...record})=>({...record,url:archiveUrl||url})) };
   Object.assign(output,datasetFor(exported,state.view==='timeline'?shownTimelineEvents:null));
   if(state.view==='network'&&state.tags.size){const selection=tagSelection(exported,state.tags),single=state.tags.size===1;output.tagSelection={...(single?{id:[...state.tags][0],label:tagDefinitions[[...state.tags][0]].label}:{}),tags:selection.byTag,mode:selection.mode,connectionLimit:selection.connectionLimit,entityIds:[...selection.matches.nodes],relationshipIds:[...selection.matches.edges],connectorRelationshipIds:[...selection.connectors]};}
-  output.nodes=output.entities;output.edges=output.relationships;output.filters={...output.filters,connectionMode:state.connectionMode,from:state.from,to:state.to,includeUncertain:state.includeUncertain,...(state.view==='network'?{pinnedIds:[...state.pinnedIds],connectionDistance:state.connectionDistance,centerEntity:focusEntityId(),tag:state.tags.size===1?[...state.tags][0]:null,tags:[...state.tags]}:{})};output.viewURL=encodeState(location.href,state,release.releaseId);
+  output.nodes=output.entities;output.edges=output.relationships;output.filters={...output.filters,connectionMode:state.connectionMode,from:state.from,to:state.to,includeUncertain:state.includeUncertain,...(state.view==='network'?{pinnedIds:[...state.pinnedIds],connectionDistance:state.connectionDistance,colorMode:state.colorMode,centerEntity:focusEntityId(),tag:state.tags.size===1?[...state.tags][0]:null,tags:[...state.tags]}:{})};output.viewURL=encodeState(location.href,state,release.releaseId);
   return {output,name:`cbus-power-${state.view}-${release.releaseId}.json`};
 }
 function openDataDownload(){
@@ -1373,14 +1399,25 @@ $('data-download-confirm').addEventListener('click',exportCurrent);
 window.addEventListener('resize',positionDataDownload);
 try{if(window.parent!==window)window.parent.addEventListener('scroll',positionDataDownload,{passive:true});}catch{}
 for (const dialog of document.querySelectorAll('dialog')) dialog.addEventListener('click', event => { if (event.target === dialog) { const r = dialog.getBoundingClientRect(); if (event.clientX < r.left || event.clientX > r.right || event.clientY < r.top || event.clientY > r.bottom) dialog.close(); } });
-function syncReportingControls(){$('connection-mode').value=state.connectionMode;$('valid-from').value=state.from;$('valid-to').value=state.to;$('include-uncertain').checked=state.includeUncertain;$('connection-distance').value=String(state.connectionDistance);}
-$('connection-distance').addEventListener('change',()=>{
-  const distance=normalizeConnectionDistance($('connection-distance').value);
-  animateFocusChange(()=>{state.connectionDistance=distance;defaults.connectionDistance=state.connectionDistance;
-  const id=focusEntityId()||(state.selected?.kind==='node'?state.selected.id:state.exploreRoot)||[...state.pinnedIds][0];
-  if(nodeById.has(id)){state.collapsedNodes.delete(id);state.focusEntity=id;state.focus=true;state.openNodes.add(id);state.explorationSeeds.add(id);}
-  try{localStorage.setItem(distancePreferenceKey,String(state.connectionDistance));}catch{}
-  syncReportingControls();});
+function syncReportingControls(){$('connection-mode').value=state.connectionMode;$('valid-from').value=state.from;$('valid-to').value=state.to;$('include-uncertain').checked=state.includeUncertain;$('connection-distance').value=state.connectionDistance==='all'?'7':String(state.connectionDistance);$('canvas-color-mode').value=state.colorMode;}
+function setCanvasDistance(distance,{remember=true}={}){
+  if(remember){settleExpansion(false);rememberView();}
+  state.connectionDistance=distance;defaults.connectionDistance=distance;
+  if(distance==='all'){state.showDirect=false;state.path=null;}
+  try{localStorage.setItem(distancePreferenceKey,String(distance));}catch{}
+  render();syncReportingControls();
+}
+let changingDistance=false;
+$('connection-distance').addEventListener('input',()=>{
+  const value=$('connection-distance').value;
+  setCanvasDistance(value==='7'?'all':normalizeConnectionDistance(value),{remember:!changingDistance});changingDistance=true;
+});
+$('connection-distance').addEventListener('change',()=>{changingDistance=false;});
+$('distance-show-all').addEventListener('click',()=>setCanvasDistance('all'));
+$('canvas-color-mode').addEventListener('change',()=>{
+  rememberView();state.colorMode=normalizeColorMode($('canvas-color-mode').value);defaults.colorMode=state.colorMode;
+  try{localStorage.setItem(colorPreferenceKey,state.colorMode);}catch{}
+  render();
 });
 for(const id of ['connection-mode','valid-from','valid-to','include-uncertain'])$(id).addEventListener('change',()=>{
   const from=$('valid-from').value,to=$('valid-to').value;
