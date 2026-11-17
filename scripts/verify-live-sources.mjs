@@ -16,9 +16,10 @@ import { donationChecks } from '../dist/donation-enrichment.js';
 import { campaignChecks } from '../dist/campaigns-2026.js';
 import { epsteinChecks } from '../dist/epstein-enrichment.js';
 import { redflexChecks } from '../dist/redflex-enrichment.js';
+import {affiliationChecks} from '../dist/party-affiliations.js';
 
 const checks={...enrichmentChecks,...infrastructureChecks,...politicalChecks,...flowChecks,...trailChecks,...mediaChecks,...civicChecks,...donationChecks,...campaignChecks};
-Object.assign(checks,epsteinChecks,redflexChecks);
+Object.assign(checks,epsteinChecks,redflexChecks,affiliationChecks);
 const requested=new Set(process.argv.slice(2));
 const selected=allDeclaredSources.filter(s=>(!requested.size||requested.has(s.id))&&!s.archiveUrl);
 if([...requested].some(id=>!allDeclaredSources.some(s=>s.id===id)))throw Error('Unknown source ID');

@@ -9,7 +9,7 @@ import { acceptedCorrections } from './corrections.js';
 import { inheritedEntityIds,inheritedRelationshipIds } from './inherited.js';
 import { validISO } from './timeline.js';
 
-export const release = { schemaVersion:'1.0.0',releaseId:'2026-11-16',status:'published',preparedOn:'2026-11-16',publishedAt:'2026-11-16T14:08:25.305319+00:00',dataRevision:meta.version,codeLicense:'MIT',dataLicense:'CC-BY-4.0',sourceCheckIds:[] };
+export const release = { schemaVersion:'1.0.0',releaseId:'2026-11-16-party',status:'published',preparedOn:'2026-11-16',publishedAt:'2026-11-17T01:58:01.006230Z',dataRevision:meta.version,codeLicense:'MIT',dataLicense:'CC-BY-4.0',sourceCheckIds:['pa26-dewine','pa26-state-roster','pa26-federal-ballot','pa26-huffman','pa26-dovilla','pa26-householder','pa26-kasich','pa26-yost','pa26-columbus-party','pa26-dorans','pa26-columbus-pac-labels','pa26-mitchell-brown','pa26-gop-chair'] };
 export const reviewFor = record => record.claimReview || { status:'legacy-unrecorded',reviewedAt:null,reviewer:{type:'unknown',identity:null},note:'Inherited curated record. Previous substantive review identity and claim-level date were not recorded; source content checks are separate. Independent editorial review is pending.' };
 export function publicSource(source) {
   const {url,archiveUrl,archiveBrowseUrl,...record}=source;

@@ -4,7 +4,6 @@ import { seedExploration,exploredGraph,branchExploration,nodeNeighborhood,transi
 import {partyColors,knownParty,connectionParty,normalizeColorMode} from './party-colors.js';
 import { repositoryURL } from './project-links.js';
 import { startingConnections,pathForeground,revealedPathPositions } from './exploration-paths.js';
-import { buildTimelineEvents, filterTimelineEvents, formatEventDate, timelineYear, timelineLanes, moneyKinds } from './timeline.js';
 import { mediaProfiles,mediaLeads } from './media.js';
 import { readerField,profileCopy,leadStories,overlapLabel } from './reader-copy.js';
 import { datasetFor, evidencePacket, publicSource, release, reviewFor } from './contract.js';
@@ -42,8 +41,7 @@ const edgeEls = new Map();
 const markerEls = new Map();
 const caseNodes = new Set(edges.filter(e => e.caseId).flatMap(e => [e.source, e.target]));
 const svgNS = 'http://www.w3.org/2000/svg';
-const timelineEvents=buildTimelineEvents(edges,sources);
-const state = { view: 'network', caseId: 'all', categories: new Set(Object.keys(categories)), relationships: new Set(Object.keys(relationships)), history: true, query: '', selected: null, focus: false, path: null, labels: 'auto', timelineEntity:'jobsohio',timelineScope:'direct',timelineMoney:'all',timelineUndated:true };
+const state = { view: 'network', caseId: 'all', categories: new Set(Object.keys(categories)), relationships: new Set(Object.keys(relationships)), history: true, query: '', selected: null, focus: false, path: null, labels: 'auto' };
 const distancePreferenceKey='columbus-network:reveal-distance-v2';
 let preferredConnectionDistance=1;
 try{preferredConnectionDistance=normalizeConnectionDistance(localStorage.getItem(distancePreferenceKey),1);}catch{}
@@ -65,9 +63,8 @@ state.tags=new Set();defaults.tags=new Set();
 let restoringURL=true,selectionOpener=null;
 function syncURL(){if(!restoringURL){history.replaceState(null,'',encodeState(location.href,state,release.releaseId));if(state.requestedRelease&&state.requestedRelease!==release.releaseId){state.requestedRelease=release.releaseId;$('route-warning').hidden=true;}scheduleWorkspaceState();}}
 function downloadJSON(output,name){const url=URL.createObjectURL(new Blob([JSON.stringify(output,null,2)],{type:'application/json'}));const anchor=document.createElement('a');anchor.href=url;anchor.download=name;anchor.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
-function rememberOpener(){const element=document.activeElement;selectionOpener=element?.dataset?.edge?`[data-edge="${CSS.escape(element.dataset.edge)}"]`:element?.dataset?.source?`[data-source="${CSS.escape(element.dataset.source)}"]`:element?.dataset?.timelineEvent?`[data-timeline-event="${CSS.escape(element.dataset.timelineEvent)}"]`:element?.dataset?.nodeDetail?`[data-node-detail="${CSS.escape(element.dataset.nodeDetail)}"]`:element?.dataset?.node?`.node-core[data-node="${CSS.escape(element.dataset.node)}"]`:'#search';}
+function rememberOpener(){const element=document.activeElement;selectionOpener=element?.dataset?.edge?`[data-edge="${CSS.escape(element.dataset.edge)}"]`:element?.dataset?.source?`[data-source="${CSS.escape(element.dataset.source)}"]`:element?.dataset?.nodeDetail?`[data-node-detail="${CSS.escape(element.dataset.nodeDetail)}"]`:element?.dataset?.node?`.node-core[data-node="${CSS.escape(element.dataset.node)}"]`:'#search';}
 function restoreFocus(){const target=[...document.querySelectorAll(selectionOpener||'#search')].find(el=>!el.closest('[hidden]')&&el.getClientRects().length);(target||$('search')).focus({preventScroll:true});}
-let shownTimelineEvents=[];
 let graph,hiddenByDistance=0;
 let camera = { x: 0, y: 0, z: 1 };
 let dimensions = { width: 800, height: 570 };
@@ -133,6 +130,11 @@ function applyTag(id,{toggle=true}={}){
   const bounds=$('canvas-area').getBoundingClientRect();dimensions={width:bounds.width,height:bounds.height};const endCamera=fittedCamera();
   if(!graph.nodes.length||matchMedia('(prefers-reduced-motion: reduce)').matches){camera=endCamera;positionGraph();}
   else{camera=startCamera;expansionAnimation={targets:new Map(),starts:new Map(),revealing:new Set(),anchor,startCamera,endCamera,sharedScale:graph.nodes.length>80,start:null,frame:null};$('graph').setAttribute('aria-busy','true');$('graph').classList.toggle('animating',expansionAnimation.sharedScale);positionGraph();expansionAnimation.frame=requestAnimationFrame(animateExpansion);}
+}
+function partyDetails(node){
+  if(!node.party)return '';
+  const affiliation=node.partyAffiliation;
+  return '<div class="party-affiliation"><strong>Party affiliation: '+escape(node.party)+'</strong>'+(affiliation?'<small>'+escape(affiliation.period)+'</small><small>'+escape(affiliation.locator)+'</small>':'')+'</div>';
 }
 const dot = category => `<span class="category-dot" style="--color:${categories[category].color}"></span>`;
 const initials = node => node.category === 'person' || node.category === 'politician' ? node.name.split(' ').filter(Boolean).map(n => n[0]).slice(0, 2).join('') : node.id === 'partnership' ? 'CP' : node.id === 'smart-columbus' ? 'SC' : node.id === 'city' ? 'C' : node.name.split(' ').filter(n => !['&', 'of', 'the'].includes(n.toLowerCase())).map(n => n[0]).slice(0, 2).join('');
@@ -337,7 +339,6 @@ function mountCanvasWindows(){
   }
 }
 
-const eventTitle=event=>{const edge=edgeById.get(event.primaryEdgeId);return edge&&event.title===edge.label?readerField(edge,'label'):event.title;};
 const sourceLinks = ids => [...new Set(ids)].map(id => {
   const s = sourceById.get(id);
   return `<div class="source-record"><a class="source-link" href="${escape(s.archiveUrl||s.url)}" target="_blank" rel="noopener noreferrer"><span class="external" aria-hidden="true">↗</span>${escape(s.title)}<small>${escape(s.publisher)} · ${friendlyDate(s.date)}<br>${s.archiveUrl?`Wayback snapshot ${s.archiveTimestamp.slice(0,8)}`:'Original source · content checked'}</small></a><button class="small-link" data-source="${escape(s.id)}">About this source ↗</button></div>`;
@@ -351,7 +352,6 @@ function applyCaseLayout(){settleExpansion(false);}
 function setCase(id) {
   startingSearchResults=[];$('starting-results').hidden=true;
   state.customStart=id==='campaigns2026';
-  if(id==='media'&&state.caseId!=='media'){state.timelineScope='case';state.timelineEntity='wsyx';}
   state.caseId = id; state.mapMode=id==='campaigns2026'?'full':'explore';state.exploredIds=new Set();state.exploreRoot=topicRoots[id]||'city'; state.query = ''; $('search').value = ''; state.selected = null; state.path = null; state.focus = false;
   $('topic-select').value=id;
   $('graph-title').textContent = id === 'money' ? 'Money & control' : id === 'all' ? 'Columbus network' : cases[id].title;
@@ -920,7 +920,7 @@ function renderQuickMenu(){
   $('selection-mode').setAttribute('aria-pressed',String(boxSelectMode));$('selection-mode').textContent=boxSelectMode?'Drag to select':'Drag to pan';
   $('quick-selection').textContent=count?`${n} ${n===1?'entity':'entities'} · ${e} ${e===1?'connection':'connections'} selected`:'Explore the map';
   const actions=[];const action=(id,label)=>actions.push(`<button type="button" data-quick-action="${id}">${label}</button>`);
-  if(n===1&&!e){action('explore','Center on entity');action('timeline','Timeline');}
+  if(n===1&&!e){action('explore','Center on entity');}
   if(n===2&&!e)action('path','Find path between these');
   if(e)action('endpoints','Select endpoints');
   if(count){action('isolate','Show only selection');const allPinned=[...[...state.multiNodes].map(id=>['entity',id]),...[...state.multiEdges].map(id=>['connection',id])].every(([kind,id])=>state.research.steps.some(step=>step.kind===kind&&step.id===id));action('pin',allPinned?'Unpin selection':'Pin selection');action('export','Export selection');action('clear','Clear selection');}
@@ -947,7 +947,6 @@ $('quick-actions').addEventListener('click',event=>{
   const ids=[...state.multiNodes],selected=selectionGraph(graph,state.multiNodes,state.multiEdges);
   if(action==='clear'){state.multiNodes.clear();state.multiEdges.clear();state.selected=null;state.detailsOpen=false;recordMenuOpen=false;state.showDirect=false;state.focus=false;state.focusEntity='';render();return;}
   if(action==='explore'){centerOnEntity(ids[0]);return;}
-  if(action==='timeline'){state.timelineEntity=ids[0];state.timelineScope='direct';setView('timeline');return;}
   if(action==='path'){openPathFinder();$('path-from').value=nodeById.get(ids[0]).name;$('path-to').value=nodeById.get(ids[1]).name;return;}
   if(action==='endpoints'){for(const id of state.multiEdges){const edge=edgeById.get(id);state.multiNodes.add(edge.source);state.multiNodes.add(edge.target);}showSelection();return;}
   if(action==='isolate'){rememberView();state.path={nodes:selected.nodes.map(node=>node.id),edges:selected.edges.map(edge=>edge.id)};state.focus=false;state.bucketIds=null;render(true);return;}
@@ -975,17 +974,9 @@ function renderInspector() {
     panel.innerHTML=`<div class="inspector-header"><span class="eyebrow">SELECTION</span>${close}</div><h2>${selectionCount()} records selected</h2><p class="selection-counts">${state.multiNodes.size} entities · ${state.multiEdges.size} connections</p><div class="subheading">ENTITIES</div>${[...state.multiNodes].map(id=>`<button class="connection-row" data-node-detail="${id}"><strong>${escape(nodeById.get(id).name)}</strong><span>${escape(nodeById.get(id).role)}</span></button>`).join('')}${state.multiEdges.size?'<div class="subheading">CONNECTIONS</div>'+[...state.multiEdges].map(id=>connectionRow(edgeById.get(id))).join(''):''}`;
     return;
   }
-  if(state.selected.kind==='event'){
-    const event=shownTimelineEvents.find(e=>e.id===state.selected.id);if(!event)return;
-    const edge=edgeById.get(event.primaryEdgeId),date=event.date,lane=timelineLanes[event.lane];
-    const range=date.precision==='period'?`${friendlyDate(date.start)} – ${friendlyDate(date.end)}`:'';
-    const published=event.sourceIds.map(id=>sourceById.get(id)).map(s=>`<div><span>${escape(s.publisher)}</span><strong>${friendlyDate(s.date)}</strong><small>${s.publisher==='Ohio Laws'?'Cited law version effective':'Publication / document date'}</small></div>`).join('');
-    panel.innerHTML=`<div class="inspector-header"><span class="eyebrow">TIMELINE EVENT</span>${close}</div><span class="timeline-lane-badge" style="--lane:${lane.color}">${lane.label}</span>${tagButtons('connection',event.primaryEdgeId)}<h2>${escape(eventTitle(event))}</h2>${statusBadge(edge)}<div class="event-dates"><span>${escape(date.role)}</span><strong>${escape(formatEventDate(date))}</strong>${range?`<small>${range}</small>`:''}${date.note?`<p>${escape(date.note)}</p>`:''}${date.observedOn?`<small>${escape(date.observationRole)}: ${friendlyDate(date.observedOn)}</small>`:''}</div><div class="event-money"><span>${moneyKinds[event.moneyKind].label}</span>${timelineAmount(event)}${event.unit?`<small>${escape(event.unit)}</small>`:''}${event.amountIncludedIn?'<p>Part of a larger authorization.</p>':''}</div><div class="edge-ends"><button data-node-detail="${edge.source}">${escape(nodeById.get(edge.source).name)} ↗</button><span class="link-between">${edge.directional?'↓':'↕'}</span><button data-node-detail="${edge.target}">${escape(nodeById.get(edge.target).name)} ↗</button></div><button class="focus-button" data-timeline-network="${event.id}">Show network connection <span>↗</span></button><div class="evidence-box"><span class="eyebrow">EVIDENCE</span><p>${escape(readerField(edge,'evidence'))}</p>${edge.locator?`<small>${escape(edge.locator)}</small>`:''}</div>${edge.context?`<p class="record-context">${escape(readerField(edge,'context'))}</p>`:''}${event.edgeIds.length>1?`<div class="subheading">RELATED RECORDS</div>${event.edgeIds.map(id=>connectionRow(edgeById.get(id))).join('')}`:''}<div class="subheading">SOURCE DATES</div><div class="event-publications">${published}</div><div class="subheading">SOURCES</div>${sourceLinks(event.sourceIds)}`;
-    return;
-  }
   if (state.selected.kind === 'node') {
     const n = nodeById.get(state.selected.id); const links = adjacent(n.id); const count = degrees.get(n.id);const action=branchAction(n.id);
-    panel.innerHTML=`<div class="inspector-header"><span class="eyebrow">ENTITY</span>${close}</div><h2>${escape(n.name)}</h2><div class="entity-role">${escape(n.role)}</div><div class="compact-record-actions"><button data-toggle-pin="${n.id}">${state.pinnedIds.has(n.id)?'Unpin':'Pin'}</button><button data-timeline-entity="${n.id}">Timeline</button><button data-expand-node="${n.id}">Connections</button></div><div class="record-facts">${links.length===count?count+' connections':links.length+' shown / '+count+' connections'} · ${n.sourceIds.length} sources</div>${n.description?`<p class="entity-description">${escape(readerField(n,'description'))}</p>`:''}${tagButtons('entity',n.id)}${campaignFinanceHTML(n.id)}<div class="subheading">CONNECTIONS</div>${links.length?links.map(e=>connectionRow(e,n.id)).join(''):'<p>No connections match the filters.</p>'}<div class="subheading">SOURCES</div>${sourceLinks(n.sourceIds)}`;
+    panel.innerHTML=`<div class="inspector-header"><span class="eyebrow">ENTITY</span>${close}</div><h2>${escape(n.name)}</h2><div class="entity-role">${escape(n.role)}</div>${partyDetails(n)}<div class="compact-record-actions"><button data-toggle-pin="${n.id}">${state.pinnedIds.has(n.id)?'Unpin':'Pin'}</button><button data-expand-node="${n.id}">Connections</button></div><div class="record-facts">${links.length===count?count+' connections':links.length+' shown / '+count+' connections'} · ${n.sourceIds.length} sources</div>${n.description?`<p class="entity-description">${escape(readerField(n,'description'))}</p>`:''}${tagButtons('entity',n.id)}${campaignFinanceHTML(n.id)}<div class="subheading">CONNECTIONS</div>${links.length?links.map(e=>connectionRow(e,n.id)).join(''):'<p>No connections match the filters.</p>'}<div class="subheading">SOURCES</div>${sourceLinks(n.sourceIds)}`;
   } else if (state.selected.kind === 'edge') {
     const e = edgeById.get(state.selected.id);
     panel.innerHTML = `<div class="inspector-header"><span class="eyebrow">RELATIONSHIP</span>${close}</div>${tagButtons('connection',e.id)}<h2>${escape(readerField(e,'label'))}</h2>${statusBadge(e)}<div class="edge-ends"><button data-node-detail="${e.source}">${escape(nodeById.get(e.source).name)} ↗</button><span class="link-between" aria-hidden="true">${e.directional?'↓':'↕'}</span><button data-node-detail="${e.target}">${escape(nodeById.get(e.target).name)} ↗</button></div><div class="period">${escape(e.period)}</div>${e.unit?`<div class="amount-unit">${escape(e.unit)}</div>`:''}<div class="evidence-box"><span class="eyebrow">EVIDENCE</span><p>${escape(readerField(e,'evidence'))}</p>${e.locator?`<small>${escape(e.locator)}</small>`:''}</div>${e.context?`<p class="record-context">${escape(readerField(e,'context'))}</p>`:''}<div class="subheading">SOURCES</div>${sourceLinks(e.sourceIds)}`;
@@ -1026,72 +1017,22 @@ function renderSources() {
   }).join('') : '<p class="empty-list">No sources match. Try another search or reset the filters.</p>';
 }
 
-function timelineAmount(event){
-  if(event.metric)return `<strong>${escape(new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(event.metric.value))}</strong><small>${escape(event.metric.label)}</small>`;
-  if(event.amount!==null)return `<strong>${escape(event.amountLabel||new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:2}).format(event.amount))}</strong>`;
-  return '';
-}
-function prepareTimeline(){
-  const base=baseGraph(),available=base.nodes.slice().sort((a,b)=>a.name.localeCompare(b.name));
-  if(!available.some(n=>n.id===state.timelineEntity))state.timelineEntity=({'jobsohio':'jobsohio',alpr:'flock',datacenters:'google',politics:'vivek',hb6:'aep',epstein:'les',sports:'hsg'}[state.caseId])||available[0]?.id||'';
-  if(!available.some(n=>n.id===state.timelineEntity))state.timelineEntity=available[0]?.id||'';
-  $('timeline-entity').innerHTML=available.map(n=>`<option value="${n.id}">${escape(n.name)}</option>`).join('');
-  $('timeline-entity').disabled=state.timelineScope==='case'||!available.length;
-  $('timeline-entity').value=state.timelineEntity;$('timeline-scope').value=state.timelineScope;$('timeline-money').value=state.timelineMoney;$('timeline-undated').checked=state.timelineUndated;
-  shownTimelineEvents=filterTimelineEvents(timelineEvents,base,{entityId:state.timelineEntity,scope:state.timelineScope,moneyGroup:state.timelineMoney,includeUndated:state.timelineUndated,query:state.query});
-  if(state.selected?.kind==='event'&&!shownTimelineEvents.some(e=>e.id===state.selected.id))state.selected=null;
-}
-function timelineInclusion(event,timelineGraph){
-  if(state.timelineScope!=='nearby'||event.actorIds.includes(state.timelineEntity))return '';
-  const paths=event.actorIds.map(id=>shortestPath(timelineGraph,state.timelineEntity,id)).filter(Boolean).sort((a,b)=>a.edges.length-b.edges.length);
-  const path=paths[0];if(!path||!path.edges.length||path.edges.length>2)return '';
-  return `Included via ${path.edges.length} recorded link${path.edges.length===1?'':'s'}: ${path.nodes.map(id=>nodeById.get(id)?.name||id).join(' ↔ ')}`;
-}
-function renderTimeline(){
-  const title=state.timelineScope==='case'?(cases[state.caseId]?.title||'Selected case'):nodeById.get(state.timelineEntity)?.name||'Selected entity';
-  $('timeline-title').textContent=title;
-  $('timeline-scope-explanation').textContent=state.timelineScope==='direct'
-    ?`Entity only shows events whose records directly name ${title}.`
-    :state.timelineScope==='nearby'
-      ?`Connected entities includes events involving entities within two recorded links of ${title}. Indirect cards show why they appear; a connection does not establish causation.`
-      :`Entire case shows all matching events in ${title}, including events that do not name one selected entity.`;
-  const undated=shownTimelineEvents.filter(e=>e.date.precision==='unknown').length;
-  $('timeline-count').textContent=`${shownTimelineEvents.length} event${shownTimelineEvents.length===1?'':'s'} · ${shownTimelineEvents.length-undated} dated · ${undated} undated`;
-  const lanes=Object.entries(timelineLanes).filter(([id])=>id!=='media'||state.caseId==='media'||shownTimelineEvents.some(e=>e.lane==='media'));
-  $('timeline-view').style.setProperty('--timeline-columns',lanes.length);
-  $('timeline-lane-headings').innerHTML=lanes.map(([id,lane])=>`<div style="--lane:${lane.color}"><strong>${lane.label}</strong><small>${lane.description}</small></div>`).join('');
-  if(!shownTimelineEvents.length){$('timeline-year-nav').innerHTML='';$('timeline-events').innerHTML='<div class="timeline-empty"><h3>No events match</h3><p>Try another entity or change the case, history, or money filters.</p><button class="small-link" data-reset-timeline>Reset timeline filters</button></div>';return;}
-  const years=[...new Set(shownTimelineEvents.map(timelineYear))];
-  $('timeline-year-nav').innerHTML='<span>Jump to</span>'+years.map(year=>`<button data-timeline-year="${year}">${year==='undated'?'Undated':year}</button>`).join('');
-  const timelineGraph=baseGraph();
-  $('timeline-events').innerHTML=years.map(year=>{
-    const list=shownTimelineEvents.filter(e=>timelineYear(e)===year);
-    return `<section class="timeline-year" data-timeline-year-section="${year}" aria-label="${year==='undated'?'Undated events':year+' events'}"><div class="timeline-year-label"><strong>${year==='undated'?'Date not established':year}</strong><span>${year==='undated'?'The source describes the record; its event date is still unresolved.':'Each card shows the date or reporting period available.'}</span></div><div class="timeline-year-lanes">${lanes.map(([id,lane])=>`<div class="timeline-lane" style="--lane:${lane.color}" aria-label="${lane.label}">${list.filter(e=>e.lane===id).map(event=>{
-      const edge=edgeById.get(event.primaryEdgeId);
-      const dateLabel=formatEventDate(event.date),observed=event.date.observedOn?`${event.date.observationRole}: ${friendlyDate(event.date.observedOn)}`:'';
-      const inclusion=timelineInclusion(event,timelineGraph);
-      return `<button class="timeline-card ${state.selected?.kind==='event'&&state.selected.id===event.id?'selected':''}" data-timeline-event="${event.id}" data-precision="${event.date.precision}" data-money-group="${moneyKinds[event.moneyKind].group}" aria-pressed="${state.selected?.kind==='event'&&state.selected.id===event.id}" aria-label="Timeline event: ${escape(eventTitle(event))}, ${escape(dateLabel)}"><span class="timeline-card-date">${escape(dateLabel)}</span><small class="timeline-card-role">${escape(event.date.role)}</small><strong class="timeline-card-title">${escape(eventTitle(event))}</strong><span class="timeline-card-actors">${escape(nodeById.get(edge.source).name)} ${edge.directional?'→':'↔'} ${escape(nodeById.get(edge.target).name)}</span>${inclusion?`<small class="timeline-inclusion">${escape(inclusion)}</small>`:''}<span class="timeline-card-amount">${timelineAmount(event)}</span><span class="timeline-money-kind">${moneyKinds[event.moneyKind].label}</span>${observed?`<small class="timeline-observed">${escape(observed)}</small>`:''}<small class="timeline-proof">${escape(evidenceStatuses[edge.status])} · ${event.sourceIds.length} source${event.sourceIds.length===1?'':'s'}${event.edgeIds.length>1?` · ${event.edgeIds.length} linked records`:''}</small></button>`;
-    }).join('')}</div>`).join('')}</div></section>`;
-  }).join('');
-}
-
 function renderMediaOverview(){
   const panel=$('media-overview');panel.hidden=state.caseId!=='media';if(panel.hidden)return;
   // Profiles describe the verified batch, independently of temporary graph filters.
   if(panel.childElementCount)return;
   const link=id=>`<button class="text-button" data-node-detail="${id}">${escape(nodeById.get(id).name)}</button>`;
   const profiles=mediaProfiles.filter(p=>[p.outlet,...p.authority,...p.affiliations].every(id=>nodeById.has(id)));
-  panel.innerHTML=`<div class="media-intro"><p class="eyebrow">MEDIA &amp; INFORMATION</p><h2>Who supplies Columbus’s information?</h2><p>Explore the organizations behind local outlets, their funding and the programs they carry. Each connection opens its source records.</p><p class="media-boundary">${profiles.length} outlet profiles · collection updated October 14, 2026</p></div><details class="media-paths"><summary>Outlet authority paths <span>${profiles.length} profiles · select a name for evidence</span></summary><div class="media-profile-grid">${profiles.map(p=>`<article class="media-profile"><h3>${link(p.outlet)}</h3><p class="media-authority"><strong>${['wosu','wcbe','ocj'].includes(p.outlet)?'Governance / organization':'Ownership / parent path'}</strong><span>${p.authority.map(link).join(p.joint?' <span class="media-path-separator">&amp;</span> ':' <span class="media-path-separator" title="Next parent or controlling owner">←</span> ')}</span></p>${p.affiliations.length?`<p class="media-affiliations"><strong>${p.outlet==='wtvn'?'Program supplier':'Network membership / affiliation'}</strong><span>${p.affiliations.map(link).join(' · ')}</span></p>`:''}<p>${escape(profileCopy[p.outlet]||p.note)}</p><button class="small-link" data-timeline-entity="${p.outlet}">View timeline</button></article>`).join('')}</div></details><details class="media-leads"><summary>Remaining research leads <span>Documents that could deepen the picture</span></summary><ul>${leadStories.map(lead=>`<li><strong>${escape(lead.title)}</strong><br>${escape(lead.text)}</li>`).join('')}</ul></details>`;
+  panel.innerHTML=`<div class="media-intro"><p class="eyebrow">MEDIA &amp; INFORMATION</p><h2>Who supplies Columbus’s information?</h2><p>Explore the organizations behind local outlets, their funding and the programs they carry. Each connection opens its source records.</p><p class="media-boundary">${profiles.length} outlet profiles · collection updated October 14, 2026</p></div><details class="media-paths"><summary>Outlet authority paths <span>${profiles.length} profiles · select a name for evidence</span></summary><div class="media-profile-grid">${profiles.map(p=>`<article class="media-profile"><h3>${link(p.outlet)}</h3><p class="media-authority"><strong>${['wosu','wcbe','ocj'].includes(p.outlet)?'Governance / organization':'Ownership / parent path'}</strong><span>${p.authority.map(link).join(p.joint?' <span class="media-path-separator">&amp;</span> ':' <span class="media-path-separator" title="Next parent or controlling owner">←</span> ')}</span></p>${p.affiliations.length?`<p class="media-affiliations"><strong>${p.outlet==='wtvn'?'Program supplier':'Network membership / affiliation'}</strong><span>${p.affiliations.map(link).join(' · ')}</span></p>`:''}<p>${escape(profileCopy[p.outlet]||p.note)}</p></article>`).join('')}</div></details><details class="media-leads"><summary>Remaining research leads <span>Documents that could deepen the picture</span></summary><ul>${leadStories.map(lead=>`<li><strong>${escape(lead.title)}</strong><br>${escape(lead.text)}</li>`).join('')}</ul></details>`;
 }
 function render(refit = false) {
   tagStatsCache=new Map();
   renderMediaOverview(); renderFilterChips();
-  graph = state.view==='network'?networkGraph():state.view==='timeline'?baseGraph():filterGraph(state);
+  graph = state.view==='network'?networkGraph():filterGraph(state);
   if(state.view==='network'){
     state.multiNodes=new Set([...state.multiNodes].filter(id=>graph.nodes.some(node=>node.id===id)));
     state.multiEdges=new Set([...state.multiEdges].filter(id=>graph.edges.some(edge=>edge.id===id)));
   }
-  if(state.view==='timeline'){prepareTimeline();renderTimeline();}
   renderIndirectRoutes();renderGraph(false); renderInspector(); decorateInspector();renderMapScope();renderQuickMenu();
   if (state.view === 'directory') renderDirectory();
   if (state.view === 'relations') renderRelations();
@@ -1123,9 +1064,9 @@ function campaignFinanceHTML(id){
 function decorateInspector(){
   if(!state.selected)return;
   if(state.view==='network'&&selectionCount()>1){$('inspector').querySelector('h2')?.setAttribute('tabindex','-1');return;}
-  const {kind,id}=state.selected,panel=$('inspector'),record=kind==='node'?nodeById.get(id):kind==='edge'?edgeById.get(id):kind==='source'?sourceById.get(id):timelineEvents.find(e=>e.id===id);
+  const {kind,id}=state.selected,panel=$('inspector'),record=kind==='node'?nodeById.get(id):kind==='edge'?edgeById.get(id):kind==='source'?sourceById.get(id):null;
   if(!record)return;panel.querySelector('h2')?.setAttribute('tabindex','-1');
-  if(kind==='edge'||kind==='event')panel.querySelector('.evidence-box')?.insertAdjacentHTML('beforebegin',contributionDates(kind==='edge'?record:edgeById.get(record.primaryEdgeId)));
+  if(kind==='edge')panel.querySelector('.evidence-box')?.insertAdjacentHTML('beforebegin',contributionDates(record));
   const details=document.createElement('div');details.className='record-tools';let evidence='';
   if(kind==='edge'){
     const review=reviewFor(record),validity=validityFor(record);
@@ -1178,33 +1119,24 @@ function revealInspector() {
   $('inspector').scrollIntoView({block:'start',behavior:'instant'});
   $('inspector').querySelector('h2')?.focus({preventScroll:true});
 }
-function jumpToTimelineYear(year) {
-  const section = document.querySelector(`[data-timeline-year-section="${CSS.escape(year)}"]`);
-  if (!section) return;
-  const header = document.querySelector('.timeline-header');
-  const inset = getComputedStyle(header).position === 'sticky' ? header.getBoundingClientRect().height : 0;
-  window.scrollTo({top:window.scrollY + section.getBoundingClientRect().top - inset - 8,behavior:'instant'});
-}
 window.addEventListener('resize',()=>{document.documentElement.style.setProperty('--masthead-height',document.querySelector('.masthead').getBoundingClientRect().height+'px');if(graph)renderMapScope();positionInspector();});
 function setView(view) {
+  if(!['network','relations','directory','sources'].includes(view))view='network';
   const previousView=state.view;
   if(previousView!==view){state.multiNodes.clear();state.multiEdges.clear();}
   if(view!=='network'){state.tags=new Set();hideTagPreview();}
   if(previousView!==view){state.query='';$('search').value='';$('starting-results').hidden=true;}
-  if(view==='timeline'&&state.selected?.kind==='node'){state.timelineEntity=state.selected.id;state.timelineScope='direct';}
-  const acceptedSelection={network:['node','edge'],timeline:['event'],relations:['edge'],directory:['node'],sources:['source']};
+  const acceptedSelection={network:['node','edge'],relations:['edge'],directory:['node'],sources:['source']};
   if(previousView!==view&&state.selected&&!acceptedSelection[view]?.includes(state.selected.kind)){
     state.selected=null;state.detailsOpen=false;state.focus=false;recordMenuOpen=false;
   }
-  if(previousView==='timeline'&&view!=='timeline'){state.query='';$('search').value='';}
-  if(view==='timeline'||previousView==='timeline')state.focus=false;
   state.view = view;
   document.querySelectorAll('[data-view]').forEach(el => { const active = el.dataset.view === view; el.classList.toggle('active', active); active ? el.setAttribute('aria-current', 'page') : el.removeAttribute('aria-current'); });
-  for (const name of ['network','timeline','relations','directory','sources']) $(`${name}-view`).hidden = name !== view;
+  for (const name of ['network','relations','directory','sources']) $(`${name}-view`).hidden = name !== view;
   document.querySelector('.workspace').setAttribute('data-current-view', view);
   mountCanvasWindows();
-  $('search').placeholder=view==='timeline'?'Search events, names or amounts…':view==='sources'?'Search sources…':view==='relations'?'Search connections…':view==='network'?'Search names or tags…':'Search people or organizations…';
-  $('search').setAttribute('aria-label',view==='timeline'?'Search timeline events':view==='sources'?'Search sources and publishers':view==='relations'?'Search relationships':view==='network'?'Search names or tags':'Search people and organizations');
+  $('search').placeholder=view==='sources'?'Search sources…':view==='relations'?'Search connections…':view==='network'?'Search names or tags…':'Search people or organizations…';
+  $('search').setAttribute('aria-label',view==='sources'?'Search sources and publishers':view==='relations'?'Search relationships':view==='network'?'Search names or tags':'Search people and organizations');
   render(view === 'network');
   syncURL();
 }
@@ -1221,7 +1153,6 @@ function resetFilters(doRender = true) {
   state.showDirect=false;
   state.multiNodes.clear();state.multiEdges.clear();state.bucketMode=false;state.bucketIds=null;
   state.categories = new Set(Object.keys(categories)); state.relationships = new Set(Object.keys(relationships)); state.history = true; state.query = ''; state.selected = null; state.path = null; state.focus = false;
-  state.timelineMoney='all';state.timelineUndated=true;
   state.caseId='all';$('topic-select').value='all';$('graph-title').textContent='Columbus network';state.tags=new Set();state.connectionMode='all';state.from='';state.to='';state.includeUncertain=true;syncReportingControls();
   $('search').value = ''; $('history').checked = true;
   $('filters').querySelectorAll('[data-category],[data-relationship]').forEach(input => input.checked = true);
@@ -1235,7 +1166,7 @@ function openPathFinder() {
   const available = baseGraph().nodes.slice().sort((a, b) => a.name.localeCompare(b.name));
   $('path-entities').innerHTML=available.map(node=>`<option value="${escape(node.name)}">${escape(node.role)}</option>`).join('');
   const chosen=[...state.startingIds].filter(id=>available.some(node=>node.id===id));
-  const first=chosen[0]||(selected?.kind==='node'?selected.id:'')||selectedEdge?.source||(originView==='timeline'?state.timelineEntity:'');
+  const first=chosen[0]||(selected?.kind==='node'?selected.id:'')||selectedEdge?.source;
   const second=chosen[1]||selectedEdge?.target||'';
   $('path-from').value=nodeById.get(first)?.name||'';$('path-to').value=nodeById.get(second)?.name||'';
   $('path-form').querySelector('button').disabled = !available.length;
@@ -1298,14 +1229,6 @@ document.addEventListener('click', event => {
   if (btn.hasAttribute('data-close-inspector')) { if(state.view==='network'){state.detailsOpen=false;render();}else{state.selected=null;state.focus=false;render();}restoreFocus(); }
   if(btn.hasAttribute('data-copy-citation')){const {kind,id}=state.selected;const citation=`CBUS Power, ${recordKind(kind)} ${id}, release ${release.releaseId}  ${recordURL(location.href,kind,id,release.releaseId)}`;navigator.clipboard.writeText(citation).then(()=>toast('Release-specific citation copied')).catch(()=>{downloadJSON({citation},'record-citation.json');toast('Citation downloaded');});}
   if(btn.hasAttribute('data-evidence-packet'))downloadJSON(evidencePacket(state.selected,baseGraph()),'evidence-'+state.selected.id+'-'+release.releaseId+'.json');
-  if(btn.dataset.timelineEvent){rememberOpener();state.selected={kind:'event',id:btn.dataset.timelineEvent};state.path=null;render();revealInspector();}
-  if(btn.dataset.timelineYear)jumpToTimelineYear(btn.dataset.timelineYear);
-  if(btn.dataset.timelineEntity){state.timelineEntity=btn.dataset.timelineEntity;state.timelineScope='direct';state.selected=null;state.query='';$('search').value='';setView('timeline');}
-  if(btn.dataset.timelineNetwork){
-    const event=shownTimelineEvents.find(e=>e.id===btn.dataset.timelineNetwork),edge=edgeById.get(event.primaryEdgeId);
-    state.query='';$('search').value='';state.selected={kind:'edge',id:edge.id};state.path={nodes:[edge.source,edge.target],edges:[edge.id]};state.focus=false;setView('network');fitGraph(new Set([edge.source,edge.target]));$('network-view').scrollIntoView({block:'start',behavior:'instant'});
-  }
-  if(btn.hasAttribute('data-reset-timeline')){state.timelineMoney='all';state.timelineUndated=true;state.query='';$('search').value='';state.selected=null;render();}
   if (btn.dataset.start) revealNode(btn.dataset.start);
   if (btn.dataset.nodeDetail) { if (btn.closest('#path-dialog')) closeFloatingPanel('path-dialog'); revealNode(btn.dataset.nodeDetail); }
   if (btn.dataset.edge && !btn.closest('#graph')) { selectEdge(btn.dataset.edge); }
@@ -1313,10 +1236,6 @@ document.addEventListener('click', event => {
   if(btn.dataset.expandNode){if(state.selected?.id!==btn.dataset.expandNode)toggleNode(btn.dataset.expandNode);showDirectConnections();}
   if (btn.hasAttribute('data-focus')) { state.focus = !state.focus; renderGraph(); renderInspector();decorateInspector();fitGraph();syncURL(); }
   if (btn.hasAttribute('data-clear-highlight')) { settleExpansion(false);const refit=state.focus;state.focus = false; state.path = null; render(refit); }
-});
-for(const id of ['timeline-entity','timeline-scope','timeline-money','timeline-undated'])$(id).addEventListener('change',()=>{
-  state.timelineEntity=$('timeline-entity').value;state.timelineScope=$('timeline-scope').value;state.timelineMoney=$('timeline-money').value;state.timelineUndated=$('timeline-undated').checked;state.selected=null;state.path=null;render();
-  syncURL();
 });
 document.addEventListener('keydown', event => {
   if(event.code==='Space'&&!event.target.closest('input,textarea,select,[contenteditable=true]')){spaceToPan=true;$('graph').dataset.selectionMode='false';}
@@ -1346,23 +1265,22 @@ $('path-form').addEventListener('submit', event => {
 });
 function currentExport() {
   let exported = graph;
-  if(state.view==='timeline'){const ids=new Set(shownTimelineEvents.flatMap(e=>e.edgeIds));const links=baseGraph().edges.filter(e=>ids.has(e.id));const actors=new Set(links.flatMap(e=>[e.source,e.target]));exported={nodes:baseGraph().nodes.filter(n=>actors.has(n.id)),edges:links};}
   if(state.view==='relations') { const links=visibleRelations(); const ids=new Set(links.flatMap(e=>[e.source,e.target])); exported={nodes:baseGraph().nodes.filter(n=>ids.has(n.id)),edges:links}; }
   if (state.view === 'directory') { const base = baseGraph(); const list = base.nodes.filter(n => matches(n, state.query)); const ids = new Set(list.map(n => n.id)); exported = { nodes: list, edges: base.edges.filter(e => ids.has(e.source) && ids.has(e.target)) }; }
   if (state.view === 'sources') { const base = baseGraph(); const visible = new Set(visibleSources().map(s => s.id)); const links = base.edges.filter(e => e.sourceIds.some(id => visible.has(id))); const ids = new Set(links.flatMap(e => [e.source, e.target])); exported = { nodes: base.nodes.filter(n => ids.has(n.id) || n.sourceIds.some(id => visible.has(id))), edges: links }; }
   const sourceIds = new Set([...exported.nodes.flatMap(n => n.sourceIds), ...exported.edges.flatMap(e => e.sourceIds)]);
-  const output = { meta, view:state.view,case:state.caseId, filters:{categories:[...state.categories],relationships:[...state.relationships],includeHistory:state.history,query:state.query,...(state.view==='timeline'?{timelineEntity:state.timelineEntity,timelineScope:state.timelineScope,moneyStatus:state.timelineMoney,includeUndated:state.timelineUndated}:{})},...(state.view==='timeline'?{events:shownTimelineEvents}:{}),...(state.caseId==='media'?{outletProfiles:mediaProfiles.filter(p=>[p.outlet,...p.authority,...p.affiliations].every(id=>exported.nodes.some(n=>n.id===id))),researchLeads:mediaLeads}:{}),nodes:exported.nodes,edges:exported.edges,sources:sources.filter(s=>sourceIds.has(s.id)).map(({url,archiveUrl,archiveBrowseUrl,...record})=>({...record,url:archiveUrl||url})) };
-  Object.assign(output,datasetFor(exported,state.view==='timeline'?shownTimelineEvents:null));
+  const output = { meta, view:state.view,case:state.caseId, filters:{categories:[...state.categories],relationships:[...state.relationships],includeHistory:state.history,query:state.query},...(state.caseId==='media'?{outletProfiles:mediaProfiles.filter(p=>[p.outlet,...p.authority,...p.affiliations].every(id=>exported.nodes.some(n=>n.id===id))),researchLeads:mediaLeads}:{}),nodes:exported.nodes,edges:exported.edges,sources:sources.filter(s=>sourceIds.has(s.id)).map(({url,archiveUrl,archiveBrowseUrl,...record})=>({...record,url:archiveUrl||url})) };
+  Object.assign(output,datasetFor(exported));
   if(state.view==='network'&&state.tags.size){const selection=tagSelection(exported,state.tags),single=state.tags.size===1;output.tagSelection={...(single?{id:[...state.tags][0],label:tagDefinitions[[...state.tags][0]].label}:{}),tags:selection.byTag,mode:selection.mode,connectionLimit:selection.connectionLimit,entityIds:[...selection.matches.nodes],relationshipIds:[...selection.matches.edges],connectorRelationshipIds:[...selection.connectors]};}
   output.nodes=output.entities;output.edges=output.relationships;output.filters={...output.filters,connectionMode:state.connectionMode,from:state.from,to:state.to,includeUncertain:state.includeUncertain,...(state.view==='network'?{pinnedIds:[...state.pinnedIds],connectionDistance:state.connectionDistance,colorMode:state.colorMode,centerEntity:focusEntityId(),tag:state.tags.size===1?[...state.tags][0]:null,tags:[...state.tags]}:{})};output.viewURL=encodeState(location.href,state,release.releaseId);
   return {output,name:`cbus-power-${state.view}-${release.releaseId}.json`};
 }
 function openDataDownload(){
   const {output,name}=currentExport();
-  const viewNames={network:'Network',timeline:'Timeline',relations:'Links',directory:'Entities',sources:'Sources'};
-  const scope={network:'the entities and connections currently on the map',timeline:'the visible timeline events and their linked records',relations:'the matching links and their endpoints',directory:'the matching entities and links among them',sources:'the matching sources and records they support'}[state.view];
+  const viewNames={network:'Network',relations:'Links',directory:'Entities',sources:'Sources'};
+  const scope={network:'the entities and connections currently on the map',relations:'the matching links and their endpoints',directory:'the matching entities and links among them',sources:'the matching sources and records they support'}[state.view];
   const counts=[`${output.entities.length} entities`,`${output.relationships.length} links`,`${output.sources.length} sources`,...(output.events?[`${output.events.length} events`]:[])].join(' · ');
-  const selectedFilters=[cases[state.caseId]?.title||'All topics',state.query?`Search: “${state.query}”`:'No search term',`${state.categories.size} entity categories`,`${state.relationships.size} connection types`,...(state.view==='timeline'?[`Scope: ${$('timeline-scope').selectedOptions[0]?.textContent||state.timelineScope}`,`Money: ${$('timeline-money').selectedOptions[0]?.textContent||state.timelineMoney}`]:[])].join(' · ');
+  const selectedFilters=[cases[state.caseId]?.title||'All topics',state.query?`Search: ${state.query}`:'No search term',`${state.categories.size} entity categories`,`${state.relationships.size} connection types`].join(' · ');
   $('data-download-summary').textContent=`This file contains ${scope}. Check the selection before saving it.`;
   $('data-download-details').innerHTML=`<dt>View</dt><dd>${escape(viewNames[state.view])}</dd><dt>Edition</dt><dd>${escape(release.releaseId)}</dd><dt>Format</dt><dd>JSON</dd><dt>Records</dt><dd>${escape(counts)}</dd><dt>Active selection</dt><dd>${escape(selectedFilters)}</dd><dt>File name</dt><dd>${escape(name)}</dd>`;
   $('data-download-manifest').href=`./downloads/${encodeURIComponent(release.releaseId)}/manifest.json`;
@@ -1429,7 +1347,7 @@ function restoreURL(){
   setCase(requested.caseId);setView(requested.view);Object.assign(state,requested);
   state.multiNodes=new Set(requested.selected?.kind==='node'?[requested.selected.id]:[]);state.multiEdges=new Set(requested.selected?.kind==='edge'?[requested.selected.id]:[]);
   state.bucketIds=null;if(requested.selected)state.detailsOpen=true;
-  const valid=state.selected&&(state.selected.kind==='node'?nodeById.has(state.selected.id):state.selected.kind==='edge'?edgeById.has(state.selected.id):state.selected.kind==='source'?sourceById.has(state.selected.id):timelineEvents.some(e=>e.id===state.selected.id));
+  const valid=state.selected&&(state.selected.kind==='node'?nodeById.has(state.selected.id):state.selected.kind==='edge'?edgeById.has(state.selected.id):state.selected.kind==='source'?sourceById.has(state.selected.id):false);
   const messages=[];if(state.selected&&!valid){messages.push('Unknown record ID; no record was substituted.');state.selected=null;}
   if(state.requestedRelease&&state.requestedRelease!==release.releaseId)messages.push(`This link cites ${state.requestedRelease}; this site contains ${release.releaseId}. Consult the saved release before citing.`);
   if(state.routeWarning)messages.push(state.routeWarning);
@@ -1548,7 +1466,7 @@ window.addEventListener('message',event=>{
   if(event.origin!==location.origin||event.source!==window.parent||event.data?.channel!=='columbus-explorer')return;
   if(Number.isFinite(event.data.viewportHeight))canvasBaseHeight=Math.max(464,event.data.viewportHeight-16);
   if(event.data.type==='restore'){try{restoreWorkspaceView(event.data.snapshot);}catch{toast('This view could not be restored.');}}
-  if(event.data.type==='navigate'&&['network','timeline','relations','directory','sources'].includes(event.data.view)){setView(event.data.view);measureWorkspace();publishWorkspaceState();}
+  if(event.data.type==='navigate'&&['network','relations','directory','sources'].includes(event.data.view)){setView(event.data.view);measureWorkspace();publishWorkspaceState();}
   if(event.data.type==='research-library')researchUI.openSaved();
   if(event.data.type==='capture')publishWorkspaceState(event.data.requestId);if(event.data.type==='measure')requestAnimationFrame(()=>{if(state.view==='network'&&graph&&$('canvas-area').getBoundingClientRect().width>0){positionGraph();}measureWorkspace();});
 });

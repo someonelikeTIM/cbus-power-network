@@ -49,3 +49,7 @@ Research leads are open questions. Filtered packets contain a complete lead only
 ## Election results
 
 Candidate entities can include `electionResult`: race ID, election date, unofficial/certified status, standing in the retrieved return, votes, shared selection candidate IDs, write-in classification, geographic scope, original source ID, source snapshot time, check date and locator. A null vote count means the candidate is not separately reported in that snapshot. Governor/lieutenant-governor members share one ticket count; do not sum their duplicated entity references. `officeAssumed: false` records that this result establishes no new term. New result relationships use `voteCount`, never a monetary `amount`. The election timeline keeps election dates separate from report/check dates. Earlier candidacy, source and finance records remain dated.
+
+## Political party affiliation
+
+`party` is a documented party label, separate from the ballot's partisan/nonpartisan rules. `partyAffiliation` holds the party, source IDs, source locator, period, check date and scope qualification for supplemental affiliation records. These fields do not establish present officeholding or transfer an affiliation to an employer, donor or connected organization. Historical source periods remain visible. Libertarian, other-party and unlisted roster labels retain their meanings; red/blue coloring recognizes only documented Republican/Democratic affiliations.

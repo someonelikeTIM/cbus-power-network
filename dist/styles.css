@@ -201,3 +201,5 @@ body[data-view=network] #connection-legend{width:292px}
 .party-swatches{display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:12px;font:11px var(--sans)}
 .party-swatches span{display:flex;align-items:center;gap:6px}.party-swatches i{width:10px;height:10px;border-radius:50%;background:var(--color)}
 body[data-canvas-colors=party] #legend-types .legend-line{border-color:#747b80}
+
+.party-affiliation{margin:10px 0;padding:8px 10px;border-left:2px solid var(--line);font:12px/1.5 var(--sans)}.party-affiliation strong{display:block;font-weight:600}.party-affiliation small{display:block;color:var(--muted);font-size:10px}

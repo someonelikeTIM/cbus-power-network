@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-11-16 — Party-affiliation corrections and simpler navigation
+
+Edition 2026-11-16-party fills missing party data for 16 officials and the Ohio Republican Party chair, including Mike DeWine, JD Vance, Donald Trump, Bernie Moreno, Jim Tressel, Matt Huffman, Andrew Ginther and Columbus council members. Thirteen checked sources support the new fields. Party labels are normalized for whitespace and common D/R spellings. Details show the recorded affiliation, its period and source locator; exports retain the same provenance.
+
+The Timeline view and its navigation, entity actions, quick actions and media-profile shortcuts have been removed. Older timeline links open the network; event record links open their underlying relationship. Source-linked dates and downloadable event records remain available with the dataset.
+
+Party affiliation remains separate from nonpartisan ballot rules, current officeholding, endorsements and donations. Historical affiliation periods are stated. Other-party and unlisted ballot entries keep their original qualifications, and public offices, businesses and donors receive no inferred party. No entities, relationships, financial amounts or election results were added or changed. Earlier download editions remain available. Coverage remains 390 entities, 577 relationships and 236 events, with 202 checked sources.
+
 ## 2026-11-16 — Canvas party colors and connection visibility
 
 Legend now offers optional political party coloring: blue for recorded Democratic affiliations, red for Republican affiliations, and gray for other or unrecorded affiliations. Connections use the known endpoint's party; connections between different parties stay gray. Coloring never assigns an affiliation to an unknown endpoint.

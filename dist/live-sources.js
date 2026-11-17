@@ -2259,5 +2259,180 @@ export const sourceLiveEvidence = {
     ],
     "missingChecks": [],
     "contentCheckNote": "Phase completion is not operation. Earlier source-check records retained; independent human editorial review is not claimed."
+  },
+  "pa26-state-roster": {
+    "originalUrl": "https://www.vote.franklincountyohio.gov/candidates/elected-officials",
+    "finalUrl": "https://www.vote.franklincountyohio.gov/candidates/elected-officials",
+    "contentVerified": true,
+    "checkedAt": "2026-11-17T01:53:12.070Z",
+    "sha256": "f468c8b90a68664e476bb2216d15521d1b35e66a0e40ddc24886950fd6e11247",
+    "contentCheckMethod": "Original HTML retrieval and text check",
+    "contentChecks": [
+      "roster of elected officials",
+      "mike dewine",
+      "jim tressel",
+      "(r)"
+    ],
+    "missingChecks": []
+  },
+  "pa26-federal-ballot": {
+    "contentVerified": true,
+    "originalUrl": "https://www.ohiosos.gov/office/media-center/categories/press-releases/2024-08-23",
+    "finalUrl": "https://www.ohiosos.gov/office/media-center/categories/press-releases/2024-08-23",
+    "checkedAt": "2026-11-17T01:55:43.999Z",
+    "sha256": null,
+    "contentCheckMethod": "Original source content read with web reader",
+    "contentCheckNote": "Direct programmatic requests returned HTTP 403. Original page content was read with the web reader; no original-byte hash is claimed.",
+    "contentChecks": [
+      "donald j. trump and jd vance (republican)",
+      "bernie moreno (republican)"
+    ],
+    "missingChecks": []
+  },
+  "pa26-dewine": {
+    "originalUrl": "https://www.nga.org/governors/ohio/",
+    "finalUrl": "https://www.nga.org/governors/ohio/",
+    "contentVerified": true,
+    "checkedAt": "2026-11-17T01:53:12.292Z",
+    "sha256": "65943858bb02386a007abe57bccd4fa74445526f51a531610718e18262fbe68e",
+    "contentCheckMethod": "Original HTML retrieval and text check",
+    "contentChecks": [
+      "mike dewine",
+      "party republican"
+    ],
+    "missingChecks": []
+  },
+  "pa26-dovilla": {
+    "originalUrl": "https://www.ohiohouse.gov/members/michael-d-dovilla/biography",
+    "finalUrl": "https://www.ohiohouse.gov/members/michael-d-dovilla/biography",
+    "contentVerified": true,
+    "checkedAt": "2026-11-17T01:53:12.346Z",
+    "sha256": "c3b729fcb7cdd2f5db7ea01ec9786ea729cb505ee9caa7dca22a9d6b3ec99725",
+    "contentCheckMethod": "Original HTML retrieval and text check",
+    "contentChecks": [
+      "mike dovilla",
+      "house republican policy committee"
+    ],
+    "missingChecks": []
+  },
+  "pa26-kasich": {
+    "originalUrl": "https://www.nga.org/governor/john-kasich/",
+    "finalUrl": "https://www.nga.org/governor/john-kasich/",
+    "contentVerified": true,
+    "checkedAt": "2026-11-17T01:53:12.369Z",
+    "sha256": "d2aa0b6f8befeea8e4be49756ecce96de73afb970bf336a579b6db256e989a3c",
+    "contentCheckMethod": "Original HTML retrieval and text check",
+    "contentChecks": [
+      "john kasich",
+      "party republican"
+    ],
+    "missingChecks": []
+  },
+  "pa26-householder": {
+    "originalUrl": "https://ohiohouse.gov/news/republican/representative-larry-householder-elected-speaker-99231",
+    "finalUrl": "https://ohiohouse.gov/news/republican/representative-larry-householder-elected-speaker-99231",
+    "contentVerified": true,
+    "checkedAt": "2026-11-17T01:53:12.434Z",
+    "sha256": "8564d08463211bf43c8dd15c8cb016ea761c940d5cfc5f79da350012d76a21d8",
+    "contentCheckMethod": "Original HTML retrieval and text check",
+    "contentChecks": [
+      "householder (r-glenford)",
+      "january 29, 2019"
+    ],
+    "missingChecks": []
+  },
+  "pa26-huffman": {
+    "originalUrl": "https://www.ohiohouse.gov/members/matt-huffman",
+    "finalUrl": "https://www.ohiohouse.gov/members/matt-huffman",
+    "contentVerified": true,
+    "checkedAt": "2026-11-17T01:53:12.591Z",
+    "sha256": "874769f7b02d3d7879ad213177fbfd479f6e26c204e9ba24f02928a93f91627b",
+    "contentCheckMethod": "Original HTML retrieval and text check",
+    "contentChecks": [
+      "matt huffman",
+      "district 78",
+      "matt huffman (r-lima)"
+    ],
+    "missingChecks": []
+  },
+  "pa26-dorans": {
+    "contentVerified": true,
+    "originalUrl": "https://columbusconstruction.org/dorans-appointed-to-columbus-city-council/",
+    "finalUrl": "https://columbusconstruction.org/dorans-appointed-to-columbus-city-council/",
+    "checkedAt": "2026-11-17T01:55:43.999Z",
+    "sha256": null,
+    "contentCheckMethod": "Original source content read with web reader",
+    "contentCheckNote": "Direct programmatic requests returned HTTP 403. Original page content was read with the web reader; no original-byte hash is claimed.",
+    "contentChecks": [
+      "dorans will run",
+      "fellow democrat"
+    ],
+    "missingChecks": []
+  },
+  "pa26-yost": {
+    "contentVerified": true,
+    "originalUrl": "https://boe.co.trumbull.oh.gov/pdfs/CANDIDATES%202022G.pdf",
+    "finalUrl": "https://boe.co.trumbull.oh.gov/pdfs/CANDIDATES%202022G.pdf",
+    "checkedAt": "2026-11-17T01:55:43.995Z",
+    "sha256": "7c2a44ad230c8382bdf055b1fc28f2bc6b45249dd603ad00ff1c125076e82cd9",
+    "contentCheckMethod": "Original PDF retrieval, text extraction and rendered party-column review",
+    "contentChecks": [
+      "dave yost - republican"
+    ],
+    "missingChecks": []
+  },
+  "pa26-columbus-pac-labels": {
+    "contentVerified": true,
+    "originalUrl": "https://d1io3yog0oux5.cloudfront.net/_edad57643dd595f16ed5c186c719ce3e/huntington/db/2715/27579/file/HBI-PAC_Disbursement_Reports_2020-2024_FINAL.pdf",
+    "finalUrl": "https://d1io3yog0oux5.cloudfront.net/_edad57643dd595f16ed5c186c719ce3e/huntington/db/2715/27579/file/HBI-PAC_Disbursement_Reports_2020-2024_FINAL.pdf",
+    "checkedAt": "2026-11-17T01:55:43.998Z",
+    "sha256": "a1ba4c91533ccddfd15e44d67cee3430347889452b0d5e810bf94f34c8140242",
+    "contentCheckMethod": "Original PDF retrieval, text extraction and rendered party-column review",
+    "contentChecks": [
+      "andrew ginther",
+      "zach klein",
+      "democrat"
+    ],
+    "missingChecks": []
+  },
+  "pa26-mitchell-brown": {
+    "originalUrl": "https://patch.com/ohio/columbus/columbus-election-results-city-council-city-attorney",
+    "finalUrl": "https://patch.com/ohio/columbus/columbus-election-results-city-council-city-attorney",
+    "contentVerified": true,
+    "checkedAt": "2026-11-17T01:53:13.086Z",
+    "sha256": "1fd55bc62fbeb3b85998ef2ad35a7f02fc67526e49a77a116b69020767d91740",
+    "contentCheckMethod": "Original HTML retrieval and text check",
+    "contentChecks": [
+      "mitchell j. brown",
+      "all three are democrats"
+    ],
+    "missingChecks": []
+  },
+  "pa26-columbus-party": {
+    "originalUrl": "https://ohiodems.org/ohio-democratic-party-congratulates-columbus-city-council-candidates-on-their-successful-elections-and-reelections-to-council/",
+    "finalUrl": "https://ohiodems.org/ohio-democratic-party-congratulates-columbus-city-council-candidates-on-their-successful-elections-and-reelections-to-council/",
+    "contentVerified": true,
+    "checkedAt": "2026-11-17T01:53:13.265Z",
+    "sha256": "7f6754fe659011148fa3f64ad7c76900b3a893bdc184e0ecaed59aa81a59b861",
+    "contentCheckMethod": "Original HTML retrieval and text check",
+    "contentChecks": [
+      "continued democratic leadership",
+      "nick bankston",
+      "shannon hardin"
+    ],
+    "missingChecks": []
+  },
+  "pa26-gop-chair": {
+    "originalUrl": "https://ohiogop.org/about-the-chairman/",
+    "finalUrl": "https://ohiogop.org/about-the-chairman/",
+    "contentVerified": true,
+    "checkedAt": "2026-11-17T01:53:13.843Z",
+    "sha256": "38debc920796939fe2e092ec331f03ef8a424047910385e38f7661519e462b23",
+    "contentCheckMethod": "Original HTML retrieval and text check",
+    "contentChecks": [
+      "alex triantafilou",
+      "chairman of the ohio republican party"
+    ],
+    "missingChecks": []
   }
 };

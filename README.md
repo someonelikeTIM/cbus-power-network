@@ -10,13 +10,13 @@ Selecting an entity opens a flyout with connection counts and types. Show direct
 
 Legend → Canvas visibility now offers 1–6 connection steps and Show all. One step shows the selected entity and its direct links; each additional step includes the next neighbors in the filtered network. The slider changes visibility without moving entities. Show all includes every connected entity in the active filters. Explicit paths retain their selected route until Show all or another entity is chosen. Legend → Color by → Political party uses blue for recorded Democratic affiliations, red for Republican affiliations, and gray for other or unrecorded affiliations. A link uses its known endpoint's party, with cross-party links gray; it does not assign an affiliation to an unknown endpoint. Party coloring and depth are retained in saved view links and support Undo.
 
-The current edition, **2026-11-16**, contains **390 entities, 577 relationships, 189 sources and 236 timeline events**. It retains the Wexner–Epstein, Redflex, post-election and construction records and clarifies an earlier financial-report coverage gap. Coverage includes campaign contributions, public contracts, tax incentives, lobbying, civic affiliations and media ownership. This is a selected collection, not a complete register.
+The current edition, **2026-11-16-party**, contains **390 entities, 577 relationships, 202 sources and 236 dated event records**. It retains the Wexner–Epstein, Redflex, post-election and construction records and clarifies an earlier financial-report coverage gap and adds sourced party affiliations for officials missing from the election roster. Coverage includes campaign contributions, public contracts, tax incentives, lobbying, civic affiliations and media ownership. This is a selected collection, not a complete register.
 
 Evidence labels distinguish reporting, allegations, findings, registrations and authorizations. A connection alone establishes neither wrongdoing nor causation. Donation totals may summarize several reported receipts; spending ceilings are different from payments. Details preserve those distinctions and explain missing dates or records. See [methodology](docs/METHODOLOGY.md).
 
 ## Data and citations
 
-The explorer provides record links, current-view downloads and evidence packets. [Versioned JSON/CSV tables, schemas and checksums](https://cbuspower.org/downloads/2026-11-16/manifest.json) are in `dist/downloads/`. Join records using stable IDs and cite the edition. See the [data dictionary](docs/DATA-DICTIONARY.md).
+The explorer provides record links, current-view downloads and evidence packets. [Versioned JSON/CSV tables, schemas and checksums](https://cbuspower.org/downloads/2026-11-16-party/manifest.json) are in `dist/downloads/`. Join records using stable IDs and cite the edition. See the [data dictionary](docs/DATA-DICTIONARY.md).
 
 ## Explorer views
 
@@ -28,7 +28,7 @@ Drag to pan and scroll to zoom. Shift-drag traces a selection rectangle; Ctrl/Cm
 
 The entity flyout, quick tools and record details can be dragged by their headers and resized from their bottom-right corners. The flyout avoids the active entity and followed path; Auto place restores its automatic position. Details also resize from the left edge, and Dock right / Undock switches between a sidebar and a floating window. Double-click the details or quick tools header to dock or undock it. Double-click the entity flyout header for automatic placement. Window movement and resizing do not move entity coordinates. Whole network returns to the full connected view while preserving placed branches; an explicit position reset starts a new layout. Details use compact rows and source qualifications instead of duplicate metric blocks.
 
-The quick menu adapts to entity, connection and mixed selections: center an entity, open a timeline, find a two-entity path, select connection endpoints, pin, isolate or export records with their sources. Sort by connection type explicitly arranges entities into labeled buckets; Natural layout restores the original world positions. Dollar labels retain each record's commitment, ceiling or range qualification without adding amounts together. Legend opens a larger connection-type panel over the canvas.
+The quick menu adapts to entity, connection and mixed selections: center an entity, find a two-entity path, select connection endpoints, pin, isolate or export records with their sources. Sort by connection type explicitly arranges entities into labeled buckets; Natural layout restores the original world positions. Dollar labels retain each record's commitment, ceiling or range qualification without adding amounts together. Legend opens a larger connection-type panel over the canvas.
 
 **Desktop-first release:** mobile layout work is deferred until the desktop version is delivered. Smaller devices can still load the site and receive a notice recommending a full-size browser. Mobile layout and regression tests are not release gates.
 
@@ -36,7 +36,6 @@ Pin entities or specific connections to chart a research path. Research opens th
 
 Filters group connection types with whole-group checkboxes and Select all / Deselect all. The legend counts the relationships drawn in the current network. Selecting a record highlights its neighborhood without hiding the rest of that filtered network.
 
-The Timeline starts with records directly involving its selected entity. Connected entities expands to events involving entities within two documented links; indirect cards show the link route that brings them into view. Scope and money-status choices remain visible beside the event count.
 
 Views → Save this view stores a named copy in this browser. Load a saved view opens that copy in a new tab. Export this view or Export all tabs creates a portable JSON file, including pins, filters, positions and zoom. Import views opens valid files as additional tabs, keeping existing work. These files store presentation choices; Download data separately exports the sourced records. Its preview states the view, current selection, format, edition, record counts and file name. Browser reloads retain the current tab session, while a fresh site visit still begins with guided search.
 

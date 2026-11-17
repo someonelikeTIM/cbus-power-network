@@ -1,15 +1,29 @@
 {
   "release": {
     "schemaVersion": "1.0.0",
-    "releaseId": "2026-11-16",
+    "releaseId": "2026-11-16-party",
     "status": "published",
     "preparedOn": "2026-11-16",
-    "publishedAt": "2026-11-16T14:08:25.305319+00:00",
-    "dataRevision": 21,
+    "publishedAt": "2026-11-17T01:58:01.006230Z",
+    "dataRevision": 22,
     "codeLicense": "MIT",
     "dataLicense": "CC-BY-4.0",
-    "sourceCheckIds": []
+    "sourceCheckIds": [
+      "pa26-dewine",
+      "pa26-state-roster",
+      "pa26-federal-ballot",
+      "pa26-huffman",
+      "pa26-dovilla",
+      "pa26-householder",
+      "pa26-kasich",
+      "pa26-yost",
+      "pa26-columbus-party",
+      "pa26-dorans",
+      "pa26-columbus-pac-labels",
+      "pa26-mitchell-brown",
+      "pa26-gop-chair"
+    ]
   },
-  "inputFingerprint": "b450a5a4fa8d71ae00c7c4f53fa9605be89da55f82c4e0f3e0123a0022dc10a1",
-  "manifest": "downloads/2026-11-16/manifest.json"
+  "inputFingerprint": "28518ea0cf30f879c1235bf60b8c292cb8e10b82b9a6e5c2dd21a371510e7d51",
+  "manifest": "downloads/2026-11-16-party/manifest.json"
 }

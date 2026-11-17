@@ -27,7 +27,6 @@
     <a class="brand" href="./" aria-label="CBUS Power home"><svg viewBox="0 0 36 36" aria-hidden="true"><path d="M8 9L27 7L18 26L8 9L29 26L27 7M18 26L29 26"/><circle cx="8" cy="9" r="4"/><circle cx="27" cy="7" r="3"/><circle cx="18" cy="26" r="4"/><circle cx="29" cy="26" r="2"/></svg><span>CBUS POWER<span class="brand-sub">cbuspower.org</span></span></a>
     <nav class="view-nav" aria-label="Explorer views">
       <button class="active" data-view="network" aria-current="page"><span aria-hidden="true">◉</span> Network</button>
-      <button data-view="timeline">Timeline</button>
       <button data-view="relations">Links</button>
       <button data-view="directory">Entities</button>
       <button data-view="sources">Sources <span id="source-total" class="nav-count"></span></button>
@@ -107,21 +106,6 @@
           <div class="graph-footer"><span>Select for evidence <span class="hint-separator">·</span> Drag to pan · Scroll to zoom · Shift-drag to select</span><button id="label-toggle" class="text-button" aria-label="Cycle node labels" title="Cycle automatic labels, more labels, and labels off">Labels auto</button></div>
         </div>
 
-        <section id="timeline-view" class="timeline-view view-panel" aria-label="Follow the money timeline" hidden>
-          <div class="timeline-header">
-            <div class="timeline-heading"><div><p class="eyebrow">FOLLOW THE MONEY</p><h2 id="timeline-title">JobsOhio</h2></div><span id="timeline-count" aria-live="polite"></span></div>
-            <div class="timeline-controls">
-              <label>Entity<select id="timeline-entity" aria-label="Timeline entity"></select></label>
-              <label>Scope<select id="timeline-scope" aria-label="Timeline scope"><option value="direct" selected>Entity only</option><option value="nearby">Connected entities</option><option value="case">Entire case</option></select></label>
-              <label>Money status<select id="timeline-money" aria-label="Timeline money status"><option value="all">All records</option><option value="cash">Cash & reported receipts</option><option value="commitments">Authorizations & commitments</option><option value="credit">Credit limits</option><option value="unpriced">No transfer amount</option></select></label>
-            </div>
-            <p id="timeline-scope-explanation" class="timeline-scope-explanation">Entity only shows events whose records directly name the selected entity.</p>
-            <div class="timeline-caption"><span>Year headings use the end of a reporting period. Cards show the dates available.</span><label><input id="timeline-undated" type="checkbox" checked> Include undated records</label></div>
-            <nav id="timeline-year-nav" class="timeline-year-nav" aria-label="Jump to timeline year"></nav>
-            <div id="timeline-lane-headings" class="timeline-lane-headings"></div>
-          </div>
-          <div id="timeline-events" class="timeline-events"></div>
-        </section>
         <section id="relations-view" class="relations-view view-panel" aria-label="Relationship ledger" hidden><div class="list-heading"><h2>Links</h2><span id="relations-count"></span></div><div id="relations-list"></div></section>
         <section id="directory-view" class="directory-view view-panel" aria-label="Entity directory" hidden><div class="list-heading"><h2>Entities</h2><span id="directory-count"></span></div><div id="directory-list" class="directory-list"></div></section>
         <section id="sources-view" class="sources-view view-panel" aria-label="Source library" hidden><div class="list-heading"><h2>Sources</h2></div><p id="archive-summary" class="archive-summary"></p><div id="source-list"></div></section>

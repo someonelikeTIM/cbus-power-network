@@ -1,0 +1,154 @@
+{
+  "release": {
+    "schemaVersion": "1.0.0",
+    "releaseId": "2026-11-16-party",
+    "status": "published",
+    "preparedOn": "2026-11-16",
+    "publishedAt": "2026-11-17T01:58:01.006230Z",
+    "dataRevision": 22,
+    "codeLicense": "MIT",
+    "dataLicense": "CC-BY-4.0",
+    "sourceCheckIds": [
+      "pa26-dewine",
+      "pa26-state-roster",
+      "pa26-federal-ballot",
+      "pa26-huffman",
+      "pa26-dovilla",
+      "pa26-householder",
+      "pa26-kasich",
+      "pa26-yost",
+      "pa26-columbus-party",
+      "pa26-dorans",
+      "pa26-columbus-pac-labels",
+      "pa26-mitchell-brown",
+      "pa26-gop-chair"
+    ]
+  },
+  "inputFingerprint": "28518ea0cf30f879c1235bf60b8c292cb8e10b82b9a6e5c2dd21a371510e7d51",
+  "counts": {
+    "entities": 390,
+    "relationships": 577,
+    "sources": 202,
+    "events": 236,
+    "leads": 7
+  },
+  "sourceChecksReperformed": true,
+  "sourceCheckScope": [
+    "pa26-dewine",
+    "pa26-state-roster",
+    "pa26-federal-ballot",
+    "pa26-huffman",
+    "pa26-dovilla",
+    "pa26-householder",
+    "pa26-kasich",
+    "pa26-yost",
+    "pa26-columbus-party",
+    "pa26-dorans",
+    "pa26-columbus-pac-labels",
+    "pa26-mitchell-brown",
+    "pa26-gop-chair"
+  ],
+  "thirdPartyDocumentsIncluded": false,
+  "files": [
+    {
+      "path": "dataset.json",
+      "bytes": 1900505,
+      "sha256": "26493c744b979989efd80bf689be902509aefb43e82519199d733f0a7141bcd0"
+    },
+    {
+      "path": "entities.csv",
+      "bytes": 270053,
+      "sha256": "016670eec2e46823e79c32adc32f385a1fc55e18cb0fc3697c75dadf9cad8a68"
+    },
+    {
+      "path": "entities.json",
+      "bytes": 382048,
+      "sha256": "e693f8c43cc768e1d38bf65ed0c91b5326ab2810399f301a62e35d8c99df92f5"
+    },
+    {
+      "path": "entities.schema.json",
+      "bytes": 11452,
+      "sha256": "5261821c3fe483bcb93476bb5e817a9f42b7d5c08ee8cacd0dc87a5bfe79eb68"
+    },
+    {
+      "path": "events.csv",
+      "bytes": 102878,
+      "sha256": "d2eae4e306937fbed41ab93b65c973db7821d71417abe17a9f528e1f3451da77"
+    },
+    {
+      "path": "events.json",
+      "bytes": 193606,
+      "sha256": "bf314f321d29a87b0cb96673a3f67886ae196a2d3db3338c4dd32bbb2981a33d"
+    },
+    {
+      "path": "events.schema.json",
+      "bytes": 11447,
+      "sha256": "a91890a4b6d0239239338187224f8b1339c74ee1b0322868ecca3fca0a43dfaf"
+    },
+    {
+      "path": "leads.csv",
+      "bytes": 4781,
+      "sha256": "2d117c581a8143fb3cad32ed9d784d0b81bf6b5ed5e95f02d43a6ce0464734bf"
+    },
+    {
+      "path": "leads.json",
+      "bytes": 7101,
+      "sha256": "7bb56176bf8801bfedace68904a0577b861059ce254282b4496680ac87785dd4"
+    },
+    {
+      "path": "leads.schema.json",
+      "bytes": 11444,
+      "sha256": "7a12e42bbcaf464bd879e1b957f198a53e86b8535d105e442092cb319189ad2e"
+    },
+    {
+      "path": "packet-anduril-city.json",
+      "bytes": 21681,
+      "sha256": "b4ac18202fb3d54140e25020ed084755f2471f4380761c84ef77b138c9f6306f"
+    },
+    {
+      "path": "packet-flock.json",
+      "bytes": 14546,
+      "sha256": "805007a8e4b9f67499c11195bf8220bd03a7bae44837569f75d1c64f0b84a7e8"
+    },
+    {
+      "path": "packet-m63.json",
+      "bytes": 8965,
+      "sha256": "4824d19725d609820418610fc159c6d702f7338acd1474752c2704a3f84287e5"
+    },
+    {
+      "path": "relationships.csv",
+      "bytes": 797923,
+      "sha256": "0d19e83029305a823bca8c956c3e242f38189e2595a2883b252a9f50d3916a59"
+    },
+    {
+      "path": "relationships.json",
+      "bytes": 1026985,
+      "sha256": "b5d3b087cfda9ebdf8e7ca402bfc70c73f3b68d9c06b8d9c551deb4cb740ff6a"
+    },
+    {
+      "path": "relationships.schema.json",
+      "bytes": 11468,
+      "sha256": "a97f2ab1a6dec680d58b04bf1ab5b09a63295594c256d46ebb58f03ddcb48a0f"
+    },
+    {
+      "path": "schema.json",
+      "bytes": 12018,
+      "sha256": "c7210d6f42a50d5b52cd10af52e2de4cdf3a623c69bb1646a3921c051db00926"
+    },
+    {
+      "path": "sources.csv",
+      "bytes": 197969,
+      "sha256": "c7b33ed33f7a7198fe04f5a0ac58bbb36dbd633bf46a5234567f251d3da9521a"
+    },
+    {
+      "path": "sources.json",
+      "bytes": 291449,
+      "sha256": "c84046f978d390f0d0efacd888dbad4b760818b92546f115a55ecf8903066b1a"
+    },
+    {
+      "path": "sources.schema.json",
+      "bytes": 11450,
+      "sha256": "57ca6d29edcfc048047fcbaa1aa9cc0865a91fe9fbbe94c756b6c8d2696257b2"
+    }
+  ]
+}

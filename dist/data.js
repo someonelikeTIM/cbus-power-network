@@ -15,8 +15,9 @@ import { campaignSources,campaignRelease,applyCampaignUpdates,campaignCase } fro
 import { epsteinSources,epsteinRelease } from './epstein-enrichment.js';
 import { redflexSources,redflexRelease } from './redflex-enrichment.js';
 import { electionResultSources,applyElectionResults } from './election-results-2026.js';
+import { affiliationSources,applyPartyAffiliations } from './party-affiliations.js';
 export const meta = {
-  title: 'CBUS Power', reviewed: '2026-11-16', version: 21,
+  title: 'CBUS Power', reviewed: '2026-11-16', version: 22,
   scope: 'Columbus and Ohio: money, control, public corruption, civic affiliations, and media ownership, governance, funding and information supply.',
   limitations: 'Selected records, not complete coverage. Evidence status, source date, and direction are attached to each case relationship. Assets, cash transfers, and penalties are identified separately.'
 };
@@ -89,7 +90,7 @@ export const allDeclaredSources = [
   {id:'redflex-plea',title:'Finley guilty plea: camera-contract bribery scheme',publisher:'U.S. Department of Justice',url:'https://www.justice.gov/archives/opa/pr/former-ceo-pleads-guilty-bribery-and-fraud-scheme-involving-red-light-camera-contracts',date:'2015-06-19',note:'Finley admitted conduit contributions, false invoices, and contracts in Columbus and Cincinnati.'},
   {id:'redflex-npa',title:'Redflex non-prosecution agreement; Raphael extortion plea',publisher:'U.S. Department of Justice',url:'https://www.justice.gov/usao-sdoh/pr/redflex-traffic-systems-enters-non-prosecution-agreement-united-states',date:'2016-12-27',note:'DOJ identifies John Raphael and his guilty plea; corporate non-prosecution agreement.'},
   {id:'redflex-ginther',title:'Ginther campaign donation crosscheck and response',publisher:'WOSU Public Media',url:'https://www.wosu.org/news/2015-06-22/ginther-im-not-a-target-of-a-redflex-investigation',date:'2015-06-22',kind:'Reporting / campaign-finance crosscheck',note:'Reported $21,000 ODP contribution in 2011. Ginther denied requesting that contribution; acknowledged asking Redflex for support. Court record did not name him.'},
-  ...cityHallSources, ...enrichmentSources, ...infrastructureSources, ...politicalSources, ...flowSources, ...trailSources, ...mediaSources, ...civicSources, ...donationSources, ...campaignSources, ...epsteinSources, ...redflexSources, ...electionResultSources
+  ...cityHallSources, ...enrichmentSources, ...infrastructureSources, ...politicalSources, ...flowSources, ...trailSources, ...mediaSources, ...civicSources, ...donationSources, ...campaignSources, ...epsteinSources, ...redflexSources, ...electionResultSources, ...affiliationSources
 ].map((s,index) => {
   const archived = sourceArchives[s.id];
   const pinned = archived?.contentVerified === true && archived.originalUrl === s.url && /^\d{14}$/.test(archived.timestamp || '') && archived.url?.startsWith(`https://web.archive.org/web/${archived.timestamp}/`);
@@ -102,7 +103,7 @@ export const sources=allDeclaredSources.filter(s=>s.archiveUrl||s.liveVerified);
 const verifiedSourceIds=new Set(sources.map(s=>s.id));
 const release=enrichmentRelease(verifiedSourceIds);
 meta.enrichmentState=release.complete?'complete':'verified subset';
-meta.pendingSourceIds=[...enrichmentSources,...infrastructureSources,...politicalSources,...flowSources,...trailSources,...mediaSources,...civicSources,...donationSources,...epsteinSources,...redflexSources,...electionResultSources].filter(s=>!verifiedSourceIds.has(s.id)).map(s=>s.id);
+meta.pendingSourceIds=[...enrichmentSources,...infrastructureSources,...politicalSources,...flowSources,...trailSources,...mediaSources,...civicSources,...donationSources,...epsteinSources,...redflexSources,...electionResultSources,...affiliationSources].filter(s=>!verifiedSourceIds.has(s.id)).map(s=>s.id);
 const capitalReady=verifiedSourceIds.has('city-capital-2025');
 
 // Positions are an editorial layout only; distance does not encode relationship strength.
@@ -355,6 +356,8 @@ caseFact('new-albany-budget-2024','datacenters','City budget records announced A
 caseFact('aep-data-tariff','datacenters','Schedule DCT sets minimum demand and long-term customer obligations.');
 if(!infrastructureSources.filter(s=>['flock-contract-2024','forcemetrics-trial-2025','vigilant-contract-2026','flock-financing-2025'].includes(s.id)).every(s=>verifiedSourceIds.has(s.id)))cases.alpr.outcomes.push('Additional contracts / financing still need source-content verification.');
 if(!infrastructureSources.filter(s=>['google-incentive-2018','new-albany-budget-2024','aep-data-tariff'].includes(s.id)).every(s=>verifiedSourceIds.has(s.id)))cases.datacenters.outcomes.push('Some infrastructure records still need source-content verification.');
+applyPartyAffiliations(nodes,verifiedSourceIds);
+
 // Corrections are additive review records; identity is independent of display and layout.
 for (const change of acceptedCorrections) {
   const record=edges.find(e=>e.id===change.recordId);

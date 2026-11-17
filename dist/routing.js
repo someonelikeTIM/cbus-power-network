@@ -1,22 +1,25 @@
-import { categories,relationships,cases } from './data.js';
+import { categories,relationships,cases,nodes,edges,sources } from './data.js';
+import {buildTimelineEvents} from './timeline.js';
 import { connectionModes,validateRange } from './reporting.js';
 import { normalizeConnectionDistance } from './exploration.js';
 import {normalizeTags} from './tags.js';
 import {normalizeColorMode} from './party-colors.js';
-const views=['network','timeline','relations','directory','sources'];
+const views=['network','relations','directory','sources'];
+const eventEdges=new Map(buildTimelineEvents(edges,sources).map(event=>[event.id,event.primaryEdgeId]));
+function currentSelection(selection){return selection?.kind==='event'?(eventEdges.has(selection.id)?{kind:'edge',id:eventEdges.get(selection.id)}:null):selection;}
 const kinds={entity:'node',relationship:'edge',source:'source',event:'event'};
 export const recordKind = kind => ({node:'entity',edge:'relationship',source:'source',event:'event'})[kind];
 export function recordURL(base,kind,id,releaseId) {
+  const selection=currentSelection({kind,id});if(selection)({kind,id}=selection);
   const url=new URL(base);url.search='';url.hash='';
-  url.searchParams.set('case','all');url.searchParams.set('view',kind==='event'?'timeline':kind==='source'?'sources':'network');
-  if(kind==='event')url.searchParams.set('scope','case');
+  url.searchParams.set('case','all');url.searchParams.set('view',kind==='source'?'sources':'network');
   url.searchParams.set('record',`${recordKind(kind)}:${id}`);url.searchParams.set('release',releaseId);
   url.searchParams.set('map','explore');if(kind==='node')url.searchParams.set('anchor',id);
   return url.href;
 }
 export function encodeState(base,state,releaseId) {
   const url=new URL(base);url.search='';const p=url.searchParams;
-  const values={case:state.caseId,view:state.view,q:state.query,history:state.history?'1':'0',categories:[...state.categories].sort().join(','),relationships:[...state.relationships].sort().join(','),mode:state.connectionMode,from:state.from,to:state.to,uncertain:state.includeUncertain?'1':'0',labels:state.labels,focus:state.focus?'1':'0',entity:state.timelineEntity,scope:state.timelineScope,money:state.timelineMoney,undated:state.timelineUndated?'1':'0',release:releaseId};
+  const values={case:state.caseId,view:views.includes(state.view)?state.view:'network',q:state.query,history:state.history?'1':'0',categories:[...state.categories].sort().join(','),relationships:[...state.relationships].sort().join(','),mode:state.connectionMode,from:state.from,to:state.to,uncertain:state.includeUncertain?'1':'0',labels:state.labels,focus:state.focus?'1':'0',release:releaseId};
   if(state.mapMode){values.map=state.mapMode;values.anchor=state.exploreRoot;values.explored=[...(state.exploredIds||[])].sort().join(',');}
   if(state.explorationSeeds){values.seeded=[...state.explorationSeeds].sort().join(',');values.expanded=[...(state.openNodes||[])].sort().join(',');}
   if(state.startingIds?.size)values.starts=[...state.startingIds].join(',');
@@ -31,7 +34,7 @@ export function encodeState(base,state,releaseId) {
   if(state.trailEdges?.size)values.trailEdges=[...state.trailEdges].join(',');
   if(state.collapsedNodes?.size)values.collapsed=[...state.collapsedNodes].join(',');
   const tags=normalizeTags(state.tags??state.tag);if(state.view==='network'&&tags.length){if(tags.length===1)values.tag=tags[0];else values.tags=tags.join(',');}
-  if(state.selected)values.record=`${recordKind(state.selected.kind)}:${state.selected.id}`;
+  const selected=currentSelection(state.selected);if(selected)values.record=`${recordKind(selected.kind)}:${selected.id}`;
   if(state.path)values.path=state.path.edges.join(',');
   if(state.bucketMode)values.group='type';if(state.showAmounts)values.amounts='1';
   for(const [key,value]of Object.entries(values))if(value!==''&&value!=null)p.set(key,value);
@@ -60,18 +63,26 @@ export function decodeState(base,defaults) {
   state.startingIds=new Set((p.has('starts')?p.get('starts'):p.get('startOnly')==='1'?'':state.exploreRoot).split(',').filter(Boolean));
   state.customStart=p.get('startOnly')==='1';
   if(['all','money',...Object.keys(cases)].includes(p.get('case')))state.caseId=p.get('case');
-  if(views.includes(p.get('view')))state.view=p.get('view');
-  for(const [param,key]of [['q','query'],['entity','timelineEntity'],['from','from'],['to','to']])if(p.has(param))state[key]=p.get(param);
-  for(const [param,key]of [['history','history'],['uncertain','includeUncertain'],['focus','focus'],['undated','timelineUndated']])if(p.has(param))state[key]=p.get(param)!=='0';
+  state.view=views.includes(p.get('view'))?p.get('view'):views.includes(defaults.view)?defaults.view:'network';
+  for(const [param,key]of [['q','query'],['from','from'],['to','to']])if(p.has(param))state[key]=p.get(param);
+  for(const [param,key]of [['history','history'],['uncertain','includeUncertain'],['focus','focus']])if(p.has(param))state[key]=p.get(param)!=='0';
   if(Object.hasOwn(connectionModes,p.get('mode')))state.connectionMode=p.get('mode');
   if(['auto','all','off'].includes(p.get('labels')))state.labels=p.get('labels');
-  if(['case','nearby','direct'].includes(p.get('scope')))state.timelineScope=p.get('scope');
-  if(['all','cash','commitments','credit','other','unpriced'].includes(p.get('money')))state.timelineMoney=p.get('money');
   const raw=p.get('record'),split=raw?.indexOf(':');
   if(split>0&&kinds[raw.slice(0,split)])state.selected={kind:kinds[raw.slice(0,split)],id:raw.slice(split+1)};
   state.requestedRelease=p.get('release');state.requestedPath=p.has('path')?p.get('path').split(',').filter(Boolean):null;
   const hasMapContext=['case','map','record','path','starts','seeded','expanded','explored','anchor','q','categories','relationships','mode','from','to','history','focus','startOnly','pins','trail','trailEdges','collapsed'].some(key=>p.has(key));
   if(!hasMapContext){state.mapMode='explore';state.exploreRoot='';state.startingIds=new Set();state.explorationSeeds=new Set();state.exploredIds=new Set();state.openNodes=new Set();state.customStart=true;state.selected=null;state.path=null;state.query='';state.focus=false;}
+  const legacyEvent=state.selected?.kind==='event';
+  if(legacyEvent){state.selected=currentSelection(state.selected);if(!state.selected)state.routeWarning='This event record is unavailable in this edition.';}
+  if(p.get('view')==='timeline'||legacyEvent){
+    state.view='network';state.query='';state.path=null;
+    const entity=nodes.find(node=>node.id===(p.get('entity')||''));
+    if(!state.selected&&entity)state.selected={kind:'node',id:entity.id};
+    const edge=state.selected?.kind==='edge'?edges.find(edge=>edge.id===state.selected.id):null;
+    const root=state.selected?.kind==='node'?state.selected.id:edge?.source;
+    if(root){state.exploreRoot=root;state.startingIds=new Set([root]);state.explorationSeeds=new Set([root]);state.customStart=false;state.focus=state.selected.kind==='node';state.focusEntity=state.focus?root:'';}
+  }
   try{validateRange(state.from,state.to);}catch{state.from='';state.to='';state.routeWarning='Invalid historical date range was cleared.';}
   return state;
 }
