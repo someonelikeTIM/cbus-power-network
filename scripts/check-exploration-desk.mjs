@@ -1,0 +1,51 @@
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import {nodes,edges,sources} from '../dist/data.js';
+import {searchDesk,deskCommands} from '../dist/desk-search.js';
+import {validateView} from '../dist/saved-views.js';
+import {researchFile,researchSnapshot} from '../dist/research-paths.js';
+import {resizeCamera} from '../dist/desktop-network.js';
+
+const byId=new Map(nodes.map(node=>[node.id,node])),ids=new Set(byId.keys());
+const edgeIds=new Set(edges.map(edge=>edge.id));
+const graph={nodes,edges},search=query=>searchDesk(graph,sources,byId,query,[]);
+assert.equal(search('JobsOhio')[0].id,'jobsohio');
+assert.equal(search('party colors')[0].id,'colors');
+assert.equal(search('date').some(hit=>hit.id==='dates'),true);
+assert.equal(search('jobsOhio').some(hit=>hit.kind==='source'),true);
+assert.equal(search('joined project announcement').some(hit=>hit.kind==='edge'),true);
+assert.deepEqual(search('not-a-record-xxxx'),[]);
+assert.deepEqual(searchDesk({nodes:[],edges:[]},sources,byId,'jobsohio',[]),[]);
+assert.equal(searchDesk({nodes:[],edges:[]},sources,byId,'party colors',[])[0].kind,'tool');
+
+const html=await readFile('dist/index.html','utf8');
+const domIds=[...html.matchAll(/\bid="([^"]+)"/g)].map(match=>match[1]);
+assert.equal(new Set(domIds).size,domIds.length,'Each control has one stable DOM identity');
+for(const command of deskCommands.filter(item=>item.target))assert.ok(domIds.includes(command.target),command.target);
+const edge=edges.find(edge=>[edge.source,edge.target].includes('intel')&&[edge.source,edge.target].includes('jobsohio'));
+const oldView={query:'?view=network',camera:{x:45,y:18,z:.7},positions:[['intel',25,40]],dimensions:{width:1000,height:620},details:{open:true,width:380,docked:false},
+  interaction:{walk:[{id:'jobsohio',via:''},{id:'intel',via:edge.id}],showDirect:true}};
+const desk={active:'filters',section:'connections',floating:true,width:350,height:440,left:22,top:18};
+const map={...oldView,desk};
+const list={...map,query:'?view=sources&q=Intel',returnMap:map,desk:{...desk,active:''}};
+const restored=validateView(list,ids);
+assert.deepEqual(restored.returnMap,validateView(map,ids));
+assert.deepEqual(restored.desk,list.desk);
+assert.equal(validateView(oldView,ids).desk,undefined,'Existing view files still open');
+assert.throws(()=>validateView({...list,returnMap:list},ids));
+assert.throws(()=>validateView({...map,desk:{...desk,active:'missing'}},ids));
+assert.throws(()=>validateView({...map,desk:{...desk,left:Infinity}},ids));
+
+const research={id:'research',title:'Transit and incentives',createdAt:'',steps:[{kind:'entity',id:'jobsohio',note:'Read the original record.'}]};
+const file=researchFile(research,restored,{releaseId:'test'}, {},graph);
+const reopened=researchSnapshot(file,{nodeIds:ids,edgeIds,validateSnapshot:validateView});
+assert.equal(reopened.desk.active,'research');
+assert.equal(reopened.returnMap,undefined);
+assert.equal(reopened.research.steps[0].note,research.steps[0].note);
+const frame={width:1000,height:600},split={width:420,height:500},camera={x:40,y:20,z:1.2},anchor={x:600,y:200};
+const resized=resizeCamera(camera,frame,split,anchor);
+assert.equal(resized.z,camera.z);
+assert.ok(Math.abs((resized.x+anchor.x*resized.z)/split.width-(camera.x+anchor.x*camera.z)/frame.width)<1e-10);
+const returned=resizeCamera(resized,split,frame,anchor);
+assert.ok(Math.abs(returned.x-camera.x)<1e-10&&Math.abs(returned.y-camera.y)<1e-10);
+console.log('PASS exploration desk: scoped record and tool discovery, UI targets, legacy views, panel state, return maps and portable research.');

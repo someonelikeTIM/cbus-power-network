@@ -4,7 +4,7 @@ import {validateView} from './saved-views.js';
 export function mountResearchUI({state,nodes,edges,relationships,release,snapshot,records,remember,changed,openPanel,focusNode,focusEdge,showPath,openView,download,importPath,notify}){
   const $=id=>document.getElementById(id),nodeById=new Map(nodes.map(n=>[n.id,n])),edgeById=new Map(edges.map(e=>[e.id,e]));
   const nodeIds=new Set(nodeById.keys()),edgeIds=new Set(edgeById.keys()),storageKey='columbus-network:research-paths-v1';
-  const fullGraph={nodes,edges};let guideLimit=8;
+  const fullGraph={nodes,edges};
   const text=(tag,value)=>{const el=document.createElement(tag);el.textContent=value;return el;};
   function edit(steps,refit=true){remember();state.research={...state.research,id:state.research.id||crypto.randomUUID(),createdAt:state.research.createdAt||new Date().toISOString(),steps};changed(refit);}
   function toggle(kind,id){
@@ -18,7 +18,7 @@ export function mountResearchUI({state,nodes,edges,relationships,release,snapsho
     $('research-count').textContent=research.steps.length||'';$('research-open').classList.toggle('has-research',!!research.steps.length);
     if(document.activeElement!==$('research-name'))$('research-name').value=research.title;
     const list=$('research-steps');list.replaceChildren();
-    if(!research.steps.length)list.append(text('p','Pin an entity or a connection to begin. Choose Explore connections to find the next step.'));
+    if(!research.steps.length)list.append(text('p','Pin an entity or a connection from its record. Your pins and notes appear here in order.'));
     research.steps.forEach((step,index)=>{
       const row=document.createElement('li'),heading=document.createElement('button');heading.className='research-step-title';
       const edge=edgeById.get(step.id),label=step.kind==='entity'?nodeById.get(step.id).name:nodeById.get(edge.source).name+' → '+nodeById.get(edge.target).name;
@@ -32,25 +32,9 @@ export function mountResearchUI({state,nodes,edges,relationships,release,snapsho
     const gaps=route.segments.filter(segment=>!segment.route).length;
     $('research-route-summary').textContent=research.steps.length?route.edgeIds.size+' recorded connection'+(route.edgeIds.size===1?'':'s')+' in the research path'+(gaps?' · '+gaps+' gap'+(gaps===1?'':'s')+' without a recorded route.':'.'):'';
     for(const id of ['research-save','research-export','research-show'])$(id).disabled=!research.steps.length;
-    renderGuide();
+
   }
   function labelFor(step){const edge=edgeById.get(step.id);return step.kind==='entity'?nodeById.get(step.id).name:nodeById.get(edge.source).name+' to '+nodeById.get(edge.target).name;}
-  function renderGuide(){
-    const id=state.selected?.kind==='node'?state.selected.id:state.focusEntity;
-    const node=nodeById.get(id),query=$('guided-search').value.trim().toLowerCase(),graph=records('graph');
-    $('guided-context').textContent=node?'Continue from '+node.name+'. Pin the records that belong in your research path.':'Choose an entity to explore its connections.';
-    const links=graph.edges.filter(edge=>edge.source===id||edge.target===id).sort((a,b)=>a.type.localeCompare(b.type)||a.id.localeCompare(b.id)).filter(edge=>[nodeById.get(edge.source).name,nodeById.get(edge.target).name,relationships[edge.type].label,edge.label].join(' ').toLowerCase().includes(query));
-    const list=$('guided-results');list.replaceChildren();
-    links.slice(0,guideLimit).forEach(edge=>{
-      const other=nodeById.get(edge.source===id?edge.target:edge.source),row=document.createElement('article');
-      const next=text('button',other.name+' →');next.className='guide-next';next.addEventListener('click',()=>{guideLimit=8;$('guided-search').value='';focusNode(other.id);});
-      const evidence=text('button',relationships[edge.type].label+' · '+edge.label);evidence.className='guide-evidence';evidence.addEventListener('click',()=>focusEdge(edge.id));
-      const pin=text('button',state.research.steps.some(step=>step.kind==='connection'&&step.id===edge.id)?'Unpin connection':'Pin connection');pin.className='guide-pin';pin.addEventListener('click',()=>toggle('connection',edge.id));
-      row.append(next,evidence,pin);list.append(row);
-    });
-    if(!links.length)list.append(text('p',node?'No connections match these filters.':'Search for a name or select an entity on the map.'));
-    if(links.length>guideLimit){const more=text('button','Show '+Math.min(8,links.length-guideLimit)+' more connections ('+(links.length-guideLimit)+' remaining)');more.className='guide-more';more.addEventListener('click',()=>{guideLimit+=8;renderGuide();});list.append(more);}
-  }
   function artifact(){if(!state.research.id)state.research={...state.research,id:crypto.randomUUID(),createdAt:state.research.createdAt||new Date().toISOString()};return researchFile(state.research,snapshot(),release,records('research'),fullGraph);}
   function library(){try{const saved=JSON.parse(localStorage.getItem(storageKey)||'[]');return Array.isArray(saved)?saved.filter(file=>{try{parse(file);return true;}catch{return false;}}):[];}catch{return [];}}
   function parse(file){
@@ -61,9 +45,6 @@ export function mountResearchUI({state,nodes,edges,relationships,release,snapsho
     if(!saved.length)list.append(text('p','No saved research paths in this browser.'));
     saved.forEach(file=>{const button=text('button','Open '+file.research.title);button.addEventListener('click',()=>openView(parse(file),file.research.title));list.append(button);});
   }
-  $('research-open').addEventListener('click',()=>{render();renderLibrary();openPanel('research-panel');});
-  $('guided-open').addEventListener('click',()=>{guideLimit=8;renderGuide();openPanel('guided-panel');});
-  $('guided-search').addEventListener('input',()=>{guideLimit=8;renderGuide();});
   let editingName=false;
   $('research-name').addEventListener('input',()=>{if(!editingName){remember();editingName=true;}state.research={...state.research,title:$('research-name').value.trim().slice(0,100)||'Untitled research path'};changed(false);});
   $('research-name').addEventListener('blur',()=>{editingName=false;});
@@ -71,5 +52,5 @@ export function mountResearchUI({state,nodes,edges,relationships,release,snapsho
   $('research-save').addEventListener('click',()=>{try{const file=artifact(),saved=library().filter(item=>item.id!==file.id);saved.push(file);localStorage.setItem(storageKey,JSON.stringify(saved));$('research-status').textContent='“'+file.title+'” saved in this browser.';renderLibrary();}catch{$('research-status').textContent='Browser storage is unavailable. Export the path to keep a copy.';}});
   $('research-export').addEventListener('click',()=>{const file=artifact(),name=(file.title.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'research-path')+'.json';download(file,name);$('research-status').textContent='Research path download started, including notes and source records.';});
   $('research-import').addEventListener('click',()=>importPath());
-  return {render,toggle,renderGuide,openSaved:()=>{render();renderLibrary();$('research-library').open=true;openPanel('research-panel');}};
+  return {render,toggle,refreshLibrary:renderLibrary,openSaved:()=>{render();renderLibrary();$('research-library').open=true;openPanel('research-panel');}};
 }

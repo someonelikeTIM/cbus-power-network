@@ -5,6 +5,7 @@ import {parseWorkspace, validateView, workspaceFile, maximumViews} from './saved
 import {researchFormat,researchSnapshot} from './research-paths.js';
 
 const ids = new Set(nodes.map(node => node.id));
+const names = new Map(nodes.map(node => [node.id,node.name]));
 const libraryKey = 'columbus-network:saved-views-v1';
 const sessionKey = 'columbus-network:workspace-v1';
 const frames = new Map();
@@ -28,7 +29,7 @@ const main = document.querySelector('main');
 const footer = document.querySelector('.page-footer');
 main.replaceChildren();
 const explorer = document.createElement('section'); explorer.id = 'explorer'; explorer.setAttribute('aria-label', 'Explorer workspace');
-explorer.innerHTML = `<div class="workspace-bar"><div class="explorer-tabs" role="tablist" aria-label="Explorer views"></div><button class="workspace-button" id="new-view" aria-label="New explorer tab">+ New tab</button><div class="workspace-actions"><button class="workspace-button" id="split-views" aria-pressed="false">Side by side</button><label id="compare-label" hidden>Beside<select id="compare-view" aria-label="View to show beside"></select></label><details class="views-menu"><summary>Views <span aria-hidden="true">▾</span></summary><div><button id="rename-view">Rename tab</button><button id="save-view">Save this view…</button><button id="load-view">Load a saved view…</button><button id="load-research">Load a research path…</button><button id="export-view">Export this view</button><button id="export-workspace">Export all tabs</button><button id="import-views">Import views…</button></div></details></div></div><div class="explorer-panes"></div><p class="workspace-status" role="status" aria-live="polite"></p><input type="file" id="view-file" accept=".json,application/json" hidden><dialog id="view-name-dialog"><form method="dialog"><h2 id="view-name-title">Save this view</h2><label>Name<input id="view-name" maxlength="80" required></label><div class="view-dialog-actions"><button value="cancel" formnovalidate>Cancel</button><button id="confirm-view-name" value="save">Save</button></div></form></dialog><dialog id="view-library"><form method="dialog"><button class="dialog-close" aria-label="Close saved views">×</button></form><h2>Saved views</h2><p>Stored in this browser. Export a file to keep a copy or use another browser.</p><div id="saved-view-list"></div></dialog>`;
+explorer.innerHTML = `<div class="workspace-bar"><div class="explorer-tabs" role="tablist" aria-label="Explorer views"></div><button class="workspace-button" id="new-view" aria-label="New explorer tab">+ New tab</button><div class="workspace-actions"><button class="workspace-button" id="split-views" aria-pressed="false">Side by side</button><label id="compare-label" hidden>Beside<select id="compare-view" aria-label="View to show beside"></select></label><details class="views-menu"><summary>Workspace <span aria-hidden="true">▾</span></summary><div><button id="rename-view">Rename tab</button><button id="save-view">Save this view…</button><button id="load-view">Load a saved view…</button><button id="load-research">Load a research path…</button><button id="export-view">Export this view</button><button id="export-workspace">Export all tabs</button><button id="import-views">Import views…</button></div></details></div></div><div class="explorer-panes"></div><p class="workspace-status" role="status" aria-live="polite"></p><input type="file" id="view-file" accept=".json,application/json" hidden><dialog id="view-name-dialog"><form method="dialog"><h2 id="view-name-title">Save this view</h2><label>Name<input id="view-name" maxlength="80" required></label><div class="view-dialog-actions"><button value="cancel" formnovalidate>Cancel</button><button id="confirm-view-name" value="save">Save</button></div></form></dialog><dialog id="view-library"><form method="dialog"><button class="dialog-close" aria-label="Close saved views">×</button></form><h2>Saved views</h2><p>Stored in this browser. Export a file to keep a copy or use another browser.</p><div id="saved-view-list"></div></dialog>`;
 main.append(explorer, footer);
 const $ = id => document.getElementById(id);
 $('source-total').textContent = String(sources.length);
@@ -59,17 +60,32 @@ function persist() {
 function mount(view) {
   if (frames.has(view.id)) return;
   const pane = document.createElement('section'); pane.className = 'explorer-pane'; pane.id = 'pane-' + view.id; pane.setAttribute('role', 'tabpanel');
-  const frame = document.createElement('iframe'); frame.title = view.name + ' explorer'; frame.setAttribute('scrolling', 'no'); frame.style.height = baseHeight() + 'px';
+  const frame = document.createElement('iframe'); frame.title = tabLabel(view) + ' explorer'; frame.setAttribute('scrolling', 'no'); frame.style.height = baseHeight() + 'px';
   const url = new URL(location.pathname, location.origin); url.search = view.snapshot.query; frame.src = url.href;
   pane.append(frame); document.querySelector('.explorer-panes').append(pane);
   frames.set(view.id, {pane, frame, pending: view.snapshot, ready: false});
+}
+function tabLabel(view){
+  if(!/^View \d+$/.test(view.name))return view.name;
+  const snapshot=view.snapshot.returnMap||view.snapshot,walk=snapshot.interaction?.walk||[];
+  const origin=names.get(walk[0]?.id);
+  if(!origin)return view.name.replace('View ','Exploration ');
+  const current=names.get(walk.at(-1)?.id);
+  return current&&current!==origin?origin+' › '+current:origin;
+}
+function syncNavigation(view){
+  const kind=new URLSearchParams(view.snapshot.query).get('view')||'network';
+  for(const button of document.querySelectorAll('.view-nav [data-view]')){
+    const selected=button.dataset.view===kind;button.classList.toggle('active',selected);
+    if(selected)button.setAttribute('aria-current','page');else button.removeAttribute('aria-current');
+  }
 }
 function renderTabs() {
   const list = document.querySelector('.explorer-tabs'); list.replaceChildren();
   for (const view of views) {
     const holder = document.createElement('div'); holder.className = 'explorer-tab';
-    const tab = document.createElement('button'); tab.setAttribute('role', 'tab'); tab.id = 'tab-' + view.id; tab.setAttribute('aria-controls', 'pane-' + view.id); tab.setAttribute('aria-selected', String(view.id === activeId)); tab.tabIndex = view.id === activeId ? 0 : -1; tab.textContent = view.name; tab.title = view.name; tab.addEventListener('click', () => activate(view.id));
-    const close = document.createElement('button'); close.className = 'close-tab'; close.setAttribute('aria-label', 'Close ' + view.name); close.textContent = '×'; close.addEventListener('click', () => closeView(view.id));
+    const tab = document.createElement('button'); tab.setAttribute('role', 'tab'); tab.id = 'tab-' + view.id; tab.setAttribute('aria-controls', 'pane-' + view.id); tab.setAttribute('aria-selected', String(view.id === activeId)); tab.tabIndex = view.id === activeId ? 0 : -1; tab.textContent = tabLabel(view); tab.title = tabLabel(view); tab.addEventListener('click', () => activate(view.id));
+    const close = document.createElement('button'); close.className = 'close-tab'; close.setAttribute('aria-label', 'Close ' + tabLabel(view)); close.textContent = '×'; close.addEventListener('click', () => closeView(view.id));
     tab.addEventListener('keydown', event => {
       if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
       event.preventDefault(); const index = views.findIndex(item => item.id === view.id);
@@ -80,12 +96,12 @@ function renderTabs() {
   }
   for (const view of views) {
     const entry = frames.get(view.id); const visible = view.id === primaryId || view.id === secondaryId;
-    entry.pane.hidden = !visible; entry.pane.classList.toggle('active-pane', view.id === activeId); entry.pane.setAttribute('aria-labelledby', 'tab-' + view.id); entry.frame.title = view.name + ' explorer';
+    entry.pane.hidden = !visible;entry.pane.style.order=view.id===primaryId?'0':'1'; entry.pane.classList.toggle('active-pane', view.id === activeId); entry.pane.setAttribute('aria-labelledby', 'tab-' + view.id); entry.frame.title = tabLabel(view) + ' explorer';
   }
   document.querySelector('.explorer-panes').dataset.layout = secondaryId ? 'split' : 'single';
   $('split-views').textContent = secondaryId ? 'Single view' : 'Side by side'; $('split-views').setAttribute('aria-pressed', String(!!secondaryId));
   $('compare-label').hidden = !secondaryId; $('compare-view').replaceChildren();
-  for (const view of views.filter(view => view.id !== primaryId)) { const option = new Option(view.name, view.id); option.selected = view.id === secondaryId; $('compare-view').append(option); }
+  for (const view of views.filter(view => view.id !== primaryId)) { const option = new Option(tabLabel(view), view.id); option.selected = view.id === secondaryId; $('compare-view').append(option); }
   persist();
 }
 function activate(id) {
@@ -94,7 +110,7 @@ function activate(id) {
   if (id !== primaryId && id !== secondaryId) {
     if (activeId === secondaryId) secondaryId = id; else primaryId = id;
   }
-  activeId = id; renderTabs();
+  activeId = id; renderTabs();syncNavigation(currentView());
   history.replaceState(null, '', location.pathname + currentView().snapshot.query);
   send(id, 'measure');
 }
@@ -179,6 +195,11 @@ window.addEventListener('message', event => {
   if (event.origin !== location.origin || event.data?.channel !== 'columbus-explorer') return;
   const entry = [...frames.entries()].find(([, entry]) => entry.frame.contentWindow === event.source); if (!entry) return;
   const [id, frame] = entry, view = views.find(view => view.id === id);
+  if(event.data.type==='workspace-action'){
+    if(!['save-view','load-view','import-views','new-view','export-view','export-workspace','split-views','rename-view'].includes(event.data.action))return;
+    if(id!==activeId)activate(id);
+    $(event.data.action).click();return;
+  }
   if(event.data.type==='download-campaign-money'){
     const text=event.data.text,name=event.data.name;
     if(typeof text!=='string'||text.length>128*1024*1024||typeof name!=='string'||!/^[a-zA-Z0-9_.-]{1,110}\.csv$/.test(name)){status('This campaign CSV could not be prepared.');return;}
@@ -192,17 +213,22 @@ window.addEventListener('message', event => {
   }
   if(event.data.type==='import-research'){$('view-file').click();return;}
   if(event.data.type==='open-research'){try{const snapshot=validateView(event.data.snapshot,ids);addView(snapshot,String(event.data.name||'Research path').slice(0,80));}catch(error){status(error.message);}return;}
-  if (event.data.type === 'ready') { frame.ready = true; send(id, 'restore', {snapshot: frame.pending||view.snapshot}); frame.pending = null; return; }
+  if (event.data.type === 'ready') { frame.ready = true; send(id, 'restore', {snapshot: frame.pending||view.snapshot,focusEntry:id===activeId}); frame.pending = null; return; }
   if (event.data.type === 'focus') { if (activeId !== id) activate(id); return; }
   if (event.data.type === 'height') { const height = Number(event.data.height); if (Number.isFinite(height)) frame.frame.style.height = Math.max(baseHeight(), Math.min(150000, height)) + 'px'; return; }
   if (event.data.type === 'state') {
     try { view.snapshot = validateView(event.data.snapshot, ids); } catch { return; }
     frame.pane.dataset.ready='true';
+    const tab=$('tab-'+id),label=tabLabel(view);
+    if(tab&&tab.textContent!==label){
+      tab.textContent=label;tab.title=label;tab.nextElementSibling.setAttribute('aria-label','Close '+label);
+      frame.frame.title=label+' explorer';
+      const option=[...$('compare-view').options].find(item=>item.value===id);if(option)option.textContent=label;
+    }
     const pending=captures.get(event.data.requestId);if(pending){captures.delete(event.data.requestId);pending.resolve(view.snapshot);}
     if (id === activeId) {
       history.replaceState(null, '', location.pathname + view.snapshot.query);
-      const kind = new URLSearchParams(view.snapshot.query).get('view') || 'network';
-      document.querySelectorAll('.view-nav [data-view]').forEach(button => { const selected = button.dataset.view === kind; button.classList.toggle('active', selected); selected ? button.setAttribute('aria-current', 'page') : button.removeAttribute('aria-current'); });
+      syncNavigation(view);
     }
     persist();
   }
@@ -217,6 +243,14 @@ document.addEventListener('click', event => {
   if (link) { event.preventDefault(); document.querySelector('dialog[open]')?.close(); $(link.dataset.projectDialog).showModal(); }
   if (event.target.closest('.methodology-open')) $('methodology').showModal();
   if (event.target.closest('.views-menu button')) document.querySelector('.views-menu').open = false;
+});
+document.addEventListener('keydown',event=>{
+  if(document.querySelector('dialog[open]')||event.target.closest('input,select,textarea,[contenteditable=true]'))return;
+  if(event.key==='/'||((event.metaKey||event.ctrlKey)&&event.key.toLowerCase()==='k')){
+    event.preventDefault();send(activeId,'focus-search');
+  }else if(event.key==='Escape'&&document.querySelector('.views-menu').open){
+    document.querySelector('.views-menu').open=false;document.querySelector('.views-menu summary').focus();
+  }
 });
 window.addEventListener('resize', () => { for (const entry of frames.values()) entry.frame.style.height = baseHeight() + 'px'; for (const id of [primaryId, secondaryId].filter(Boolean)) send(id, 'measure'); });
 window.addEventListener('popstate', () => { currentView().snapshot = {...emptySnapshot(), query: location.search}; send(activeId, 'restore', {snapshot: currentView().snapshot}); });

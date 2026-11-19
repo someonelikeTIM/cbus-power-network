@@ -47,7 +47,8 @@ export function researchFile(research,snapshot,release,records,graph){
   const query=new URLSearchParams(snapshot.query);
   query.set('view','network');query.set('map','explore');query.set('focus','0');query.delete('record');query.delete('center');
   query.set('path',[...route.edgeIds].join(','));query.set('seeded',[...route.nodeIds].join(','));query.set('explored',[...route.nodeIds].join(','));query.set('expanded','');query.set('starts',[...route.anchors].join(','));query.set('startOnly','1');
-  const pathSnapshot={...snapshot,query:'?'+query.toString(),research:structuredClone(research),details:{...snapshot.details,open:false}};
+  const {returnMap,...presentation}=snapshot;
+  const pathSnapshot={...presentation,...(snapshot.desk?{desk:{...snapshot.desk,active:'research'}}:{}),query:'?'+query.toString(),research:structuredClone(research),details:{...snapshot.details,open:false}};
   return {format:researchFormat,version:researchVersion,id:research.id,title:research.title,createdAt:research.createdAt,savedAt:new Date().toISOString(),release,research,snapshot:pathSnapshot,connectingRoutes:route.segments.map(segment=>({from:segment.from,to:segment.to,kind:segment.kind,entityIds:segment.route?.nodes||[],relationshipIds:segment.route?.edges||[]})),records,interpretation:'Pinned steps are the reader’s research choices. Connecting routes use recorded relationships; they do not establish causation or wrongdoing.'};
 }
 export function researchSnapshot(file,{nodeIds,edgeIds,validateSnapshot}){

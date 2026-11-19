@@ -34,7 +34,7 @@ const landing=decodeState('https://example.test/cbus-power-network/',state);asse
 const landingReload=decodeState(encodeState('https://example.test/cbus-power-network/',landing,release.releaseId),state);assert.equal(landingReload.startingIds.size,0);assert.equal(landingReload.exploreRoot,'');
 const fullState={...landing,mapMode:'full',customStart:false},fullRestored=decodeState(encodeState('https://example.test/cbus-power-network/',fullState,release.releaseId),state);assert.equal(fullRestored.mapMode,'full');assert.equal(fullRestored.startingIds.size,0);
 assert.equal(pathForeground(full,fullRestored.startingIds,null).nodes.size,full.nodes.length,'Overview state has no arbitrary entity focus');
-const html=await readFile('dist/index.html','utf8');for(const id of ['search-window','starting-results','route-layer','path-entities','legend-open'])assert.ok(html.includes('id="'+id+'"'));
+const html=await readFile('dist/index.html','utf8');for(const id of ['entry-search-slot','desk-search-slot','desk-search','starting-results','route-layer','path-entities','legend-open'])assert.ok(html.includes('id="'+id+'"'));
 for(const removed of ['start-dialog','starting-mode','start-exploring','starting-selected'])assert.ok(!html.includes('id="'+removed+'"'),'Starting search has no selection form');
 const emptyState={...state,startingIds:new Set(),explorationSeeds:new Set(),exploredIds:new Set(),path:null};
 const emptyRestored=decodeState(encodeState('https://example.test/cbus-power-network/',emptyState,release.releaseId),emptyState);assert.equal(emptyRestored.startingIds.size,0);assert.equal(emptyRestored.explorationSeeds.size,0);

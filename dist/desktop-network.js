@@ -58,6 +58,15 @@ export function labelPlacements(items,{width,height,obstacles=[],gap=3}={}){
   }
   return placed;
 }
+export function resizeCamera(camera,previous,next,anchor){
+  if(!previous.width||!previous.height||!next.width||!next.height)return {...camera};
+  const x=anchor?(camera.x+anchor.x*camera.z)/previous.width:.5;
+  const y=anchor?(camera.y+anchor.y*camera.z)/previous.height:.5;
+  const visible=x>=0&&x<=1&&y>=0&&y<=1;
+  const dx=next.width-previous.width,dy=next.height-previous.height;
+  return {x:camera.x+(Math.abs(dx)<1?0:dx*(visible?x:.5)),
+    y:camera.y+(Math.abs(dy)<1?0:dy*(visible?y:.5)),z:camera.z};
+}
 export function appendWalk(walk,id,{from='',via='',edges=[]}={}){
   const result=walk.map(step=>({...step}));if(!result.length)result.push({id:from||id,via:''});
   if(via){const edge=edges.find(e=>e.id===via);if(!edge||!((edge.source===from&&edge.target===id)||(edge.target===from&&edge.source===id)))throw Error('The selected relationship does not connect these entities.');

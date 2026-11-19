@@ -16,6 +16,7 @@ const checks = [
   'check-connection-distance',
   'check-party-colors',
   'check-navigation',
+  'check-exploration-desk',
   'check-explorer-ui',
   'check-tags-path-focus',
   'check-correction-workflow',

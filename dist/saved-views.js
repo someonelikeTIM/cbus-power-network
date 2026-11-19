@@ -7,7 +7,17 @@ export const workspaceVersion = 1;
 export const maximumViews = 12;
 
 const finite = value => typeof value === 'number' && Number.isFinite(value) && Math.abs(value) <= 1e7;
-export function validateView(value, entityIds) {
+function readDesk(value){
+  if(!value||!['','record','filters','path','research','settings'].includes(value.active)
+    ||!['connections','evidence'].includes(value.section)||typeof value.floating!=='boolean'
+    ||![value.width,value.height,value.top].every(finite)||value.left!==null&&!finite(value.left)){
+    throw Error('This view contains invalid panel settings.');
+  }
+  return {active:value.active,section:value.section,floating:value.floating,
+    width:Math.max(250,Math.min(680,value.width)),height:Math.max(180,Math.min(2400,value.height)),
+    left:value.left,top:value.top};
+}
+export function validateView(value, entityIds, allowReturnMap=true) {
   if (!value || typeof value !== 'object' || typeof value.query !== 'string' || value.query.length > 30000 || (value.query && !value.query.startsWith('?'))) throw Error('This file does not contain a valid explorer view.');
   const query = new URLSearchParams(value.query);
   for (const key of ['pins', 'starts', 'seeded', 'expanded', 'explored', 'anchor', 'center']) for (const id of (query.get(key) || '').split(',').filter(Boolean)) if (!entityIds.has(id)) throw Error('This view references an entity that is unavailable in this edition.');
@@ -19,6 +29,19 @@ export function validateView(value, entityIds) {
   const size = value.dimensions || {};
   const dimensions = {width: finite(size.width) && size.width > 0 ? size.width : 800, height: finite(size.height) && size.height > 0 ? size.height : 570};
   const details = value.details || {};
+  const desk=value.desk?readDesk(value.desk):null;
+  let pathFinder=null;
+  if(value.pathFinder){
+    const {from,to,directed,submitted}=value.pathFinder;
+    if(![from,to].every(name=>typeof name==='string'&&name.length<=240)||typeof directed!=='boolean'||typeof submitted!=='boolean')throw Error('This view contains invalid path finder fields.');
+    pathFinder={from,to,directed,submitted};
+  }
+  let returnMap=null;
+  if(value.returnMap){
+    if(!allowReturnMap||query.get('view')==='network')throw Error('This view contains an invalid return map.');
+    returnMap=validateView(value.returnMap,entityIds,false);
+    if((new URLSearchParams(returnMap.query).get('view')||'network')!=='network')throw Error('The return destination must be a map.');
+  }
   const interaction=value.interaction||{};
   for(const [key,allowed]of [['entities',entityIds],['connections',relationshipIds],['bucketIds',entityIds]])if(interaction[key]&&(!Array.isArray(interaction[key])||interaction[key].some(id=>!allowed.has(id))||interaction[key].length>allowed.size))throw Error('This view contains an invalid map selection.');
   if(interaction.walk!==undefined){
@@ -29,7 +52,7 @@ export function validateView(value, entityIds) {
   if(interaction.orbitIds!==undefined&&(!Array.isArray(interaction.orbitIds)||interaction.orbitIds.length>entityIds.size||interaction.orbitIds.some(id=>!entityIds.has(id))||new Set(interaction.orbitIds).size!==interaction.orbitIds.length))throw Error('This view contains invalid placed entities.');
   if(interaction.flyout!==undefined){const f=interaction.flyout;if(!f||typeof f.manual!=='boolean'||![f.left,f.top,f.width].every(finite)||f.height!==null&&!finite(f.height))throw Error('This view contains invalid entity-window geometry.');}
   const mapInteraction={...(interaction.orbitIds?{orbitIds:[...interaction.orbitIds]}:{}),...(interaction.flyout?{flyout:{manual:interaction.flyout.manual,left:interaction.flyout.left,top:interaction.flyout.top,width:Math.max(250,Math.min(620,interaction.flyout.width)),height:interaction.flyout.height===null?null:Math.max(200,Math.min(1200,interaction.flyout.height))}}:{}),...(interaction.walk?{walk:interaction.walk.map(step=>({id:step.id,via:step.via})),showDirect:interaction.showDirect===true}:{}),entities:[...(interaction.entities||[])],connections:[...(interaction.connections||[])],bucketIds:interaction.bucketIds?[...interaction.bucketIds]:null};
-  return {query: value.query,...(value.interaction?{interaction:mapInteraction}:{}), ...(['bubble-cloud-v1','bubble-cloud-v2','stable-network-v1'].includes(value.mapLayout)?{mapLayout:value.mapLayout}:{}),...(value.overviewIds?{overviewIds:[...value.overviewIds]}:{}), positions: value.positions.map(row => [...row]), camera: {x:camera.x,y:camera.y,z:camera.z}, dimensions, scale:finite(value.scale)&&value.scale>=.3&&value.scale<=1?value.scale:1, details: {open: details.open !== false, docked: details.docked === true, width: finite(details.width) ? Math.max(240, Math.min(900, details.width)) : 380,...(finite(details.height)?{height:Math.max(180,Math.min(1200,details.height))}:{})},...(value.research?{research:validateResearch(value.research,entityIds,relationshipIds)}:{})};
+  return {query: value.query,...(desk?{desk}:{}),...(pathFinder?{pathFinder}:{}),...(returnMap?{returnMap}:{}),...(value.interaction?{interaction:mapInteraction}:{}), ...(['bubble-cloud-v1','bubble-cloud-v2','stable-network-v1'].includes(value.mapLayout)?{mapLayout:value.mapLayout}:{}),...(value.overviewIds?{overviewIds:[...value.overviewIds]}:{}), positions: value.positions.map(row => [...row]), camera: {x:camera.x,y:camera.y,z:camera.z}, dimensions, scale:finite(value.scale)&&value.scale>=.3&&value.scale<=1?value.scale:1, details: {open: details.open !== false, docked: details.docked === true, width: finite(details.width) ? Math.max(240, Math.min(900, details.width)) : 380,...(finite(details.height)?{height:Math.max(180,Math.min(1200,details.height))}:{})},...(value.research?{research:validateResearch(value.research,entityIds,relationshipIds)}:{})};
 }
 
 export function parseWorkspace(value, entityIds) {
