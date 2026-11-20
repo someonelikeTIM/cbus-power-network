@@ -4,6 +4,8 @@
 
 An independent, source-linked map of the people, organizations, money and public decisions that shape Columbus and Ohio. Inspired by [TheyRule](https://theyrule.net/), the project aims to make Columbus politics easier to explore and understand.
 
+Each entity opens with a short introduction and links to the documents behind it. Follow a connection to read about the next person, organization or project, or use **Undo** to return to the previous stop.
+
 Start with a name, topic, organization, source or tool. For example, search for **JobsOhio**, choose its record, then follow **Intel** through the joint project announcement. The **Evidence** link on that row opens the supporting record. The arrival link on Intel’s record returns to the announcement. You can also start with an issue such as **red light cameras**. Opening a connection from the welcome screen frames both endpoints. During an exploration, **Show this connection on map** frames the record and **Back to previous map** restores your place.
 
 Search stays above the map. Press **/** or **Ctrl/Cmd+K** to focus it, use the arrow keys to choose a suggestion, and press **Enter** to open it. **Escape** dismisses suggestions and keeps your place. Searching for **party colors**, **date** or **connection distance** opens the relevant control.

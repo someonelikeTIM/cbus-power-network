@@ -6,10 +6,32 @@ import {validateView} from '../dist/saved-views.js';
 import {networkForPins,researchFile,researchSnapshot} from '../dist/research-paths.js';
 import {resizeCamera,walkConnection,appendWalk} from '../dist/desktop-network.js';
 import {entrySampler,featuredHeadlines} from '../dist/entry-samples.js';
+import {buildEntitySummaries} from '../dist/entity-summaries.js';
 
 const byId=new Map(nodes.map(node=>[node.id,node])),ids=new Set(byId.keys());
 const edgeIds=new Set(edges.map(edge=>edge.id));
 const graph={nodes,edges},search=query=>searchDesk(graph,sources,byId,query,[]);
+const summaries=buildEntitySummaries(nodes,edges,sources);
+const publishedSources=new Set(sources.map(source=>source.id));
+for(const node of nodes){
+  const summary=summaries.get(node.id);
+  assert.ok(summary?.text.trim() && summary.text!==node.role,'Missing introduction for '+node.id);
+  assert.ok(summary.sourceIds.length && summary.sourceIds.every(id=>publishedSources.has(id)),'Uncited introduction for '+node.id);
+}
+assert.match(summaries.get('pizzuti-solutions').text,/Michael B\. Coleman/);
+assert.deepEqual(summaries.get('pizzuti-solutions').sourceIds,['pizzuti-solutions']);
+assert.match(summaries.get('george-mccue').text,/Pizzuti Solutions/);
+const ticket=byId.get('don-kissick');
+const candidateWithNoTotal={...ticket,electionResult:{...ticket.electionResult,votes:null,standing:'not-reported',selectionCandidateIds:[]}};
+assert.match(buildEntitySummaries([candidateWithNoTotal],[],sources).get(ticket.id).text,/no separate vote total/);
+const sharedTotal={...ticket,electionResult:{...ticket.electionResult,votes:150,selectionCandidateIds:[ticket.id,'james-mills']}};
+assert.match(buildEntitySummaries([sharedTotal,byId.get('james-mills')],[],sources).get(ticket.id).text,/150 votes for the joint ticket with James/);
+const newEntity={id:'unfamiliar',name:'Example organization',role:'Organization',sourceIds:['example-source']};
+const newLink={id:'example-record',source:newEntity.id,target:'city',status:'reported',evidence:'A dated filing lists the organization as a city contractor.',sourceIds:['example-source']};
+const partialSources=[{id:'example-source'}];
+const partial=buildEntitySummaries([newEntity,byId.get('city')],[newLink],partialSources);
+assert.deepEqual(partial.get('unfamiliar'),{text:newLink.evidence,sourceIds:newLink.sourceIds,edge:newLink});
+assert.equal(partial.get('city').edge,newLink,'A profile cannot borrow a source missing from the edition');
 const sampleNodes=['a','b','c','d','isolated'].map(id=>({id}));
 const sampleEdges=[['ab','a','b'],['ba','b','a'],['bc','b','c'],['cd','c','d']].map(([id,source,target])=>({id,source,target,sourceIds:['document']}));
 const headlines={ab:'First record',bc:'Second record',unsourced:'Incomplete record',missing:'Missing endpoint'};

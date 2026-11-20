@@ -6,6 +6,7 @@ import { repositoryURL } from './project-links.js';
 import { startingConnections,pathForeground,revealedPathPositions } from './exploration-paths.js';
 import { mediaProfiles,mediaLeads } from './media.js';
 import { readerField,profileCopy,leadStories,overlapLabel } from './reader-copy.js';
+import {buildEntitySummaries} from './entity-summaries.js';
 import { datasetFor, evidencePacket, publicSource, release } from './contract.js';
 import { validityFor, validityInRange, findPaths, validateRange } from './reporting.js';
 import { relationshipMatches, sourceMatches } from './search.js';
@@ -31,6 +32,7 @@ const campaignMoneyUI=mountCampaignMoney({openEntity:id=>{resetFilters(false);to
 const nodeById = new Map(nodes.map(n => [n.id, n]));
 const edgeById = new Map(edges.map(e => [e.id, e]));
 const sourceById = new Map(sources.map(s => [s.id, s]));
+const entitySummaries = buildEntitySummaries(nodes,edges,sources);
 const degrees = new Map(nodes.map(n => [n.id, edges.filter(e => e.source === n.id || e.target === n.id).length]));
 const edgePairs=new Map(),edgeBends=new Map();
 edges.forEach(edge=>{const key=[edge.source,edge.target].sort().join('|');if(!edgePairs.has(key))edgePairs.set(key,[]);edgePairs.get(key).push(edge);});
@@ -385,6 +387,16 @@ function citationRefs(ids,order=ids){
     const label=ordered.length===1?'Source':'Source '+(ordered.indexOf(id)+1);
     return `<a class="claim-ref" href="${escape(source.url)}" target="_blank" rel="noopener noreferrer" aria-label="${label}, ${escape(source.publisher)}, ${escape(source.title)}" title="${escape(source.title)}">${label} · ${escape(publisher)} <span aria-hidden="true">↗</span></a>`;
   }).join(' ');
+}
+function entitySummaryHTML(node) {
+  const summary=entitySummaries.get(node.id);
+  if(!summary)return '';
+  const edge=summary.edge;
+  const context=edge?`<div class="summary-context">${statusBadge(edge)} <button type="button" data-edge="${escape(edge.id)}">${escape(nodeById.get(edge.source).name)} · ${escape(nodeById.get(edge.target).name)}</button></div>`:'';
+  return `<section class="entity-intro" aria-label="About ${escape(node.name)}">
+    ${context}<p class="intro-statement">${escape(summary.text)}</p>
+    <div class="intro-sources">${citationRefs(summary.sourceIds)}</div>
+  </section>`;
 }
 function sourceLinks(ids,owner='',entries=[],sharedLocator=''){
   const ordered=[...new Set(ids)];
@@ -870,7 +882,9 @@ function updateRecordMenu(){
   const signature=[id,term,state.focusType,state.showDirect,pinned,...summary.links.map(e=>e.id)].join('|');
   if(signature===popoverSignature)return;
   popoverSignature=signature;
-  $('popover-name').textContent=node.name;$('popover-role').textContent=node.role;
+  $('popover-name').textContent=node.name;
+  const intro=$('popover-summary');
+  if(intro.dataset.entity!==id){intro.innerHTML=entitySummaryHTML(node);intro.dataset.entity=id;}
   $('popover-kind').textContent=categories[node.category]?.short||'Entity';
   $('popover-stats').textContent=summary.neighbors.size+(summary.neighbors.size===1?' connected entity':' connected entities')+' · '+summary.links.length+(summary.links.length===1?' record':' records');
   $('popover-collapse').textContent=state.showDirect?'Fit direct connections':'Show direct connections';
@@ -1076,13 +1090,15 @@ function renderInspector() {
   }
   if (state.selected.kind === 'node') {
     const n=nodeById.get(state.selected.id),links=adjacent(n.id),count=degrees.get(n.id),owner='node-'+n.id;
+    const summary=entitySummaries.get(n.id),sourceIds=[...new Set([...(summary?.sourceIds||[]),...n.sourceIds])];
+    const notes=readerField(n,'description');
     panel.innerHTML=`<div class="inspector-header"><span class="eyebrow">Entity</span></div>
-      <h2>${escape(n.name)}</h2><div class="entity-role">${escape(n.role)}</div>${partyDetails(n)}
+      <h2>${escape(n.name)}</h2>${entitySummaryHTML(n)}<div class="entity-role">${escape(n.role)}</div>${partyDetails(n)}
       <div class="compact-record-actions"><button data-toggle-pin="${n.id}">${currentResearch().pinnedEntities.has(n.id)?'Unpin':'Pin'}</button><button data-expand-node="${n.id}">Connections</button>
-        <button data-citation-target="${escape('cite-'+owner+'-'+n.sourceIds[0])}">Sources (${n.sourceIds.length})</button></div>
+        <button data-citation-target="${escape('cite-'+owner+'-'+sourceIds[0])}">Sources (${sourceIds.length})</button></div>
       <div class="record-facts">${links.length===count?count+' connections':links.length+' shown / '+count+' connections'}</div>
-      ${n.description?`<p class="entity-description">${escape(readerField(n,'description'))}</p>`:''}
-      <div class="claim-source-block"><h3 class="citation-heading">Sources</h3>${sourceLinks(n.sourceIds,owner)}</div>
+      ${notes&&notes!==summary?.text?`<details class="entity-record-notes"><summary>Record notes</summary><p class="entity-description">${escape(notes)}</p></details>`:''}
+      <div class="claim-source-block"><h3 class="citation-heading">Sources</h3>${sourceLinks(sourceIds,owner)}</div>
       ${tagButtons('entity',n.id)}${campaignFinanceHTML(n.id)}<div class="subheading">Connections</div>
       ${links.length?links.map(e=>connectionRow(e,n.id)).join(''):'<p>No connections match the filters.</p>'}`;
   }else if(state.selected.kind==='edge'){
@@ -1367,7 +1383,10 @@ $('popover-pin').addEventListener('click',()=>{if(state.selected?.kind==='node')
 $('neighbor-search').addEventListener('input',()=>{$('neighbor-choice').hidden=true;updateRecordMenu();});
 $('record-types').addEventListener('click',event=>{const button=event.target.closest('[data-focus-type]');if(button)showDirectConnections(button.dataset.focusType);});
 $('popover-collapse').addEventListener('click',()=>showDirectConnections());
-$('record-neighbors').addEventListener('click',event=>{const button=event.target.closest('[data-follow-node]');if(button)toggleNode(button.dataset.followNode,{from:state.selected.id,via:button.dataset.followEdge});});
+$('record-neighbors').addEventListener('click',event=>{
+  const button=event.target.closest('[data-follow-node]');
+  if(button){toggleNode(button.dataset.followNode,{from:state.selected.id,via:button.dataset.followEdge});focusRecordHeading();}
+});
 $('entity-popover').addEventListener('pointerenter',hideEntityTooltip);
 $('exploration-trail').addEventListener('click',event=>{const button=event.target.closest('[data-walk-node]');if(button)toggleNode(button.dataset.walkNode,{resume:true});});
 $('network-overview').addEventListener('click',event=>{if(!overviewTransform)return;const rect=event.currentTarget.getBoundingClientRect(),f=overviewTransform,x=((event.clientX-rect.left)*184/rect.width-f.x)/f.z,y=((event.clientY-rect.top)*96/rect.height-f.y)/f.z;moveCamera({z:camera.z,x:dimensions.width/2-x*camera.z,y:dimensions.height/2-y*camera.z});});
