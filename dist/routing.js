@@ -36,7 +36,7 @@ export function encodeState(base,state,releaseId) {
   if(state.collapsedNodes?.size)values.collapsed=[...state.collapsedNodes].join(',');
   const tags=normalizeTags(state.tags??state.tag);if(state.view==='network'&&tags.length){if(tags.length===1)values.tag=tags[0];else values.tags=tags.join(',');}
   const selected=currentSelection(state.selected);if(selected)values.record=`${recordKind(selected.kind)}:${selected.id}`;
-  if(state.projectId)values.project=state.projectId;
+  if(state.projectId){values.project=state.projectId;values.step=state.projectStep;}
   if(state.path)values.path=state.path.edges.join(',');
   if(state.bucketMode)values.group='type';if(state.showAmounts)values.amounts='1';
   for(const [key,value]of Object.entries(values))if(value!==''&&value!=null)p.set(key,value);
@@ -48,6 +48,7 @@ export function decodeState(base,defaults) {
   const list=(key,allowed,original)=>p.has(key)?new Set(p.get(key).split(',').filter(v=>Object.hasOwn(allowed,v))):new Set(original);
   const state={...defaults,categories:list('categories',categories,defaults.categories),relationships:list('relationships',relationships,defaults.relationships)};
   state.projectId=p.get('project')||'';
+  state.projectStep=state.projectId?(p.get('step')||''):'';
   state.connectionDistance=normalizeConnectionDistance(p.has('distance')?p.get('distance'):defaults.connectionDistance);
   state.colorMode=normalizeColorMode(p.has('colors')?p.get('colors'):defaults.colorMode);
   state.pinnedIds=new Set((p.get('pins')||'').split(',').filter(Boolean));

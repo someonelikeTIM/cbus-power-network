@@ -14,7 +14,7 @@ The homepage features connections from court records, audits and public spending
 
 **Your trail** shows the entities you visited. Select an earlier step to resume there. A **New start** marks a jump without a recorded link. **Undo** restores the previous exploration step. Visit **Links**, **Entities** or **Sources** to browse the underlying records. **Return to map** restores the trail, camera and panel you left.
 
-The four research projects on the homepage open a finished map and its evidence trail. Inspect a connection or open its original document. **Back to project overview** brings the map back together. **Add to my research** copies the connections into your own path and keeps your existing notes. Click inside the Record panel to widen it or on the canvas to give the map more room. The divider also lets you set a width by hand.
+The four research projects on the homepage open a finished map and its evidence trail. Inspect a connection or follow a related entity. The **Back** button names the finding you left and restores your reading position and project map. The Flock project links to each witness’s original PDF and the Ohio House hearing page. **Add to my research** copies the connections into your own path and keeps your existing notes. Click inside the Record panel to widen it or on the canvas to give the map more room. The divider also lets you set a width by hand.
 
 The current edition, **2026-11-20-research-projects**, contains **396 entities, 584 relationships, 209 sources and 243 event records**. Seven new sources document an earlier data-center tax law, opposing testimony on Ohio license plate reader legislation, company trade-group disclosures and TechNet’s testimony on an Ohio AI bill.
 

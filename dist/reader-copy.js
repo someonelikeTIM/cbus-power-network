@@ -1,6 +1,14 @@
 // Presentation copy only. The original source assertions and qualifications remain in data exports.
+export const plateReaderHearing='https://ohiohouse.gov/committees/public-safety/meetings/cmte_h_pub_safety_1_2026-11-17-0930_1530';
+// The House serves these files as attachments. The meeting page lists both witnesses in HTML.
+export const hearingTestimony={
+  'policy-flock-hb725':{download:'Download Flock’s testimony (PDF)',pages:'pp. 1 and 3',witness:'Vaughn Roland'},
+  'policy-aclu-hb725':{download:'Download ACLU of Ohio’s testimony (PDF)',pages:'p. 2',witness:'Gary Daniels'}
+};
 const investmentContext='The announcement gives the total financing round. Individual investment amounts and ownership shares were not disclosed.';
 export const readerOverrides={
+  'policy-01':{label:'Flock asked lawmakers to pass HB 725',evidence:'Vaughn Roland, Flock Safety’s government affairs director, supported a ban on commercial sales of license plate reader data. He asked for a recorded reason and an audit log for each search, oversight and clear penalties for misuse. He also supported retention rules that preserve police access for specific investigations.',locator:'Written testimony, p. 1 (commercial sales and retention) and p. 3 (search logs, oversight and penalties).'},
+  'policy-02':{locator:'Written testimony, p. 2, opening paragraph on public access to police search inquiries.'},
   e71:{label:'Raphael extorted Redflex money for campaign contributions',evidence:'The Justice Department says Columbus lobbyist John Raphael pleaded guilty to extorting money from Redflex. He sought to pass the money to Ohio elected officials to help the company win red-light camera contracts.'},
   'rf26-13':{label:'Karen Finley’s guilty plea in the Ohio bribery case',evidence:'Finley admitted that the camera company routed campaign contributions through a consultant and disguised the payments with false invoices. The scheme sought help winning or keeping city contracts, including Columbus’s red-light camera contract.'},
   'rf26-11':{label:'John Raphael pleaded guilty to extortion'},

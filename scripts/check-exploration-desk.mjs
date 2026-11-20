@@ -8,6 +8,8 @@ import {resizeCamera,walkConnection,appendWalk} from '../dist/desktop-network.js
 import {entrySampler,featuredHeadlines} from '../dist/entry-samples.js';
 import {buildEntitySummaries} from '../dist/entity-summaries.js';
 import {starterProjects,isProjectMap,addProjectToResearch} from '../dist/starter-projects.js';
+import {encodeState,decodeState} from '../dist/routing.js';
+import {hearingTestimony,plateReaderHearing,readerField} from '../dist/reader-copy.js';
 
 const byId=new Map(nodes.map(node=>[node.id,node])),ids=new Set(byId.keys());
 const edgeIds=new Set(edges.map(edge=>edge.id));
@@ -23,8 +25,17 @@ for(const project of projects.values()){
   for(const step of project.steps){
     const supporting=new Set(step.records.flatMap(edge=>edge.sourceIds));
     assert.ok(step.citations.length&&step.citations.every(id=>supporting.has(id)));
+    assert.equal(step.id,step.records[0].id);
+    if(step.follow)assert.ok(step.records.some(edge=>edge.source===step.follow||edge.target===step.follow));
   }
 }
+const flockProject=projects.get('flock-plate-readers'),flockStep=flockProject.steps[0];
+assert.equal(flockStep.id,'policy-01');assert.equal(flockStep.follow,'flock');
+assert.deepEqual(flockProject.sources,['policy-flock-hb725']);
+assert.match(flockProject.finding,/ban on commercial sales/);assert.match(flockProject.finding,/penalties for misuse/);
+assert.notEqual(hearingTestimony['policy-flock-hb725'].download,hearingTestimony['policy-aclu-hb725'].download);
+assert.match(plateReaderHearing,/ohiohouse\.gov\/committees\/public-safety\/meetings\//);
+assert.match(readerField(flockStep.records[0],'locator'),/p\. 3/);
 const technologyProject=projects.get('ai-tech-lobbying');
 assert.ok(!starterProjects(nodes,edges,sources.filter(source=>source.id!=='policy-technet-sb163')).has(technologyProject.id));
 const firstTechnologyPin=technologyProject.route.edges[0];
@@ -119,6 +130,16 @@ const oldView={query:'?view=network',camera:{x:45,y:18,z:.7},positions:[['intel'
   interaction:{walk:[{id:'jobsohio',via:''},{id:'intel',via:edge.id}],showDirect:true}};
 const desk={active:'filters',section:'connections',floating:true,side:'right',width:350,height:440,left:22,top:18};
 const map={...oldView,desk};
+const readingState={view:'network',caseId:'all',categories:new Set(),relationships:new Set(),projectId:flockProject.id,projectStep:flockStep.id};
+const readingURL=encodeState('https://example.test/',readingState,'test');
+assert.equal(decodeState(readingURL,readingState).projectStep,'policy-01');
+assert.equal(decodeState('https://example.test/?step=policy-01',readingState).projectStep,'');
+const projectPlace={project:flockProject.id,scroll:244,offset:26,fitted:false,camera:{x:35,y:55,z:1.2},dimensions:{width:970,height:620},positions:[['flock',20,40]]};
+const savedFinding={...map,query:new URL(readingURL).search,projectPlace};
+assert.deepEqual(validateView(savedFinding,ids).projectPlace,projectPlace);
+assert.throws(()=>validateView({...savedFinding,projectPlace:{...projectPlace,project:'another-project'}},ids));
+assert.throws(()=>validateView({...savedFinding,projectPlace:{...projectPlace,offset:Infinity}},ids));
+assert.throws(()=>validateView({...savedFinding,projectPlace:{...projectPlace,positions:[['unknown',0,0]]}},ids));
 const list={...map,query:'?view=sources&q=Intel',returnMap:map,desk:{...desk,active:''}};
 const restored=validateView(list,ids);
 assert.deepEqual(restored.returnMap,validateView(map,ids));

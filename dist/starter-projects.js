@@ -16,14 +16,14 @@ const definitions = [
   {
     id:'flock-plate-readers', icon:'projectCamera', title:'Flock and Ohio’s license plate reader rules',
     teaser:'Trace a Columbus camera lease, a lobbying registration and opposing testimony on a state bill.',
-    finding:'Columbus authorized 38 Flock cameras in 2024. In November 2026 Flock asked Ohio lawmakers to support HB 725. The ACLU of Ohio opposed the substitute bill over public access to police search records.',
-    sources:['flock-contract-2024','policy-flock-hb725','policy-aclu-hb725'],
+    finding:'In written testimony on November 17, 2026, Flock asked Ohio lawmakers to pass HB 725. It wanted a ban on commercial sales of license plate reader data, a recorded reason and an audit log for each search, and oversight with clear penalties for misuse.',
+    sources:['policy-flock-hb725'],
     positions:{city:[0,0],capobianco:[0,1.65],flock:[1,.8],'ohio-hb725-alpr':[2,.8],'aclu-ohio':[3,0]},
     steps:[
-      {title:'The local decision',text:'In December 2024, City Council waived bidding and authorized up to $228,000 for a two-year lease of 38 fixed license plate readers.',links:{e179:'Lease authorized'}},
-      {title:'The registered representative',text:'Columbus’s November 2025 roster lists Louis Capobianco as Flock’s city lobbyist. The entry identifies his client and jurisdiction.',links:{e171:'Registered lobbyist'}},
-      {title:'What Flock asked for',text:'At the November 17, 2026 House hearing, Flock’s government affairs director backed HB 725. He supported documented reasons for searches, audit logs and restrictions on selling plate data.',links:{'policy-01':'Supported HB 725'}},
-      {title:'Why the ACLU objected',text:'At the same hearing, the ACLU of Ohio opposed the substitute bill. It argued that Ohioans should be able to see how often and why officials search plate data.',links:{'policy-02':'Opposed HB 725'}}
+      {title:'What Flock asked for',text:'Vaughn Roland, Flock’s government affairs director, also backed the bill’s rules on how long agencies could keep plate records. He wanted police to retain access for specific investigations.',excerpt:{text:'… prohibits the sale of LPR data, requires documented justification and auditable logs for searches, and provides meaningful oversight with clear penalties for misuse.',credit:'Vaughn Roland on the legislation Flock supported · p. 3'},links:{'policy-01':'Supported HB 725'},follow:'flock'},
+      {title:'Why the ACLU objected',text:'At the same hearing, Gary Daniels of the ACLU of Ohio opposed the proposal to exempt police search inquiries from public records. He argued that residents should be able to learn how often and why officials search plate data.',links:{'policy-02':'Opposed HB 725'},follow:'aclu-ohio'},
+      {title:'The local decision',text:'In December 2024, Columbus City Council waived bidding and authorized up to $228,000 for a two-year lease of 38 fixed license plate readers.',links:{e179:'Lease authorized'},follow:'city'},
+      {title:'The registered representative',text:'Columbus listed Louis Capobianco as Flock’s city lobbyist in its November 2025 roster.',links:{e171:'Registered lobbyist'},follow:'capobianco'}
     ]
   },
   {
@@ -65,7 +65,7 @@ export function starterProjects(nodes,edges,sources) {
     const steps=definition.steps.map(step=>{
       const records=Object.keys(step.links).map(id=>byEdge.get(id));
       const citations=step.sources||[...new Set(records.map(edge=>edge.sourceIds[0]))];
-      return {...step,records,citations};
+      return {...step,id:records[0].id,records,citations};
     });
     const citations=[...definition.sources,...steps.flatMap(step=>step.citations)];
     if(citations.some(id=>!sourceIds.has(id)))continue;
@@ -80,8 +80,11 @@ export function isProjectMap(project,path) {
 
 export function addProjectToResearch(project,research) {
   const existing=new Set(research.steps.filter(step=>step.kind==='connection').map(step=>step.id));
-  const additions=project.steps.flatMap(step=>step.records.filter(edge=>!existing.has(edge.id))
-    .map(edge=>({kind:'connection',id:edge.id,note:step.records.length===1?step.text:edge.evidence})));
+  const additions=project.steps.flatMap(step=>{
+    const text=step.excerpt?step.text+' “'+step.excerpt.text+'” ('+step.excerpt.credit+')':step.text;
+    return step.records.filter(edge=>!existing.has(edge.id))
+      .map(edge=>({kind:'connection',id:edge.id,note:step.records.length===1?text:edge.evidence}));
+  });
   if(!additions.length)return research;
   if(research.steps.length+additions.length>200)throw Error('This research path has room for 200 records. Save a new path to add this project.');
   const title=!research.steps.length&&research.title==='Untitled research path'?project.title:research.title;

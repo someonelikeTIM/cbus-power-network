@@ -11,6 +11,18 @@ function readCamera(camera){
   if(!camera||!finite(camera.x)||!finite(camera.y)||!finite(camera.z)||camera.z<.02||camera.z>4)throw Error('This file contains an invalid map zoom.');
   return {x:camera.x,y:camera.y,z:camera.z};
 }
+function readPositions(rows,entityIds){
+  if(!Array.isArray(rows)||rows.length>entityIds.size||rows.some(row=>!Array.isArray(row)||row.length!==3||!entityIds.has(row[0])||!finite(row[1])||!finite(row[2])))throw Error('This file contains invalid entity positions.');
+  if(new Set(rows.map(row=>row[0])).size!==rows.length)throw Error('This file repeats an entity position.');
+  return rows.map(row=>[...row]);
+}
+function readProjectPlace(place,project,entityIds){
+  const size=place.dimensions;
+  if(!project||place.project!==project||typeof place.fitted!=='boolean'||!finite(place.offset)||place.offset<0||!finite(place.scroll)||place.scroll<0||
+    !size||![size.width,size.height].every(n=>finite(n)&&n>0))throw Error('This view contains an invalid return to a research project.');
+  return {project,offset:place.offset,scroll:place.scroll,fitted:place.fitted,camera:readCamera(place.camera),
+    dimensions:{width:size.width,height:size.height},positions:readPositions(place.positions,entityIds)};
+}
 function readDesk(value){
   if(!value||!['','record','filters','path','research','settings'].includes(value.active)
     ||value.side!==undefined&&!['left','right'].includes(value.side)
@@ -26,8 +38,8 @@ export function validateView(value, entityIds, allowReturnMap=true) {
   if (!value || typeof value !== 'object' || typeof value.query !== 'string' || value.query.length > 30000 || (value.query && !value.query.startsWith('?'))) throw Error('This file does not contain a valid explorer view.');
   const query = new URLSearchParams(value.query);
   for (const key of ['pins', 'starts', 'seeded', 'expanded', 'explored', 'anchor', 'center']) for (const id of (query.get(key) || '').split(',').filter(Boolean)) if (!entityIds.has(id)) throw Error('This view references an entity that is unavailable in this edition.');
-  if (!Array.isArray(value.positions) || value.positions.length > entityIds.size || value.positions.some(row => !Array.isArray(row) || row.length !== 3 || !entityIds.has(row[0]) || !finite(row[1]) || !finite(row[2]))) throw Error('This file contains invalid entity positions.');
-  if (new Set(value.positions.map(row => row[0])).size !== value.positions.length) throw Error('This file repeats an entity position.');
+  const positions=readPositions(value.positions,entityIds);
+  const projectPlace=value.projectPlace?readProjectPlace(value.projectPlace,query.get('project'),entityIds):null;
   if(value.overviewIds&&(!Array.isArray(value.overviewIds)||value.overviewIds.length>entityIds.size||value.overviewIds.some(id=>!entityIds.has(id))||new Set(value.overviewIds).size!==value.overviewIds.length))throw Error('This file contains invalid overview entities.');
   const camera=readCamera(value.camera);
   let pinFrame=null;
@@ -62,7 +74,7 @@ export function validateView(value, entityIds, allowReturnMap=true) {
   if(interaction.orbitIds!==undefined&&(!Array.isArray(interaction.orbitIds)||interaction.orbitIds.length>entityIds.size||interaction.orbitIds.some(id=>!entityIds.has(id))||new Set(interaction.orbitIds).size!==interaction.orbitIds.length))throw Error('This view contains invalid placed entities.');
   if(interaction.flyout!==undefined){const f=interaction.flyout;if(!f||typeof f.manual!=='boolean'||![f.left,f.top,f.width].every(finite)||f.height!==null&&!finite(f.height))throw Error('This view contains invalid entity-window geometry.');}
   const mapInteraction={...(interaction.orbitIds?{orbitIds:[...interaction.orbitIds]}:{}),...(interaction.flyout?{flyout:{manual:interaction.flyout.manual,left:interaction.flyout.left,top:interaction.flyout.top,width:Math.max(250,Math.min(620,interaction.flyout.width)),height:interaction.flyout.height===null?null:Math.max(200,Math.min(1200,interaction.flyout.height))}}:{}),...(interaction.walk?{walk:interaction.walk.map(step=>({id:step.id,via:step.via})),showDirect:interaction.showDirect===true}:{}),entities:[...(interaction.entities||[])],connections:[...(interaction.connections||[])],bucketIds:interaction.bucketIds?[...interaction.bucketIds]:null};
-  return {query:value.query,...(pinFrame?{pinFrame}:{}),...(desk?{desk}:{}),...(pathFinder?{pathFinder}:{}),...(returnMap?{returnMap}:{}),...(value.interaction?{interaction:mapInteraction}:{}), ...(['bubble-cloud-v1','bubble-cloud-v2','stable-network-v1'].includes(value.mapLayout)?{mapLayout:value.mapLayout}:{}),...(value.overviewIds?{overviewIds:[...value.overviewIds]}:{}), positions: value.positions.map(row => [...row]), camera, dimensions, scale:finite(value.scale)&&value.scale>=.3&&value.scale<=1?value.scale:1, details: {open: details.open !== false, docked: details.docked === true, width: finite(details.width) ? Math.max(240, Math.min(900, details.width)) : 380,...(finite(details.height)?{height:Math.max(180,Math.min(1200,details.height))}:{})},...(value.research?{research:validateResearch(value.research,entityIds,relationshipIds)}:{})};
+  return {query:value.query,...(projectPlace?{projectPlace}:{}),...(pinFrame?{pinFrame}:{}),...(desk?{desk}:{}),...(pathFinder?{pathFinder}:{}),...(returnMap?{returnMap}:{}),...(value.interaction?{interaction:mapInteraction}:{}), ...(['bubble-cloud-v1','bubble-cloud-v2','stable-network-v1'].includes(value.mapLayout)?{mapLayout:value.mapLayout}:{}),...(value.overviewIds?{overviewIds:[...value.overviewIds]}:{}), positions, camera, dimensions, scale:finite(value.scale)&&value.scale>=.3&&value.scale<=1?value.scale:1, details: {open: details.open !== false, docked: details.docked === true, width: finite(details.width) ? Math.max(240, Math.min(900, details.width)) : 380,...(finite(details.height)?{height:Math.max(180,Math.min(1200,details.height))}:{})},...(value.research?{research:validateResearch(value.research,entityIds,relationshipIds)}:{})};
 }
 
 export function parseWorkspace(value, entityIds) {
