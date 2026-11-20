@@ -1146,7 +1146,7 @@ function syncDesk(){
     isSingleNode:state.selected?.kind==='node'&&selectionCount()<=1,currentView:state.view});
   const pins=state.research.steps.length,inPins=!!graph.pinNetwork;
   $('show-all-pins').hidden=!pins;
-  $('show-all-pins').textContent=(inPins?'Fit all pins':'Show all pins')+' ('+pins+')';
+  $('show-all-pins').title='Fit '+pins+' pinned '+(pins===1?'record':'records')+' on the map';
   $('pins-banner').hidden=!inPins;
   $('pins-summary').textContent=inPins?'Pinned network · '+pins+(pins===1?' pin':' pins')+' · '+graph.edges.length+(graph.edges.length===1?' documented link':' documented links')+' across all topics'+(graph.components>1?' · '+graph.components+' separate groups':''):'';
   document.body.dataset.pinOverview=String(inPins);

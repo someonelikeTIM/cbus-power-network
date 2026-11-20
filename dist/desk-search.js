@@ -7,7 +7,7 @@ export const deskCommands = [
   {id:'filters', label:'Filter the network', terms:'filters topic categories dates history relationship type', panel:'filters', target:'topic-select'},
   {id:'dates', label:'Filter by date', terms:'date dates time period historical', panel:'filters', target:'valid-from'},
   {id:'path', label:'Find a path between entities', terms:'paths shortest route from to connection', panel:'path', target:'path-to'},
-  {id:'show-pins', label:'Show all pins on the map', terms:'pins pinned entities connections zoom fit overview research'},
+  {id:'show-pins', label:'SHOW PINNED', terms:'show all pins on the map pinned entities connections zoom fit overview research'},
   {id:'research', label:'Open research path', terms:'notebook notes pins bookmark saved research', panel:'research', target:'research-name'},
   {id:'record', label:'Open selected record', terms:'details inspector evidence sources selected', panel:'record'},
   {id:'settings', label:'Open map tools', terms:'settings controls display legend layout actions preferences', panel:'settings'},

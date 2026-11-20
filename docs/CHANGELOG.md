@@ -4,7 +4,7 @@
 
 Edition 2026-11-19-metadata corrects how CBUS Power describes checks against cited material. The project has no editorial review process. A connection shows its check date when one was recorded. Downloadable records use a null reviewer identity when the checker is unknown. Source citations, evidence, amounts, dates of prior checks and record IDs carry forward from the November 16 edition.
 
-The Record panel stays open while readers use tools and settings in a separate panel. It docks on the left by default. A floating record has arrows for docking on either side. Show all pins fits the pinned network in the canvas, including intermediate connections and separate groups. About the records now explains how to find a citation and read a claim in context.
+The Record panel stays open while readers use tools and settings in a separate panel. It docks on the left by default. A floating record has arrows for docking on either side. The SHOW PINNED button fits the pinned network in the canvas, including intermediate connections and separate groups. About the records now explains how to find a citation and read a claim in context.
 
 ## 2026-11-16 — Party-affiliation corrections and simpler navigation
 
