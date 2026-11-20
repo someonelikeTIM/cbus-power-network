@@ -1,3 +1,7 @@
+import {evidenceStatuses} from './data.js';
+import {entrySampler} from './entry-samples.js';
+import {readerField} from './reader-copy.js';
+
 const $=id=>document.getElementById(id);
 const toolPages={filters:'filters',path:'path-dialog',research:'research-panel',settings:'dock-settings'};
 const titles={record:'Record',filters:'Filters',path:'Find a path',research:'Research path',settings:'Map tools'};
@@ -11,39 +15,71 @@ const icons={
   jobs:'M3 9h18v12H3z M8 9V5h8v4 M3 13q9 5 18 0 M10 14h4',
   city:'M2 9l10-6 10 6z M4 20h16 M2 22h20 M6 11v7 M10 11v7 M14 11v7 M18 11v7',
   ballot:'M3 14l3-4h2 M16 10h2l3 4v7H3v-7h18 M8 4l7-2 3 8-7 2z M10 6l2 1 2-3',
-  undo:'M8 5 3 10l5 5 M4 10h10a6 6 0 0 1 6 6v3'
+  undo:'M8 5 3 10l5 5 M4 10h10a6 6 0 0 1 6 6v3',
+  random:'M3 6h2c6 0 8 12 14 12h2m-3-3 3 3-3 3 M3 18h2c2.5 0 4.3-2.1 6-5m2-3c1.8-2.6 3.4-4 6-4h2m-3-3 3 3-3 3'
 };
 function icon(name){
   const svg=document.createElementNS('http://www.w3.org/2000/svg','svg'),path=document.createElementNS(svg.namespaceURI,'path');
   svg.setAttribute('viewBox','0 0 24 24');svg.setAttribute('aria-hidden','true');svg.classList.add('desk-icon');
   path.setAttribute('d',icons[name]);svg.append(path);return svg;
 }
-function makeEntry(nodes,edges,sources,choose){
-  const byId=new Map(nodes.map(node=>[node.id,node]));
+function makeEntry(nodes,edges,sources,openEntity,openConnection){
   $('entry-coverage').textContent=nodes.length+' entities  ·  '+edges.length+' connections  ·  '+sources.length+' sources';
   for(const button of $('start-guide').querySelectorAll('[data-start-entity]')){
     const count=edges.filter(edge=>[edge.source,edge.target].includes(button.dataset.startEntity)).length;
     button.querySelector('small').textContent=count+' documented connections';
     button.querySelector('[data-symbol]').append(icon(button.querySelector('[data-symbol]').dataset.symbol));
   }
-  const drawing=$('entry-diagram');
-  // Coordinates are a schematic. Every line corresponds to a recorded direct relationship.
-  const points={morpc:[23,17],city:[76,24],linkus:[48,50],cota:[18,77],county:[80,80]};
-  const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
-  svg.setAttribute('viewBox','0 0 100 100');svg.setAttribute('preserveAspectRatio','none');svg.setAttribute('aria-hidden','true');
-  for(const edge of edges.filter(edge=>points[edge.source]&&points[edge.target]&&(edge.source==='linkus'||edge.target==='linkus'))){
-    const [x1,y1]=points[edge.source],[x2,y2]=points[edge.target],line=document.createElementNS(svg.namespaceURI,'line');
-    for(const [key,value] of Object.entries({x1,y1,x2,y2}))line.setAttribute(key,value);
-    svg.append(line);
+  const picker=entrySampler(nodes,edges),card=$('entry-sample'),content=$('sample-content');
+  const motion=matchMedia('(prefers-reduced-motion: reduce)'),rotation=$('sample-rotation');
+  let sample=null,timer=null,intersecting=false,hovering=false,focusInside=false,paused=motion.matches;
+
+  function draw(){
+    sample=picker.nextSample();
+    if(!sample)return;
+    const {edge,source,target}=sample;
+    for(const [button,node] of [[$('sample-source'),source],[$('sample-target'),target]]){
+      button.querySelector('.sample-name').textContent=node.name;
+      button.setAttribute('aria-label','Explore '+node.name);button.title=node.name;
+    }
+    const label=readerField(edge,'label');
+    $('entry-diagram').dataset.directional=String(!!edge.directional);
+    $('sample-status').textContent=(edge.historical?'Past record · ':'')+evidenceStatuses[edge.status];
+    $('sample-label').textContent=label;
+    $('sample-evidence').title=[label,edge.period].filter(Boolean).join(' · ');
+    const endpoints=edge.directional?' from '+source.name+' to '+target.name:' between '+source.name+' and '+target.name;
+    $('sample-evidence').setAttribute('aria-label','Read evidence for '+label+endpoints);
   }
-  drawing.append(svg);
-  for(const [id,[x,y]] of Object.entries(points)){
-    const node=byId.get(id),button=document.createElement('button');
-    button.type='button';button.className='diagram-entity';button.dataset.center=String(id==='linkus');
-    button.style.left=x+'%';button.style.top=y+'%';button.setAttribute('aria-label','Explore '+node.name);
-    const label=document.createElement('span');label.textContent=node.name;button.append(label);
-    button.addEventListener('click',()=>choose(id));drawing.append(button);
+  function canRotate(){
+    return picker.pairCount>1&&intersecting&&!$('entry').hidden&&!document.hidden&&
+      !paused&&!hovering&&!focusInside&&!$('search').value.trim();
   }
+  function sync(){
+    if(!canRotate()){clearTimeout(timer);timer=null;return;}
+    if(timer===null)timer=setTimeout(()=>{timer=null;if(canRotate())draw();sync();},12000);
+  }
+  function updateRotation(){
+    rotation.textContent=paused?'Resume':'Pause';
+    rotation.setAttribute('aria-label',rotation.textContent+' sample rotation');
+    sync();
+  }
+  draw();card.hidden=!sample;rotation.hidden=picker.pairCount<2;
+  $('random-start').prepend(icon('random'));$('random-start').disabled=!sample;
+  $('random-start').addEventListener('click',()=>{const id=picker.nextEntity();if(id!==null)openEntity(id);});
+  $('sample-source').addEventListener('click',()=>openEntity(sample.source.id));
+  $('sample-target').addEventListener('click',()=>openEntity(sample.target.id));
+  $('sample-evidence').addEventListener('click',()=>openConnection(sample.edge.id));
+  rotation.addEventListener('click',()=>{paused=!paused;updateRotation();});
+  motion.addEventListener('change',event=>{paused=event.matches;updateRotation();});
+  content.addEventListener('pointerenter',()=>{hovering=true;sync();});
+  content.addEventListener('pointerleave',()=>{hovering=false;sync();});
+  content.addEventListener('focusin',()=>{focusInside=true;sync();});
+  content.addEventListener('focusout',event=>{focusInside=content.contains(event.relatedTarget);sync();});
+  new IntersectionObserver(([entry])=>{intersecting=entry.isIntersecting;sync();}).observe(card);
+  document.addEventListener('visibilitychange',sync);
+  $('search').addEventListener('input',sync);
+  updateRotation();
+  return sync;
 }
 
 export function mountDesk({nodes,edges,sources,search,choose,start,launch,changed}){
@@ -53,7 +89,7 @@ export function mountDesk({nodes,edges,sources,search,choose,start,launch,change
   const toolScroll=new Map();
   let hits=[],cursor=-1;
   const clamp=(value,min,max)=>Math.max(min,Math.min(value,Math.max(min,max)));
-  makeEntry(nodes,edges,sources,start);
+  const syncEntry=makeEntry(nodes,edges,sources,start,id=>choose({kind:'edge',id}));
   $('undo-map').prepend(icon('undo'));
   for(const button of document.querySelectorAll('[data-desk-panel]')){
     button.prepend(icon(button.dataset.deskPanel));
@@ -92,6 +128,7 @@ export function mountDesk({nodes,edges,sources,search,choose,start,launch,change
     document.body.dataset.landing=String(isEntry);
     $('entry').hidden=!isEntry;$('desk-bar').hidden=isEntry;$('trail-bar').hidden=isEntry;
     $('scope-bar').hidden=isEntry;body.hidden=isEntry;
+    syncEntry();
     const slot=$(isEntry?'entry-search-slot':'desk-search-slot');
     if(input.closest('#desk-search').parentElement!==slot)slot.append($('desk-search'));
     const tool=Object.hasOwn(toolPages,active)?active:'';
@@ -165,7 +202,7 @@ export function mountDesk({nodes,edges,sources,search,choose,start,launch,change
   });
   new ResizeObserver(geometry).observe(surface);
 
-  function dismiss(){input.value='';hits=[];cursor=-1;results.hidden=true;results.replaceChildren();input.setAttribute('aria-expanded','false');input.removeAttribute('aria-activedescendant');$('search-status').textContent='';}
+  function dismiss(){input.value='';hits=[];cursor=-1;results.hidden=true;results.replaceChildren();input.setAttribute('aria-expanded','false');input.removeAttribute('aria-activedescendant');$('search-status').textContent='';syncEntry();}
   function highlight(index){
     cursor=index;
     for(const row of results.querySelectorAll('[role=option]'))row.setAttribute('aria-selected',String(Number(row.dataset.index)===index));

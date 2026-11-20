@@ -13,7 +13,7 @@ body[data-workspace-host] #explorer{border:0;background:transparent}
 .workspace-actions label{display:flex;align-items:center;gap:6px;font-size:11px}
 .workspace-actions select{max-width:130px;padding:6px;border:1px solid var(--line);border-radius:5px;background:var(--white);font:12px var(--sans)}
 .views-menu{position:relative}.views-menu summary{padding:10px;cursor:pointer;list-style:none;border:1px solid var(--line);border-radius:6px;background:var(--white)}
-.views-menu>div{position:absolute;z-index:100;right:0;top:100%;min-width:200px;display:grid;padding:8px;border:1px solid var(--line);border-radius:7px;background:var(--white);box-shadow:0 5px 20px #252b2920}
+.views-menu>div{position:absolute;z-index:100;right:0;top:100%;min-width:200px;display:grid;padding:8px;border:1px solid var(--line);border-radius:7px;background:var(--white);box-shadow:0 5px 20px #25262920}
 .views-menu button{padding:10px;text-align:left;min-height:40px;border-radius:4px;font:12px var(--sans)}.views-menu button:hover{background:var(--paper)}
 .explorer-panes{display:grid;gap:8px;grid-template-columns:minmax(0,1fr);align-items:start}
 .explorer-panes[data-layout=split]{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -37,7 +37,7 @@ body[data-embedded] .intro{display:none}
 #edge-layer .graph-edge.path-line{stroke-width:1.8;opacity:.8}
 #edge-layer>g.hovered .graph-edge{stroke-width:2.5;opacity:1;filter:none}
 #edge-layer .edge-hit{stroke-width:20}
-.graph-node .node-core{filter:drop-shadow(0 2px 3px #252b2928)}
+.graph-node .node-core{filter:drop-shadow(0 2px 3px #25262928)}
 .graph-node .node-label{font-size:var(--entity-label-size,13px);font-weight:650;stroke-width:5px}
 .graph-node .node-letter{font-size:12px;font-weight:750}
 .graph-node.pinned-node{opacity:1!important}.pinned-node .node-halo{opacity:.25;stroke:var(--rust);stroke-width:2px}
@@ -53,7 +53,7 @@ body[data-embedded] .intro{display:none}
 .pin-entity-button[aria-pressed=true]{background:var(--rust);color:var(--white)}
 #pinned-anchors{display:flex;gap:6px;flex-wrap:wrap;padding:9px 12px;border-top:1px solid var(--line);max-height:130px;overflow:auto}
 .anchor-label{width:100%;font:10px var(--mono);text-transform:uppercase;color:var(--muted)}
-.anchor-chip{display:inline-flex;border:1px solid #ae795f;border-radius:20px;background:#faf0e8;font:11px var(--sans)}
+.anchor-chip{display:inline-flex;border:1px solid var(--scarlet-line);border-radius:20px;background:var(--scarlet-tint);font:11px var(--sans)}
 .anchor-chip button{padding:6px 8px}.anchor-chip button:first-child{max-width:210px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 body[data-view=network] #search-window .distance-control{border:0;border-top:1px solid var(--line);padding:8px 12px;margin:0}
 #search-window .distance-control label{display:flex;align-items:center;justify-content:space-between;gap:8px;font:12px var(--sans)}
@@ -69,7 +69,7 @@ body[data-view=network] #graph-stage[data-compact=true] .selection-chip{top:calc
 .filter-type-group>div{padding:8px 0 2px 8px}.filter-type-group .filter-row{min-height:32px}
 #relationship-filters{display:block!important}
 .legend-group{display:block!important;width:100%}.legend-group>details>summary{cursor:pointer;font:600 11px var(--sans);margin:5px 0}.legend-group ul{margin:7px 0 10px;padding-left:6px}
-.connection-legend .legend-filtered{color:#858984}.legend-filtered .legend-line{border-color:#a5aaa3!important}.legend-filtered .legend-type-label{text-decoration:line-through;text-decoration-thickness:1px}
+.connection-legend .legend-filtered{color:#77787d}.legend-filtered .legend-line{border-color:#a5a6ac!important}.legend-filtered .legend-type-label{text-decoration:line-through;text-decoration-thickness:1px}
 .legend-show{opacity:0;min-height:28px;padding:3px 6px;border:1px solid var(--line);border-radius:4px;font:600 10px var(--sans);color:var(--ink);background:var(--white)}
 .legend-filtered:hover .legend-show,.legend-filtered:focus-within .legend-show,.legend-show:focus-visible{opacity:1}
 body[data-view=network] #connection-legend ul{display:block!important;grid-template-columns:none!important}

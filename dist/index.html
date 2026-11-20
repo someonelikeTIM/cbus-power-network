@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Explore sourced connections among Columbus and Ohio people, organizations, campaign money, contracts and public decisions.">
-  <meta name="theme-color" content="#f5f3ec">
+  <meta name="theme-color" content="#bb0000">
   <title>CBUS Power · Columbus connections</title>
   <link rel="canonical" href="https://cbuspower.org/">
   <meta property="og:site_name" content="CBUS Power">
@@ -12,7 +12,7 @@
   <meta property="og:description" content="Explore the people, organizations, money and public decisions that shape Columbus and Ohio.">
   <meta property="og:url" content="https://cbuspower.org/">
   <meta property="og:type" content="website">
-  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="./favicon.svg?v=eye" type="image/svg+xml">
   <link rel="stylesheet" href="./styles.css">
   <link rel="stylesheet" href="./explorer-workspace.css">
   <link rel="stylesheet" href="./semantic-explorer.css">
@@ -26,7 +26,7 @@
   <aside class="mobile-notice" role="note">Not optimized for mobile devices. Please visit <strong>cbuspower.org</strong> in a full-size browser for the best experience.</aside>
   <a class="skip-link" href="#explorer">Skip to the explorer</a>
   <header class="masthead">
-    <a class="brand" href="./" aria-label="CBUS Power home"><svg viewBox="0 0 36 36" aria-hidden="true"><path d="M8 9L27 7L18 26L8 9L29 26L27 7M18 26L29 26"/><circle cx="8" cy="9" r="4"/><circle cx="27" cy="7" r="3"/><circle cx="18" cy="26" r="4"/><circle cx="29" cy="26" r="2"/></svg><span>CBUS <b>Power</b></span></a>
+    <a class="brand" href="./" aria-label="CBUS Power home"><img class="brand-mark" src="./favicon.svg?v=eye" width="34" height="34" alt=""><span>CBUS <b>Power</b></span></a>
     <nav class="view-nav" aria-label="Explorer views">
       <button class="active" data-view="network" aria-current="page">Network</button>
       <button data-view="relations">Links</button>
@@ -51,16 +51,24 @@
               <p class="entry-kicker">Columbus &amp; Ohio · Public records</p>
               <h1 id="entry-title">Who’s connected<br>in <em>Columbus?</em></h1>
               <p class="entry-deck">Follow people, money and public decisions through the records that connect them.</p>
-              <div id="entry-search-slot"><div id="desk-search" role="search">
+              <div class="entry-search-row"><div id="entry-search-slot"><div id="desk-search" role="search">
           <div class="search-wrap"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input id="search" type="text" role="combobox" aria-autocomplete="list" aria-controls="starting-results" aria-expanded="false" aria-label="Search the network and tools" placeholder="Search people, topics or tools…" autocomplete="off" spellcheck="false"><kbd aria-hidden="true">/</kbd></div>
           <div id="starting-results" role="listbox" aria-label="Search results" hidden></div>
           <span id="search-status" class="desk-sr" role="status"></span>
-        </div></div>
+        </div></div><button id="random-start" type="button" title="Explore a random connected entity" disabled>RANDOM</button></div>
               <p id="entry-coverage"></p>
             </div>
-            <figure class="entry-example">
-              <div id="entry-diagram" aria-label="Explore the documented regional partners of LinkUS"></div>
-              <figcaption>Regional transit <span>Documented LinkUS partnerships</span></figcaption>
+            <figure id="entry-sample" class="entry-example" aria-labelledby="sample-caption" hidden>
+              <figcaption><span id="sample-caption">Sample connection</span><button id="sample-rotation" type="button" aria-controls="sample-content">Pause</button></figcaption>
+              <div id="sample-content" aria-live="off">
+                <div id="entry-diagram" role="group" aria-label="Connected entities">
+                  <div class="sample-pair"><span class="sample-wire" aria-hidden="true"></span>
+                    <button class="diagram-entity" id="sample-source" type="button"><span class="sample-dot" aria-hidden="true"></span><span class="sample-name"></span></button>
+                    <button class="diagram-entity" id="sample-target" type="button"><span class="sample-dot" aria-hidden="true"></span><span class="sample-name"></span></button>
+                  </div>
+                </div>
+                <button id="sample-evidence" type="button" aria-describedby="sample-status"><span id="sample-status"></span><strong id="sample-label"></strong><span class="sample-evidence-link">Read evidence <span aria-hidden="true">›</span></span></button>
+              </div>
             </figure>
           </div>
           <section id="start-guide" aria-labelledby="start-guide-title">

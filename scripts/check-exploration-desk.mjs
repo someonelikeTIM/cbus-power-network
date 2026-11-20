@@ -5,10 +5,31 @@ import {searchDesk,deskCommands} from '../dist/desk-search.js';
 import {validateView} from '../dist/saved-views.js';
 import {networkForPins,researchFile,researchSnapshot} from '../dist/research-paths.js';
 import {resizeCamera,walkConnection,appendWalk} from '../dist/desktop-network.js';
+import {entrySampler} from '../dist/entry-samples.js';
 
 const byId=new Map(nodes.map(node=>[node.id,node])),ids=new Set(byId.keys());
 const edgeIds=new Set(edges.map(edge=>edge.id));
 const graph={nodes,edges},search=query=>searchDesk(graph,sources,byId,query,[]);
+const sampleNodes=['a','b','c','isolated'].map(id=>({id}));
+const sampleEdges=[['ab','a','b'],['ba','b','a'],['bc','b','c']].map(([id,source,target])=>({id,source,target,sourceIds:['document']}));
+const samplePool=entrySampler(sampleNodes,[...sampleEdges,{id:'unsourced',source:'a',target:'isolated',sourceIds:[]},
+  {id:'missing',source:'c',target:'unknown',sourceIds:['document']}],()=>0);
+assert.equal(samplePool.pairCount,2);
+const starts=Array.from({length:6},()=>samplePool.nextEntity());
+assert.deepEqual(new Set(starts.slice(0,3)),new Set(['a','b','c']));
+assert.deepEqual(new Set(starts.slice(3)),new Set(['a','b','c']));
+assert.notEqual(starts[2],starts[3]);
+let previousPair='';
+for(let i=0;i<6;i++){
+  const sample=samplePool.nextSample();
+  assert.ok(sampleEdges.includes(sample.edge));
+  assert.equal(sample.source.id,sample.edge.source);assert.equal(sample.target.id,sample.edge.target);
+  const pair=[sample.source.id,sample.target.id].sort().join('|');assert.notEqual(pair,previousPair);previousPair=pair;
+}
+const emptyPool=entrySampler(sampleNodes,[]);
+assert.equal(emptyPool.pairCount,0);assert.equal(emptyPool.nextEntity(),null);assert.equal(emptyPool.nextSample(),null);
+const singlePool=entrySampler(sampleNodes,[sampleEdges[0]]);
+assert.equal(singlePool.pairCount,1);assert.equal(singlePool.nextSample().edge,sampleEdges[0]);
 assert.equal(search('JobsOhio')[0].id,'jobsohio');
 assert.equal(search('party colors')[0].id,'colors');
 assert.equal(search('date').some(hit=>hit.id==='dates'),true);
