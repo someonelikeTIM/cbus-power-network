@@ -7,12 +7,33 @@ import {networkForPins,researchFile,researchSnapshot} from '../dist/research-pat
 import {resizeCamera,walkConnection,appendWalk} from '../dist/desktop-network.js';
 import {entrySampler,featuredHeadlines} from '../dist/entry-samples.js';
 import {buildEntitySummaries} from '../dist/entity-summaries.js';
+import {starterProjects,isProjectMap,addProjectToResearch} from '../dist/starter-projects.js';
 
 const byId=new Map(nodes.map(node=>[node.id,node])),ids=new Set(byId.keys());
 const edgeIds=new Set(edges.map(edge=>edge.id));
 const graph={nodes,edges},search=query=>searchDesk(graph,sources,byId,query,[]);
 const summaries=buildEntitySummaries(nodes,edges,sources);
 const publishedSources=new Set(sources.map(source=>source.id));
+const projects=starterProjects(nodes,edges,sources);
+assert.equal(projects.size,4);
+for(const project of projects.values()){
+  assert.deepEqual(new Set(Object.keys(project.positions)),new Set(project.route.nodes));
+  assert.equal(isProjectMap(project,project.route),true);
+  assert.equal(isProjectMap(project,{edges:[]}),false);
+  for(const step of project.steps){
+    const supporting=new Set(step.records.flatMap(edge=>edge.sourceIds));
+    assert.ok(step.citations.length&&step.citations.every(id=>supporting.has(id)));
+  }
+}
+const technologyProject=projects.get('ai-tech-lobbying');
+assert.ok(!starterProjects(nodes,edges,sources.filter(source=>source.id!=='policy-technet-sb163')).has(technologyProject.id));
+const firstTechnologyPin=technologyProject.route.edges[0];
+const personal={id:'mine',title:'My notes',createdAt:'',steps:[{kind:'connection',id:firstTechnologyPin,note:'My original note'}]};
+const combined=addProjectToResearch(technologyProject,personal);
+assert.equal(combined.title,'My notes');assert.deepEqual(combined.steps[0],personal.steps[0]);
+assert.equal(combined.steps.length,technologyProject.route.edges.length);
+assert.equal(addProjectToResearch(technologyProject,combined),combined);
+assert.equal(personal.steps.length,1);
 for(const node of nodes){
   const summary=summaries.get(node.id);
   assert.ok(summary?.text.trim() && summary.text!==node.role,'Missing introduction for '+node.id);

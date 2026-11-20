@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-11-20 — Research projects
+
+Four homepage projects open directly to arranged maps with findings and links to the evidence. They cover the Wexners’ reported Columbus campaign donations, Flock and Ohio license plate reader policy, data-center investment and lobbying, and tech industry advocacy on AI. Readers can open individual records, return to the project, or add its connections to their own research.
+
+Edition 2026-11-20-research-projects adds six entities and seven connections from seven original documents. The records distinguish company-wide lobbying disclosures, personal campaign contributions, earlier legislation and statements made at a hearing. The edition contains 396 entities, 584 connections and 209 sources.
+
 ## 2026-11-19 — Source-check metadata correction
 
 Edition 2026-11-19-metadata corrects how CBUS Power describes checks against cited material. The project has no editorial review process. A connection shows its check date when one was recorded. Downloadable records use a null reviewer identity when the checker is unknown. Source citations, evidence, amounts, dates of prior checks and record IDs carry forward from the November 16 edition.

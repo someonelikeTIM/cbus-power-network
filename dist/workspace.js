@@ -3,9 +3,11 @@ import {release} from './contract.js';
 import {repositoryURL} from './project-links.js';
 import {parseWorkspace, validateView, workspaceFile, maximumViews} from './saved-views.js';
 import {researchFormat,researchSnapshot} from './research-paths.js';
+import {starterProjects} from './starter-projects.js';
 
 const ids = new Set(nodes.map(node => node.id));
 const names = new Map(nodes.map(node => [node.id,node.name]));
+const projects = starterProjects(nodes,edges,sources);
 const libraryKey = 'columbus-network:saved-views-v1';
 const sessionKey = 'columbus-network:workspace-v1';
 const frames = new Map();
@@ -29,7 +31,7 @@ const main = document.querySelector('main');
 const footer = document.querySelector('.page-footer');
 main.replaceChildren();
 const explorer = document.createElement('section'); explorer.id = 'explorer'; explorer.setAttribute('aria-label', 'Explorer workspace');
-explorer.innerHTML = `<div class="workspace-bar"><div class="explorer-tabs" role="tablist" aria-label="Explorer views"></div><button class="workspace-button" id="new-view" aria-label="New explorer tab">+ New tab</button><div class="workspace-actions"><button class="workspace-button" id="split-views" aria-pressed="false">Side by side</button><label id="compare-label" hidden>Beside<select id="compare-view" aria-label="View to show beside"></select></label><details class="views-menu"><summary>Workspace <span aria-hidden="true">▾</span></summary><div><button id="rename-view">Rename tab</button><button id="save-view">Save this view…</button><button id="load-view">Load a saved view…</button><button id="load-research">Load a research path…</button><button id="export-view">Export this view</button><button id="export-workspace">Export all tabs</button><button id="import-views">Import views…</button></div></details></div></div><div class="explorer-panes"></div><p class="workspace-status" role="status" aria-live="polite"></p><input type="file" id="view-file" accept=".json,application/json" hidden><dialog id="view-name-dialog"><form method="dialog"><h2 id="view-name-title">Save this view</h2><label>Name<input id="view-name" maxlength="80" required></label><div class="view-dialog-actions"><button value="cancel" formnovalidate>Cancel</button><button id="confirm-view-name" value="save">Save</button></div></form></dialog><dialog id="view-library"><form method="dialog"><button class="dialog-close" aria-label="Close saved views">×</button></form><h2>Saved views</h2><p>Stored in this browser. Export a file to keep a copy or use another browser.</p><div id="saved-view-list"></div></dialog>`;
+explorer.innerHTML = `<div class="workspace-bar"><div class="explorer-tabs" role="tablist" aria-label="Explorer views"></div><button class="workspace-button" id="new-view" aria-label="New explorer tab">+ New tab</button><div class="workspace-actions"><button class="workspace-button" id="split-views" aria-pressed="false">Side by side</button><label id="compare-label" hidden>Beside<select id="compare-view" aria-label="View to show beside"></select></label><details class="views-menu"><summary>Workspace</summary><div><button id="rename-view">Rename tab</button><button id="save-view">Save this view…</button><button id="load-view">Load a saved view…</button><button id="load-research">Load a research path…</button><button id="export-view">Export this view</button><button id="export-workspace">Export all tabs</button><button id="import-views">Import views…</button></div></details></div></div><div class="explorer-panes"></div><p class="workspace-status" role="status" aria-live="polite"></p><input type="file" id="view-file" accept=".json,application/json" hidden><dialog id="view-name-dialog"><form method="dialog"><h2 id="view-name-title">Save this view</h2><label>Name<input id="view-name" maxlength="80" required></label><div class="view-dialog-actions"><button value="cancel" formnovalidate>Cancel</button><button id="confirm-view-name" value="save">Save</button></div></form></dialog><dialog id="view-library"><form method="dialog"><button class="dialog-close" aria-label="Close saved views">×</button></form><h2>Saved views</h2><p>Stored in this browser. Export a file to keep a copy or use another browser.</p><div id="saved-view-list"></div></dialog>`;
 main.append(explorer, footer);
 const $ = id => document.getElementById(id);
 $('source-total').textContent = String(sources.length);
@@ -69,9 +71,9 @@ function tabLabel(view){
   if(!/^View \d+$/.test(view.name))return view.name;
   const snapshot=view.snapshot.returnMap||view.snapshot,walk=snapshot.interaction?.walk||[];
   const origin=names.get(walk[0]?.id);
-  if(!origin)return view.name.replace('View ','Exploration ');
+  if(!origin)return projects.get(new URLSearchParams(snapshot.query).get('project'))?.title||view.name.replace('View ','Exploration ');
   const current=names.get(walk.at(-1)?.id);
-  return current&&current!==origin?origin+' › '+current:origin;
+  return current&&current!==origin?origin+' / '+current:origin;
 }
 function syncNavigation(view){
   const kind=new URLSearchParams(view.snapshot.query).get('view')||'network';
@@ -158,7 +160,7 @@ $('view-name-dialog').addEventListener('close', () => {
 function showLibrary() {
   const list = $('saved-view-list'); list.replaceChildren();
   const entries = library();
-  if (!entries.length) list.textContent = 'No saved views yet. Use Views → Save this view.';
+  if (!entries.length) list.textContent = 'No saved views yet. Choose Save this view in the Workspace menu.';
   entries.forEach((entry, index) => {
     const row = document.createElement('div'); row.className = 'saved-view-row';
     const open = document.createElement('button'); open.textContent = 'Open ' + entry.name; open.addEventListener('click', () => { if (addView(entry.snapshot, entry.name)) $('view-library').close(); });
@@ -204,7 +206,7 @@ window.addEventListener('message', event => {
     const text=event.data.text,name=event.data.name;
     if(typeof text!=='string'||text.length>128*1024*1024||typeof name!=='string'||!/^[a-zA-Z0-9_.-]{1,110}\.csv$/.test(name)){status('This campaign CSV could not be prepared.');return;}
     let link=$('campaign-csv-download');
-    if(!link){link=document.createElement('a');link.id='campaign-csv-download';link.className='workspace-button';link.textContent='Save campaign CSV ↧';document.querySelector('.workspace-actions').prepend(link);}
+    if(!link){link=document.createElement('a');link.id='campaign-csv-download';link.className='workspace-button';link.textContent='Save campaign CSV';document.querySelector('.workspace-actions').prepend(link);}
     if(link.href.startsWith('blob:'))URL.revokeObjectURL(link.href);
     link.href=URL.createObjectURL(new Blob([text],{type:'text/csv;charset=utf-8'}));link.download=name;link.click();status('Campaign CSV prepared. Save campaign CSV keeps a downloadable copy above the explorer.');return;
   }

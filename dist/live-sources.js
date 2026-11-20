@@ -2434,5 +2434,110 @@ export const sourceLiveEvidence = {
       "chairman of the ohio republican party"
     ],
     "missingChecks": []
+  },
+  "policy-cisco-dues": {
+    "originalUrl": "https://www.cisco.com/c/dam/en_us/about/government-affairs/trade-association-payments.pdf",
+    "finalUrl": "https://www.cisco.com/c/dam/en_us/about/government-affairs/trade-association-payments.pdf",
+    "contentVerified": true,
+    "checkedAt": "2026-11-20T16:39:29.810Z",
+    "sha256": "8153d9846fe3bc9c5ae0a53e446865697cd9d18a35d0ab6b9835acdd8a2ec15a",
+    "contentCheckMethod": "Original content fetch",
+    "contentChecks": [
+      "2025",
+      "Trade Association",
+      "TechNet",
+      "40,590"
+    ],
+    "missingChecks": []
+  },
+  "policy-flock-hb725": {
+    "originalUrl": "https://search-prod.lis.state.oh.us/api/v2/general_assembly_136/committees/cmte_h_pub_safety_1/meetings/cmte_h_pub_safety_1_2026-11-17-0930_1530/testimony/19973/flock_safety_11_17_2026_testimony.pdf",
+    "finalUrl": "https://search-prod.lis.state.oh.us/api/v2/general_assembly_136/committees/cmte_h_pub_safety_1/meetings/cmte_h_pub_safety_1_2026-11-17-0930_1530/testimony/19973/flock_safety_11_17_2026_testimony.pdf",
+    "contentVerified": true,
+    "checkedAt": "2026-11-20T16:39:30.291Z",
+    "sha256": "0ea62751eee525d3502dc247e3b2d01137704e2ece54ed8ac2d3b0cdbb34eb1e",
+    "contentCheckMethod": "Original content fetch",
+    "contentChecks": [
+      "Vaughn Roland",
+      "November 17, 2026",
+      "HB 725",
+      "auditable logs"
+    ],
+    "missingChecks": []
+  },
+  "policy-verizon-dues": {
+    "originalUrl": "https://www.verizon.com/about/sites/default/files/2024-Political-Engagement.pdf",
+    "finalUrl": "https://www.verizon.com/about/sites/default/files/2024-Political-Engagement.pdf",
+    "contentVerified": true,
+    "checkedAt": "2026-11-20T16:39:31.337Z",
+    "sha256": "501285aafa015dc2c03048d795963063547824dbad82283ac149e055bf187393",
+    "contentCheckMethod": "Original content fetch",
+    "contentChecks": [
+      "Technology Network",
+      "47,753",
+      "used for lobbying"
+    ],
+    "missingChecks": []
+  },
+  "policy-aclu-hb725": {
+    "originalUrl": "https://search-prod.lis.state.oh.us/api/v2/general_assembly_136/committees/cmte_h_pub_safety_1/meetings/cmte_h_pub_safety_1_2026-11-17-0930_1530/testimony/19899/sub_hb_725_testimony___aclu_of_ohio___11_17_26.pdf",
+    "finalUrl": "https://search-prod.lis.state.oh.us/api/v2/general_assembly_136/committees/cmte_h_pub_safety_1/meetings/cmte_h_pub_safety_1_2026-11-17-0930_1530/testimony/19899/sub_hb_725_testimony___aclu_of_ohio___11_17_26.pdf",
+    "contentVerified": true,
+    "checkedAt": "2026-11-20T16:39:31.549Z",
+    "sha256": "f01f17b7b80df1da65b081718064949393a8f927a40a92b264b867120372179c",
+    "contentCheckMethod": "Original content fetch",
+    "contentChecks": [
+      "Gary Daniels",
+      "Opponent Testimony",
+      "House Bill 725",
+      "search inquiries"
+    ],
+    "missingChecks": []
+  },
+  "policy-google-groups": {
+    "originalUrl": "https://services.google.com/fh/files/misc/trade_association_and_third_party_groups.pdf",
+    "finalUrl": "https://services.google.com/fh/files/misc/trade_association_and_third_party_groups.pdf",
+    "contentVerified": true,
+    "checkedAt": "2026-11-20T16:39:32.014Z",
+    "sha256": "281a350a270234b0bcc5269eae4b3ac26b0886b59a4ea7da754a278b37be813d",
+    "contentCheckMethod": "Original content fetch",
+    "contentChecks": [
+      "Government Affairs",
+      "Trade Associations",
+      "TechNet"
+    ],
+    "missingChecks": []
+  },
+  "policy-technet-sb163": {
+    "originalUrl": "https://search-prod.lis.state.oh.us/api/v2/general_assembly_136/committees/cmte_s_judiciary_1/meetings/cmte_s_judiciary_1_2025-06-18-0945_609/testimony/10406/oh_sb163_technet_comments_oppose_final.pdf",
+    "finalUrl": "https://search-prod.lis.state.oh.us/api/v2/general_assembly_136/committees/cmte_s_judiciary_1/meetings/cmte_s_judiciary_1_2025-06-18-0945_609/testimony/10406/oh_sb163_technet_comments_oppose_final.pdf",
+    "contentVerified": true,
+    "checkedAt": "2026-11-20T16:39:32.270Z",
+    "sha256": "16793c59b8ea3e010be764c929c8ff55603aeb02bd320be821cec361f9726022",
+    "contentCheckMethod": "Original content fetch",
+    "contentChecks": [
+      "June 17, 2025",
+      "SB 163",
+      "assigns liability",
+      "provenance",
+      "must oppose"
+    ],
+    "missingChecks": []
+  },
+  "policy-dovilla-sb243": {
+    "originalUrl": "https://ohiosenate.gov/legislation/130/sb243",
+    "finalUrl": "https://ohiosenate.gov/legislation/130/sb243",
+    "contentVerified": true,
+    "checkedAt": "2026-11-20T16:42:23.710Z",
+    "sha256": "3f9978155630f4b30c2c735fdfaebc2412e630c88bdc8a7b4fdec82ac6c02418",
+    "contentCheckMethod": "Original content fetch",
+    "contentChecks": [
+      "130th General Assembly",
+      "temporarily allow computer data centers",
+      "capital investment",
+      "Michael D. Dovilla",
+      "March 23, 2015"
+    ],
+    "missingChecks": []
   }
 };

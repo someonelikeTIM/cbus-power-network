@@ -23,7 +23,8 @@ export const moneyKinds = {
   'gift-source':{label:'Personal gift source disclosed',group:'other'},
   'charitable-gift':{label:'Charitable gift announced',group:'commitments'},
   'recognized-revenue':{label:'Recognized funding revenue',group:'other'},
-  'transaction-value':{label:'Asset purchase price disclosed',group:'other'}
+  'transaction-value':{label:'Asset purchase price disclosed',group:'other'},
+  'lobbying-portion':{label:'Disclosed lobbying portion',group:'other'}
 };
 const day=(value,role='Event date',note='')=>({precision:'day',start:value,end:value,role,note});
 const month=(value,role='Event month',note='Day not established')=>({precision:'month',start:value+'-01',end:monthEnd(value),role,note});

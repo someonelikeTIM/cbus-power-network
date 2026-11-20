@@ -1,0 +1,142 @@
+{
+  "release": {
+    "schemaVersion": "1.0.0",
+    "releaseId": "2026-11-20-research-projects",
+    "status": "published",
+    "preparedOn": "2026-11-20",
+    "publishedAt": "2026-11-20T16:50:45Z",
+    "dataRevision": 24,
+    "codeLicense": "MIT",
+    "dataLicense": "CC-BY-4.0",
+    "sourceCheckIds": [
+      "policy-dovilla-sb243",
+      "policy-flock-hb725",
+      "policy-aclu-hb725",
+      "policy-cisco-dues",
+      "policy-verizon-dues",
+      "policy-google-groups",
+      "policy-technet-sb163"
+    ]
+  },
+  "inputFingerprint": "8fb045479e5126d59dea186aa38955f292ce859a73fab5e79ccbe78e67efeafa",
+  "counts": {
+    "entities": 396,
+    "relationships": 584,
+    "sources": 209,
+    "events": 243,
+    "leads": 7
+  },
+  "sourceChecksReperformed": true,
+  "sourceCheckScope": [
+    "policy-dovilla-sb243",
+    "policy-flock-hb725",
+    "policy-aclu-hb725",
+    "policy-cisco-dues",
+    "policy-verizon-dues",
+    "policy-google-groups",
+    "policy-technet-sb163"
+  ],
+  "thirdPartyDocumentsIncluded": false,
+  "files": [
+    {
+      "path": "dataset.json",
+      "bytes": 1824459,
+      "sha256": "9a54e5f19fd994be62ff37f0f49bf12c74b2978c90f843dfa7cd4e5739618781"
+    },
+    {
+      "path": "entities.csv",
+      "bytes": 235477,
+      "sha256": "68596f526749b10a4be236f1eab5006b3c8f87b4c26735b7d70a9fe3da28f1f2"
+    },
+    {
+      "path": "entities.json",
+      "bytes": 344252,
+      "sha256": "424b0e5be8cb582c8749af09ff9396d7d1d83c15c662f5c86dbc65c0c963f024"
+    },
+    {
+      "path": "entities.schema.json",
+      "bytes": 11452,
+      "sha256": "5261821c3fe483bcb93476bb5e817a9f42b7d5c08ee8cacd0dc87a5bfe79eb68"
+    },
+    {
+      "path": "events.csv",
+      "bytes": 108419,
+      "sha256": "5c162138ce90412473d030a4c9f4c7d8122cdaf90f889c877c2fcf76212a604d"
+    },
+    {
+      "path": "events.json",
+      "bytes": 198697,
+      "sha256": "eaeddf20c16f3ea5c966d96b842579e37923a9add8c6c266270727f8ab26b41e"
+    },
+    {
+      "path": "events.schema.json",
+      "bytes": 11447,
+      "sha256": "a91890a4b6d0239239338187224f8b1339c74ee1b0322868ecca3fca0a43dfaf"
+    },
+    {
+      "path": "leads.csv",
+      "bytes": 4865,
+      "sha256": "e936bf366305766a577315fec774ea9688ce902863c96c02b349262279d85b66"
+    },
+    {
+      "path": "leads.json",
+      "bytes": 6983,
+      "sha256": "d45e7d1186009f948307c73e2b39fc2cd5390bc60c7faf5527fc418946ff7385"
+    },
+    {
+      "path": "leads.schema.json",
+      "bytes": 11444,
+      "sha256": "7a12e42bbcaf464bd879e1b957f198a53e86b8535d105e442092cb319189ad2e"
+    },
+    {
+      "path": "packet-anduril-city.json",
+      "bytes": 20655,
+      "sha256": "b24f82aaad0d86db8e4b250879b5d05f6fe79f95bdd1787d7fec7a9dce53ecc5"
+    },
+    {
+      "path": "packet-flock.json",
+      "bytes": 13878,
+      "sha256": "bcc9c82ae9560c1bc3170287f1cb3cd83bf270faa0ecab9830b9484dec86531d"
+    },
+    {
+      "path": "packet-m63.json",
+      "bytes": 8417,
+      "sha256": "4d153e44d77d96b06bd5bda0b85757090fc1cbd4b0203a4b72025bdf38b3a2c5"
+    },
+    {
+      "path": "relationships.csv",
+      "bytes": 755844,
+      "sha256": "accc2a7e1d4ae504e27c5773bbad834dcd83fb546cbcefc192768771e2a69a27"
+    },
+    {
+      "path": "relationships.json",
+      "bytes": 981244,
+      "sha256": "9af0c3dfe0be07bc6c38c494a35adc88c59d2b1b4beb7d1d46938c9e38e5d06c"
+    },
+    {
+      "path": "relationships.schema.json",
+      "bytes": 11468,
+      "sha256": "a97f2ab1a6dec680d58b04bf1ab5b09a63295594c256d46ebb58f03ddcb48a0f"
+    },
+    {
+      "path": "schema.json",
+      "bytes": 12018,
+      "sha256": "c7210d6f42a50d5b52cd10af52e2de4cdf3a623c69bb1646a3921c051db00926"
+    },
+    {
+      "path": "sources.csv",
+      "bytes": 199437,
+      "sha256": "82bcb6ed94d4673b063b3ebb5fbedd75fb7434a87b6b9afed3da285f18c08ec8"
+    },
+    {
+      "path": "sources.json",
+      "bytes": 293488,
+      "sha256": "69b866539c226b206388e99b6cf309f69f89063b0b8660c9a46b6434cb261aaf"
+    },
+    {
+      "path": "sources.schema.json",
+      "bytes": 11450,
+      "sha256": "57ca6d29edcfc048047fcbaa1aa9cc0865a91fe9fbbe94c756b6c8d2696257b2"
+    }
+  ]
+}

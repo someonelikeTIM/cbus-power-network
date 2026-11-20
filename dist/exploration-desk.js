@@ -11,9 +11,10 @@ const icons={
   path:'M7 5h8a4 4 0 0 1 0 8H9a3 3 0 0 0 0 6h7 M7 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0 M21 19a2 2 0 1 1-4 0 2 2 0 0 1 4 0',
   research:'M5 4h14v17l-7-4-7 4z M8 8h8 M8 11h6',
   settings:'M4 4h7v7H4z M14 5h6 M14 9h6 M4 15h6 M4 19h6 M14 14h7v7h-7z',
-  jobs:'M3 9h18v12H3z M8 9V5h8v4 M3 13q9 5 18 0 M10 14h4',
-  city:'M2 9l10-6 10 6z M4 20h16 M2 22h20 M6 11v7 M10 11v7 M14 11v7 M18 11v7',
-  ballot:'M3 14l3-4h2 M16 10h2l3 4v7H3v-7h18 M8 4l7-2 3 8-7 2z M10 6l2 1 2-3',
+  projectFunds:'M4 4h15v17l-3-2-3 2-3-2-3 2-3-2z M8 8h7 M8 12h7 M8 16h4',
+  projectCamera:'M3 7h4l2-3h6l2 3h4v13H3z M16 13a4 4 0 1 1-8 0 4 4 0 1 1 8 0',
+  projectServers:'M3 4h18v7H3z M3 14h18v7H3z M6 7.5h1 M10 7.5h7 M6 17.5h1 M10 17.5h7',
+  projectChip:'M6 6h12v12H6z M9 9h6v6H9z M9 2v4m6-4v4M9 18v4m6-4v4M2 9h4m-4 6h4m12-6h4m-4 6h4',
   undo:'M8 5 3 10l5 5 M4 10h10a6 6 0 0 1 6 6v3',
   random:'M3 6h2c6 0 8 12 14 12h2m-3-3 3 3-3 3 M3 18h2c2.5 0 4.3-2.1 6-5m2-3c1.8-2.6 3.4-4 6-4h2m-3-3 3 3-3 3'
 };
@@ -22,12 +23,20 @@ function icon(name){
   svg.setAttribute('viewBox','0 0 24 24');svg.setAttribute('aria-hidden','true');svg.classList.add('desk-icon');
   path.setAttribute('d',icons[name]);svg.append(path);return svg;
 }
-function makeEntry(nodes,edges,sources,openEntity,openConnection){
+function makeEntry(nodes,edges,sources,openEntity,openConnection,projects,openProject){
   $('entry-coverage').textContent=nodes.length+' entities  ·  '+edges.length+' connections  ·  '+sources.length+' sources';
-  for(const button of $('start-guide').querySelectorAll('[data-start-entity]')){
-    const count=edges.filter(edge=>[edge.source,edge.target].includes(button.dataset.startEntity)).length;
-    button.querySelector('small').textContent=count+' documented connections';
-    button.querySelector('[data-symbol]').append(icon(button.querySelector('[data-symbol]').dataset.symbol));
+  for(const project of projects.values()){
+    const card=document.createElement('a'),symbol=document.createElement('span'),title=document.createElement('strong');
+    const teaser=document.createElement('span'),count=document.createElement('small');
+    card.href='?project='+project.id;card.target='_top';card.className='project-card';
+    symbol.className='start-symbol';symbol.append(icon(project.icon));title.textContent=project.title;
+    teaser.className='project-teaser';teaser.textContent=project.teaser;count.textContent=project.route.edges.length+' mapped connections';
+    card.append(symbol,title,teaser,count);
+    card.addEventListener('click',event=>{
+      if(event.button!==0||event.ctrlKey||event.metaKey||event.shiftKey||event.altKey)return;
+      event.preventDefault();openProject(project.id);
+    });
+    $('starter-projects').append(card);
   }
   const picker=entrySampler(nodes,edges),card=$('entry-sample'),content=$('sample-content');
   const motion=matchMedia('(prefers-reduced-motion: reduce)'),rotation=$('sample-rotation');
@@ -116,14 +125,15 @@ function makeEntry(nodes,edges,sources,openEntity,openConnection){
   return sync;
 }
 
-export function mountDesk({nodes,edges,sources,search,choose,start,launch,changed}){
+export function mountDesk({nodes,edges,sources,search,choose,start,launch,changed,projects,openProject}){
   let active='',section='connections',landing=true,selected=null,singleNode=false,view='network';
+  let projectOverview=false;
   let floating=false,side='left',width=360,height=500,left=null,top=14,drag=null;
   const dock=$('record-dock'),body=$('desk-body'),surface=$('desk-main'),input=$('search'),results=$('starting-results');
   const toolScroll=new Map();
   let hits=[],cursor=-1;
   const clamp=(value,min,max)=>Math.max(min,Math.min(value,Math.max(min,max)));
-  const syncEntry=makeEntry(nodes,edges,sources,start,id=>choose({kind:'edge',id}));
+  const syncEntry=makeEntry(nodes,edges,sources,start,id=>choose({kind:'edge',id}),projects,openProject);
   $('undo-map').prepend(icon('undo'));
   for(const button of document.querySelectorAll('[data-desk-panel]')){
     button.prepend(icon(button.dataset.deskPanel));
@@ -142,16 +152,26 @@ export function mountDesk({nodes,edges,sources,search,choose,start,launch,change
   $('tab-connections').addEventListener('click',()=>showRecord('connections'));
   $('tab-evidence').addEventListener('click',()=>showRecord('evidence'));
 
+  function widthLimits(){
+    const min=Math.min(260,Math.max(1,surface.clientWidth-16));
+    return {min,max:Math.max(min,Math.min(680,surface.clientWidth*(floating ? .94 : .55)))};
+  }
+  function focusWidth(expand){
+    if(!surface.clientWidth||body.hidden)return;
+    const limits=widthLimits(),next=expand?limits.max:limits.min;
+    if(Math.abs(width-next)<.5)return;
+    width=next;geometry();changed();
+  }
   function geometry(){
     if(!surface.clientWidth||!surface.clientHeight)return;
-    const inset=8,w=clamp(width,Math.min(260,surface.clientWidth-16),Math.min(680,surface.clientWidth*(floating ? .94 : .55)));
+    const limits=widthLimits(),inset=8,w=clamp(width,limits.min,limits.max);
     const h=clamp(height,180,surface.clientHeight-2*inset);
     body.style.setProperty('--dock-width',w+'px');dock.style.setProperty('--float-height',h+'px');
     dock.style.setProperty('--float-left',clamp(left??(side==='left'?inset:surface.clientWidth-w-inset),inset,surface.clientWidth-w-inset)+'px');
     dock.style.setProperty('--float-top',clamp(top,inset,surface.clientHeight-h-inset)+'px');
     $('dock-resize').setAttribute('aria-valuenow',Math.round(w));
-    $('dock-resize').setAttribute('aria-valuemax',Math.round(surface.clientWidth));
-    $('dock-resize').setAttribute('aria-valuemin',Math.min(260,Math.round(w)));
+    $('dock-resize').setAttribute('aria-valuemax',Math.round(limits.max));
+    $('dock-resize').setAttribute('aria-valuemin',Math.round(limits.min));
   }
   function setFloating(next,dockSide=side){
     floating=next;side=dockSide;paint();changed();
@@ -170,13 +190,14 @@ export function mountDesk({nodes,edges,sources,search,choose,start,launch,change
     $('tools-panel').hidden=!tool;
     $('tools-title').textContent=tool?titles[tool]:'Explorer tools';
     $('tools-close').setAttribute('aria-label','Close '+(titles[tool]||'tool'));
-    $('dock-title').textContent=selected?.kind==='edge'?'Connection evidence':selected?.kind==='source'?'Source record':'Record';
+    $('dock-title').textContent=projectOverview?'Research project':selected?.kind==='edge'?'Connection evidence':selected?.kind==='source'?'Source record':'Record';
     $('dock-place').hidden=floating;$('dock-left').hidden=!floating;$('dock-right').hidden=!floating;
     $('dock-header').title=floating?'Drag to move the record panel, or double-click to dock '+side:'Double-click to float the record panel';
     for(const [key,id] of Object.entries(toolPages))$(id).hidden=tool!==key;
     for(const button of document.querySelectorAll('[data-desk-panel]:not(#record-open)'))button.setAttribute('aria-expanded',String(tool===button.dataset.deskPanel));
     $('record-switch').hidden=!singleNode;
-    $('record-empty').hidden=!!selected;
+    $('record-empty').hidden=!!selected||projectOverview;
+    $('project-report').hidden=!projectOverview;
     $('entity-popover').hidden=!singleNode||section!=='connections';
     $('inspector').hidden=!selected||(singleNode&&section==='connections');
     $('tab-connections').setAttribute('aria-pressed',String(section==='connections'));
@@ -210,6 +231,11 @@ export function mountDesk({nodes,edges,sources,search,choose,start,launch,change
     section=next;setPanel('record',{focus});$('dock-content').scrollTop=0;
   }
   const header=$('dock-header'),resize=$('dock-resize');
+  // Resize after the actual click. Moving the panel at pointerdown would move a
+  // link or a button out from under the pointer before the browser activates it.
+  let movedHeader=false;
+  dock.addEventListener('pointerdown',()=>{movedHeader=false;},true);
+  dock.addEventListener('click',event=>{if(!movedHeader&&!event.target.closest('#dock-resize'))focusWidth(true);});
   function begin(event,mode){
     if(event.button!==0||mode==='move'&&(!floating||event.target.closest('button')))return;
     const rect=dock.getBoundingClientRect(),outer=surface.getBoundingClientRect();
@@ -221,8 +247,8 @@ export function mountDesk({nodes,edges,sources,search,choose,start,launch,change
   dock.addEventListener('pointermove',event=>{
     if(!drag||drag.id!==event.pointerId)return;
     const dx=event.clientX-drag.x,dy=event.clientY-drag.y;
-    if(drag.mode==='move'){left=drag.left+dx;top=drag.top+dy;}
-    else{width=clamp(drag.w+(floating||side==='left'?dx:-dx),250,680);if(floating){left=drag.left;height=clamp(drag.h+dy,180,surface.clientHeight-16);}}
+    if(drag.mode==='move'){if(Math.hypot(dx,dy)>4)movedHeader=true;left=drag.left+dx;top=drag.top+dy;}
+    else{const limits=widthLimits();width=clamp(drag.w+(floating||side==='left'?dx:-dx),limits.min,limits.max);if(floating){left=drag.left;height=clamp(drag.h+dy,180,surface.clientHeight-16);}}
     geometry();
   });
   for(const eventName of ['pointerup','pointercancel','lostpointercapture'])dock.addEventListener(eventName,event=>{if(drag?.id===event.pointerId){drag=null;changed();}});
@@ -231,7 +257,7 @@ export function mountDesk({nodes,edges,sources,search,choose,start,launch,change
     if(!(onResize||onTitle&&floating)||!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(event.key))return;
     event.preventDefault();const dx=event.key==='ArrowLeft'?-16:event.key==='ArrowRight'?16:0,dy=event.key==='ArrowUp'?-16:event.key==='ArrowDown'?16:0;
     if(onTitle){left=dock.offsetLeft+dx;top=dock.offsetTop+dy;}
-    else{width=clamp(dock.offsetWidth+(floating||side==='left'?dx:-dx),250,680);if(floating)height=dock.offsetHeight+dy;}
+    else{const limits=widthLimits();width=clamp(dock.offsetWidth+(floating||side==='left'?dx:-dx),limits.min,limits.max);if(floating)height=dock.offsetHeight+dy;}
     geometry();changed();
   });
   new ResizeObserver(geometry).observe(surface);
@@ -286,14 +312,14 @@ export function mountDesk({nodes,edges,sources,search,choose,start,launch,change
   results.addEventListener('click',event=>{const button=event.target.closest('[data-index]');if(button)chooseIndex(Number(button.dataset.index));});
   document.addEventListener('pointerdown',event=>{if(!results.hidden&&!event.target.closest('#desk-search'))dismiss();});
   input.addEventListener('blur',()=>{if(!results.hidden)dismiss();});
-  function sync({empty,selection,isSingleNode,currentView}){
-    landing=empty;selected=selection;singleNode=isSingleNode;view=currentView;paint();
+  function sync({empty,selection,isSingleNode,currentView,showProject=false}){
+    landing=empty;selected=selection;singleNode=isSingleNode;view=currentView;projectOverview=showProject;paint();
   }
   function restore(saved,selection){
     active=saved?saved.active:(selection?'record':'');section=saved?.section||(selection?.kind==='node'?'connections':'evidence');
     side=saved?.side==='right'?'right':'left';floating=saved?.floating||false;width=saved?.width||360;height=saved?.height||500;left=saved?.left??null;top=saved?.top??14;paint();
   }
-  return {sync,setPanel,closeTool,showRecord,dismiss,restore,focusSearch:()=>{input.focus({preventScroll:true});input.select();},
+  return {sync,setPanel,closeTool,showRecord,dismiss,restore,focusWidth,focusSearch:()=>{input.focus({preventScroll:true});input.select();},
     get tool(){return Object.hasOwn(toolPages,active)?active:'';},get section(){return section;},
     snapshot:()=>({active,section,floating,side,width,height,left,top})};
 }

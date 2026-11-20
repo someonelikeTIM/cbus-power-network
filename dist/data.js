@@ -16,8 +16,9 @@ import { epsteinSources,epsteinRelease } from './epstein-enrichment.js';
 import { redflexSources,redflexRelease } from './redflex-enrichment.js';
 import { electionResultSources,applyElectionResults } from './election-results-2026.js';
 import { affiliationSources,applyPartyAffiliations } from './party-affiliations.js';
+import {policySources,policyRelease} from './policy-records.js';
 export const meta = {
-  title: 'CBUS Power', reviewed: '2026-11-16', version: 23,
+  title: 'CBUS Power', reviewed: '2026-11-20', version: 24,
   scope: 'Columbus and Ohio: money, control, public corruption, civic affiliations, and media ownership, governance, funding and information supply.',
   limitations: 'Selected records, not complete coverage. Evidence status, source date, and direction are attached to each case relationship. Assets, cash transfers, and penalties are identified separately.'
 };
@@ -90,7 +91,7 @@ export const allDeclaredSources = [
   {id:'redflex-plea',title:'Finley guilty plea: camera-contract bribery scheme',publisher:'U.S. Department of Justice',url:'https://www.justice.gov/archives/opa/pr/former-ceo-pleads-guilty-bribery-and-fraud-scheme-involving-red-light-camera-contracts',date:'2015-06-19',note:'Finley admitted conduit contributions, false invoices, and contracts in Columbus and Cincinnati.'},
   {id:'redflex-npa',title:'Redflex non-prosecution agreement; Raphael extortion plea',publisher:'U.S. Department of Justice',url:'https://www.justice.gov/usao-sdoh/pr/redflex-traffic-systems-enters-non-prosecution-agreement-united-states',date:'2016-12-27',note:'DOJ identifies John Raphael and his guilty plea; corporate non-prosecution agreement.'},
   {id:'redflex-ginther',title:'Ginther campaign donation crosscheck and response',publisher:'WOSU Public Media',url:'https://www.wosu.org/news/2015-06-22/ginther-im-not-a-target-of-a-redflex-investigation',date:'2015-06-22',kind:'Reporting / campaign-finance crosscheck',note:'Reported $21,000 ODP contribution in 2011. Ginther denied requesting that contribution; acknowledged asking Redflex for support. Court record did not name him.'},
-  ...cityHallSources, ...enrichmentSources, ...infrastructureSources, ...politicalSources, ...flowSources, ...trailSources, ...mediaSources, ...civicSources, ...donationSources, ...campaignSources, ...epsteinSources, ...redflexSources, ...electionResultSources, ...affiliationSources
+  ...cityHallSources, ...enrichmentSources, ...infrastructureSources, ...politicalSources, ...flowSources, ...trailSources, ...mediaSources, ...civicSources, ...donationSources, ...campaignSources, ...epsteinSources, ...redflexSources, ...electionResultSources, ...affiliationSources, ...policySources
 ].map((s,index) => {
   const archived = sourceArchives[s.id];
   const pinned = archived?.contentVerified === true && archived.originalUrl === s.url && /^\d{14}$/.test(archived.timestamp || '') && archived.url?.startsWith(`https://web.archive.org/web/${archived.timestamp}/`);
@@ -103,7 +104,7 @@ export const sources=allDeclaredSources.filter(s=>s.archiveUrl||s.liveVerified);
 const verifiedSourceIds=new Set(sources.map(s=>s.id));
 const release=enrichmentRelease(verifiedSourceIds);
 meta.enrichmentState=release.complete?'complete':'verified subset';
-meta.pendingSourceIds=[...enrichmentSources,...infrastructureSources,...politicalSources,...flowSources,...trailSources,...mediaSources,...civicSources,...donationSources,...epsteinSources,...redflexSources,...electionResultSources,...affiliationSources].filter(s=>!verifiedSourceIds.has(s.id)).map(s=>s.id);
+meta.pendingSourceIds=[...enrichmentSources,...infrastructureSources,...politicalSources,...flowSources,...trailSources,...mediaSources,...civicSources,...donationSources,...epsteinSources,...redflexSources,...electionResultSources,...affiliationSources,...policySources].filter(s=>!verifiedSourceIds.has(s.id)).map(s=>s.id);
 const capitalReady=verifiedSourceIds.has('city-capital-2025');
 
 // Positions are an editorial layout only; distance does not encode relationship strength.
@@ -290,6 +291,8 @@ meta.epsteinState=epsteinIntake.complete?'complete':'verified subset';
 const redflexIntake=redflexRelease(verifiedSourceIds,nodes.map(node=>node.id));
 nodes.push(...redflexIntake.nodes);edges.push(...redflexIntake.edges);
 meta.redflexState=redflexIntake.complete?'complete':'verified subset';
+const policyIntake=policyRelease(verifiedSourceIds,nodes.map(node=>node.id));
+nodes.push(...policyIntake.nodes);edges.push(...policyIntake.edges);
 if(verifiedSourceIds.has('flow-jobs-finance')){
  const record=nodes.find(n=>n.id==='jobsohio');
  const extraIds=['flow-jobs-finance','flow-jobs-audit','flow-podcast'].filter(id=>verifiedSourceIds.has(id));

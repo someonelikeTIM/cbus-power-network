@@ -8,8 +8,9 @@ import { validityFor } from './reporting.js';
 import { acceptedCorrections } from './corrections.js';
 import { inheritedEntityIds,inheritedRelationshipIds } from './inherited.js';
 import { validISO } from './timeline.js';
+import {policySources} from './policy-records.js';
 
-export const release = { schemaVersion:'1.0.0',releaseId:'2026-11-19-metadata',status:'published',preparedOn:'2026-11-19',publishedAt:'2026-11-20T00:14:05Z',dataRevision:meta.version,codeLicense:'MIT',dataLicense:'CC-BY-4.0',sourceCheckIds:[] };
+export const release = { schemaVersion:'1.0.0',releaseId:'2026-11-20-research-projects',status:'published',preparedOn:'2026-11-20',publishedAt:'2026-11-20T16:50:45Z',dataRevision:meta.version,codeLicense:'MIT',dataLicense:'CC-BY-4.0',sourceCheckIds:policySources.map(source=>source.id) };
 export const reviewFor = record => record.claimReview || { status:'legacy-unrecorded',reviewedAt:null,reviewer:{type:'unknown',identity:null},note:'The date of the check against the cited material is unknown.' };
 export function publicSource(source) {
   const {url,archiveUrl,archiveBrowseUrl,...record}=source;

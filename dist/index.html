@@ -33,7 +33,7 @@
       <button data-view="directory">Entities</button>
       <button data-view="sources">Sources <span id="source-total" class="nav-count"></span></button>
     </nav>
-    <button class="text-button methodology-open">About the records <span aria-hidden="true">↗</span></button>
+    <button class="text-button methodology-open">About the records</button>
   </header>
 
   <main>
@@ -62,9 +62,9 @@
               <figcaption>
                 <span id="sample-caption">Featured connection</span>
                 <div id="feature-controls" role="group" aria-label="Browse featured connections">
-                  <button id="feature-previous" type="button" aria-label="Previous featured connection" title="Previous connection" aria-controls="sample-content"><span aria-hidden="true">←</span></button>
+                  <button id="feature-previous" type="button" aria-label="Previous featured connection" title="Previous connection" aria-controls="sample-content"><span class="control-chevron previous" aria-hidden="true"></span></button>
                   <button id="sample-rotation" type="button" aria-controls="sample-content">Pause</button>
-                  <button id="feature-next" type="button" aria-label="Next featured connection" title="Next connection" aria-controls="sample-content"><span aria-hidden="true">→</span></button>
+                  <button id="feature-next" type="button" aria-label="Next featured connection" title="Next connection" aria-controls="sample-content"><span class="control-chevron" aria-hidden="true"></span></button>
                 </div>
               </figcaption>
               <div id="sample-content" aria-live="off">
@@ -78,8 +78,8 @@
                   <span id="sample-status"></span>
                   <strong id="sample-label"></strong>
                   <div class="feature-links">
-                    <button id="sample-evidence" type="button" aria-describedby="sample-status">Read evidence <span aria-hidden="true">›</span></button>
-                    <a id="feature-document" target="_blank" rel="noopener noreferrer"><span id="feature-publisher"></span> <span aria-hidden="true">↗</span></a>
+                    <button id="sample-evidence" type="button" aria-describedby="sample-status">Read evidence</button>
+                    <a id="feature-document" target="_blank" rel="noopener noreferrer"><span id="feature-publisher"></span></a>
                   </div>
                 </div>
               </div>
@@ -87,12 +87,8 @@
             </figure>
           </div>
           <section id="start-guide" aria-labelledby="start-guide-title">
-            <div class="entry-section"><h2 id="start-guide-title">Choose a starting point</h2><button id="search-show-all" type="button">Browse the network</button></div>
-            <div class="start-cards">
-              <button type="button" data-start-entity="jobsohio"><span class="start-symbol" data-symbol="jobs" aria-hidden="true"></span><strong>JobsOhio</strong><span>Trace public incentives, oversight and the businesses involved.</span><small></small></button>
-              <button type="button" data-start-entity="city"><span class="start-symbol" data-symbol="city" aria-hidden="true"></span><strong>Columbus City Hall</strong><span>Explore city government, contractors and regional partnerships.</span><small></small></button>
-              <button type="button" data-start-entity="ohio-governor-election"><span class="start-symbol" data-symbol="ballot" aria-hidden="true"></span><strong>Ohio governor election</strong><span>Find the 2026 candidates and follow their campaign records.</span><small></small></button>
-            </div>
+            <div class="entry-section"><h2 id="start-guide-title">Explore a research project</h2><button id="search-show-all" type="button">Browse the network</button></div>
+            <div id="starter-projects" class="start-cards"></div>
           </section>
         </div>
       </section>
@@ -119,16 +115,25 @@
           <h2 id="dock-title" tabindex="-1">Record</h2>
           <span id="dock-placement" role="group" aria-label="Record panel position" tabindex="-1">
             <button id="dock-place" type="button" title="Float the record panel">Float</button>
-            <button id="dock-left" type="button" aria-label="Dock left" title="Dock left" hidden>←</button>
-            <button id="dock-right" type="button" aria-label="Dock right" title="Dock right" hidden>→</button>
+            <button id="dock-left" type="button" aria-label="Dock left" title="Dock left" hidden><span class="control-chevron previous" aria-hidden="true"></span></button>
+            <button id="dock-right" type="button" aria-label="Dock right" title="Dock right" hidden><span class="control-chevron" aria-hidden="true"></span></button>
           </span>
         </header>
         <div id="dock-content">
           <section id="dock-record" class="dock-page">
+            <button id="project-return" type="button" hidden>Back to project overview</button>
             <button id="record-back" type="button" hidden></button>
             <p id="record-scope-note" hidden>This record is outside the current map view.</p>
             <div id="record-switch" aria-label="Selected record"><button id="tab-connections" type="button" aria-pressed="true">Connections</button><button id="tab-evidence" type="button" aria-pressed="false">Evidence &amp; sources</button></div>
             <div id="arrival-record" hidden></div>
+            <section id="project-report" aria-labelledby="project-heading" hidden>
+              <h2 id="project-heading" tabindex="-1"></h2>
+              <p id="project-finding"></p>
+              <div id="project-sources" class="intro-sources"></div>
+              <button id="project-add" type="button">Add to my research</button>
+              <h3>Evidence trail</h3>
+              <ol id="project-steps"></ol>
+            </section>
             <div id="record-empty"><h3>Choose a record</h3><p>Search for a name or select an entity or connection on the map to see its records.</p></div>
           </section>
 
@@ -198,15 +203,15 @@
     <footer class="page-footer"><span id="review-date"></span><span id="release-label"></span><nav aria-label="Project information"><a href="#about-project" data-project-dialog="about-project">About</a><a id="github-contribute" href="https://github.com/someonelikeTIM/cbus-power-network/blob/main/docs/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer">Contribute</a><a id="github-contact" href="https://github.com/someonelikeTIM/cbus-power-network/issues" target="_blank" rel="noopener noreferrer">Contact</a><button class="methodology-open">About the records</button></nav></footer>
   </main>
 
-  <dialog id="about-project" aria-labelledby="about-title"><form method="dialog"><button class="dialog-close" aria-label="Close about">×</button></form><h2 id="about-title">About this project</h2><p>I was inspired by <a href="https://theyrule.net/" target="_blank" rel="noopener noreferrer">TheyRule</a> to bring more transparency to Columbus politics.</p><p>This map follows the people, organizations, money and public decisions that shape Columbus. It starts with a few connections and grows as you explore. Each connection opens the records and sources behind it.</p><p><a href="https://github.com/someonelikeTIM/cbus-power-network">Project on GitHub</a> · <a href="https://github.com/someonelikeTIM/cbus-power-network/blob/main/LICENSE">MIT code</a> · <a href="https://github.com/someonelikeTIM/cbus-power-network/blob/main/DATA-LICENSE.md">CC BY 4.0 curated data</a></p><p>Third-party materials keep their own terms. <a href="./docs/PRIVACY.html">Privacy</a></p><a href="https://github.com/someonelikeTIM/cbus-power-network/blob/main/docs/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer">Contribute on GitHub →</a></dialog>
+  <dialog id="about-project" aria-labelledby="about-title"><form method="dialog"><button class="dialog-close" aria-label="Close about">×</button></form><h2 id="about-title">About this project</h2><p>I was inspired by <a href="https://theyrule.net/" target="_blank" rel="noopener noreferrer">TheyRule</a> to bring more transparency to Columbus politics.</p><p>This map follows the people, organizations, money and public decisions that shape Columbus. It starts with a few connections and grows as you explore. Each connection opens the records and sources behind it.</p><p><a href="https://github.com/someonelikeTIM/cbus-power-network">Project on GitHub</a> · <a href="https://github.com/someonelikeTIM/cbus-power-network/blob/main/LICENSE">MIT code</a> · <a href="https://github.com/someonelikeTIM/cbus-power-network/blob/main/DATA-LICENSE.md">CC BY 4.0 curated data</a></p><p>Third-party materials keep their own terms. <a href="./docs/PRIVACY.html">Privacy</a></p><a href="https://github.com/someonelikeTIM/cbus-power-network/blob/main/docs/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer">Contribute on GitHub</a></dialog>
   <dialog id="methodology" aria-labelledby="method-title">
     <form method="dialog"><button class="dialog-close" aria-label="Close about the records">×</button></form>
     <h2 id="method-title">About the records</h2>
     <p>Select a connection to see why it’s on the map. The citation beside the claim opens the publisher’s document. Under <strong>Sources</strong> you’ll also find an archived copy or a page reference when one is available.</p>
     <p>A board roster can show that two people served together. A complaint records what someone alleged. For the court’s decision, look for its ruling.</p>
   </dialog>
-  <dialog id="data-download" aria-labelledby="data-download-title"><form method="dialog"><button class="dialog-close" aria-label="Close data download">×</button></form><p class="eyebrow">Data export</p><h2 id="data-download-title">Download the records in this view</h2><p id="data-download-summary"></p><dl id="data-download-details" class="download-details"></dl><p class="download-note">The JSON includes the records and sources in this view. For complete versioned tables and schemas, use the <a id="data-download-manifest" href="./downloads/2026-11-19-metadata/manifest.json" target="_blank" rel="noopener noreferrer">edition manifest ↗</a>.</p><button id="data-download-confirm" class="primary-button" type="button">Download JSON <span aria-hidden="true">↓</span></button></dialog>
-  <section id="path-dialog" class="floating-panel" aria-labelledby="path-title" hidden><div class="floating-panel-header" tabindex="0"><h2 id="path-title">Explore paths</h2><button data-close-floating="path-dialog" aria-label="Close paths">×</button></div><form id="path-form"><label for="path-from">From</label><input id="path-from" type="search" maxlength="240" list="path-entities" required placeholder="Search an entity…"><label for="path-to">To</label><input id="path-to" type="search" maxlength="240" list="path-entities" required placeholder="Search an entity…"><datalist id="path-entities"></datalist><label class="path-direction"><input id="path-directed" type="checkbox"> Follow recorded directions</label><button class="primary-button" type="submit">Find path <span aria-hidden="true">→</span></button></form><div id="path-result" aria-live="polite"></div></section>
+  <dialog id="data-download" aria-labelledby="data-download-title"><form method="dialog"><button class="dialog-close" aria-label="Close data download">×</button></form><p class="eyebrow">Data export</p><h2 id="data-download-title">Download the records in this view</h2><p id="data-download-summary"></p><dl id="data-download-details" class="download-details"></dl><p class="download-note">The JSON includes the records and sources in this view. For complete versioned tables and schemas, use the <a id="data-download-manifest" href="./downloads/2026-11-20-research-projects/manifest.json" target="_blank" rel="noopener noreferrer">edition manifest</a>.</p><button id="data-download-confirm" class="primary-button" type="button">Download JSON</button></dialog>
+  <section id="path-dialog" class="floating-panel" aria-labelledby="path-title" hidden><div class="floating-panel-header" tabindex="0"><h2 id="path-title">Explore paths</h2><button data-close-floating="path-dialog" aria-label="Close paths">×</button></div><form id="path-form"><label for="path-from">From</label><input id="path-from" type="search" maxlength="240" list="path-entities" required placeholder="Search an entity…"><label for="path-to">To</label><input id="path-to" type="search" maxlength="240" list="path-entities" required placeholder="Search an entity…"><datalist id="path-entities"></datalist><label class="path-direction"><input id="path-directed" type="checkbox"> Follow recorded directions</label><button class="primary-button" type="submit">Find path</button></form><div id="path-result" aria-live="polite"></div></section>
   <div id="toast" role="status"></div>
   <div id="tag-tooltip" role="tooltip" hidden></div>
   <noscript><p class="noscript">This interactive map needs JavaScript. The source data is available in <a href="./data.js">data.js</a>.</p></noscript>

@@ -1,15 +1,23 @@
 {
   "release": {
     "schemaVersion": "1.0.0",
-    "releaseId": "2026-11-19-metadata",
+    "releaseId": "2026-11-20-research-projects",
     "status": "published",
-    "preparedOn": "2026-11-19",
-    "publishedAt": "2026-11-20T00:14:05Z",
-    "dataRevision": 23,
+    "preparedOn": "2026-11-20",
+    "publishedAt": "2026-11-20T16:50:45Z",
+    "dataRevision": 24,
     "codeLicense": "MIT",
     "dataLicense": "CC-BY-4.0",
-    "sourceCheckIds": []
+    "sourceCheckIds": [
+      "policy-dovilla-sb243",
+      "policy-flock-hb725",
+      "policy-aclu-hb725",
+      "policy-cisco-dues",
+      "policy-verizon-dues",
+      "policy-google-groups",
+      "policy-technet-sb163"
+    ]
   },
-  "inputFingerprint": "b813c525e4d0bee0f7d127ea373cea6854eea51be121551ed06f1c43bbf92a02",
-  "manifest": "downloads/2026-11-19-metadata/manifest.json"
+  "inputFingerprint": "8fb045479e5126d59dea186aa38955f292ce859a73fab5e79ccbe78e67efeafa",
+  "manifest": "downloads/2026-11-20-research-projects/manifest.json"
 }

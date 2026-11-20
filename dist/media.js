@@ -216,7 +216,7 @@ export const mediaCase={label:'Media & information',title:'Media & information',
  'Connections to JobsOhio, Anduril, Charter and Ohio State combine distinct records. No owner/funder direction of a particular local story is inferred.'
 ],positions:{},contextEdgeIds:['j15','j16','j17','j18','j19','j20','j21','j22','j23','j24','j25','e69']};
 export const mediaProfiles=[
- {outlet:'wsyx',authority:['wsyx-licensee','sinclair-group','sinclair-inc','smith-brothers'],affiliations:['abc-network'],note:'FCC license company → group parent → majority voting bloc. Intermediate subsidiaries are not exhaustive.'},
+ {outlet:'wsyx',authority:['wsyx-licensee','sinclair-group','sinclair-inc','smith-brothers'],affiliations:['abc-network'],note:'The FCC license holder connects to the broadcast group and its majority voting bloc. Intermediate subsidiaries are not exhaustive.'},
  {outlet:'wtte',authority:['cunningham'],affiliations:[],note:'Sinclair services are a separate contract link. Smith-child trusts hold non-voting interests; voting control is not established here.'},
  {outlet:'wwho',authority:['sinclair-group','sinclair-inc','smith-brothers'],affiliations:['cw-network'],note:'October 2025 acquisition replaces the former Manhan license-asset relationship.'},
  {outlet:'wcmh',authority:['nexstar-operating','nexstar'],affiliations:['nbc-network'],note:'Nexstar ownership; Perry Sook’s executive role is distinct from personal voting control.'},

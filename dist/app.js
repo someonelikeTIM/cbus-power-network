@@ -7,6 +7,7 @@ import { startingConnections,pathForeground,revealedPathPositions } from './expl
 import { mediaProfiles,mediaLeads } from './media.js';
 import { readerField,profileCopy,leadStories,overlapLabel } from './reader-copy.js';
 import {buildEntitySummaries} from './entity-summaries.js';
+import {starterProjects,isProjectMap,addProjectToResearch} from './starter-projects.js';
 import { datasetFor, evidencePacket, publicSource, release } from './contract.js';
 import { validityFor, validityInRange, findPaths, validateRange } from './reporting.js';
 import { relationshipMatches, sourceMatches } from './search.js';
@@ -33,6 +34,7 @@ const nodeById = new Map(nodes.map(n => [n.id, n]));
 const edgeById = new Map(edges.map(e => [e.id, e]));
 const sourceById = new Map(sources.map(s => [s.id, s]));
 const entitySummaries = buildEntitySummaries(nodes,edges,sources);
+const projects=starterProjects(nodes,edges,sources);
 const degrees = new Map(nodes.map(n => [n.id, edges.filter(e => e.source === n.id || e.target === n.id).length]));
 const edgePairs=new Map(),edgeBends=new Map();
 edges.forEach(edge=>{const key=[edge.source,edge.target].sort().join('|');if(!edgePairs.has(key))edgePairs.set(key,[]);edgePairs.get(key).push(edge);});
@@ -52,6 +54,7 @@ Object.assign(state,{connectionMode:'all',from:'',to:'',includeUncertain:true,ma
 state.pinnedIds=new Set();state.pinnedEdgeIds=new Set();state.research=emptyResearch();
 state.trailNodes=new Set();state.trailEdges=new Set();state.collapsedNodes=new Set();
 state.walk=[];state.pinOverview=false;state.pinFrame=null;state.showDirect=false;state.orbitIds=new Set();
+state.projectId='';
 state.colorMode='type';
 const colorPreferenceKey='cbus-power:canvas-colors';
 try{state.colorMode=normalizeColorMode(localStorage.getItem(colorPreferenceKey));}catch{}
@@ -71,6 +74,7 @@ function rememberOpener(){const element=document.activeElement;selectionOpener=e
 function restoreFocus(){const target=[...document.querySelectorAll(selectionOpener||'#search')].find(el=>!el.closest('[hidden]')&&el.getClientRects().length);(target||$('search')).focus({preventScroll:true});}
 let graph,hiddenByDistance=0;
 let camera = { x: 0, y: 0, z: 1 };
+let lastProjectFit=null;
 let dimensions = { width: 800, height: 570 };
 let drag = null;
 let cameraMotion=null,miniSignature='',overviewTransform=null,walkSignature='',miniWalkSignature='';
@@ -87,7 +91,8 @@ const connectionIcons=new Map();
 let hoveredEdge=null;
 const desk=mountDesk({
   nodes,edges,sources,search:query=>searchDesk(baseGraph(),sources,nodeById,query,state.tags).filter(hit=>hit.id!=='show-pins'||state.research.steps.length),
-  choose:chooseSearchResult,start:id=>{toggleNode(id);focusRecordHeading();},launch:launchPanel,changed:scheduleWorkspaceState
+  choose:chooseSearchResult,start:id=>{toggleNode(id);focusRecordHeading();},launch:launchPanel,changed:scheduleWorkspaceState,
+  projects,openProject:openStarterProject
 });
 function focusEntityId(){return state.focus&&!state.pinOverview?(state.focusEntity||(state.selected?.kind==='node'?state.selected.id:null)):null;}
 const explorationHistory=[];
@@ -157,6 +162,42 @@ function exploredForeground(){
   return {edges:new Set(links.map(edge=>edge.id)),nodes:new Set(links.flatMap(edge=>[edge.source,edge.target]))};
 }
 function syncResearchPins(){const path=currentResearch();state.pinnedIds=path.anchors;state.pinnedEdgeIds=path.pinnedEdges;}
+function mappedProject(){
+  const project=projects.get(state.projectId);
+  return state.view==='network'&&!state.pinOverview&&isProjectMap(project,state.path)?project:null;
+}
+function arrangeProject(project){
+  const ids=project.route.nodes;
+  const center=ids.reduce((sum,id)=>{const point=naturalLayout.get(id);return {x:sum.x+point.x/ids.length,y:sum.y+point.y/ids.length};},{x:0,y:0});
+  const coords=ids.map(id=>project.positions[id]);
+  const offsetX=(Math.min(...coords.map(p=>p[0]))+Math.max(...coords.map(p=>p[0])))/2;
+  const offsetY=(Math.min(...coords.map(p=>p[1]))+Math.max(...coords.map(p=>p[1])))/2;
+  // Choose an orientation on opening, allowing room for the expanded reader.
+  // Later divider changes frame these same world positions.
+  const surfaceWidth=document.documentElement.clientWidth;
+  const vertical=surfaceWidth-Math.min(680,surfaceWidth*.55)<(innerHeight-120)*1.08;
+  ids.forEach((id,index)=>{
+    const x=coords[index][0]-offsetX,y=coords[index][1]-offsetY;
+    positions.set(id,{x:center.x+(vertical?y*175:x*250),y:center.y+(vertical?x*195:y*155)});
+  });
+}
+function scopeProject(project){
+  resetFilters(false);
+  state.projectId=project.id;state.mapMode='explore';state.customStart=false;
+  state.exploreRoot=project.route.nodes[0];state.explorationSeeds=new Set(project.route.nodes);
+  state.startingIds=new Set();state.exploredIds=new Set(project.route.nodes);state.openNodes=new Set();
+  state.pinOverview=false;state.pinFrame=null;state.focusEntity='';state.focusType='';
+  state.walk=[];state.trailNodes.clear();state.trailEdges.clear();state.collapsedNodes.clear();state.orbitIds.clear();
+  state.path={nodes:[...project.route.nodes],edges:[...project.route.edges]};state.detailsOpen=true;
+  arrangeProject(project);
+}
+function openStarterProject(id){
+  const project=projects.get(id);if(!project)return;
+  if(state.view!=='network')navigateSection('network');
+  settleExpansion(false);rememberView();scopeProject(project);
+  desk.dismiss();desk.showRecord('evidence');render(true);
+  $('project-heading').focus({preventScroll:true});
+}
 function networkGraph(){
   if(state.pinOverview&&state.research.steps.length){
     hiddenByDistance=0;
@@ -374,18 +415,18 @@ function citationActions(source,showDetails=true){
   const archiveDate=source.archiveTimestamp?.slice(0,8);
   const date=archiveDate?friendlyDate(archiveDate.slice(0,4)+'-'+archiveDate.slice(4,6)+'-'+archiveDate.slice(6)):'';
   return `<div class="citation-actions">
-    <a class="citation-original" href="${escape(source.url)}" target="_blank" rel="noopener noreferrer" aria-label="Read original document, ${title}">Read original <span aria-hidden="true">↗</span></a>
-    ${source.archiveUrl?`<a class="citation-archive" href="${escape(source.archiveUrl)}" target="_blank" rel="noopener noreferrer" aria-label="Archived copy of ${title}" title="Wayback snapshot ${escape(date)}">Archived copy <span aria-hidden="true">↗</span></a>`:''}
+    <a class="citation-original" href="${escape(source.url)}" target="_blank" rel="noopener noreferrer" aria-label="Read original document, ${title}">Read original</a>
+    ${source.archiveUrl?`<a class="citation-archive" href="${escape(source.archiveUrl)}" target="_blank" rel="noopener noreferrer" aria-label="Archived copy of ${title}" title="Wayback snapshot ${escape(date)}">Archived copy</a>`:''}
     ${showDetails?`<button type="button" data-source="${escape(source.id)}" aria-label="Source details for ${title}">Source details</button>`:''}
   </div>`;
 }
-const publisherShortNames={'U.S. Department of Justice':'DOJ','WOSU Public Media':'WOSU','Federal Election Commission':'FEC','U.S. Securities and Exchange Commission':'SEC'};
+const publisherShortNames={'U.S. Department of Justice':'DOJ','WOSU Public Media':'WOSU','Federal Election Commission':'FEC','U.S. Securities and Exchange Commission':'SEC','Ohio House Public Safety Committee':'Ohio House','Ohio Senate Judiciary Committee':'Ohio Senate','Ohio Joint Legislative Ethics Committee / OLAC':'Ohio lobbying register','TiffinOhio.net / R.L. Porter':'TiffinOhio.net','Les Wexner / Wexner Foundation':'Les Wexner'};
 function citationRefs(ids,order=ids){
   const ordered=[...new Set(order)];
   return [...new Set(ids)].map(id=>{
     const source=sourceById.get(id),publisher=publisherShortNames[source.publisher]||source.publisher;
     const label=ordered.length===1?'Source':'Source '+(ordered.indexOf(id)+1);
-    return `<a class="claim-ref" href="${escape(source.url)}" target="_blank" rel="noopener noreferrer" aria-label="${label}, ${escape(source.publisher)}, ${escape(source.title)}" title="${escape(source.title)}">${label} · ${escape(publisher)} <span aria-hidden="true">↗</span></a>`;
+    return `<a class="claim-ref" href="${escape(source.url)}" target="_blank" rel="noopener noreferrer" aria-label="${label}, ${escape(source.publisher)}, ${escape(source.title)}" title="${escape(source.title)}">${label} · ${escape(publisher)}</a>`;
   }).join(' ');
 }
 function entitySummaryHTML(node) {
@@ -405,7 +446,7 @@ function sourceLinks(ids,owner='',entries=[],sharedLocator=''){
     const locators=[...new Set(entries.filter(entry=>entry.sourceId===id).map(entry=>entry.locator).filter(place=>place&&place!==sharedLocator))];
     return `<article class="citation-card"${target}>
       <div class="citation-publisher">${ordered.length>1?`<span class="citation-index">${index+1}</span> `:''}${escape(source.publisher)} <span>· ${escape(friendlyDate(source.date))}</span></div>
-      <a class="citation-title" href="${escape(source.archiveUrl||source.url)}" target="_blank" rel="noopener noreferrer">${escape(source.title)} <span aria-hidden="true">↗</span></a>
+      <a class="citation-title" href="${escape(source.archiveUrl||source.url)}" target="_blank" rel="noopener noreferrer">${escape(source.title)}</a>
       ${citationActions(source)}
       ${locators.map(place=>`<p class="citation-locator">${escape(place)}</p>`).join('')}
     </article>`;
@@ -427,7 +468,7 @@ function evidenceBlock(edge){
 const adjacent = (id, list = graph.edges) => list.filter(e => e.source === id || e.target === id);
 const other = (edge, id) => edge.source === id ? edge.target : edge.source;
 const statusBadge = e => `<span class="status-badge status-${e.status}">${escape(evidenceStatuses[e.status] || e.status)}</span>`;
-const connectionRow = (e, id) => `<button class="connection-row" data-edge="${e.id}"><strong>${escape(id ? nodeById.get(other(e, id)).name : `${nodeById.get(e.source).name} ${e.directional ? '→' : '↔'} ${nodeById.get(e.target).name}`)}</strong><span><span class="relationship-swatch ${e.historical ? 'history' : ''}" style="--color:${relationships[e.type].color}"></span>${escape(readerField(e,'label'))}</span>${e.caseId ? `<small>${escape(evidenceStatuses[e.status])}</small>` : ''}</button>`;
+const connectionRow = (e, id) => `<button class="connection-row" data-edge="${e.id}"><strong>${escape(id ? nodeById.get(other(e, id)).name : `${nodeById.get(e.source).name} ${e.directional ? 'to' : 'and'} ${nodeById.get(e.target).name}`)}</strong><span><span class="relationship-swatch ${e.historical ? 'history' : ''}" style="--color:${relationships[e.type].color}"></span>${escape(readerField(e,'label'))}</span>${e.caseId ? `<small>${escape(evidenceStatuses[e.status])}</small>` : ''}</button>`;
 
 function applyCaseLayout(){settleExpansion(false);}
 function setCase(id,{keepRecord=false}={}) {
@@ -465,7 +506,7 @@ function renderFilterChips(){
   if(state.connectionMode!=='all')chips.push(['mode',$('connection-mode').selectedOptions[0].textContent]);
   if(state.categories.size!==Object.keys(categories).length)chips.push(['categories',state.categories.size+' entity types']);
   if(state.relationships.size!==Object.keys(relationships).length)chips.push(['relationships',state.relationships.size+' connection types']);
-  if(state.from||state.to)chips.push(['dates',(state.from||'Any date')+' → '+(state.to||'Any date')]);
+  if(state.from||state.to)chips.push(['dates',(state.from||'Any date')+' to '+(state.to||'Any date')]);
   if(!state.history)chips.push(['history','Past records hidden']);
   if(!state.includeUncertain&&(state.from||state.to))chips.push(['uncertain','Known dates only']);
   $('active-filters').hidden=!chips.length;
@@ -553,9 +594,9 @@ function buildGraph() {
     const group = svgEl('g');
     const line = svgEl('path', { class: `graph-edge${e.caseId ? ' case-link' : ''}`, stroke: relationships[e.type].color, ...(e.historical ? { 'stroke-dasharray': '5 5' } : {}), ...(e.directional ? {'marker-end':`url(#arrow-${e.type})`} : {}) });
     const hit = svgEl('path', { class: 'edge-hit', role: 'button', tabindex: '0', 'data-edge': e.id, 'aria-label': `Relationship: ${a.name} to ${b.name}, ${readerField(e,'label')}${e.historical ? ', historical' : ''}` });
-    const title = svgEl('title'); title.textContent = `${relationships[e.type].label} · ${a.name} → ${b.name}: ${readerField(e,'label')}`; hit.append(title);
+    const title = svgEl('title'); title.textContent = `${relationships[e.type].label} · ${a.name} ${e.directional?'to':'and'} ${b.name}: ${readerField(e,'label')}`; hit.append(title);
     const graphLabels={e45:'Power of attorney',e46:'Managed finances',e47:'Trustee 1992–2007',e49:'Spending control',e51:'Political control',e54:'Passage / repeal blockade',e55:'AEP benefit',e57:'Sole shareholder',e58:'Foundation link',e59:'$34.28m in shares',e60:'$12.38m in assets',e61:'Founded 2007',e62:'Misappropriation claim'};
-    const label = svgEl('text', {class:'edge-label',fill:relationships[e.type].color}); label.textContent=graphLabels[e.id]||e.amountLabel||e.graphLabel||'';
+    const label = svgEl('text', {class:'edge-label',fill:relationships[e.type].color,'data-edge':e.id,'aria-hidden':'true'}); label.textContent=graphLabels[e.id]||e.amountLabel||e.graphLabel||'';
     group.append(line, hit, label); $('edge-layer').append(group); edgeEls.set(e.id, { group, line, hit, label });
     const icon=svgEl('g',{class:'connection-icon',role:'button',tabindex:'-1','data-edge':e.id,'aria-hidden':'true','aria-label':`Connection icon: ${relationships[e.type].label}, ${readerField(e,'label')}, ${a.name} to ${b.name}`,style:`display:none;--connection-color:${relationships[e.type].color}`});
     const iconTitle=svgEl('title');iconTitle.textContent=`${relationships[e.type].label} · ${readerField(e,'label')} · Select for Pin and Details`;
@@ -586,6 +627,7 @@ function buildGraph() {
   });
   $('graph').addEventListener('click', event => {
     if (suppressClick) { suppressClick = false; return; }
+    desk.focusWidth(false);
     const pin=event.target.closest('[data-pin]');if(pin){togglePin(pin.dataset.pin);return;}
     const target = event.target.closest('[data-node],[data-edge],[data-route]');
     if(target?.dataset.route!==undefined)showExplorationPath(indirectRoutes[Number(target.dataset.route)]);
@@ -645,6 +687,7 @@ function buildGraph() {
     else if(drag.route!==undefined){showExplorationPath(indirectRoutes[Number(drag.route)]);suppressClick=true;}
     else if (drag.id) { selectRecord('node',drag.id,drag.additive); suppressClick = true; }
     else if (drag.edge) { selectRecord('edge',drag.edge,drag.additive); suppressClick = true; }
+    if(!drag.moved&&event.button===0)desk.focusWidth(false);
     drag = null;
     $('graph').dataset.panning='false';
     if ($('graph').hasPointerCapture(event.pointerId)) $('graph').releasePointerCapture(event.pointerId);
@@ -660,7 +703,9 @@ function buildGraph() {
     if(rect.width<1||rect.height<1||Math.abs(rect.width-dimensions.width)<1&&Math.abs(rect.height-dimensions.height)<1)return;
     settleExpansion(false);
     const next={width:rect.width,height:rect.height};
-    camera=graph?.pinNetwork?fittedCamera():resizeCamera(camera,dimensions,next,positions.get(focusEntityId()));dimensions=next;
+    const project=mappedProject();
+    const stillFitted=project&&lastProjectFit?.id===project.id&&Math.abs(camera.x-lastProjectFit.x)<1&&Math.abs(camera.y-lastProjectFit.y)<1&&Math.abs(camera.z-lastProjectFit.z)<.001;
+    camera=graph?.pinNetwork||stillFitted?fittedCamera():resizeCamera(camera,dimensions,next,positions.get(focusEntityId()));dimensions=next;
     positionGraph();if(graph)renderMapScope();
   }).observe($('canvas-area'));
 }
@@ -722,9 +767,11 @@ function fittedCamera(){
   if(!graph?.nodes.length)return {...camera};
   const bounds=$('canvas-area').getBoundingClientRect();if(bounds.width<1||bounds.height<1)return {...camera};dimensions={width:bounds.width,height:bounds.height};
   if(graph.pinNetwork||state.path){
-    const space=explorationViewport(),padding=Math.max(10,Math.min(44,space.width/7,space.height/7));
+    const project=mappedProject(),space=explorationViewport(),padding=project?Math.max(20,Math.min(88,space.width/5,space.height/5)):Math.max(10,Math.min(44,space.width/7,space.height/7));
     const fit=frameNetwork(graph.nodes.map(node=>node.id),positions,{width:space.width,height:space.height,padding});
-    return {x:fit.x+space.left,y:fit.y+space.top,z:fit.z};
+    const result={x:fit.x+space.left,y:fit.y+space.top,z:fit.z};
+    if(project)lastProjectFit={id:project.id,...result};
+    return result;
   }
   if(state.bucketMode)return fitBucketCamera();
   $('bucket-layer').replaceChildren();focusPorts.clear();focusMenuRect=null;cloudNeedsFit=false;
@@ -778,12 +825,15 @@ function fitBucketCamera(){
 }
 
 function drawAmountLabels(){
-  if(!state.showAmounts){edgeEls.forEach(entry=>{entry.label.style.display='none';entry.label.classList.remove('dollar-label');});return;}
+  const project=mappedProject();
+  if(!state.showAmounts&&!project){edgeEls.forEach(entry=>{entry.label.style.display='none';entry.label.classList.remove('dollar-label','project-edge-label');});return;}
   const occupied=[];
   for(const id of semanticNodes){const r=nodeEls.get(id).group.getBoundingClientRect(),s=$('graph').getBoundingClientRect();occupied.push({left:r.left-s.left,right:r.right-s.left,top:r.top-s.top,bottom:r.bottom-s.top});}
   const links=[...graph.edges].sort((a,b)=>Number(state.multiEdges.has(b.id))-Number(state.multiEdges.has(a.id)));
-  for(const edge of links){const entry=edgeEls.get(edge.id),label=entry.label,text=dollarLabel(edge);label.classList.toggle('dollar-label',state.showAmounts&&!!text&&semanticEdges.has(edge.id));label.style.display='none';
-    if(!state.showAmounts||!text||!semanticEdges.has(edge.id))continue;
+  for(const edge of links){const entry=edgeEls.get(edge.id),label=entry.label,amount=state.showAmounts?dollarLabel(edge):'';
+    const caption=state.labels!=='off'?project?.labels.get(edge.id):'',text=amount||caption;
+    label.classList.toggle('dollar-label',!!amount);label.classList.toggle('project-edge-label',!!caption);label.style.display='none';
+    if(!text||!semanticEdges.has(edge.id))continue;
     label.replaceChildren();const words=text.split(/\s+/),lines=[];let line='';for(const word of words){if(line.length+word.length>33&&line){lines.push(line);line='';}line+=(line?' ':'')+word;}if(line)lines.push(line);
     lines.forEach((text,index)=>{const span=svgEl('tspan',{x:0,dy:index?14:0});span.textContent=text;label.append(span);});label.style.display='';
     const mid=entry.midpoint;if(!mid)continue;const x=camera.x+mid.x*camera.z,y=camera.y+mid.y*camera.z;
@@ -855,12 +905,12 @@ function placeLabels(){
   semanticNodes=new Set(graph.nodes.map(n=>n.id));semanticEdges=new Set(graph.edges.map(e=>e.id));
   const center=focusEntityId(),neighbors=center?directConnections(graph,center,state.focusType).nodes:new Set(),pathIds=new Set(state.walk.map(step=>step.id));
   for(const id of state.multiEdges){const edge=edgeById.get(id);if(edge){neighbors.add(edge.source);neighbors.add(edge.target);}}
-  const obstacles=mapObstacles();
+  const obstacles=mapObstacles(),project=mappedProject();
   const candidates=[];
   for(const node of graph.nodes){const entry=nodeEls.get(node.id),style=styleNode(node.id,camera.z);semanticStyles.set(node.id,style);
     entry.group.style.display='';entry.group.style.opacity='1';entry.group.setAttribute('aria-hidden','false');entry.core.setAttribute('tabindex','0');entry.group.dataset.semanticHidden='false';
     entry.group.classList.toggle('origin-node',state.walk[0]?.id===node.id);entry.letter.style.display=style.radius>=11?'':'none';
-    const selected=state.multiNodes.has(node.id)||graph.pinNetwork&&state.pinnedIds.has(node.id),neighbor=state.showDirect&&neighbors.has(node.id),show=state.labels!=='off'&&showNetworkLabel(degrees.get(node.id),camera.z,{selected:selected||hoveredNode===node.id||pathIds.has(node.id),neighbor,all:state.labels==='all'||state.bucketMode});
+    const selected=state.multiNodes.has(node.id)||graph.pinNetwork&&state.pinnedIds.has(node.id),neighbor=state.showDirect&&neighbors.has(node.id),show=state.labels!=='off'&&showNetworkLabel(degrees.get(node.id),camera.z,{selected:selected||hoveredNode===node.id||pathIds.has(node.id),neighbor,all:!!project||state.labels==='all'||state.bucketMode});
     if(!show){entry.label.style.display='none';continue;}
     const key=node.id+'|'+style.font;let measure=labelMeasurements.get(key);if(!measure){bubbleTextMeasure.font='700 '+style.font+'px '+getComputedStyle(document.documentElement).getPropertyValue('--sans');measure={w:Math.max(...entry.normalLines.map(line=>bubbleTextMeasure.measureText(line).width))+6,h:entry.normalLines.length*style.font*1.12+2};labelMeasurements.set(key,measure);}
     const p=positions.get(node.id);candidates.push({id:node.id,x:camera.x+p.x*camera.z,y:camera.y+p.y*camera.z,r:style.radius,...measure,priority:selected?10000:hoveredNode===node.id?9500:state.walk[0]?.id===node.id?9000:pathIds.has(node.id)?8000:neighbor?6000:degrees.get(node.id)*10});
@@ -925,7 +975,7 @@ function renderWalk(){
   nav.hidden=!state.walk.length;$('trail-empty').hidden=!!state.walk.length;
   nav.innerHTML=state.walk.map((step,index)=>{
     const name=nodeById.get(step.id)?.name||step.id,edge=edgeById.get(step.via);
-    const separator=index?(edge?'<span class="trail-step" title="'+escape(readerField(edge,'label'))+'" aria-label="Connected by '+escape(readerField(edge,'label'))+'">›</span>':'<span class="trail-branch" title="Separate starting point">New start</span>'):'';
+    const separator=index?(edge?'<span class="trail-step" title="'+escape(readerField(edge,'label'))+'" aria-label="Connected by '+escape(readerField(edge,'label'))+'">·</span>':'<span class="trail-branch" title="Separate starting point">New start</span>'):'';
     return separator+'<button data-walk-node="'+step.id+'" aria-current="'+(lastCurrent===index?'step':'false')+'" title="'+escape(name)+'">'+escape(name)+'</button>';
   }).join('');
   const link=nav.querySelector('[aria-current="step"]');
@@ -935,6 +985,7 @@ function renderWalk(){
 
 
 function renderGraph(position=true) {
+  $('graph').dataset.projectMap=String(!!mappedProject());
   document.body.dataset.grouped=String(state.bucketMode&&!graph.pinNetwork);
   $('bucket-layer').style.display=graph.pinNetwork?'none':'';
   const center=focusEntityId();document.body.dataset.focusScene='false';document.body.dataset.nodeFocus=String(!!center);document.body.dataset.focusMenu=String(!!center);
@@ -1103,19 +1154,19 @@ function renderInspector() {
       ${links.length?links.map(e=>connectionRow(e,n.id)).join(''):'<p>No connections match the filters.</p>'}`;
   }else if(state.selected.kind==='edge'){
     const e=edgeById.get(state.selected.id);
-    const endpoint=id=>`<button data-node-detail="${id}" data-endpoint-of="${e.id}" title="Explore ${escape(nodeById.get(id).name)}">${escape(nodeById.get(id).name)} <span aria-hidden="true">›</span></button>`;
+    const endpoint=id=>`<button data-node-detail="${id}" data-endpoint-of="${e.id}" title="Explore ${escape(nodeById.get(id).name)}">${escape(nodeById.get(id).name)}</button>`;
     panel.innerHTML=`<div class="inspector-header"><span class="eyebrow">Relationship</span></div>
       <h2>${escape(readerField(e,'label'))}</h2>${statusBadge(e)}
       <div class="compact-record-actions"><button type="button" data-citation-target="${escape('cite-edge-'+e.id+'-'+e.sourceIds[0])}" aria-controls="${escape('cite-edge-'+e.id+'-'+e.sourceIds[0])}">Sources (${e.sourceIds.length})</button>
         <button type="button" data-map-connection="${e.id}">Show this connection on map</button>
         <button type="button" data-pin-connection="${e.id}" aria-pressed="${state.pinnedEdgeIds.has(e.id)}">${state.pinnedEdgeIds.has(e.id)?'Unpin connection':'Pin connection'}</button></div>
-      <div class="edge-ends">${endpoint(e.source)}<span class="link-between" aria-hidden="true">${e.directional?'↓':'↕'}</span>${endpoint(e.target)}</div>
+      <div class="edge-ends">${endpoint(e.source)}<span class="link-between" aria-hidden="true">${e.directional?'to':'and'}</span>${endpoint(e.target)}</div>
       <div class="period">${escape(e.period)}</div>${e.unit?`<div class="amount-unit">${escape(e.unit)}</div>`:''}
       ${evidenceBlock(e)}${tagButtons('connection',e.id)}`;
     const others=pairedRelationships(baseGraph().edges,e).filter(other=>other.id!==e.id);
     if(others.length)panel.insertAdjacentHTML('beforeend',`<div class="subheading">${others.length+1} connections between these entities</div>`+
       others.map(other=>`<article class="paired-connection-card" data-paired-record="${other.id}">
-        <button data-edge="${other.id}">${escape(readerField(other,'label'))} ›</button>
+        <button data-edge="${other.id}">${escape(readerField(other,'label'))}</button>
         <small>${escape(relationships[other.type].label)} · ${escape(other.period)}</small>${statusBadge(other)}
         ${evidenceBlock(other)}${tagButtons('connection',other.id)}</article>`).join(''));
   }else{
@@ -1130,14 +1181,14 @@ function renderInspector() {
 function renderDirectory() {
   const list = baseGraph().nodes.filter(n => matches(n, state.query)).sort((a, b) => a.name.localeCompare(b.name));
   $('directory-count').textContent = `${list.length} entities`;
-  $('directory-list').innerHTML = list.length ? list.map(n => `<button class="directory-row" data-node-detail="${n.id}"><span class="directory-icon" style="--color:${categories[n.category].color}">${escape(initials(n))}</span><span><strong>${escape(n.name)}</strong><small>${escape(n.role)}</small></span><span class="row-arrow" aria-hidden="true">↗</span></button>`).join('') : '<p class="empty-list">No entities match. Try another search or reset the filters.</p>';
+  $('directory-list').innerHTML = list.length ? list.map(n => `<button class="directory-row" data-node-detail="${n.id}"><span class="directory-icon" style="--color:${categories[n.category].color}">${escape(initials(n))}</span><span><strong>${escape(n.name)}</strong><small>${escape(n.role)}</small></span></button>`).join('') : '<p class="empty-list">No entities match. Try another search or reset the filters.</p>';
 }
 function visibleRelations() {
   return baseGraph().edges.filter(e=>relationshipMatches(e,state.query,nodeById));
 }
 function renderRelations() {
   const list=visibleRelations(); $('relations-count').textContent=`${list.length} links`;
-  $('relations-list').innerHTML=list.length?list.map(e=>`<button class="ledger-row" data-edge="${e.id}"><span class="ledger-ends">${escape(nodeById.get(e.source).name)} <b>${e.directional?'→':'↔'}</b> ${escape(nodeById.get(e.target).name)}</span><strong>${escape(readerField(e,'label'))}</strong><small>${escape(e.period)}</small>${statusBadge(e)}</button>`).join(''):'<p class="empty-list">No links match.</p>';
+  $('relations-list').innerHTML=list.length?list.map(e=>`<button class="ledger-row" data-edge="${e.id}"><span class="ledger-ends">${escape(nodeById.get(e.source).name)} <b>${e.directional?'to':'and'}</b> ${escape(nodeById.get(e.target).name)}</span><strong>${escape(readerField(e,'label'))}</strong><small>${escape(e.period)}</small>${statusBadge(e)}</button>`).join(''):'<p class="empty-list">No links match.</p>';
 }
 function visibleSources() {
   const base = baseGraph(); const used = new Set([...base.nodes.flatMap(n => n.sourceIds), ...base.edges.flatMap(e => e.sourceIds)]);
@@ -1149,7 +1200,7 @@ function renderSources() {
   $('archive-summary').textContent = `${sources.length} sources · ${pinned} archived copies · ${sources.length-pinned} original pages`;
   $('source-list').innerHTML = list.length ? list.map(s => {
     const count = base.edges.filter(e => e.sourceIds.includes(s.id)).length;
-    return `<article class="source-card"><span class="source-number">${String(sources.indexOf(s)+1).padStart(2,'0')}</span><div><h3><a href="${escape(s.archiveUrl||s.url)}" target="_blank" rel="noopener noreferrer">${escape(s.title)} ↗</a></h3><p>${escape(readerField(s,'note'))}</p><small>${escape(s.publisher)} · ${friendlyDate(s.date)} · ${escape(s.kind)}<br>${s.archiveUrl?`Pinned Wayback snapshot: ${s.archiveTimestamp}`:'Original source · content checked'}<br>Source checked ${friendlyDate(s.contentCheckedAt?.slice(0,10)||s.reviewed)}</small>${citationActions(s,false)}<button class="source-connections" data-source="${s.id}">${count} relationship${count===1?'':'s'} →</button></div></article>`;
+    return `<article class="source-card"><span class="source-number">${String(sources.indexOf(s)+1).padStart(2,'0')}</span><div><h3><a href="${escape(s.archiveUrl||s.url)}" target="_blank" rel="noopener noreferrer">${escape(s.title)}</a></h3><p>${escape(readerField(s,'note'))}</p><small>${escape(s.publisher)} · ${friendlyDate(s.date)} · ${escape(s.kind)}<br>${s.archiveUrl?`Pinned Wayback snapshot: ${s.archiveTimestamp}`:'Original source · content checked'}<br>Source checked ${friendlyDate(s.contentCheckedAt?.slice(0,10)||s.reviewed)}</small>${citationActions(s,false)}<button class="source-connections" data-source="${s.id}">${count} relationship${count===1?'':'s'}</button></div></article>`;
   }).join('') : '<p class="empty-list">No sources match. Try another search or reset the filters.</p>';
 }
 
@@ -1159,7 +1210,7 @@ function renderMediaOverview(){
   if(panel.childElementCount)return;
   const link=id=>`<button class="text-button" data-node-detail="${id}">${escape(nodeById.get(id).name)}</button>`;
   const profiles=mediaProfiles.filter(p=>[p.outlet,...p.authority,...p.affiliations].every(id=>nodeById.has(id)));
-  panel.innerHTML=`<div class="media-intro"><p class="eyebrow">MEDIA &amp; INFORMATION</p><h2>Who supplies Columbus’s information?</h2><p>Explore the organizations behind local outlets, their funding and the programs they carry. Each connection opens its source records.</p><p class="media-boundary">${profiles.length} outlet profiles · collection updated October 14, 2026</p></div><details class="media-paths"><summary>Outlet authority paths <span>${profiles.length} profiles · select a name for evidence</span></summary><div class="media-profile-grid">${profiles.map(p=>`<article class="media-profile"><h3>${link(p.outlet)}</h3><p class="media-authority"><strong>${['wosu','wcbe','ocj'].includes(p.outlet)?'Governance / organization':'Ownership / parent path'}</strong><span>${p.authority.map(link).join(p.joint?' <span class="media-path-separator">&amp;</span> ':' <span class="media-path-separator" title="Next parent or controlling owner">←</span> ')}</span></p>${p.affiliations.length?`<p class="media-affiliations"><strong>${p.outlet==='wtvn'?'Program supplier':'Network membership / affiliation'}</strong><span>${p.affiliations.map(link).join(' · ')}</span></p>`:''}<p>${escape(profileCopy[p.outlet]||p.note)}</p></article>`).join('')}</div></details><details class="media-leads"><summary>Remaining research leads <span>Documents that could deepen the picture</span></summary><ul>${leadStories.map(lead=>`<li><strong>${escape(lead.title)}</strong><br>${escape(lead.text)}</li>`).join('')}</ul></details>`;
+  panel.innerHTML=`<div class="media-intro"><p class="eyebrow">MEDIA &amp; INFORMATION</p><h2>Who supplies Columbus’s information?</h2><p>Explore the organizations behind local outlets, their funding and the programs they carry. Each connection opens its source records.</p><p class="media-boundary">${profiles.length} outlet profiles · collection updated October 14, 2026</p></div><details class="media-paths"><summary>Outlet authority paths <span>${profiles.length} profiles · select a name for evidence</span></summary><div class="media-profile-grid">${profiles.map(p=>`<article class="media-profile"><h3>${link(p.outlet)}</h3><p class="media-authority"><strong>${['wosu','wcbe','ocj'].includes(p.outlet)?'Governance / organization':'Ownership / parent path'}</strong><span>${p.authority.map(link).join(p.joint?' <span class="media-path-separator">&amp;</span> ':' <span class="media-path-separator" title="Next parent or controlling owner">held by</span> ')}</span></p>${p.affiliations.length?`<p class="media-affiliations"><strong>${p.outlet==='wtvn'?'Program supplier':'Network membership / affiliation'}</strong><span>${p.affiliations.map(link).join(' · ')}</span></p>`:''}<p>${escape(profileCopy[p.outlet]||p.note)}</p></article>`).join('')}</div></details><details class="media-leads"><summary>Remaining research leads <span>Documents that could deepen the picture</span></summary><ul>${leadStories.map(lead=>`<li><strong>${escape(lead.title)}</strong><br>${escape(lead.text)}</li>`).join('')}</ul></details>`;
 }
 function render(refit = false) {
   tagStatsCache=new Map();
@@ -1186,7 +1237,7 @@ function contributionDates(edge){
 function renderCampaignCoverage(){
   const panel=$('campaign-coverage');panel.hidden=state.caseId!=='campaigns2026'&&!state.tags.has('topic-campaigns-2026');if(panel.hidden)return;
   const rows=campaignRoster.filter(row=>nodeById.has(row.id));
-  $('campaign-coverage-list').innerHTML=rows.map(row=>{const committees=campaignFinanceIndex.units.filter(unit=>unit.candidateIds.includes(row.id)),reports=committees.flatMap(unit=>unit.reportIds),label=reports.length?reports.length+' filing reports':'Filing ledger not yet matched';return '<li><button class="explore-button" data-campaign-money="'+row.id+'">'+escape(row.name)+' · campaign money →</button><span>'+escape(row.party+' · '+row.office)+(row.writeIn?' · write-in':'')+'</span><small>'+label+'</small></li>';}).join('');
+  $('campaign-coverage-list').innerHTML=rows.map(row=>{const committees=campaignFinanceIndex.units.filter(unit=>unit.candidateIds.includes(row.id)),reports=committees.flatMap(unit=>unit.reportIds),label=reports.length?reports.length+' filing reports':'Filing ledger not yet matched';return '<li><button class="explore-button" data-campaign-money="'+row.id+'">'+escape(row.name)+' · campaign money</button><span>'+escape(row.party+' · '+row.office)+(row.writeIn?' · write-in':'')+'</span><small>'+label+'</small></li>';}).join('');
 }
 function campaignFinanceHTML(id){
   const ledger=campaignMoneyCard(id);if(ledger)return ledger;
@@ -1223,12 +1274,32 @@ function decorateInspector(){
     evidence=(record.aliases?.length?'<p>Also known as '+escape(record.aliases.join('; '))+'</p>':'')+entity.externalIdentifiers.map(i=>'<p>'+escape(i.scheme)+': <strong>'+escape(i.value)+'</strong></p>').join('');
   }
   const url=recordURL(location.href,kind,id,release.releaseId);
-  details.innerHTML=evidence+'<p class="stable-record">Record <strong>'+escape(id)+'</strong> · edition '+release.releaseId+'</p><div class="record-actions"><a href="'+escape(url)+'">Record link ↗</a><button class="small-link" data-copy-citation>Copy citation</button><details><summary>Data file</summary><button class="small-link" data-evidence-packet>Download record JSON</button></details></div>';
+  details.innerHTML=evidence+'<p class="stable-record">Record <strong>'+escape(id)+'</strong> · edition '+release.releaseId+'</p><div class="record-actions"><a href="'+escape(url)+'">Record link</a><button class="small-link" data-copy-citation>Copy citation</button><details><summary>Data file</summary><button class="small-link" data-evidence-packet>Download record JSON</button></details></div>';
   panel.append(details);
 }
+function renderProjectReport(project){
+  const panel=$('project-report');
+  if(panel.dataset.project!==project.id){
+    panel.dataset.project=project.id;
+    $('project-heading').textContent=project.title;
+    $('project-finding').textContent=project.finding;
+    $('project-sources').innerHTML=citationRefs(project.sources);
+    $('project-steps').innerHTML=project.steps.map(step=>{
+      const records=step.records.map(edge=>`<button class="project-record" type="button" data-edge="${escape(edge.id)}" aria-label="Inspect ${escape(nodeById.get(edge.source).name)} and ${escape(nodeById.get(edge.target).name)}: ${escape(readerField(edge,'label'))}">${step.records.length===1?'Inspect record':escape(project.labels.get(edge.id))}</button>`).join(' ');
+      return `<li><h4>${escape(step.title)}</h4><p>${escape(step.text)}</p><div class="intro-sources">${citationRefs(step.citations)}</div><div class="project-records">${records}</div></li>`;
+    }).join('');
+  }
+  const alreadyAdded=project.route.edges.every(id=>currentResearch().pinnedEdges.has(id));
+  $('project-add').textContent=alreadyAdded?'Added to my research':'Add to my research';
+  $('project-add').disabled=alreadyAdded;
+}
 function syncDesk(){
+  const project=projects.get(state.projectId);
+  const overview=!!mappedProject()&&!state.selected;
   desk.sync({empty:document.body.dataset.emptyStart==='true',selection:state.selected,
-    isSingleNode:state.selected?.kind==='node'&&selectionCount()<=1,currentView:state.view});
+    isSingleNode:state.selected?.kind==='node'&&selectionCount()<=1,currentView:state.view,showProject:overview});
+  $('project-return').hidden=!project||overview||state.view!=='network';
+  if(overview)renderProjectReport(project);
   const pins=state.research.steps.length,inPins=!!graph.pinNetwork;
   $('show-all-pins').hidden=!pins;
   $('show-all-pins').title='Fit '+pins+' pinned '+(pins===1?'record':'records')+' on the map';
@@ -1260,7 +1331,7 @@ function syncDesk(){
   if(inspection&&lastStep?.reason==='show-connection'&&state.path?.edges.length===1&&state.path.edges[0]===selected.id){
     back.hidden=false;back.dataset.resume='';back.textContent=lastStep.state.customStart&&!previous&&!lastStep.state.walk.length?'Back to search':'Back to previous map';
   }
-  $('trail-empty').textContent=state.path?'Selected path':state.tags.size?'Tagged records':
+  $('trail-empty').textContent=overview?project.title:state.path?'Selected path':state.tags.size?'Tagged records':
     state.view==='network'?'Network overview':'Records';
 }
 function revealInspector(){desk.showRecord('evidence');focusRecordHeading();}
@@ -1371,6 +1442,7 @@ function openPathFinder(focus=true) {
 }
 
 $('undo-map').addEventListener('click',undoExploration);
+$('graph-stage').addEventListener('click',event=>{if(event.target.closest('.graph-controls,.overview-map'))desk.focusWidth(false);});
 buildFilters(); buildGraph();
 researchUI=mountResearchUI({state,nodes,edges,relationships,release,snapshot:workspaceSnapshot,remember:rememberView,
   changed:(redraw=true)=>{if(redraw===false){syncURL();return;}syncResearchPins();if(state.pinOverview&&!state.research.steps.length){leavePins(false);return;}render();if(state.pinOverview)moveCamera(fittedCamera());},
@@ -1397,7 +1469,14 @@ $('dataset-counts').innerHTML = `<span><b>${nodes.length}</b> entities</span><sp
 $('review-date').textContent = `Evidence updated ${friendlyDate(meta.reviewed)}`;
 $('topic-select').addEventListener('change',()=>{rememberView();setCase($('topic-select').value,{keepRecord:true});});
 document.querySelector('.view-nav').addEventListener('click',event=>{const button=event.target.closest('[data-view]');if(button)navigateSection(button.dataset.view);});
-$('start-guide').addEventListener('click',event=>{const button=event.target.closest('[data-start-entity]');if(button){toggleNode(button.dataset.startEntity);focusRecordHeading();}});
+$('project-return').addEventListener('click',()=>openStarterProject(state.projectId));
+$('project-add').addEventListener('click',()=>{
+  const project=mappedProject();if(!project)return;
+  let next;try{next=addProjectToResearch(project,state.research);}catch(error){toast(error.message);return;}
+  if(next===state.research)return;
+  rememberView();state.research={...next,id:next.id||crypto.randomUUID(),createdAt:next.createdAt||new Date().toISOString()};
+  syncResearchPins();render();toast('Project connections added to your research path.');
+});
 $('list-search').addEventListener('input',()=>{state.query=$('list-search').value.trim();if(state.view==='directory')renderDirectory();else if(state.view==='relations')renderRelations();else if(state.view==='sources')renderSources();syncURL();});
 $('return-map').addEventListener('click',()=>navigateSection('network'));
 $('show-all-pins').addEventListener('click',showAllPins);
@@ -1474,7 +1553,7 @@ $('path-form').addEventListener('submit', event => {
   if(!from||!to||from===to){$('path-result').innerHTML='<p class="path-result" role="alert">Choose two different entities from the suggestions.</p>';return;}
   const routes=findPaths(available,from,to,{directed:$('path-directed').checked});
   if(!routes.length){$('path-result').innerHTML='<p class="path-result">No route found within six steps and the current case, mode, direction and dates. Longer paths may exist.</p>';return;}
-  $('path-result').innerHTML=routes.map((route,index)=>`<div class="path-result"><strong>Route ${index+1} · ${route.edges.length} ${route.edges.length===1?'link':'links'}</strong><p>${escape(route.edges.length===1?'Recorded link period: '+edgeById.get(route.edges[0]).period:'Overlapping date range: '+overlapLabel(route.dates.status))}</p>${route.nodes.map((id,i)=>`${i?`<div class="path-edge-label">${escape(edgeById.get(route.edges[i-1]).type)} · ${escape(readerField(edgeById.get(route.edges[i-1]),'label'))}<br>${escape(edgeById.get(route.edges[i-1]).period)} · ${escape(evidenceStatuses[edgeById.get(route.edges[i-1]).status])}</div>`:''}<div class="path-hop"><button data-node-detail="${id}">${escape(nodeById.get(id).name)}</button></div>`).join('')}<button class="explore-button path-show-button" data-show-route="${index}">Show this path →</button> <button class="small-link" data-packet-route="${index}">Download path data ↓</button></div>`).join('')+'<p>Up to three routes, at most six steps. </p>';
+  $('path-result').innerHTML=routes.map((route,index)=>`<div class="path-result"><strong>Route ${index+1} · ${route.edges.length} ${route.edges.length===1?'link':'links'}</strong><p>${escape(route.edges.length===1?'Recorded link period: '+edgeById.get(route.edges[0]).period:'Overlapping date range: '+overlapLabel(route.dates.status))}</p>${route.nodes.map((id,i)=>`${i?`<div class="path-edge-label">${escape(edgeById.get(route.edges[i-1]).type)} · ${escape(readerField(edgeById.get(route.edges[i-1]),'label'))}<br>${escape(edgeById.get(route.edges[i-1]).period)} · ${escape(evidenceStatuses[edgeById.get(route.edges[i-1]).status])}</div>`:''}<div class="path-hop"><button data-node-detail="${id}">${escape(nodeById.get(id).name)}</button></div>`).join('')}<button class="explore-button path-show-button" data-show-route="${index}">Show this path</button> <button class="small-link" data-packet-route="${index}">Download path data</button></div>`).join('')+'<p>Up to three routes, at most six steps. </p>';
   $('path-result').querySelectorAll('[data-show-route]').forEach(button=>button.addEventListener('click',()=>{desk.closeTool(false);showExplorationPath(routes[Number(button.dataset.showRoute)],[from,to]);}));
   $('path-result').querySelectorAll('[data-packet-route]').forEach(button=>button.addEventListener('click',()=>{const route=routes[Number(button.dataset.packetRoute)];downloadJSON(evidencePacket({kind:'path',...route}),'path-'+release.releaseId+'.json');}));
 });
@@ -1576,6 +1655,8 @@ function restoreURL(){
   state.bucketIds=null;if(requested.selected)state.detailsOpen=true;
   const valid=state.selected&&(state.selected.kind==='node'?nodeById.has(state.selected.id):state.selected.kind==='edge'?edgeById.has(state.selected.id):state.selected.kind==='source'?sourceById.has(state.selected.id):false);
   const messages=[];if(state.selected&&!valid){messages.push('Unknown record ID; no record was substituted.');state.selected=null;}
+  const project=projects.get(state.projectId);
+  if(state.projectId&&!project){messages.push('This research project is unavailable in this edition.');state.projectId='';}
   if(state.requestedRelease&&state.requestedRelease!==release.releaseId)messages.push(`This link cites ${state.requestedRelease}; this site contains ${release.releaseId}. Consult the saved release before citing.`);
   if(state.routeWarning)messages.push(state.routeWarning);
   $('route-warning').textContent=messages.join(' ');$('route-warning').hidden=!messages.length;
@@ -1596,6 +1677,11 @@ function restoreURL(){
   if(state.mapMode==='explore'&&state.selected?.kind==='node')state.explorationSeeds.add(state.selected.id);
   if(state.mapMode==='explore'&&state.selected?.kind==='edge'){const edge=edgeById.get(state.selected.id);state.explorationSeeds.add(edge.source);state.explorationSeeds.add(edge.target);}
   if(state.requestedPath?.length){const links=state.requestedPath.map(id=>edgeById.get(id));if(links.every(Boolean)){state.path={edges:links.map(e=>e.id),nodes:[...new Set(links.flatMap(e=>[e.source,e.target]))]};}}
+  if(project){
+    const entryLink=[...new URLSearchParams(location.search).keys()].every(key=>key==='project'||key==='release');
+    if(entryLink)scopeProject(project);
+    else if(mappedProject())arrangeProject(project);
+  }
   if(focusEntityId()){if(nodeById.has(focusEntityId()))state.explorationSeeds.add(focusEntityId());else state.focus=false;}
   applyCaseLayout();render(true);restoringURL=false;
   // Preserve mismatched release citation in the incoming URL until the reader changes the view.
