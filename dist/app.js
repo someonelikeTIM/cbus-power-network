@@ -572,6 +572,7 @@ function raisePathForeground(){
   for(const id of explored.nodes){const node=nodeEls.get(id);if(node?.group.style.display!=='none')bringForward(node);}
 }
 function positionConnectionBadges(){
+  if(mappedProject())return;
   connectionIcons.forEach(({group,peerIds},id)=>{
     if(group.style.display==='none')return;const points=peerIds.map(peer=>edgeEls.get(peer).iconPoint).filter(Boolean);if(!points.length)return;
     const point={x:points.reduce((sum,p)=>sum+p.x,0)/points.length,y:points.reduce((sum,p)=>sum+p.y,0)/points.length};group.setAttribute('transform',`translate(${point.x} ${point.y}) scale(${1/camera.z})`);
@@ -824,11 +825,28 @@ function fitBucketCamera(){
   focusPorts.clear();return frameNetwork(graph.nodes.map(node=>node.id),positions,dimensions);
 }
 
+function placeProjectCaption(entry,occupied,viewport){
+  const {start,control,end}=entry.route;
+  for(const offset of [-9,17,-25,33,-43,51]){
+    for(const t of [.5,.38,.62,.27,.73]){
+      const u=1-t,x=u*u*start.x+2*u*t*control.x+t*t*end.x;
+      const y=u*u*start.y+2*u*t*control.y+t*t*end.y+offset/camera.z;
+      entry.label.setAttribute('transform',`translate(${x} ${y}) scale(${1/camera.z})`);
+      const rect=entry.label.getBoundingClientRect();
+      const box={left:rect.left-viewport.left,right:rect.right-viewport.left,top:rect.top-viewport.top,bottom:rect.bottom-viewport.top};
+      if(box.left<3||box.top<3||box.right>viewport.width-3||box.bottom>viewport.height-3||occupied.some(other=>overlaps(box,other,5)))continue;
+      occupied.push(box);return;
+    }
+  }
+  // A manually panned or very narrow view can leave no clear space for a caption.
+  // Its edge and the corresponding record in the evidence trail remain selectable.
+  entry.label.classList.remove('project-edge-label','dollar-label');entry.label.style.display='none';
+}
 function drawAmountLabels(){
   const project=mappedProject();
   if(!state.showAmounts&&!project){edgeEls.forEach(entry=>{entry.label.style.display='none';entry.label.classList.remove('dollar-label','project-edge-label');});return;}
-  const occupied=[];
-  for(const id of semanticNodes){const r=nodeEls.get(id).group.getBoundingClientRect(),s=$('graph').getBoundingClientRect();occupied.push({left:r.left-s.left,right:r.right-s.left,top:r.top-s.top,bottom:r.bottom-s.top});}
+  const viewport=$('graph').getBoundingClientRect(),occupied=project?mapObstacles():[];
+  for(const id of semanticNodes){const r=nodeEls.get(id).group.getBoundingClientRect();occupied.push({left:r.left-viewport.left,right:r.right-viewport.left,top:r.top-viewport.top,bottom:r.bottom-viewport.top});}
   const links=[...graph.edges].sort((a,b)=>Number(state.multiEdges.has(b.id))-Number(state.multiEdges.has(a.id)));
   for(const edge of links){const entry=edgeEls.get(edge.id),label=entry.label,amount=state.showAmounts?dollarLabel(edge):'';
     const caption=state.labels!=='off'?project?.labels.get(edge.id):'',text=amount||caption;
@@ -836,6 +854,7 @@ function drawAmountLabels(){
     if(!text||!semanticEdges.has(edge.id))continue;
     label.replaceChildren();const words=text.split(/\s+/),lines=[];let line='';for(const word of words){if(line.length+word.length>33&&line){lines.push(line);line='';}line+=(line?' ':'')+word;}if(line)lines.push(line);
     lines.forEach((text,index)=>{const span=svgEl('tspan',{x:0,dy:index?14:0});span.textContent=text;label.append(span);});label.style.display='';
+    if(project&&entry.route){placeProjectCaption(entry,occupied,viewport);continue;}
     const mid=entry.midpoint;if(!mid)continue;const x=camera.x+mid.x*camera.z,y=camera.y+mid.y*camera.z;
     const bounds=label.getBBox(),w=bounds.width,h=bounds.height;
     let best={x,y:y-22};
