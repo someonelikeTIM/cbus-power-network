@@ -1,7 +1,7 @@
 const $=id=>document.getElementById(id);
 const toolPages={filters:'filters',path:'path-dialog',research:'research-panel',settings:'dock-settings'};
 const titles={record:'Record',filters:'Filters',path:'Find a path',research:'Research path',settings:'Map tools'};
-const kinds={entity:'People & organizations',tag:'Topics',source:'Sources',edge:'Connections',tool:'Tools & settings'};
+const kinds={entity:'On the map',tag:'Topics',source:'Sources',edge:'Connections',tool:'Tools & settings',suggestion:'Try a shorter search'};
 const icons={
   record:'M5 3h10l4 4v14H5z M14 3v5h5 M8 12h8 M8 16h6',
   filters:'M3 6h9m4 0h5M3 12h3m4 0h11M3 18h11m4 0h3 M12 3v6 M7 9v6 M15 15v6',
@@ -172,11 +172,23 @@ export function mountDesk({nodes,edges,sources,search,choose,start,launch,change
     const row=$('desk-result-'+index);
     if(row){input.setAttribute('aria-activedescendant',row.id);row.scrollIntoView({block:'nearest'});}
   }
-  function chooseIndex(index){const hit=hits[index];if(!hit)return;dismiss();choose(hit);}
+  function chooseIndex(index){
+    const hit=hits[index];if(!hit)return;
+    if(hit.kind==='suggestion'){input.value=hit.label;suggest();input.focus({preventScroll:true});return;}
+    dismiss();choose(hit);
+  }
   function suggest(){
     const query=input.value.trim();if(!query){dismiss();return;}
     results.style.setProperty('--results-room',Math.max(130,innerHeight-input.getBoundingClientRect().bottom-12)+'px');
     hits=search(query);cursor=-1;input.removeAttribute('aria-activedescendant');
+    if(!hits.length){
+      const words=query.split(/\s+/);
+      if(words.length>1){
+        const shorter=new Set([words.slice(0,-1).join(' '),words.slice(1).join(' ')]);
+        hits=[...shorter].filter(phrase=>phrase.length>2&&search(phrase).some(hit=>hit.kind!=='tool'))
+          .map(label=>({kind:'suggestion',label,description:'Search matching records'}));
+      }
+    }
     results.replaceChildren();results.hidden=false;input.setAttribute('aria-expanded','true');
     let group='',container=null;
     hits.forEach((hit,index)=>{
@@ -189,8 +201,8 @@ export function mountDesk({nodes,edges,sources,search,choose,start,launch,change
       const name=document.createElement('strong'),description=document.createElement('small');name.textContent=hit.label;description.textContent=hit.description;
       button.append(name,description);container.append(button);
     });
-    if(!hits.length){const p=document.createElement('p');p.textContent='No matches. Try another name, topic or tool.';results.append(p);}
-    $('search-status').textContent=hits.length?hits.length+' suggestions. Use the arrow keys to choose.':'No matches.';
+    if(!hits.length){const p=document.createElement('p');p.textContent='No matches in this view. Try fewer words or check your filters.';results.append(p);}
+    $('search-status').textContent=hits.length?hits.length+(hits.length===1?' suggestion.':' suggestions.')+' Use the arrow keys to choose.':'No matches.';
   }
   input.addEventListener('input',suggest);
   input.addEventListener('keydown',event=>{

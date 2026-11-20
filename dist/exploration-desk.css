@@ -93,6 +93,7 @@ body[data-embedded] #starting-results button small {font-size:.76rem;font-weight
 .desk-launchers button:hover,.desk-launchers button:focus-visible {background:#e8eee3}
 .desk-launchers button[aria-expanded=true] {background:var(--desk-green);color:#fff;border-color:var(--desk-green)}
 body[data-embedded] .desk-launchers #research-open {display:inline-flex}
+body[data-embedded] .desk-launchers #research-open[aria-expanded=true] {color:white}
 #research-count:empty {display:none}
 #research-count:not(:empty) {font:.75rem var(--mono);border:1px solid currentColor;border-radius:4px;padding:1px 4px}
 #trail-bar {display:flex;align-items:center;gap:12px;min-height:38px;padding:0 clamp(14px,2vw,32px);background:#edf1e9;border-bottom:1px solid var(--desk-line);color:#3b5146;font:500 .82rem var(--sans)}
@@ -266,3 +267,39 @@ body[data-workspace-host] .masthead :focus-visible {outline-color:#f4b395;outlin
 
 #methodology {width:min(37rem,calc(100vw - 32px))}
 #methodology>p {font:1rem/1.55 var(--sans);color:var(--desk-ink)}
+
+/* Keep the statement, its qualifications and the documents supporting it together. */
+body[data-embedded] #record-dock #inspector .cited-claim {
+  margin:12px 0;padding:11px 12px 12px;border:1px solid #aabcae;border-left:3px solid var(--desk-green);
+  border-radius:5px;background:#f7faf4;
+}
+#record-dock .cited-claim>.eyebrow {color:var(--desk-green);font:650 .75rem/1.4 var(--sans);letter-spacing:.035em}
+body[data-embedded] #record-dock #inspector .cited-claim .claim-text {margin:5px 0;color:var(--desk-ink);font:400 .95rem/1.5 var(--sans)}
+body[data-embedded] #record-dock #inspector .cited-claim .record-context {margin:7px 0 0;padding:0 0 0 8px;border-left:2px solid #beaa87;color:#514c3f;font:.85rem/1.45 var(--sans)}
+.claim-refs {display:inline}
+body[data-embedded] #record-dock #inspector .claim-ref {
+  display:inline-block;max-width:100%;margin:2px 1px;padding:3px 7px;border:1px solid var(--desk-green);border-radius:4px;
+  background:var(--desk-green);color:white;font:650 .8rem/1.4 var(--sans);vertical-align:baseline;text-decoration:underline;text-underline-offset:2px;
+}
+body[data-embedded] #record-dock .claim-source-block {display:grid;gap:6px;margin:11px 0;padding:9px 0 0;border-top:2px solid #809f89}
+body[data-embedded] #record-dock .cited-claim .claim-source-block {margin-bottom:0}
+body[data-embedded] #record-dock .citation-heading {margin:0;color:var(--desk-green);font:700 .91rem/1.35 var(--sans)}
+.citation-card {display:grid;gap:4px;min-width:0;padding:9px 10px;background:#fff;border:1px solid var(--desk-line);border-radius:4px}
+.citation-card:focus-within {outline:2px solid var(--desk-green);outline-offset:1px}
+.citation-publisher {color:#3e594b;font:600 .77rem/1.4 var(--sans)}
+.citation-publisher>span:not(.citation-index) {font-weight:400;white-space:normal}
+.citation-index {display:inline-grid;place-items:center;min-width:17px;height:17px;border-radius:3px;background:#e4edde;color:#244d37;font:650 .7rem var(--mono)}
+#record-dock .citation-title {display:block;color:var(--desk-green);font:650 .9rem/1.35 var(--sans);text-decoration:underline;text-underline-offset:2px}
+.citation-actions {display:flex;align-items:center;flex-wrap:wrap;gap:5px;margin-top:3px}
+body[data-embedded] :is(#record-dock,#sources-view) .citation-actions a,
+body[data-embedded] :is(#record-dock,#sources-view) .citation-actions button {
+  display:inline-flex;width:auto;align-items:center;justify-content:center;gap:4px;min-height:30px;
+  padding:4px 7px;border-radius:4px;border:1px solid #9eb39f;background:white;color:var(--desk-green);
+  font:600 .77rem/1.25 var(--sans);text-decoration:underline;text-underline-offset:2px;
+}
+body[data-embedded] :is(#record-dock,#sources-view) .citation-actions .citation-original {background:var(--desk-green);border-color:var(--desk-green);color:white}
+body[data-embedded] :is(#record-dock,#sources-view) .citation-actions button {padding-inline:4px;border-color:transparent;background:transparent}
+body[data-embedded] #record-dock #inspector .citation-locator {margin:0;color:var(--desk-muted);font:.77rem/1.4 var(--sans)}
+.citation-locator strong {margin-right:3px;color:var(--desk-ink)}
+#record-dock .source-access {margin:10px 0}
+body[data-embedded] #record-dock #inspector .compact-record-actions [data-citation-target] {border-color:#789985;background:#e1edde;color:var(--desk-green);text-decoration:underline;text-underline-offset:3px}

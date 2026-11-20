@@ -4,7 +4,7 @@ import {nodes,edges,sources} from '../dist/data.js';
 import {searchDesk,deskCommands} from '../dist/desk-search.js';
 import {validateView} from '../dist/saved-views.js';
 import {networkForPins,researchFile,researchSnapshot} from '../dist/research-paths.js';
-import {resizeCamera} from '../dist/desktop-network.js';
+import {resizeCamera,walkConnection,appendWalk} from '../dist/desktop-network.js';
 
 const byId=new Map(nodes.map(node=>[node.id,node])),ids=new Set(byId.keys());
 const edgeIds=new Set(edges.map(edge=>edge.id));
@@ -17,6 +17,19 @@ assert.equal(search('joined project announcement').some(hit=>hit.kind==='edge'),
 assert.deepEqual(search('not-a-record-xxxx'),[]);
 assert.deepEqual(searchDesk({nodes:[],edges:[]},sources,byId,'jobsohio',[]),[]);
 assert.equal(searchDesk({nodes:[],edges:[]},sources,byId,'party colors',[])[0].kind,'tool');
+for(const query of ['red light cameras','red-light camera','redlight cameras','traffic cameras']){
+  const hits=search(query);
+  assert.equal(hits[0].id,'columbus-photo-red-light',query);
+  assert.ok(hits.some(item=>item.id==='redflex-ohio-proceedings'),query);
+  assert.deepEqual(searchDesk({nodes:[],edges:[]},sources,byId,query,[]),[]);
+}
+assert.equal(search('Ohio bribery')[0].id,'rf26-13');
+assert.equal(search('Redflex')[0].id,'redflex');
+const conduit=edges.find(edge=>edge.id==='e72'),origin=[{id:conduit.source,via:''}];
+const traversed=walkConnection(origin,conduit);
+assert.deepEqual(traversed,[...origin,{id:conduit.target,via:conduit.id}]);
+assert.deepEqual(walkConnection(traversed,conduit),traversed);
+assert.deepEqual(appendWalk(origin,conduit.target,{from:conduit.source,via:conduit.id,edges}),traversed);
 
 const html=await readFile('dist/index.html','utf8');
 const domIds=[...html.matchAll(/\bid="([^"]+)"/g)].map(match=>match[1]);

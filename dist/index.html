@@ -104,7 +104,7 @@
           <section id="dock-record" class="dock-page">
             <button id="record-back" type="button" hidden></button>
             <p id="record-scope-note" hidden>This record is outside the current map view.</p>
-            <div id="record-switch" aria-label="Selected record"><button id="tab-connections" type="button" aria-pressed="true">Connections</button><button id="tab-evidence" type="button" aria-pressed="false">Evidence</button></div>
+            <div id="record-switch" aria-label="Selected record"><button id="tab-connections" type="button" aria-pressed="true">Connections</button><button id="tab-evidence" type="button" aria-pressed="false">Evidence &amp; sources</button></div>
             <div id="arrival-record" hidden></div>
             <div id="record-empty"><h3>Choose a record</h3><p>Search for a name or select an entity or connection on the map to see its records.</p></div>
           </section>
@@ -179,7 +179,7 @@
   <dialog id="methodology" aria-labelledby="method-title">
     <form method="dialog"><button class="dialog-close" aria-label="Close about the records">×</button></form>
     <h2 id="method-title">About the records</h2>
-    <p>Select a connection to see why it’s on the map. Follow the link under <strong>Sources</strong> to read the document yourself. When we have a page or paragraph number, we include it beside the evidence.</p>
+    <p>Select a connection to see why it’s on the map. The citation beside the claim opens the publisher’s document. Under <strong>Sources</strong> you’ll also find an archived copy or a page reference when one is available.</p>
     <p>A board roster can show that two people served together. A complaint records what someone alleged. For the court’s decision, look for its ruling.</p>
   </dialog>
   <dialog id="data-download" aria-labelledby="data-download-title"><form method="dialog"><button class="dialog-close" aria-label="Close data download">×</button></form><p class="eyebrow">Data export</p><h2 id="data-download-title">Download the records in this view</h2><p id="data-download-summary"></p><dl id="data-download-details" class="download-details"></dl><p class="download-note">The JSON includes the records and sources in this view. For complete versioned tables and schemas, use the <a id="data-download-manifest" href="./downloads/2026-11-19-metadata/manifest.json" target="_blank" rel="noopener noreferrer">edition manifest ↗</a>.</p><button id="data-download-confirm" class="primary-button" type="button">Download JSON <span aria-hidden="true">↓</span></button></dialog>

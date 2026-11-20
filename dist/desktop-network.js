@@ -74,6 +74,13 @@ export function appendWalk(walk,id,{from='',via='',edges=[]}={}){
   }else if(result.at(-1).id!==id)result.push({id,via:''});
   return result.length>30?[result[0],{...result.at(-28),via:''},...result.slice(-27)]:result;
 }
+export function walkConnection(walk,edge){
+  const last=walk.at(-1);
+  if(last?.via===edge.id)return walk;
+  const from=last?.id===edge.target?edge.target:edge.source;
+  const to=from===edge.source?edge.target:edge.source;
+  return appendWalk(walk,to,{from,via:edge.id,edges:[edge]});
+}
 // Place only newly revealed neighbors. Previously placed entities are immutable.
 export function orbitalBranch(graph,anchor,positions,placed=new Set(),{radius=240,ringStep=140,gap=112,parent=''}={}){
   const center=positions.get(anchor);if(!center)return {positions:new Map(),placed:new Set(placed)};

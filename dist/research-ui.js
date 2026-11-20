@@ -30,7 +30,7 @@ export function mountResearchUI({state,nodes,edges,relationships,release,snapsho
       const notes=document.createElement('details');notes.append(text('summary',step.note?'Research note':'Add a note'));const input=document.createElement('textarea');input.value=step.note;input.maxLength=1000;input.setAttribute('aria-label','Note for '+labelFor(step));let editingNote=false;input.addEventListener('input',()=>{if(!editingNote){remember();editingNote=true;}state.research={...state.research,steps:state.research.steps.map((item,i)=>i===index?{...item,note:input.value}:item)};changed(false);});input.addEventListener('blur',()=>{editingNote=false;});notes.append(input);row.append(notes);list.append(row);
     });
     const gaps=route.segments.filter(segment=>!segment.route).length;
-    $('research-route-summary').textContent=research.steps.length?route.edgeIds.size+' recorded connection'+(route.edgeIds.size===1?'':'s')+' in the research path'+(gaps?' · '+gaps+' gap'+(gaps===1?'':'s')+' without a recorded route.':'.'):'';
+    $('research-route-summary').textContent=research.steps.length?'The steps in this path use '+route.edgeIds.size+' documented link'+(route.edgeIds.size===1?'':'s')+(gaps?' · '+gaps+' gap'+(gaps===1?'':'s')+' without a recorded route.':'.'):'';
     for(const id of ['research-save','research-export','research-show'])$(id).disabled=!research.steps.length;
 
   }

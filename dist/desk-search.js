@@ -1,5 +1,5 @@
 import {explorerSearch} from './explorer-search.js';
-import {normalizeText} from './search.js';
+import {discoveryText,discoveryRank} from './search.js';
 import {readerField} from './reader-copy.js';
 
 // A tool result opens its control. Search never applies a setting on its own.
@@ -31,26 +31,29 @@ export const deskCommands = [
   {id:'new-view', label:'Start a new workspace tab', terms:'new tab start separate search branch'}
 ];
 
-const wordsMatch=(text,words)=>words.every(word=>text.includes(word));
-
 export function searchDesk(graph, sources, byId, query, tags) {
-  const text=normalizeText(query).trim();
+  const text=discoveryText(query);
   if(!text)return [];
-  const words=text.split(/\s+/);
-  const tools=deskCommands.filter(tool=>wordsMatch(normalizeText(tool.label+' '+tool.terms),words))
+  const words=text.split(' ');
+  const tools=deskCommands.filter(tool=>Number.isFinite(discoveryRank(words,tool.label,tool.terms)))
     .map(tool=>({kind:'tool',id:tool.id,label:tool.label,description:'Explorer tool'}));
   const matches=explorerSearch(graph,query,tags);
   const entities=matches.filter(item=>item.kind==='entity').map(item=>({...item,description:item.role}));
   const topics=matches.filter(item=>item.kind==='tag').map(item=>({...item,description:item.entityCount+' entities · '+item.connectionCount+' connections'}));
   const sourceIds=new Set([...graph.edges.flatMap(edge=>edge.sourceIds),...graph.nodes.flatMap(node=>node.sourceIds||[])]);
-  const documents=sources.filter(source=>sourceIds.has(source.id)&&wordsMatch(normalizeText([source.title,source.publisher,source.id].join(' ')),words))
-    .slice(0,3).map(source=>({kind:'source',id:source.id,label:source.title,description:source.publisher}));
-  const links=[];
-  for(const edge of graph.edges){
+  const documents=sources.filter(source=>sourceIds.has(source.id)).map(source=>({
+    kind:'source',id:source.id,label:source.title,description:source.publisher,
+    rank:discoveryRank(words,source.title,[source.id,source.publisher,readerField(source,'note')])
+  }));
+  const links=graph.edges.map(edge=>{
     const label=readerField(edge,'label'),ends=byId.get(edge.source).name+' · '+byId.get(edge.target).name;
-    if(wordsMatch(normalizeText([label,ends,edge.id].join(' ')),words))links.push({kind:'edge',id:edge.id,label,description:ends});
-    if(links.length===3)break;
-  }
-  const exactEntity=entities.find(item=>normalizeText(item.label)===text);
-  return exactEntity||!tools.length?[...entities,...topics,...tools,...links,...documents]:[...tools,...entities,...topics,...links,...documents];
+    return {kind:'edge',id:edge.id,label,description:ends,
+      rank:discoveryRank(words,label,[ends,edge.id,edge.label,readerField(edge,'evidence')])};
+  });
+  const bestThree=list=>list.filter(hit=>Number.isFinite(hit.rank)).sort((a,b)=>a.rank-b.rank).slice(0,3);
+  const groups=[entities,topics,bestThree(links),bestThree(documents)].filter(group=>group.length);
+  groups.sort((a,b)=>a[0].rank-b[0].rank);
+  const records=groups.flat();
+  if(entities.some(hit=>hit.rank===0))return [...records,...tools];
+  return [...tools,...records];
 }

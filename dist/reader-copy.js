@@ -1,6 +1,9 @@
 // Presentation copy only. The original source assertions and qualifications remain in data exports.
 const investmentContext='The announcement gives the total financing round. Individual investment amounts and ownership shares were not disclosed.';
 export const readerOverrides={
+  e71:{label:'Raphael extorted Redflex money for campaign contributions',evidence:'The Justice Department says Columbus lobbyist John Raphael pleaded guilty to extorting money from Redflex. He sought to pass the money to Ohio elected officials to help the company win red-light camera contracts.'},
+  'rf26-13':{label:'Karen Finley’s guilty plea in the Ohio bribery case',evidence:'Finley admitted that the camera company routed campaign contributions through a consultant and disguised the payments with false invoices. The scheme sought help winning or keeping city contracts, including Columbus’s red-light camera contract.'},
+  'rf26-11':{label:'John Raphael pleaded guilty to extortion'},
   wtte:{description:'WTTE is a Cunningham station with Sinclair service agreements. The FOX 28 brand and WSYX have separate records; WTTE’s current FOX affiliation is an open reporting question.'},
   ...Object.fromEntries(Array.from({length:10},(_,i)=>['e'+(187+i),{context:investmentContext}])),
   t19:{context:'The announcement describes a historical assistance plan. Execution and payments remain undocumented here. State grants, federal CHIPS funding and later project revisions have separate records.'},

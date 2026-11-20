@@ -16,7 +16,7 @@ Each connection is a narrow statement supported by cited material. Its direction
 
 Reporting, allegations, charges, findings, admissions, convictions, registrations and public authorizations have separate labels. A reporting source remains reporting even when its contents have been checked. Ownership, employment, advisory roles, lobbying and campaign contributions are separate relationships. A path through several records supplies context; it does not establish control, causation, wrongdoing or an exchange.
 
-Source information records content availability, check dates, methods and hashes where available. A successful source check establishes what was retrieved or observed, not the truth of every statement on the page. Verified dated Wayback snapshots are preferred. Otherwise the checked original is cited. Each source has one preferred citation URL.
+Source information records content availability, check dates, methods and hashes where available. A successful source check establishes what was retrieved or observed, not the truth of every statement on the page. The explorer links to the publisher’s original beside each claim. Source cards also link to dated Wayback snapshots when available. Downloaded records retain one preferred citation URL, using a verified snapshot when one exists.
 
 When CBUS Power records the date it checked a connection against the cited material, that date appears with the connection. The date on a source page describes when the document itself was checked. Use the record ID to suggest a correction.
 
