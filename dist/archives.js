@@ -1086,9 +1086,9 @@ export const sourceArchives = {
     ],
     "reviewer": {
       "type": "unknown",
-      "identity": "Unattributed initial review"
+      "identity": null
     },
-    "contentCheckNote": "Dated article capture checked; donation amounts remain attributed reporting, separate from claim review."
+    "contentCheckNote": "Dated article capture checked. The donation amounts are attributed to the reporting source."
   },
   "donation-qts-register": {
     "originalUrl": "https://www2.jlec-olig.state.oh.us/OLAC/Reports/Employers/11286/Agents",
@@ -1106,7 +1106,7 @@ export const sourceArchives = {
     ],
     "reviewer": {
       "type": "unknown",
-      "identity": "Unattributed initial review"
+      "identity": null
     },
     "contentCheckNote": "Dated roster capture checked; original roster also checked October 15, 2026. Engagement start not established."
   },

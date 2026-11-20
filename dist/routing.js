@@ -27,6 +27,7 @@ export function encodeState(base,state,releaseId) {
   if(state.connectionDistance!=null)values.distance=normalizeConnectionDistance(state.connectionDistance);
   values.colors=normalizeColorMode(state.colorMode);
   if(state.pinnedIds?.size)values.pins=[...state.pinnedIds].sort().join(',');
+  if(state.pinOverview&&state.view==='network'&&state.research?.steps.length)values.pinsView='1';
   if(state.research?.steps.length)values.research=state.research.steps.map(step=>step.kind+':'+step.id).join('|');
   if(state.focus&&state.focusEntity&&(state.selected?.kind!=='node'||state.selected.id!==state.focusEntity))values.center=state.focusEntity;
   if(state.focus&&Object.hasOwn(relationships,state.focusType))values.focusType=state.focusType;
@@ -83,6 +84,7 @@ export function decodeState(base,defaults) {
     const root=state.selected?.kind==='node'?state.selected.id:edge?.source;
     if(root){state.exploreRoot=root;state.startingIds=new Set([root]);state.explorationSeeds=new Set([root]);state.customStart=false;state.focus=state.selected.kind==='node';state.focusEntity=state.focus?root:'';}
   }
+  state.pinOverview=state.view==='network'&&p.get('pinsView')==='1'&&!!(state.requestedResearch.length||state.pinnedIds.size);
   try{validateRange(state.from,state.to);}catch{state.from='';state.to='';state.routeWarning='Invalid historical date range was cleared.';}
   return state;
 }

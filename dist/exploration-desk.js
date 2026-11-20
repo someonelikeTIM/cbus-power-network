@@ -1,5 +1,5 @@
 const $=id=>document.getElementById(id);
-const pages={record:'dock-record',filters:'filters',path:'path-dialog',research:'research-panel',settings:'dock-settings'};
+const toolPages={filters:'filters',path:'path-dialog',research:'research-panel',settings:'dock-settings'};
 const titles={record:'Record',filters:'Filters',path:'Find a path',research:'Research path',settings:'Map tools'};
 const kinds={entity:'People & organizations',tag:'Topics',source:'Sources',edge:'Connections',tool:'Tools & settings'};
 const icons={
@@ -48,42 +48,44 @@ function makeEntry(nodes,edges,sources,choose){
 
 export function mountDesk({nodes,edges,sources,search,choose,start,launch,changed}){
   let active='',section='connections',landing=true,selected=null,singleNode=false,view='network';
-  let floating=false,width=360,height=500,left=null,top=14,drag=null;
-  const dock=$('tool-dock'),body=$('desk-body'),input=$('search'),results=$('starting-results');
-  const scrollPositions=new Map();
+  let floating=false,side='left',width=360,height=500,left=null,top=14,drag=null;
+  const dock=$('record-dock'),body=$('desk-body'),surface=$('desk-main'),input=$('search'),results=$('starting-results');
+  const toolScroll=new Map();
   let hits=[],cursor=-1;
   const clamp=(value,min,max)=>Math.max(min,Math.min(value,Math.max(min,max)));
   makeEntry(nodes,edges,sources,start);
   $('undo-map').prepend(icon('undo'));
   for(const button of document.querySelectorAll('[data-desk-panel]')){
     button.prepend(icon(button.dataset.deskPanel));
-    button.addEventListener('click',()=>{if(active===button.dataset.deskPanel)hide();else launch(button.dataset.deskPanel);});
+    button.addEventListener('click',()=>{if(button.dataset.deskPanel!=='record'&&active===button.dataset.deskPanel)closeTool();else launch(button.dataset.deskPanel);});
   }
-  $('dock-content').append($('filters'),$('path-dialog'),$('research-panel'));
+  $('tools-content').append($('filters'),$('path-dialog'),$('research-panel'));
   $('dock-record').append($('entity-popover'),$('inspector'));
   $('settings-display').append($('connection-legend'),$('label-toggle'));
   $('legend-controls').prepend(document.querySelector('.distance-control'));
   $('settings-selection').append($('quick-menu'),$('map-full'),$('reset-layout'));
   $('connection-legend').hidden=false;
   $('dock-header').addEventListener('dblclick',event=>{if(!event.target.closest('button'))setFloating(!floating);});
-  $('dock-place').addEventListener('click',()=>setFloating(!floating));
-  $('dock-close').addEventListener('click',()=>hide());
+  $('dock-place').addEventListener('click',()=>setFloating(true));
+  for(const edge of ['left','right'])$('dock-'+edge).addEventListener('click',()=>setFloating(false,edge));
+  $('tools-close').addEventListener('click',()=>closeTool());
   $('tab-connections').addEventListener('click',()=>showRecord('connections'));
   $('tab-evidence').addEventListener('click',()=>showRecord('evidence'));
 
   function geometry(){
-    if(!body.clientWidth||!body.clientHeight)return;
-    const inset=8,w=clamp(width,Math.min(260,body.clientWidth-16),Math.min(680,body.clientWidth*(floating ? .94 : .55)));
-    const h=clamp(height,180,body.clientHeight-2*inset);
+    if(!surface.clientWidth||!surface.clientHeight)return;
+    const inset=8,w=clamp(width,Math.min(260,surface.clientWidth-16),Math.min(680,surface.clientWidth*(floating ? .94 : .55)));
+    const h=clamp(height,180,surface.clientHeight-2*inset);
     body.style.setProperty('--dock-width',w+'px');dock.style.setProperty('--float-height',h+'px');
-    dock.style.setProperty('--float-left',clamp(left??body.clientWidth-w-inset,inset,body.clientWidth-w-inset)+'px');
-    dock.style.setProperty('--float-top',clamp(top,inset,body.clientHeight-h-inset)+'px');
+    dock.style.setProperty('--float-left',clamp(left??(side==='left'?inset:surface.clientWidth-w-inset),inset,surface.clientWidth-w-inset)+'px');
+    dock.style.setProperty('--float-top',clamp(top,inset,surface.clientHeight-h-inset)+'px');
     $('dock-resize').setAttribute('aria-valuenow',Math.round(w));
-    $('dock-resize').setAttribute('aria-valuemax',Math.round(body.clientWidth));
+    $('dock-resize').setAttribute('aria-valuemax',Math.round(surface.clientWidth));
     $('dock-resize').setAttribute('aria-valuemin',Math.min(260,Math.round(w)));
   }
-  function setFloating(next){
-    floating=next;paint();changed();$('dock-place').focus({preventScroll:true});
+  function setFloating(next,dockSide=side){
+    floating=next;side=dockSide;paint();changed();
+    $(floating?'dock-'+side:'dock-place').focus({preventScroll:true});
   }
   function paint(){
     const isEntry=landing&&!active&&view==='network';
@@ -92,16 +94,16 @@ export function mountDesk({nodes,edges,sources,search,choose,start,launch,change
     $('scope-bar').hidden=isEntry;body.hidden=isEntry;
     const slot=$(isEntry?'entry-search-slot':'desk-search-slot');
     if(input.closest('#desk-search').parentElement!==slot)slot.append($('desk-search'));
-    body.dataset.panel=active;body.dataset.floating=String(floating);
-    dock.hidden=!active;
-    const recordTitle=selected?.kind==='edge'?'Connection evidence':selected?.kind==='source'?'Source record':'Record';
-    $('dock-title').textContent=active==='record'?recordTitle:titles[active]||'Explorer panel';
-    $('dock-place').textContent=floating?'Dock right':'Float';
-    $('dock-place').setAttribute('aria-pressed',String(floating));
-    $('dock-header').title=floating?'Drag to move the panel, or double-click to dock':'Double-click to float the panel';
-    $('dock-place').title=floating?'Return panel to the right dock':'Move and resize this panel over the map';
-    for(const [key,id] of Object.entries(pages))$(id).hidden=active!==key;
-    for(const button of document.querySelectorAll('[data-desk-panel]'))button.setAttribute('aria-expanded',String(active===button.dataset.deskPanel));
+    const tool=Object.hasOwn(toolPages,active)?active:'';
+    body.dataset.tools=tool;body.dataset.dock=floating?'floating':side;
+    $('tools-panel').hidden=!tool;
+    $('tools-title').textContent=tool?titles[tool]:'Explorer tools';
+    $('tools-close').setAttribute('aria-label','Close '+(titles[tool]||'tool'));
+    $('dock-title').textContent=selected?.kind==='edge'?'Connection evidence':selected?.kind==='source'?'Source record':'Record';
+    $('dock-place').hidden=floating;$('dock-left').hidden=!floating;$('dock-right').hidden=!floating;
+    $('dock-header').title=floating?'Drag to move the record panel, or double-click to dock '+side:'Double-click to float the record panel';
+    for(const [key,id] of Object.entries(toolPages))$(id).hidden=tool!==key;
+    for(const button of document.querySelectorAll('[data-desk-panel]:not(#record-open)'))button.setAttribute('aria-expanded',String(tool===button.dataset.deskPanel));
     $('record-switch').hidden=!singleNode;
     $('record-empty').hidden=!!selected;
     $('entity-popover').hidden=!singleNode||section!=='connections';
@@ -112,19 +114,25 @@ export function mountDesk({nodes,edges,sources,search,choose,start,launch,change
     $('trail-empty').hidden=!!$('exploration-trail').childElementCount;
     geometry();
   }
-  function scrollKey(){return active==='record'?'record/'+(selected?.kind||'')+'/'+(selected?.id||'')+'/'+section:active;}
   function setPanel(name,{focus=true}={}){
-    if(!pages[name])return;
-    if(active!==name){if(active)scrollPositions.set(scrollKey(),$('dock-content').scrollTop);active=name;paint();$('dock-content').scrollTop=scrollPositions.get(scrollKey())||0;}
-    else paint();
-    if(focus)$('dock-title').focus({preventScroll:true});
+    if(name==='record'){
+      if(!active)active='record';
+      paint();
+      if(focus)$('dock-title').focus({preventScroll:true});
+    }else if(Object.hasOwn(toolPages,name)){
+      if(name!==active){
+        if(Object.hasOwn(toolPages,active))toolScroll.set(active,$('tools-content').scrollTop);
+        active=name;paint();$('tools-content').scrollTop=toolScroll.get(name)||0;
+      }else paint();
+      if(focus)$('tools-title').focus({preventScroll:true});
+    }
     changed();
   }
-  function hide(focus=true){
-    const last=active;
-    if(last)scrollPositions.set(scrollKey(),$('dock-content').scrollTop);
-    active='';paint();
-    if(focus){const target=landing&&view==='network'?input:document.querySelector('[data-desk-panel="'+last+'"]');target?.focus({preventScroll:true});}
+  function closeTool(focus=true){
+    if(!Object.hasOwn(toolPages,active))return;
+    const last=active;toolScroll.set(last,$('tools-content').scrollTop);
+    active='record';paint();
+    if(focus)document.querySelector('[data-desk-panel="'+last+'"]')?.focus({preventScroll:true});
     changed();
   }
   function showRecord(next='connections',focus=false){
@@ -133,7 +141,7 @@ export function mountDesk({nodes,edges,sources,search,choose,start,launch,change
   const header=$('dock-header'),resize=$('dock-resize');
   function begin(event,mode){
     if(event.button!==0||mode==='move'&&(!floating||event.target.closest('button')))return;
-    const rect=dock.getBoundingClientRect(),outer=body.getBoundingClientRect();
+    const rect=dock.getBoundingClientRect(),outer=surface.getBoundingClientRect();
     drag={mode,id:event.pointerId,x:event.clientX,y:event.clientY,w:rect.width,h:rect.height,left:rect.left-outer.left,top:rect.top-outer.top};
     event.currentTarget.setPointerCapture(event.pointerId);event.preventDefault();
   }
@@ -143,7 +151,7 @@ export function mountDesk({nodes,edges,sources,search,choose,start,launch,change
     if(!drag||drag.id!==event.pointerId)return;
     const dx=event.clientX-drag.x,dy=event.clientY-drag.y;
     if(drag.mode==='move'){left=drag.left+dx;top=drag.top+dy;}
-    else{width=clamp(drag.w+(floating?dx:-dx),250,680);if(floating){left=drag.left;height=clamp(drag.h+dy,180,body.clientHeight-16);}}
+    else{width=clamp(drag.w+(floating||side==='left'?dx:-dx),250,680);if(floating){left=drag.left;height=clamp(drag.h+dy,180,surface.clientHeight-16);}}
     geometry();
   });
   for(const eventName of ['pointerup','pointercancel','lostpointercapture'])dock.addEventListener(eventName,event=>{if(drag?.id===event.pointerId){drag=null;changed();}});
@@ -152,10 +160,10 @@ export function mountDesk({nodes,edges,sources,search,choose,start,launch,change
     if(!(onResize||onTitle&&floating)||!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(event.key))return;
     event.preventDefault();const dx=event.key==='ArrowLeft'?-16:event.key==='ArrowRight'?16:0,dy=event.key==='ArrowUp'?-16:event.key==='ArrowDown'?16:0;
     if(onTitle){left=dock.offsetLeft+dx;top=dock.offsetTop+dy;}
-    else{width=clamp(dock.offsetWidth+(floating?dx:-dx),250,680);if(floating)height=dock.offsetHeight+dy;}
+    else{width=clamp(dock.offsetWidth+(floating||side==='left'?dx:-dx),250,680);if(floating)height=dock.offsetHeight+dy;}
     geometry();changed();
   });
-  new ResizeObserver(geometry).observe(body);
+  new ResizeObserver(geometry).observe(surface);
 
   function dismiss(){input.value='';hits=[];cursor=-1;results.hidden=true;results.replaceChildren();input.setAttribute('aria-expanded','false');input.removeAttribute('aria-activedescendant');$('search-status').textContent='';}
   function highlight(index){
@@ -200,9 +208,9 @@ export function mountDesk({nodes,edges,sources,search,choose,start,launch,change
   }
   function restore(saved,selection){
     active=saved?saved.active:(selection?'record':'');section=saved?.section||(selection?.kind==='node'?'connections':'evidence');
-    floating=saved?.floating||false;width=saved?.width||360;height=saved?.height||500;left=saved?.left??null;top=saved?.top??14;paint();
+    side=saved?.side==='right'?'right':'left';floating=saved?.floating||false;width=saved?.width||360;height=saved?.height||500;left=saved?.left??null;top=saved?.top??14;paint();
   }
-  return {sync,setPanel,hide,showRecord,dismiss,restore,focusSearch:()=>{input.focus({preventScroll:true});input.select();},
-    get active(){return active;},get section(){return section;},
-    snapshot:()=>({active,section,floating,width,height,left,top})};
+  return {sync,setPanel,closeTool,showRecord,dismiss,restore,focusSearch:()=>{input.focus({preventScroll:true});input.select();},
+    get tool(){return Object.hasOwn(toolPages,active)?active:'';},get section(){return section;},
+    snapshot:()=>({active,section,floating,side,width,height,left,top})};
 }

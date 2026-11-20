@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-11-19 — Source-check metadata correction
+
+Edition 2026-11-19-metadata corrects how CBUS Power describes checks against cited material. The project has no editorial review process. A connection shows its check date when one was recorded. Downloadable records use a null reviewer identity when the checker is unknown. Source citations, evidence, amounts, dates of prior checks and record IDs carry forward from the November 16 edition.
+
+The Record panel stays open while readers use tools and settings in a separate panel. It docks on the left by default. A floating record has arrows for docking on either side. Show all pins fits the pinned network in the canvas, including intermediate connections and separate groups. About the records now explains how to find a citation and read a claim in context.
+
 ## 2026-11-16 — Party-affiliation corrections and simpler navigation
 
 Edition 2026-11-16-party fills missing party data for 16 officials and the Ohio Republican Party chair, including Mike DeWine, JD Vance, Donald Trump, Bernie Moreno, Jim Tressel, Matt Huffman, Andrew Ginther and Columbus council members. Thirteen checked sources support the new fields. Party labels are normalized for whitespace and common D/R spellings. Details show the recorded affiliation, its period and source locator; exports retain the same provenance.
@@ -20,7 +26,7 @@ Identified and checked three earlier F3X originals for C00895276 that are absent
 
 These are financial reports, not supplementary contribution notices. All 172 indexed financial reports, 1,913,710 transaction/memo/balance rows, 100 earlier financial source records, 29 committees and 104 supplementary disclosures remain unchanged. No money from the unparsed files was extracted or added to totals. Subsequent full ledger builds retain the new coverage qualification.
 
-The November 13 statewide feed is marked UnofficialComplete but has identical counts, leaders and write-in selections for the eight covered state/district races. It does not establish certification. The county original is byte-identical, so the explicitly dated November 4 election snapshot and existing officeholding remain unchanged. Graph totals remain 390 entities, 577 relationships, 189 sources and 236 timeline events. Edition 2026-11-16 is published; independent human editorial review remains pending.
+The November 13 statewide feed is marked UnofficialComplete but has identical counts, leaders and write-in selections for the eight covered state/district races. It does not establish certification. The county original is byte-identical, so the explicitly dated November 4 election snapshot and existing officeholding remain unchanged. Graph totals remain 390 entities, 577 relationships, 189 sources and 236 timeline events. Edition 2026-11-16 is published.
 
 ## 2026-11-09 — Federal notices and construction-phase update
 
@@ -28,7 +34,7 @@ Added 23 checked original 48-hour contribution notices, including one amendment,
 
 All 172 financial reports, 1,913,710 transaction/memo/balance rows, 29 committees, 100 financial source records and 81 earlier supplementary records are unchanged. The snapshot date identifies this notice-only addition. Earlier financial source-check dates and incomplete state/county coverage remain explicit. No newly indexed post-general financial report or completed-cycle fundraising total is asserted.
 
-The November 4 official election XML is unchanged and still marked unofficial; county general-election links still identify unofficial returns. The November 7 election snapshot is retained without advancing check dates or officeholding. Eight finance gaps remain unknown. Graph totals are 390 entities, 577 relationships, 189 sources and 236 timeline events. Edition 2026-11-09 is published; independent human editorial review remains pending.
+The November 4 official election XML is unchanged and still marked unofficial; county general-election links still identify unofficial returns. The November 7 election snapshot is retained without advancing check dates or officeholding. Eight finance gaps remain unknown. Graph totals are 390 entities, 577 relationships, 189 sources and 236 timeline events. Edition 2026-11-09 is published.
 
 Microsoft’s October 2026 New Albany update adds one dated phase-status relationship: early construction works are complete, community engagement has returned to Microsoft, and limited fall/winter maintenance may continue. The July record and its source check are retained. This company statement establishes no full-facility completion, operational start or actual payment. A new source-check record preserves the later evidence without replacing the earlier snapshot.
 
@@ -38,7 +44,7 @@ The November 3 election has been held. All ten covered races now have checked un
 
 Ten new result links and election timeline entries identify the leaders in those unofficial returns. No certified victory, new term of office or completed canvass is asserted. Governor and lieutenant-governor candidates share one ticket selection. Ron Ula and Michael Lehnerd have no separate row in the retrieved return and retain unknown totals. Gary Josephson is classified as a write-in in the official return; the September roster snapshot is retained. OH-15 uses the full district count rather than Franklin County’s partial geography. Votes are not financial amounts.
 
-The graph contains 390 entities, 576 relationships, 188 sources and 235 timeline events. Prior relationships, source-check records and published editions remain intact. Campaign-finance files retain their November 2 snapshot and narrower source dates, including the eight unresolved coverage gaps; they are not complete election-cycle totals. Maintenance now prioritizes certification, corrections and post-general reports. Edition 2026-11-07 is published; independent human editorial review remains pending.
+The graph contains 390 entities, 576 relationships, 188 sources and 235 timeline events. Prior relationships, source-check records and published editions remain intact. Campaign-finance files retain their November 2 snapshot and narrower source dates, including the eight unresolved coverage gaps; they are not complete election-cycle totals. Maintenance now prioritizes certification, corrections and post-general reports. Edition 2026-11-07 is published.
 
 ## 2026-11-02 — Weekly county filing addition
 
@@ -46,7 +52,7 @@ Citizens for Stinziano’s 2026 pre-general report, filed October 22, adds 59 tr
 
 The ledger now contains 172 reports and 1,913,710 transaction, memo and balance rows across the same 29 committees, plus the existing 81 supplementary disclosures. All earlier report payloads, stable IDs, source-check dates and editions are retained. The new source records November 2 page-image transcription rather than human editorial approval.
 
-This is a county-only addition. Other county/state ledger inputs retain their October 15 baseline; Crawley’s pre-general report awaits transcription. The targeted October 26 federal inventory and Ronan’s earlier inventory are retained. Ohio bulk retrieval still meets a security challenge. Eight candidate coverage gaps remain unknown. Edition 2026-11-02 is published; independent editorial review remains pending.
+This is a county-only addition. Other county/state ledger inputs retain their October 15 baseline; Crawley’s pre-general report awaits transcription. The targeted October 26 federal inventory and Ronan’s earlier inventory are retained. Ohio bulk retrieval still meets a security challenge. Eight candidate coverage gaps remain unknown. Edition 2026-11-02 is published.
 
 ## 2026-10-26 — Published weekly federal filing refresh
 
@@ -54,17 +60,17 @@ Nine checked original FEC financial reports extend the ledger: eight pre-general
 
 Twenty-five contribution notices, including one amendment, and one lobbyist-bundling disclosure bring supplementary links to 81. They remain excluded from financial receipt totals. Reporting periods, filing dates, cash balances, borrowing and transfers retain separate meanings; committee totals are not summed across candidates.
 
-This is a targeted federal refresh. Ronan’s API listing was rate-limited and its earlier inventory was retained. Ohio bulk retrieval met a security challenge. New county filings were observed but await transcription, so state/county ledger inputs retain their October 15 baseline. Eight candidate coverage gaps remain unknown. Source checking is separate from independent editorial review. Edition 2026-10-26 is published; independent editorial review remains pending.
+This is a targeted federal refresh. Ronan’s API listing was rate-limited and its earlier inventory was retained. Ohio bulk retrieval met a security challenge. New county filings were observed but await transcription, so state/county ledger inputs retain their October 15 baseline. Eight candidate coverage gaps remain unknown. Edition 2026-10-26 is published.
 
 ## 2026-10-19 — Published campaign-finance edition
 
 Two checked original FEC financial reports extend the ledgers: Redpath's October 1–14 pre-general report, filed October 16, and Ronan's April 1–June 30 report, also filed October 16. Redpath reports $1,207.77 in contributions and $5,000 in borrowing, totaling $6,207.77 in receipts, with $6,070.11 in disbursements. Ronan reports no receipts, $1,000 in disbursements and negative beginning/end cash balances; those reported balances are preserved. Filing dates remain separate from activity periods.
 
-Eight new 48-hour contribution-notice links are supplementary disclosures, excluded from receipt totals. Earlier report IDs and amendment selections remain intact. This is a targeted federal update: Ohio's bulk endpoint served a maintenance page, the old federal committee's API was rate-limited, and the eight unresolved candidate coverage gaps remain unknown. County source-check dates remain October 15. The new snapshot date does not imply every source was rechecked substantively. Edition 2026-10-19 is published; independent editorial review remains pending.
+Eight new 48-hour contribution-notice links are supplementary disclosures, excluded from receipt totals. Earlier report IDs and amendment selections remain intact. This is a targeted federal update: Ohio's bulk endpoint served a maintenance page, the old federal committee's API was rate-limited, and the eight unresolved candidate coverage gaps remain unknown. County source-check dates remain October 15. The new snapshot date does not imply every source was rechecked substantively. Edition 2026-10-19 is published.
 
 ## 2026-10-17 — Published enrichment edition
 
-Edition 2026-10-17 combines the Wexner–Epstein and Redflex batches below. It contains 390 entities, 566 relationships, 185 sources and 225 timeline events: thirteen entities, twenty-five relationships, ten sources and sixteen events added since the preceding published edition. Earlier public download editions remain available. Source-support checks are separate from independent human editorial review.
+Edition 2026-10-17 combines the Wexner–Epstein and Redflex batches below. It contains 390 entities, 566 relationships, 185 sources and 225 timeline events: thirteen entities, twenty-five relationships, ten sources and sixteen events added since the preceding published edition. Earlier public download editions remain available.
 
 ## 2026-10-17 — Redflex enrichment
 
@@ -72,7 +78,7 @@ After the Wexner–Epstein enrichment, Redflex had the narrowest relationship an
 
 Columbus ordinance 1440-2013 and its attachments add contract history, the bid-waiver justification, named signature-block roles and proposed compensation of $29.74 per paid citation. The vendor-signed copy has blank city execution fields; its proposed June 1 effective date differs from the ordinance’s June 4 term start. No new appropriation, executed agreement or total payment is inferred from these documents.
 
-The Ohio legal records add Raphael’s guilty plea and 15-month sentence and Finley’s guilty plea and reported 14-month sentence. Exact sentencing-day precision is withheld for Finley. The company’s conditional non-prosecution agreement, historical parent and $100,000 Columbus restitution obligation remain separate from individual convictions, campaign receipts and completed payments. Human editorial review remains pending.
+The Ohio legal records add Raphael’s guilty plea and 15-month sentence and Finley’s guilty plea and reported 14-month sentence. Exact sentencing-day precision is withheld for Finley. The company’s conditional non-prosecution agreement, historical parent and $100,000 Columbus restitution obligation remain separate from individual convictions, campaign receipts and completed payments.
 
 ## 2026-10-17 — Wexner–Epstein enrichment
 
@@ -80,7 +86,7 @@ The Wexner–Epstein topic had the narrowest relationship-source coverage: nine 
 
 Ohio State’s records distinguish $260,000 in historical foundation gifts, a separate $1,000 membership gift and an unconfirmed $75,000 pledge. Two $2.5 million checks supported the football-complex addition; the university’s later review traced the COUQ-routed gift to Wexner funds. Origin links have no extra transfer amounts. Gift recognition, check dates, receipt periods, an announced remedial contribution and the date of Wexner’s deposition retain their distinct meanings.
 
-The batch adds seven timeline events and preserves earlier records. Source checks retain hashes, locators and verification methods; the scanned agreement was reviewed as rendered pages. Human editorial review remains pending.
+The batch adds seven timeline events and preserves earlier records. Source checks retain hashes, locators and verification methods; the scanned agreement was reviewed as rendered pages.
 
 ## Unreleased — Fixed orbital branches and movable flyouts
 

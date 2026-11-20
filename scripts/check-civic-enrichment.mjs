@@ -10,7 +10,7 @@ assert.deepEqual([civicNodes.length,civicEdges.length,civicSources.length],[7,13
 assert.deepEqual(civicRelease(new Set(),baseIds),{nodes:[],edges:[],complete:false});
 for(const source of civicSources){const missing=new Set(ids);missing.delete(source.id);const subset=civicRelease(missing,baseIds);assert.ok(subset.edges.every(edge=>!edge.sourceIds.includes(source.id)));assert.ok(subset.nodes.every(node=>!node.sourceIds.includes(source.id)));const check=sourceLiveEvidence[source.id];assert.equal(check.originalUrl,source.url);assert.equal(check.contentVerified,true);assert.deepEqual(check.contentChecks,civicChecks[source.id]);assert.match(check.sha256,/^[a-f0-9]{64}$/);}
 const published=civicRelease(ids,baseIds);assert.equal(published.nodes.length,7);assert.equal(published.edges.length,13);assert.equal(published.complete,true);
-for(const record of [...civicNodes,...civicEdges]){assert.equal(record.claimReview.status,'reviewed');assert.equal(record.claimReview.reviewer.type,'unknown');assert.ok(record.claimReview.reviewer.identity);assert.ok(record.sourceIds.length);}
+for(const record of [...civicNodes,...civicEdges]){assert.equal(record.claimReview.status,'reviewed');assert.equal(record.claimReview.reviewer.type,'unknown');assert.equal(record.claimReview.reviewer.identity,null);assert.ok(record.sourceIds.length);}
 for(const edge of civicEdges){assert.ok(edge.locator);assert.ok(edge.evidenceEntries.every(entry=>entry.locator&&entry.sourceId));}
 const byId=new Map(civicEdges.map(edge=>[edge.id,edge]));
 assert.equal(byId.get('c26-01').amount,60000);assert.equal(byId.get('c26-01').status,'authorized');assert.equal(byId.get('c26-01').amountIsUpperBound,true);assert.equal(byId.get('c26-01').timeline.moneyKind,'authorization');

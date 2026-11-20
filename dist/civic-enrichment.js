@@ -13,7 +13,7 @@ export const civicChecks={
  'enrich-shortnorth-2018':['1636-2018','6/18/2018','2015-2024','217 to 20','13,300,000','1,225,000','not to be in compliance','ninety (90) days'],
  'enrich-edwards-easements-2022':['2141-2022','7/25/2022','Edwards Companies','aerial sculpture','500.00','SECTION 1']
 };
-const review={status:'reviewed',reviewedAt:'2026-10-15',reviewer:{type:'unknown',identity:'Unattributed initial review'},note:'Claim reviewed against the cited primary content and locator. Independent editorial review is pending.'};
+const review={status:'reviewed',reviewedAt:'2026-10-15',reviewer:{type:'unknown',identity:null},note:'Checked against the cited primary material at the recorded location.'};
 const n=(id,name,category,role,description,sourceIds,x,y,historical=false)=>({id,name,category,role,description,sourceIds,x,y,historical,claimReview:{...review}});
 export const civicNodes=[
  n('pizzuti-short-north-office','Pizzuti Short North Office LLC','corporation','Short North office tax-abatement agreement party','Named enterprise in a historical 75% property-tax abatement and its 2018 amendment.',['enrich-shortnorth-2018'],1900,350,true),

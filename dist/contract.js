@@ -9,13 +9,13 @@ import { acceptedCorrections } from './corrections.js';
 import { inheritedEntityIds,inheritedRelationshipIds } from './inherited.js';
 import { validISO } from './timeline.js';
 
-export const release = { schemaVersion:'1.0.0',releaseId:'2026-11-16-party',status:'published',preparedOn:'2026-11-16',publishedAt:'2026-11-17T01:58:01.006230Z',dataRevision:meta.version,codeLicense:'MIT',dataLicense:'CC-BY-4.0',sourceCheckIds:['pa26-dewine','pa26-state-roster','pa26-federal-ballot','pa26-huffman','pa26-dovilla','pa26-householder','pa26-kasich','pa26-yost','pa26-columbus-party','pa26-dorans','pa26-columbus-pac-labels','pa26-mitchell-brown','pa26-gop-chair'] };
-export const reviewFor = record => record.claimReview || { status:'legacy-unrecorded',reviewedAt:null,reviewer:{type:'unknown',identity:null},note:'Inherited curated record. Previous substantive review identity and claim-level date were not recorded; source content checks are separate. Independent editorial review is pending.' };
+export const release = { schemaVersion:'1.0.0',releaseId:'2026-11-19-metadata',status:'published',preparedOn:'2026-11-19',publishedAt:'2026-11-20T00:14:05Z',dataRevision:meta.version,codeLicense:'MIT',dataLicense:'CC-BY-4.0',sourceCheckIds:[] };
+export const reviewFor = record => record.claimReview || { status:'legacy-unrecorded',reviewedAt:null,reviewer:{type:'unknown',identity:null},note:'The date of the check against the cited material is unknown.' };
 export function publicSource(source) {
   const {url,archiveUrl,archiveBrowseUrl,...record}=source;
   const check=archiveUrl?sourceArchives[source.id]:sourceLiveEvidence[source.id];
   return {...record,url:archiveUrl||url,publicationDate:{value:source.date,precision:!source.date?'unknown':source.date.length===4?'year':source.date.length===7?'month':'day'},
-    contentCheck:{verified:!!check?.contentVerified,checkedAt:check?.checkedAt||null,method:check?.contentCheckMethod|| (archiveUrl?'Archived content retrieval with source-specific checks':'Method not recorded'),reviewer:check?.reviewer||{type:'unknown',identity:null},sha256:check?.sha256||null,checks:check?.contentChecks||[],note:check?.contentCheckNote||'Initial review attribution is unavailable. Content availability / matching is separate from claim review.'},
+    contentCheck:{verified:!!check?.contentVerified,checkedAt:check?.checkedAt||null,method:check?.contentCheckMethod|| (archiveUrl?'Archived content retrieval with source-specific checks':'Method not recorded'),reviewer:check?.reviewer||{type:'unknown',identity:null},sha256:check?.sha256||null,checks:check?.contentChecks||[],note:check?.contentCheckNote||'This check records what source content was retrieved or observed.'},
     archiveCapture:source.archiveTimestamp||null};
 }
 export const leads = mediaLeads.map((question,index)=>({id:`lead-media-${String(index+1).padStart(2,'0')}`,question,...leadDetails[index],identifiers:leadDetails[index].identifiers||[],status:'open',lastAttempt:null,resultingRecordIds:[],note:'Research question, not an accepted relationship. No new retrieval was performed for this release preparation.'}));
@@ -33,20 +33,26 @@ export function datasetFor(graph={nodes,edges}, events=null) {
   // Include the lead's existing supporting references as well as claim citations.
   relevantLeads.forEach(l=>l.sourceIds.forEach(id=>sourceIds.add(id)));
   const references=links.flatMap(edge=>[edge.amountIncludedIn?{id:edge.amountIncludedIn,role:'containing-amount'}:null,edge.modifiesRelationshipId?{id:edge.modifiesRelationshipId,role:'modified-contract'}:null].filter(ref=>ref&&!edgeIds.has(ref.id)));
-  const output={release,meta,entities,relationships:links,sources:sources.filter(s=>sourceIds.has(s.id)).map(publicSource),events:chronology,leads:relevantLeads,relatedLeadIds:leads.filter(l=>l.entityIds.some(id=>entities.some(n=>n.id===id))).map(l=>l.id),externalRelationshipReferences:[...new Map(references.map(ref=>[ref.role+':'+ref.id,{...ref,releaseId:release.releaseId}])).values()],corrections:acceptedCorrections.filter(c=>[...entities,...links].some(r=>r.id===c.recordId)),limitations:[meta.limitations,'Claim-level review metadata is incomplete for inherited records.','Dates usually describe events or observations; relationship validity is largely unknown.','Filtered packets include complete lead records only when all their entities are present; relatedLeadIds and externalRelationshipReferences refer to the full release.']};
+  const output={release,meta,entities,relationships:links,sources:sources.filter(s=>sourceIds.has(s.id)).map(publicSource),events:chronology,leads:relevantLeads,relatedLeadIds:leads.filter(l=>l.entityIds.some(id=>entities.some(n=>n.id===id))).map(l=>l.id),externalRelationshipReferences:[...new Map(references.map(ref=>[ref.role+':'+ref.id,{...ref,releaseId:release.releaseId}])).values()],corrections:acceptedCorrections.filter(c=>[...entities,...links].some(r=>r.id===c.recordId)),limitations:[meta.limitations,'Some older records lack the date of a check against the cited material.','Dates usually describe events or observations; relationship validity is largely unknown.','Filtered packets include complete lead records only when all their entities are present; relatedLeadIds and externalRelationshipReferences refer to the full release.']};
   validateDataset(output);return output;
+}
+function validDatedCheck(check){
+  const reviewer=check.reviewer;
+  if(!check.reviewedAt||!reviewer)return false;
+  const named=typeof reviewer.identity==='string'&&reviewer.identity.trim().length>0;
+  return reviewer.type==='human'?named:reviewer.type==='unknown'&&(reviewer.identity===null||named);
 }
 export function validateDataset(data) {
   const unique=(list,label)=>{if(new Set(list.map(r=>r.id)).size!==list.length)throw Error(`Duplicate ${label} ID`);};
   for(const name of ['entities','relationships','sources','events','leads'])unique(data[name],name);
   const ids=new Set(data.entities.map(n=>n.id)),sourceIds=new Set(data.sources.map(s=>s.id)),edgeIds=new Set(data.relationships.map(e=>e.id));
   for(const s of data.sources)if(!s.contentCheck.verified||!s.contentCheck.checkedAt||!/^https:/.test(s.url))throw Error(`Unchecked source ${s.id}`);
-  for(const n of data.entities){if(n.publicationState!=='accepted'||!n.sourceIds.length||n.sourceIds.some(id=>!sourceIds.has(id))||!['legacy-unrecorded','reviewed'].includes(n.claimReview?.status)||(n.claimReview.status==='legacy-unrecorded'&&!inheritedEntityIds.includes(n.id)))throw Error(`Unpublishable entity ${n.id}`);for(const identifier of n.externalIdentifiers)if(identifier.sourceIds.some(id=>!sourceIds.has(id)))throw Error(`Unchecked identifier ${n.id}`);}
+  for(const n of data.entities){if(n.publicationState!=='accepted'||!n.sourceIds.length||n.sourceIds.some(id=>!sourceIds.has(id))||!['legacy-unrecorded','reviewed'].includes(n.claimReview?.status)||(n.claimReview.status==='legacy-unrecorded'&&!inheritedEntityIds.includes(n.id))||(n.claimReview.status==='reviewed'&&!validDatedCheck(n.claimReview)))throw Error(`Unpublishable entity ${n.id}`);for(const identifier of n.externalIdentifiers)if(identifier.sourceIds.some(id=>!sourceIds.has(id)))throw Error(`Unchecked identifier ${n.id}`);}
   for(const e of data.relationships){
     if(e.publicationState!=='accepted'||!ids.has(e.source)||!ids.has(e.target)||!e.evidence||!evidenceStatuses[e.status]||!e.sourceIds.length||e.sourceIds.some(id=>!sourceIds.has(id)))throw Error(`Unpublishable relationship ${e.id}`);
     if(!['legacy-unrecorded','reviewed'].includes(e.claimReview.status))throw Error(`Unreviewed proposal ${e.id}`);
     if(e.claimReview.status==='legacy-unrecorded'&&!inheritedRelationshipIds.includes(e.id))throw Error(`New record lacks substantive review ${e.id}`);
-    if(e.claimReview.status==='reviewed'&&(!e.claimReview.reviewedAt||!['unknown','human'].includes(e.claimReview.reviewer.type)||!e.claimReview.reviewer.identity))throw Error(`Incomplete reviewer ${e.id}`);
+    if(e.claimReview.status==='reviewed'&&!validDatedCheck(e.claimReview))throw Error(`Invalid source-check metadata ${e.id}`);
     for(const entry of e.evidenceEntries)if(!sourceIds.has(entry.sourceId)||!['support','qualify','contradict','supersede'].includes(entry.role))throw Error(`Invalid evidence entry ${e.id}`);
     const v=e.validity;
     if((v.start&&!validISO(v.start))||(v.end&&!validISO(v.end))||(v.start&&v.end&&v.start>v.end)||v.sourceIds?.some(id=>!sourceIds.has(id)))throw Error(`Invalid relationship validity ${e.id}`);

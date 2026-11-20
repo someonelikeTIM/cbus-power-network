@@ -35,7 +35,7 @@ export const campaignChecks={
  'pc26-aep-filing':['C00096842','8AD73BC61A','2EB27DFBEB','Voided 1/28/26 Contribution','Husted For Senate','5000.00'],
  'pc26-kidspac-filing':['C00147975','Friends of Sherrod Brown','C00916288','500176255','500176256','5000.00']
 };
-const review={status:'reviewed',reviewedAt:'2026-10-15',reviewer:{type:'unknown',identity:'Unattributed initial review'},note:'Source-supported curation. Campaign statements remain attributed; independent editorial review is pending.'};
+const review={status:'reviewed',reviewedAt:'2026-10-15',reviewer:{type:'unknown',identity:null},note:'Checked against the cited material. Campaign statements are attributed to their sources.'};
 const n=(id,name,category,role,sourceIds,extra={})=>({id,name,category,role,description:'',x:1800,y:1000,historical:false,sourceIds,claimReview:{...review},...extra});
 const e=(id,source,target,type,label,sourceIds,locator,extra={})=>({id,source,target,type,label,evidence:label,sourceIds,locator,period:'Checked October 15, 2026',caseId:'campaigns2026',historical:false,directional:true,status:'documented',publicationState:'accepted',claimReview:{...review},evidenceEntries:sourceIds.map(sourceId=>({sourceId,role:'support',locator,excerpt:null,note:'Scope and qualifications remain with this record.'})),...extra});
 const roster=(id,name,party,race,office,writeIn=false)=>({id,name,party,race,office,writeIn});

@@ -17,7 +17,7 @@ import { redflexSources,redflexRelease } from './redflex-enrichment.js';
 import { electionResultSources,applyElectionResults } from './election-results-2026.js';
 import { affiliationSources,applyPartyAffiliations } from './party-affiliations.js';
 export const meta = {
-  title: 'CBUS Power', reviewed: '2026-11-16', version: 22,
+  title: 'CBUS Power', reviewed: '2026-11-16', version: 23,
   scope: 'Columbus and Ohio: money, control, public corruption, civic affiliations, and media ownership, governance, funding and information supply.',
   limitations: 'Selected records, not complete coverage. Evidence status, source date, and direction are attached to each case relationship. Assets, cash transfers, and penalties are identified separately.'
 };
@@ -278,7 +278,7 @@ const donations=donationRelease(verifiedSourceIds,nodes.map(node=>node.id));
 nodes.push(...donations.nodes);edges.push(...donations.edges);
 meta.donationState=donations.complete?'complete':'verified subset';
 const campaigns=campaignRelease(verifiedSourceIds,nodes.map(node=>node.id));
-if(verifiedSourceIds.has('trail-microsoft-oct2026')){const project=nodes.find(node=>node.id==='microsoft-new-albany');if(project)Object.assign(project,{role:'Early works completed · October 2026 update',description:'Microsoft says early construction works are complete and community engagement has returned to Microsoft. Limited fall/winter maintenance may continue; an operational start is not established. The earlier July status remains on its dated relationship.',sourceIds:[...new Set([...project.sourceIds,'trail-microsoft-oct2026'])],claimReview:{"status": "reviewed", "reviewedAt": "2026-11-09", "reviewer": {"type": "unknown", "identity": "Unattributed automated source check"}, "note": "Automated source-supported maintenance update. Company statement read and phase/operation distinctions checked; independent human editorial review is not recorded."}});}
+if(verifiedSourceIds.has('trail-microsoft-oct2026')){const project=nodes.find(node=>node.id==='microsoft-new-albany');if(project)Object.assign(project,{role:'Early works completed · October 2026 update',description:'Microsoft says early construction works are complete and community engagement has returned to Microsoft. Limited fall/winter maintenance may continue; an operational start is not established. The earlier July status remains on its dated relationship.',sourceIds:[...new Set([...project.sourceIds,'trail-microsoft-oct2026'])],claimReview:{"status": "reviewed", "reviewedAt": "2026-11-09", "reviewer": {"type": "unknown", "identity": null}, "note": "Automated check of the company statement and the distinction between construction phase and operation."}});}
 nodes.push(...campaigns.nodes);edges.push(...campaigns.edges);applyCampaignUpdates(nodes,verifiedSourceIds);
 applyElectionResults(nodes,edges,verifiedSourceIds);
 meta.election2026Phase='Election held November 3; unofficial November 4 returns checked November 7; certification pending';

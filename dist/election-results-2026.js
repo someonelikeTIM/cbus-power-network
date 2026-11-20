@@ -420,7 +420,7 @@ export const electionResults={
   ]
 };
 
-const review=()=>({status:'reviewed',reviewedAt:'2026-11-07',reviewer:{type:'unknown',identity:'Unattributed automated source check'},note:'Automated source-supported update. Original results, jurisdiction scope and qualifications checked; no independent human editorial review is recorded.'});
+const review=()=>({status:'reviewed',reviewedAt:'2026-11-07',reviewer:{type:'unknown',identity:null},note:'Automated check of the original results, jurisdiction and qualifications.'});
 const number=value=>value.toLocaleString('en-US');
 export function applyElectionResults(nodes,edges,verified){
  if(!verified.has('er26-results-notice'))return;

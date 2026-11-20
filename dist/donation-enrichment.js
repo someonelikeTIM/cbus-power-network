@@ -16,7 +16,7 @@ export const donationChecks={
  'donation-dovilla-identity':['Name','MIKE DOVILLA FOR OHIO'],
  'campaign-developers-2025':['Matthew Ferris','10,000','Mark Corna','1,000','Building Industry Association of Central Ohio','5,000','Klein']
 };
-const reviewed={status:'reviewed',reviewedAt:'2026-10-15',reviewer:{type:'unknown',identity:'Unattributed initial review'},note:'Reviewed against the cited material and locator. Reported contributions remain sourced reporting; independent editorial review is pending.'};
+const reviewed={status:'reviewed',reviewedAt:'2026-10-15',reviewer:{type:'unknown',identity:null},note:'Checked against the cited material at the recorded location. Each reported contribution is attributed to its source.'};
 const n=(id,name,category,role,description,sourceIds,x,y,extra={})=>({id,name,category,role,description,sourceIds,x,y,historical:false,claimReview:{...reviewed},...extra});
 export const donationNodes=[
  n('matthew-ferris','Matthew E. Ferris','person','E.P. Ferris president / land-development engineer','WOSU names Matthew Ferris with EP Ferris as a 2025 donor; the company biography supplies his full name and role.',['campaign-developers-2025','donation-ferris-team'],1650,-500,{aliases:['Matthew Ferris']}),

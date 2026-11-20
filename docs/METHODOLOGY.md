@@ -18,7 +18,7 @@ Reporting, allegations, charges, findings, admissions, convictions, registration
 
 Source information records content availability, check dates, methods and hashes where available. A successful source check establishes what was retrieved or observed, not the truth of every statement on the page. Verified dated Wayback snapshots are preferred. Otherwise the checked original is cited. Each source has one preferred citation URL.
 
-Initial review attribution is unavailable in this public edition. Source-support check dates are retained where recorded; independent editorial review remains pending. This collection is a starting point for examination, not an independently audited body of findings. Corrections can be proposed against any stable record ID.
+When CBUS Power records the date it checked a connection against the cited material, that date appears with the connection. The date on a source page describes when the document itself was checked. Use the record ID to suggest a correction.
 
 ## Money and time
 

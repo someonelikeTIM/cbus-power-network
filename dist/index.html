@@ -77,32 +77,38 @@
       <div id="desk-bar" hidden>
         <div id="desk-search-slot"></div>
         <nav class="desk-launchers" aria-label="Explorer panels">
-          <button id="record-open" data-desk-panel="record" aria-expanded="false" aria-controls="tool-dock">Record</button>
-          <button id="mobile-filters" data-desk-panel="filters" aria-expanded="false" aria-controls="tool-dock">Filters</button>
-          <button id="path-open" data-desk-panel="path" aria-expanded="false" aria-controls="tool-dock">Find path</button>
-          <button id="research-open" data-desk-panel="research" aria-expanded="false" aria-controls="tool-dock">Research <span id="research-count"></span></button>
-          <button id="legend-open" data-desk-panel="settings" aria-expanded="false" aria-controls="tool-dock">Map tools</button>
+          <button id="record-open" data-desk-panel="record" aria-controls="record-dock" title="Focus the current record">Record</button>
+          <button id="mobile-filters" data-desk-panel="filters" aria-expanded="false" aria-controls="tools-panel">Filters</button>
+          <button id="path-open" data-desk-panel="path" aria-expanded="false" aria-controls="tools-panel">Find path</button>
+          <button id="research-open" data-desk-panel="research" aria-expanded="false" aria-controls="tools-panel">Research <span id="research-count"></span></button>
+          <button id="legend-open" data-desk-panel="settings" aria-expanded="false" aria-controls="tools-panel">Map tools</button>
         </nav>
       </div>
       <div id="trail-bar" hidden><button id="undo-map" type="button" title="Undo last exploration step (Ctrl/Cmd+Z)" disabled>Undo</button>
-        <span class="trail-label">Your trail</span><nav id="exploration-trail" aria-label="Exploration trail"></nav><span id="trail-empty">Network overview</span><button id="return-map" type="button" hidden>Return to map</button></div>
+        <span class="trail-label">Your trail</span><nav id="exploration-trail" aria-label="Exploration trail"></nav><span id="trail-empty">Network overview</span><button id="return-map" type="button" hidden>Return to map</button><button id="show-all-pins" type="button" hidden>Show all pins</button></div>
+      <div id="pins-banner" hidden><span id="pins-summary" role="status"></span><button id="leave-pins" type="button">Back to exploration</button></div>
       <div id="scope-bar" hidden><div id="active-tags" role="group" aria-label="Active tags" hidden></div><div id="active-filters" class="active-filters" aria-label="Active filters" hidden></div></div>
       <div id="desk-body" hidden>
+      <div id="desk-main">
       <div id="list-search-row" hidden><label for="list-search">Filter these records</label><input id="list-search" type="search" autocomplete="off"><button id="export-visible" type="button">Download data</button></div>
-      <aside id="tool-dock" aria-labelledby="dock-title" hidden>
-        <header class="dock-header" id="dock-header"><h2 id="dock-title" tabindex="-1"></h2><button id="dock-place" type="button">Float</button><button id="dock-close" type="button" aria-label="Hide panel" title="Hide panel">×</button></header>
+      <aside id="record-dock" aria-labelledby="dock-title">
+        <header class="dock-header" id="dock-header">
+          <h2 id="dock-title" tabindex="-1">Record</h2>
+          <span id="dock-placement" role="group" aria-label="Record panel position" tabindex="-1">
+            <button id="dock-place" type="button" title="Float the record panel">Float</button>
+            <button id="dock-left" type="button" aria-label="Dock left" title="Dock left" hidden>←</button>
+            <button id="dock-right" type="button" aria-label="Dock right" title="Dock right" hidden>→</button>
+          </span>
+        </header>
         <div id="dock-content">
-          <section id="dock-record" class="dock-page" hidden>
+          <section id="dock-record" class="dock-page">
             <button id="record-back" type="button" hidden></button>
+            <p id="record-scope-note" hidden>This record is outside the current map view.</p>
             <div id="record-switch" aria-label="Selected record"><button id="tab-connections" type="button" aria-pressed="true">Connections</button><button id="tab-evidence" type="button" aria-pressed="false">Evidence</button></div>
             <div id="arrival-record" hidden></div>
             <div id="record-empty"><h3>Choose a record</h3><p>Search for a name or select an entity or connection on the map to see its records.</p></div>
           </section>
-          <section id="dock-settings" class="dock-page" hidden>
-            <div id="settings-display"><h3>Map display</h3></div>
-            <div id="settings-selection"><h3>Layout &amp; selection</h3></div>
-            <div class="settings-actions"><h3>Records &amp; data</h3><button class="plain-button" data-campaign-money="">Campaign money</button><button id="export" type="button">Download data</button></div>
-          </section>
+
         </div>
         <button id="dock-resize" type="button" role="separator" aria-orientation="vertical" aria-label="Resize panel" title="Resize panel with drag or arrow keys"></button>
       </aside>
@@ -119,12 +125,12 @@
       <div class="workspace" data-current-view="network">
         <div id="network-view" class="network-view view-panel">
           <section id="quick-menu" aria-label="Map actions"><div class="quick-controls"><button id="group-connections" type="button" aria-pressed="false">Group by connection type</button><button id="toggle-amounts" type="button" aria-pressed="false">Show dollar amounts</button><button id="selection-mode" type="button" aria-pressed="false">Drag to pan</button></div><strong id="quick-selection"></strong><div id="quick-actions"></div><p id="quick-hint"></p></section>
-          <div id="map-status" class="map-status"><div class="graph-heading"><div><span id="graph-title" class="eyebrow">Columbus network</span><button id="map-scope" class="node-details-link" aria-controls="inspector"></button></div><span id="visible-count" aria-live="polite"></span><small id="semantic-summary"></small></div><div class="overview-map"><canvas id="network-overview" width="184" height="96" aria-label="Network overview; click to pan"></canvas><svg viewBox="0 0 184 96" aria-hidden="true"><g id="overview-path"></g><rect id="overview-viewport"/></svg></div><div class="map-exploration-controls"><button id="map-full" class="explore-button">Browse the whole network</button></div></div>
           <p id="starting-summary" class="starting-summary" role="status"></p>
           <p class="exploration-hint">Choose an entity to explore its connections. Follow a path and keep earlier steps in view. Pin records to save them in your research path.</p>
           <section id="connection-legend" class="connection-legend floating-panel" aria-label="Connection types currently shown" hidden><div class="floating-panel-header" tabindex="0"><h2>Connections shown</h2><button data-close-floating="connection-legend" aria-label="Close legend">×</button></div><div id="legend-controls"><label class="canvas-color-control" for="canvas-color-mode">Color by<select id="canvas-color-mode"><option value="type">Entity / connection type</option><option value="party">Political party</option></select></label><div id="party-color-key" hidden><div class="party-swatches"><span><i style="--color:#2463b4"></i>Democratic</span><span><i style="--color:#c43c3c"></i>Republican</span><span><i style="--color:#747b80"></i>Other / unrecorded</span></div><p>Entity colors use recorded affiliations. Links use the known endpoint’s party; links between different parties are gray. A colored link does not assign a party to its other endpoint.</p></div></div><details id="map-key"><summary id="legend-summary">Connection key</summary><ul id="legend-types"></ul><p id="legend-key"></p><p id="indirect-key" hidden><span class="indirect-swatch" aria-hidden="true"></span>Dotted line: indirect route · select it to reveal the recorded links.</p><p id="legend-context">Other visible nodes stay clickable at 50% opacity.</p></details></section>
           <div id="graph-stage" class="graph-stage">
             <div id="canvas-area"><svg id="graph" aria-label="Interactive map of documented Columbus relationships" role="group" tabindex="0"><g id="graph-world"><g id="bucket-layer" aria-label="Connection type buckets"></g><g id="edge-layer"></g><g id="route-layer"></g><g id="connection-icon-layer"></g><g id="node-layer"></g></g><rect id="selection-box" hidden x="0" y="0" width="0" height="0"/></svg>
+            <div id="map-status" class="map-status"><div class="graph-heading"><div><span id="graph-title" class="eyebrow">Columbus network</span><button id="map-scope" class="node-details-link" aria-controls="inspector"></button></div><span id="visible-count" aria-live="polite"></span><small id="semantic-summary"></small></div><div class="overview-map"><canvas id="network-overview" width="184" height="96" aria-label="Network overview; click to pan"></canvas><svg viewBox="0 0 184 96" aria-hidden="true"><g id="overview-path"></g><rect id="overview-viewport"/></svg></div><div class="map-exploration-controls"><button id="map-full" class="explore-button">Browse the whole network</button></div></div>
 
             <div id="connection-tooltip" role="tooltip" hidden></div>
             <div id="entity-tooltip" role="tooltip" hidden><strong></strong><span></span></div>
@@ -138,7 +144,7 @@
               <p id="neighbor-choice" role="status" hidden></p>
               <div id="record-neighbors" aria-label="Direct connections"></div>
             </section>
-            <section id="research-panel" class="floating-panel" aria-labelledby="research-title" hidden><div class="floating-panel-header" tabindex="0"><h2 id="research-title">Research path</h2><button data-close-floating="research-panel" aria-label="Close research path">×</button></div><p class="research-intro">Pins chart your research. Connections between steps follow the source records.</p><label>Path name<input id="research-name" maxlength="100" value="Untitled research path"></label><ol id="research-steps"></ol><p id="research-route-summary"></p><div class="research-actions"><button id="research-show">Show path</button><button id="research-save">Save path</button><button id="research-export">Export path</button><button id="research-import">Import path…</button></div><details id="research-library"><summary>Saved research paths</summary><div id="research-saved"></div></details><p id="research-status" role="status"></p></section>
+            <section id="research-panel" class="floating-panel" aria-labelledby="research-title" hidden><div class="floating-panel-header" tabindex="0"><h2 id="research-title">Research path</h2><button data-close-floating="research-panel" aria-label="Close research path">×</button></div><p class="research-intro">Pins chart your research. Connections between steps follow the source records.</p><label>Path name<input id="research-name" maxlength="100" value="Untitled research path"></label><ol id="research-steps"></ol><p id="research-route-summary"></p><div class="research-actions"><button id="research-show">Show all pins on map</button><button id="research-save">Save path</button><button id="research-export">Export path</button><button id="research-import">Import path…</button></div><details id="research-library"><summary>Saved research paths</summary><div id="research-saved"></div></details><p id="research-status" role="status"></p></section>
             <div class="graph-controls" aria-label="Map controls"><button id="zoom-in" title="Zoom in" aria-label="Zoom in">+</button><button id="zoom-out" title="Zoom out" aria-label="Zoom out">−</button><span></span><button id="fit" title="Fit all visible nodes" aria-label="Fit the network"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4H4v5m11-5h5v5M4 15v5h5m11-5v5h-5"/></svg></button><button id="reset-layout" title="Restore the original entity positions">Reset map layout</button></div>
           </div>
           </div>
@@ -152,14 +158,31 @@
         <div id="media-overview" class="media-overview" hidden></div>
       </div>
       </div>
+      <aside id="tools-panel" aria-labelledby="tools-title" hidden>
+        <header class="dock-header"><h2 id="tools-title" tabindex="-1">Explorer tools</h2><button id="tools-close" type="button" aria-label="Close tool" title="Close tool">×</button></header>
+        <div id="tools-content">
+          <section id="dock-settings" class="dock-page" hidden>
+            <div id="settings-display"><h3>Map display</h3></div>
+            <div id="settings-selection"><h3>Layout &amp; selection</h3></div>
+            <button id="open-network-tools" type="button" hidden>Open layout controls on the network</button>
+            <div class="settings-actions"><h3>Records &amp; data</h3><button class="plain-button" data-campaign-money="">Campaign money</button><button id="export" type="button">Download data</button></div>
+          </section>
+        </div>
+      </aside>
+      </div>
     </section>
 
     <footer class="page-footer"><span id="review-date"></span><span id="release-label"></span><nav aria-label="Project information"><a href="#about-project" data-project-dialog="about-project">About</a><a id="github-contribute" href="https://github.com/someonelikeTIM/cbus-power-network/blob/main/docs/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer">Contribute</a><a id="github-contact" href="https://github.com/someonelikeTIM/cbus-power-network/issues" target="_blank" rel="noopener noreferrer">Contact</a><button class="methodology-open">About the records</button></nav></footer>
   </main>
 
   <dialog id="about-project" aria-labelledby="about-title"><form method="dialog"><button class="dialog-close" aria-label="Close about">×</button></form><h2 id="about-title">About this project</h2><p>I was inspired by <a href="https://theyrule.net/" target="_blank" rel="noopener noreferrer">TheyRule</a> to bring more transparency to Columbus politics.</p><p>This map follows the people, organizations, money and public decisions that shape Columbus. It starts with a few connections and grows as you explore. Each connection opens the records and sources behind it.</p><p><a href="https://github.com/someonelikeTIM/cbus-power-network">Project on GitHub</a> · <a href="https://github.com/someonelikeTIM/cbus-power-network/blob/main/LICENSE">MIT code</a> · <a href="https://github.com/someonelikeTIM/cbus-power-network/blob/main/DATA-LICENSE.md">CC BY 4.0 curated data</a></p><p>Third-party materials keep their own terms. <a href="./docs/PRIVACY.html">Privacy</a></p><a href="https://github.com/someonelikeTIM/cbus-power-network/blob/main/docs/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer">Contribute on GitHub →</a></dialog>
-  <dialog id="methodology" aria-labelledby="method-title"><form method="dialog"><button class="dialog-close" aria-label="Close methodology">×</button></form><h2 id="method-title">About the records</h2><div class="method-grid"><div><h3>Status</h3><p>Evidence labels describe the statement behind each connection: a finding, allegation, participant account or documented record. Its source and qualifications appear in the details.</p></div><div><h3>Money & authority</h3><p>Arrows show the recorded direction. Amounts identify payments, funding, spending ceilings, asset values or penalties. Each amount belongs to its own recipient and period.</p></div><div><h3>Sources</h3><p>Source links lead to the cited documents, with page or paragraph references where recorded. Source information includes the research method and check date.</p></div><div><h3>Coverage</h3><p>State and federal politics, campaign money, contracts, lobbying, HB 6, Wexner–Epstein, Redflex, and selected affiliations. Authorizations are distinct from payments. Node size counts dataset links; placement is for readability.</p></div></div></dialog>
-  <dialog id="data-download" aria-labelledby="data-download-title"><form method="dialog"><button class="dialog-close" aria-label="Close data download">×</button></form><p class="eyebrow">Data export</p><h2 id="data-download-title">Download the records in this view</h2><p id="data-download-summary"></p><dl id="data-download-details" class="download-details"></dl><p class="download-note">The JSON includes source-linked records and the active view filters. For complete versioned tables and schemas, use the <a id="data-download-manifest" href="./downloads/2026-10-17/manifest.json" target="_blank" rel="noopener noreferrer">edition manifest ↗</a>.</p><button id="data-download-confirm" class="primary-button" type="button">Download JSON <span aria-hidden="true">↓</span></button></dialog>
+  <dialog id="methodology" aria-labelledby="method-title">
+    <form method="dialog"><button class="dialog-close" aria-label="Close about the records">×</button></form>
+    <h2 id="method-title">About the records</h2>
+    <p>Select a connection to see why it’s on the map. Follow the link under <strong>Sources</strong> to read the document yourself. When we have a page or paragraph number, we include it beside the evidence.</p>
+    <p>A board roster can show that two people served together. A complaint records what someone alleged. For the court’s decision, look for its ruling.</p>
+  </dialog>
+  <dialog id="data-download" aria-labelledby="data-download-title"><form method="dialog"><button class="dialog-close" aria-label="Close data download">×</button></form><p class="eyebrow">Data export</p><h2 id="data-download-title">Download the records in this view</h2><p id="data-download-summary"></p><dl id="data-download-details" class="download-details"></dl><p class="download-note">The JSON includes the records and sources in this view. For complete versioned tables and schemas, use the <a id="data-download-manifest" href="./downloads/2026-11-19-metadata/manifest.json" target="_blank" rel="noopener noreferrer">edition manifest ↗</a>.</p><button id="data-download-confirm" class="primary-button" type="button">Download JSON <span aria-hidden="true">↓</span></button></dialog>
   <section id="path-dialog" class="floating-panel" aria-labelledby="path-title" hidden><div class="floating-panel-header" tabindex="0"><h2 id="path-title">Explore paths</h2><button data-close-floating="path-dialog" aria-label="Close paths">×</button></div><form id="path-form"><label for="path-from">From</label><input id="path-from" type="search" maxlength="240" list="path-entities" required placeholder="Search an entity…"><label for="path-to">To</label><input id="path-to" type="search" maxlength="240" list="path-entities" required placeholder="Search an entity…"><datalist id="path-entities"></datalist><label class="path-direction"><input id="path-directed" type="checkbox"> Follow recorded directions</label><button class="primary-button" type="submit">Find path <span aria-hidden="true">→</span></button></form><div id="path-result" aria-live="polite"></div></section>
   <div id="toast" role="status"></div>
   <div id="tag-tooltip" role="tooltip" hidden></div>

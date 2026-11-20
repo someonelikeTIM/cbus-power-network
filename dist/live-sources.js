@@ -1530,9 +1530,9 @@ export const sourceLiveEvidence = {
     "missingChecks": [],
     "reviewer": {
       "type": "unknown",
-      "identity": "Unattributed initial review"
+      "identity": null
     },
-    "contentCheckNote": "New source content checked for this enrichment revision. Claim review is recorded separately; no human review is claimed."
+    "contentCheckNote": "Source content checked for this edition. Individual records carry a separate date when checked against the cited material."
   },
   "enrich-cota-contracts-2024": {
     "originalUrl": "https://cota.com/static/1997b36ed69c290dbf008b911c4a8ac1/cota-agenda-board-241211.pdf",
@@ -1551,9 +1551,9 @@ export const sourceLiveEvidence = {
     "missingChecks": [],
     "reviewer": {
       "type": "unknown",
-      "identity": "Unattributed initial review"
+      "identity": null
     },
-    "contentCheckNote": "New source content checked for this enrichment revision. Claim review is recorded separately; no human review is claimed."
+    "contentCheckNote": "Source content checked for this edition. Individual records carry a separate date when checked against the cited material."
   },
   "enrich-cota-board-2026": {
     "originalUrl": "https://www.cota.com/about-us/board-of-trustees/",
@@ -1576,9 +1576,9 @@ export const sourceLiveEvidence = {
     "missingChecks": [],
     "reviewer": {
       "type": "unknown",
-      "identity": "Unattributed initial review"
+      "identity": null
     },
-    "contentCheckNote": "New source content checked for this enrichment revision. Claim review is recorded separately; no human review is claimed."
+    "contentCheckNote": "Source content checked for this edition. Individual records carry a separate date when checked against the cited material."
   },
   "enrich-shortnorth-2018": {
     "originalUrl": "https://columbus.legistar.com/LegislationDetail.aspx?FullText=1&GUID=8125F89F-19AD-400A-85D9-41F9FD4337DA&ID=3530032",
@@ -1600,9 +1600,9 @@ export const sourceLiveEvidence = {
     "missingChecks": [],
     "reviewer": {
       "type": "unknown",
-      "identity": "Unattributed initial review"
+      "identity": null
     },
-    "contentCheckNote": "New source content checked for this enrichment revision. Claim review is recorded separately; no human review is claimed."
+    "contentCheckNote": "Source content checked for this edition. Individual records carry a separate date when checked against the cited material."
   },
   "enrich-edwards-easements-2022": {
     "originalUrl": "https://columbus.legistar.com/LegislationDetail.aspx?ID=5736198&GUID=81009982-4FD8-4771-94F7-07D63C9692CC&Options=&Search=&FullText=1",
@@ -1622,9 +1622,9 @@ export const sourceLiveEvidence = {
     "missingChecks": [],
     "reviewer": {
       "type": "unknown",
-      "identity": "Unattributed initial review"
+      "identity": null
     },
-    "contentCheckNote": "New source content checked for this enrichment revision. Claim review is recorded separately; no human review is claimed."
+    "contentCheckNote": "Source content checked for this edition. Individual records carry a separate date when checked against the cited material."
   },
   "donation-ferris-team": {
     "originalUrl": "https://www.epferris.com/about",
@@ -1642,7 +1642,7 @@ export const sourceLiveEvidence = {
     "missingChecks": [],
     "reviewer": {
       "type": "unknown",
-      "identity": "Unattributed initial review"
+      "identity": null
     },
     "contentCheckNote": "New source checked for this revision; separate source-support review is attached to the record."
   },
@@ -1664,7 +1664,7 @@ export const sourceLiveEvidence = {
     "missingChecks": [],
     "reviewer": {
       "type": "unknown",
-      "identity": "Unattributed initial review"
+      "identity": null
     },
     "contentCheckNote": "New source checked for this revision; separate source-support review is attached to the record."
   },
@@ -1686,7 +1686,7 @@ export const sourceLiveEvidence = {
     "missingChecks": [],
     "reviewer": {
       "type": "unknown",
-      "identity": "Unattributed initial review"
+      "identity": null
     },
     "contentCheckNote": "New source checked for this revision; separate source-support review is attached to the record."
   },
@@ -1711,7 +1711,7 @@ export const sourceLiveEvidence = {
     "missingChecks": [],
     "reviewer": {
       "type": "unknown",
-      "identity": "Unattributed initial review"
+      "identity": null
     },
     "contentCheckNote": "Article body checked in the original-site browser; donation claims remain attributed reporting."
   },
@@ -1731,7 +1731,7 @@ export const sourceLiveEvidence = {
     "missingChecks": [],
     "reviewer": {
       "type": "unknown",
-      "identity": "Unattributed initial review"
+      "identity": null
     },
     "contentCheckNote": "New source checked for this revision; separate source-support review is attached to the record."
   },
@@ -1749,7 +1749,7 @@ export const sourceLiveEvidence = {
     "missingChecks": [],
     "reviewer": {
       "type": "unknown",
-      "identity": "Unattributed initial review"
+      "identity": null
     },
     "contentCheckNote": "Committee identity only; contribution rows not independently verified."
   },
@@ -2210,7 +2210,7 @@ export const sourceLiveEvidence = {
       "149287"
     ],
     "missingChecks": [],
-    "contentCheckNote": "Automated source check; independent human editorial review is not claimed. Source snapshot dates remain separate from the check date."
+    "contentCheckNote": "Automated source check. The source snapshot and check dates are recorded separately."
   },
   "er26-franklin-results": {
     "originalUrl": "https://vote.franklincountyohio.gov/getmedia/7b784f15-62ce-4f9d-93ba-bed82b23e779/Franklin-County-Only-Group-Detail",
@@ -2228,7 +2228,7 @@ export const sourceLiveEvidence = {
       "889 of 889"
     ],
     "missingChecks": [],
-    "contentCheckNote": "Automated source check; independent human editorial review is not claimed. Source snapshot dates remain separate from the check date."
+    "contentCheckNote": "Automated source check. The source snapshot and check dates are recorded separately."
   },
   "er26-results-notice": {
     "originalUrl": "https://liveresults.ohiosos.gov/",
@@ -2243,7 +2243,7 @@ export const sourceLiveEvidence = {
       "provisional ballots"
     ],
     "missingChecks": [],
-    "contentCheckNote": "Automated source check; independent human editorial review is not claimed. Source snapshot dates remain separate from the check date."
+    "contentCheckNote": "Automated source check. The source snapshot and check dates are recorded separately."
   },
   "trail-microsoft-oct2026": {
     "originalUrl": "https://local.microsoft.com/blog/newalbany-datacenter-construction-update/",
@@ -2258,7 +2258,7 @@ export const sourceLiveEvidence = {
       "maintenance work"
     ],
     "missingChecks": [],
-    "contentCheckNote": "Phase completion is not operation. Earlier source-check records retained; independent human editorial review is not claimed."
+    "contentCheckNote": "The company statement documents completion of a construction phase. The original source-check dates are retained."
   },
   "pa26-state-roster": {
     "originalUrl": "https://www.vote.franklincountyohio.gov/candidates/elected-officials",

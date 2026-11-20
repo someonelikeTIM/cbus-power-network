@@ -33,7 +33,7 @@ explorer.innerHTML = `<div class="workspace-bar"><div class="explorer-tabs" role
 main.append(explorer, footer);
 const $ = id => document.getElementById(id);
 $('source-total').textContent = String(sources.length);
-$('review-date').textContent = 'Updated ' + new Intl.DateTimeFormat('en-US', {month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC'}).format(new Date(meta.reviewed + 'T12:00:00Z'));
+$('review-date').textContent = 'Evidence updated ' + new Intl.DateTimeFormat('en-US', {month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC'}).format(new Date(meta.reviewed + 'T12:00:00Z'));
 $('release-label').textContent = (release.status === 'published' ? 'Edition · ' : 'Local preview · ') + release.releaseId;
 if (repositoryURL) {
   $('github-contribute').href = repositoryURL + '/blob/main/docs/CONTRIBUTING.md';

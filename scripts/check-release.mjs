@@ -49,6 +49,13 @@ for(const selection of [{kind:'node',id:'wsyx'},{kind:'edge',id:'m63'},{kind:'so
 validateDataset(datasetFor({nodes:nodes.filter(n=>n.id==='wsyx'),edges:[]}));
 assert.throws(()=>datasetFor({nodes,edges:edges.map((e,i)=>i===0?{...e,publicationState:'proposed'}:e)}));
 for(const mutate of [d=>d.relationships[0].publicationState='proposed',d=>d.relationships[0].sourceIds.push('absent'),d=>d.sources[0].contentCheck.verified=false,d=>d.relationships[0].claimReview.status='submitted',d=>d.relationships[0].id='new-unreviewed',d=>d.relationships[0].validity.start='2026-02-30']){const bad=structuredClone(data);mutate(bad);assert.throws(()=>validateDataset(bad));}
+// A recorded check can have an unknown checker. A claimed human reviewer must have a name.
+for(const table of ['entities','relationships']){
+  const fixture=structuredClone(data),record=fixture[table].find(item=>item.claimReview.status==='reviewed');
+  record.claimReview.reviewer={type:'unknown',identity:null};validateDataset(fixture);
+  record.claimReview.reviewer.type='human';assert.throws(()=>validateDataset(fixture));
+  record.claimReview.reviewer.identity='Named test reviewer';validateDataset(fixture);
+}
 // Examples prove attribution/disposition without changing accepted application data.
 const proposal={id:'test-proposal',kind:'new-evidence',recordKind:'relationship',recordId:'m63',releaseId:release.releaseId,proposedChange:'Retain the existing intermediate-chain qualification.',attribution:'Test fixture contributor',state:'submitted',evidence:[{sourceId:'media-fcc-wsyx',locator:'WSYX renewal row',role:'qualify'}],history:[]};
 const reviewer={type:'human',identity:'Fixture reviewer (test only)'},review={reviewer,reviewedAt:'2026-10-14',reason:'Fixture verifies review transitions only; no actual factual correction.'};

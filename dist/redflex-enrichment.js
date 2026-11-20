@@ -13,7 +13,7 @@ export const redflexChecks = {
   'rf26-raphael-sentence':['June 8, 2016','15 months','Oct. 15, 2015','Hobbs Act','over $70,000','Columbus and Cincinnati'],
   'rf26-finley-sentence':['October 28, 2016','14 months','June 19, 2015','Michael H. Watson','false invoices']
 };
-const review={status:'reviewed',reviewedAt:'2026-10-17',reviewer:{type:'unknown',identity:'Unattributed source-support review'},note:'Checked against the cited material and qualifications. Independent human editorial review remains pending.'};
+const review={status:'reviewed',reviewedAt:'2026-10-17',reviewer:{type:'unknown',identity:null},note:'Checked against the cited material and its qualifications.'};
 const n=(id,name,category,role,sourceIds,description,x,y)=>({id,name,category,role,sourceIds,description,x,y,historical:true,publicationState:'accepted',claimReview:review});
 export const redflexNodes = [
   n('redflex-holdings','Redflex Holdings Group','corporation','Historical parent named by DOJ',['redflex-npa'],'DOJ describes the Melbourne parent in its December 2016 announcement. Current ownership is not asserted.',1350,2250),

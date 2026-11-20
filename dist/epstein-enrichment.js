@@ -13,7 +13,7 @@ export const epsteinChecks = {
   'ep26-osu-giving':['VENDOR YEARLY GIFT REPORT','1-16-2000','J. Epstein Foundation','97 PAID','96 PAID','100,000','75,000','50,000','25,000','10,000'],
   'ep26-house-deposition':['Feb 19, 2026','Les Wexner','February 18, 2026','Ohio']
 };
-const review={status:'reviewed',reviewedAt:'2026-10-17',reviewer:{type:'unknown',identity:'Unattributed source-support review'},note:'Source support and qualifications checked. Independent human editorial review remains pending.'};
+const review={status:'reviewed',reviewedAt:'2026-10-17',reviewer:{type:'unknown',identity:null},note:'The check covered the cited material and the qualifications on the claim.'};
 const n=(id,name,role,sourceIds,description,x,y)=>({id,name,category:'institution',role,sourceIds,description,x,y,historical:true,publicationState:'accepted',claimReview:review});
 export const epsteinNodes = [
   n('j-epstein-foundation','J. Epstein Foundation','Donor named in Ohio State records',['ep26-osu-giving','ep26-osu-review'],'Historical donor label. Legal identity and any succession to COUQ are not established here.',1750,650),

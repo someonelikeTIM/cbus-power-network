@@ -10,13 +10,13 @@ Search stays above the map. Press **/** or **Ctrl/Cmd+K** to focus it, use the a
 
 **Your trail** shows the entities you visited. Select an earlier step to resume there. A **New start** marks a jump without a recorded link. **Undo** restores the previous exploration step. Visit **Links**, **Entities** or **Sources** to browse the underlying records. **Return to map** restores the trail, camera and panel you left.
 
-The current edition, **2026-11-16-party**, contains **390 entities, 577 relationships, 202 sources and 236 dated event records**. It retains the Wexner–Epstein, Redflex, post-election and construction records and clarifies an earlier financial-report coverage gap and adds sourced party affiliations for officials missing from the election roster. Coverage includes campaign contributions, public contracts, tax incentives, lobbying, civic affiliations and media ownership. This is a selected collection, not a complete register.
+The current edition, **2026-11-19-metadata**, contains **390 entities, 577 relationships, 202 sources and 236 dated event records**. This edition clarifies which checks were recorded against the cited material and uses an empty identity when the checker is unknown. Coverage includes campaign contributions, public contracts, tax incentives, lobbying, civic affiliations and media ownership. This is a selected collection, not a complete register.
 
 Evidence labels distinguish reporting, allegations, findings, registrations and authorizations. A connection alone establishes neither wrongdoing nor causation. Donation totals may summarize several reported receipts; spending ceilings are different from payments. Details preserve those distinctions and explain missing dates or records. See [methodology](docs/METHODOLOGY.md).
 
 ## Data and citations
 
-The explorer provides record links, current-view downloads and evidence packets. [Versioned JSON/CSV tables, schemas and checksums](https://cbuspower.org/downloads/2026-11-16-party/manifest.json) are in `dist/downloads/`. Join records using stable IDs and cite the edition. See the [data dictionary](docs/DATA-DICTIONARY.md).
+The explorer provides record links, current-view downloads and evidence packets. [Versioned JSON/CSV tables, schemas and checksums](https://cbuspower.org/downloads/2026-11-19-metadata/manifest.json) are in `dist/downloads/`. Join records using stable IDs and cite the edition. See the [data dictionary](docs/DATA-DICTIONARY.md).
 
 ## Explorer views
 
@@ -26,13 +26,15 @@ New tab opens another independent exploration. Side by side keeps two desktop vi
 
 Drag to pan and scroll to zoom. Shift-drag selects an area, Ctrl/Cmd-click adds or removes a record, and Alt-drag moves selected entities. New direct neighbors can be placed around an anchor once. Earlier placements stay fixed as you follow a branch. The overview locator and Fit control help you find the wider network.
 
-**Record**, **Filters**, **Find path**, **Research** and **Map tools** open in the same panel. Use **Float** to move it over the canvas, **Dock right** to return it, and **Hide panel** to close it. Each labeled button stays available to reopen its panel. Within **Record**, use **Connections** to follow a neighbor or filter the list by name or relationship. **Evidence** opens the selected record’s sources, qualifications and citation.
+The **Record** panel stays open as you explore. It starts on the left, with the overview map in the lower-right corner. **Float** lets you move it over the map. Use **←** to dock it on the left or **→** to dock it on the right. Each saved view remembers its panel position. **Connections** lets you follow a neighbor, and **Evidence** opens its sources, qualifications and citation.
+
+**Filters**, **Find path**, **Research** and **Map tools** open in a separate tools panel. You can inspect the current record while using a tool. Close the tool with its × button or Escape.
 
 **Map tools** includes the connection key, color mode, connection distance, labels, dollar amounts, layout and selection actions. Distance can show one through six steps or all connected entities in the current filters. Party colors use recorded affiliations. Links with different known parties appear gray. Each dollar label retains its own payment, commitment, ceiling or range qualification.
 
 **Desktop-first release:** mobile layout work is deferred until the desktop version is delivered. Smaller devices can still load the site and receive a notice recommending a full-size browser. Mobile layout and regression tests are not release gates.
 
-Pin entities or specific connections to chart a research path. Research opens the ordered steps, their connecting routes and space for your own notes. Steps can be reordered or removed; Undo restores changes. Show path brings the research network forward. Save path keeps a named copy in this browser. Export path creates a distinct research artifact with its identifier, edition, step order, notes, presentation settings and referenced source records. Import path opens that artifact in a new tab. Connecting routes use existing relationships, with gaps retained where no route is recorded; they remain separate from your notes and interpretations.
+Pin entities or specific connections to chart a research path. Research opens the ordered steps, their connecting routes and space for your own notes. Steps can be reordered or removed; Undo restores changes. **Show all pins** beside the trail fits every pinned entity and both ends of every pinned connection on the canvas, across all topics and filters. The overview includes direct records between pins and documented routes through intermediate entities. Disconnected groups stay separate. **Back to exploration** restores the previous map framing. Save path keeps a named copy in this browser. Export path creates a distinct research artifact with its identifier, edition, step order, notes, presentation settings and referenced source records. Import path opens that artifact in a new tab. Connecting routes use existing relationships, with gaps retained where no route is recorded; they remain separate from your notes and interpretations.
 
 Filters group connection types with whole-group checkboxes and Select all / Deselect all. The legend counts the relationships drawn in the current network. Selecting a record highlights its neighborhood without hiding the rest of that filtered network.
 

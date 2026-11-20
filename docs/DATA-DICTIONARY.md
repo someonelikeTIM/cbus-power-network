@@ -30,7 +30,7 @@ IDs persist when names or graph positions change. Coordinates are presentation o
 
 type describes the connection category. status describes its evidence, including reported, allegation, finding, authorized and registered. evidence and context state the support and its limits. evidenceEntries identify a source, locator and role: support, qualify, contradict or supersede. publicationState separates accepted records from proposals.
 
-claimReview contains the recorded support-check status/date and reviewer attribution where available. Initial public records have unavailable attribution and carry no claim of independent editorial review. A contentCheck describes source retrieval/observation separately. Hashes can cover original response bytes or explicitly identified rendered text; methods explain the distinction.
+`claimReview.reviewedAt` is the recorded date of a check that the cited material supports the claim. The `reviewer` field identifies who performed that check when known. Many older records have an empty date and identity. The source author and publisher are part of the citation. A source’s `contentCheck` describes when and how its page or file was examined. The method specifies whether a hash covers original response bytes or rendered text.
 
 ## Amounts and dates
 

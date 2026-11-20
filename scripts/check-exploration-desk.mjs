@@ -3,7 +3,7 @@ import {readFile} from 'node:fs/promises';
 import {nodes,edges,sources} from '../dist/data.js';
 import {searchDesk,deskCommands} from '../dist/desk-search.js';
 import {validateView} from '../dist/saved-views.js';
-import {researchFile,researchSnapshot} from '../dist/research-paths.js';
+import {networkForPins,researchFile,researchSnapshot} from '../dist/research-paths.js';
 import {resizeCamera} from '../dist/desktop-network.js';
 
 const byId=new Map(nodes.map(node=>[node.id,node])),ids=new Set(byId.keys());
@@ -25,12 +25,18 @@ for(const command of deskCommands.filter(item=>item.target))assert.ok(domIds.inc
 const edge=edges.find(edge=>[edge.source,edge.target].includes('intel')&&[edge.source,edge.target].includes('jobsohio'));
 const oldView={query:'?view=network',camera:{x:45,y:18,z:.7},positions:[['intel',25,40]],dimensions:{width:1000,height:620},details:{open:true,width:380,docked:false},
   interaction:{walk:[{id:'jobsohio',via:''},{id:'intel',via:edge.id}],showDirect:true}};
-const desk={active:'filters',section:'connections',floating:true,width:350,height:440,left:22,top:18};
+const desk={active:'filters',section:'connections',floating:true,side:'right',width:350,height:440,left:22,top:18};
 const map={...oldView,desk};
 const list={...map,query:'?view=sources&q=Intel',returnMap:map,desk:{...desk,active:''}};
 const restored=validateView(list,ids);
 assert.deepEqual(restored.returnMap,validateView(map,ids));
 assert.deepEqual(restored.desk,list.desk);
+const {side,...previousDesk}=desk;
+assert.equal(validateView({...map,desk:previousDesk},ids).desk.side,'left');
+assert.equal(validateView({...map,desk:{...desk,floating:false,side:'left'}},ids).desk.side,'left');
+assert.throws(()=>validateView({...map,desk:{...desk,side:'bottom'}},ids));
+assert.ok(domIds.includes('record-dock')&&domIds.includes('tools-panel'));
+assert.ok(domIds.includes('dock-left')&&domIds.includes('dock-right')&&!domIds.includes('dock-close'));
 assert.equal(validateView(oldView,ids).desk,undefined,'Existing view files still open');
 assert.throws(()=>validateView({...list,returnMap:list},ids));
 assert.throws(()=>validateView({...map,desk:{...desk,active:'missing'}},ids));
@@ -42,6 +48,16 @@ const reopened=researchSnapshot(file,{nodeIds:ids,edgeIds,validateSnapshot:valid
 assert.equal(reopened.desk.active,'research');
 assert.equal(reopened.returnMap,undefined);
 assert.equal(reopened.research.steps[0].note,research.steps[0].note);
+const pinFixture={nodes:['a','b','c','d','isolated'].map(id=>({id})),
+  edges:[['ab','a','b'],['bc','b','c'],['cd','c','d'],['cd-second','c','d']].map(([id,source,target])=>({id,source,target}))};
+const overview=networkForPins(pinFixture,['a','isolated'],['cd']);
+assert.deepEqual(overview.nodes,pinFixture.nodes);
+assert.deepEqual(overview.edges,pinFixture.edges);
+assert.equal(overview.components,2);
+assert.deepEqual(networkForPins(pinFixture,['isolated'],[]),{nodes:[{id:'isolated'}],edges:[],components:1});
+assert.deepEqual(networkForPins(pinFixture,[],[]),{nodes:[],edges:[],components:0});
+assert.deepEqual(validateView({...map,pinFrame:{camera:map.camera,dimensions:map.dimensions}},ids).pinFrame,{camera:map.camera,dimensions:map.dimensions});
+assert.throws(()=>validateView({...map,pinFrame:{camera:map.camera,dimensions:{width:-1,height:300}}},ids));
 const frame={width:1000,height:600},split={width:420,height:500},camera={x:40,y:20,z:1.2},anchor={x:600,y:200};
 const resized=resizeCamera(camera,frame,split,anchor);
 assert.equal(resized.z,camera.z);

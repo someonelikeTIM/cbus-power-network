@@ -1,7 +1,7 @@
 import {researchConnections,researchFile,researchSnapshot} from './research-paths.js';
 import {validateView} from './saved-views.js';
 
-export function mountResearchUI({state,nodes,edges,relationships,release,snapshot,records,remember,changed,openPanel,focusNode,focusEdge,showPath,openView,download,importPath,notify}){
+export function mountResearchUI({state,nodes,edges,relationships,release,snapshot,records,remember,changed,openPanel,focusNode,focusEdge,showPins,openView,download,importPath,notify}){
   const $=id=>document.getElementById(id),nodeById=new Map(nodes.map(n=>[n.id,n])),edgeById=new Map(edges.map(e=>[e.id,e]));
   const nodeIds=new Set(nodeById.keys()),edgeIds=new Set(edgeById.keys()),storageKey='columbus-network:research-paths-v1';
   const fullGraph={nodes,edges};
@@ -48,7 +48,7 @@ export function mountResearchUI({state,nodes,edges,relationships,release,snapsho
   let editingName=false;
   $('research-name').addEventListener('input',()=>{if(!editingName){remember();editingName=true;}state.research={...state.research,title:$('research-name').value.trim().slice(0,100)||'Untitled research path'};changed(false);});
   $('research-name').addEventListener('blur',()=>{editingName=false;});
-  $('research-show').addEventListener('click',()=>{const route=researchConnections(state.research.steps,fullGraph);showPath({nodes:[...route.nodeIds],edges:[...route.edgeIds]});});
+  $('research-show').addEventListener('click',showPins);
   $('research-save').addEventListener('click',()=>{try{const file=artifact(),saved=library().filter(item=>item.id!==file.id);saved.push(file);localStorage.setItem(storageKey,JSON.stringify(saved));$('research-status').textContent='“'+file.title+'” saved in this browser.';renderLibrary();}catch{$('research-status').textContent='Browser storage is unavailable. Export the path to keep a copy.';}});
   $('research-export').addEventListener('click',()=>{const file=artifact(),name=(file.title.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'research-path')+'.json';download(file,name);$('research-status').textContent='Research path download started, including notes and source records.';});
   $('research-import').addEventListener('click',()=>importPath());
