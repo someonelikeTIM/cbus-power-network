@@ -1,43 +1,60 @@
-// Draw without replacement, including across the boundary between two shuffles.
-function shuffledDraw(items,random){
-  let remaining=[],last=null;
-  return ()=>{
-    if(!items.length)return null;
-    if(!remaining.length){
-      remaining=items.slice();
-      for(let i=remaining.length-1;i>0;i--){
-        const j=Math.floor(random()*(i+1));
-        [remaining[i],remaining[j]]=[remaining[j],remaining[i]];
-      }
-      if(remaining.length>1&&remaining.at(-1)===last){
-        const j=Math.floor(random()*(remaining.length-1)),end=remaining.length-1;
-        [remaining[j],remaining[end]]=[remaining[end],remaining[j]];
-      }
-    }
-    last=remaining.pop();
-    return last;
-  };
+// Homepage headlines point to published connection IDs. The records supply the
+// endpoints, evidence classification, period and original document.
+export const featuredHeadlines = {
+  e52: 'FirstEnergy admitted paying millions for help passing Ohio’s nuclear bailout.',
+  e53: 'Larry Householder used more than $500,000 for personal expenses.',
+  e56: 'AEP agreed to a $19 million penalty over misleading disclosures about political spending.',
+  e71: 'John Raphael pleaded guilty to extorting Redflex over red-light camera contracts.',
+  j16: 'Ohio State found that Ted Carter used his office to seek resources for a personal associate.',
+  e179: 'Columbus waived bidding for a license plate reader lease of up to $228,000.',
+  j29: 'JobsOhio signed a $310 million grant tied to Anduril’s hiring and investment commitments.',
+  e45: 'Les Wexner said he gave Jeffrey Epstein power of attorney over his finances.'
+};
+
+function shuffled(items, random) {
+  const deck = [...items];
+  for (let end = deck.length - 1; end > 0; end--) {
+    const pick = Math.floor(random() * (end + 1));
+    [deck[end], deck[pick]] = [deck[pick], deck[end]];
+  }
+  return deck;
 }
 
-export function entrySampler(nodes,edges,random=Math.random){
-  const byId=new Map(nodes.map(node=>[node.id,node])),connected=new Set(),pairs=new Map();
-  for(const edge of edges){
-    if(edge.source===edge.target||!edge.sourceIds?.length||!byId.has(edge.source)||!byId.has(edge.target))continue;
-    connected.add(edge.source);connected.add(edge.target);
-    const key=[edge.source,edge.target].sort().join('|');
-    if(!pairs.has(key))pairs.set(key,[]);
-    pairs.get(key).push(edge);
+export function entrySampler(nodes, edges, headlines = featuredHeadlines, random = Math.random) {
+  const byId = new Map(nodes.map(node => [node.id, node]));
+  const connected = new Set();
+  const featured = [];
+  for (const edge of edges) {
+    const source = byId.get(edge.source), target = byId.get(edge.target);
+    if (!source || !target || source === target || !edge.sourceIds?.length) continue;
+    connected.add(source.id);
+    connected.add(target.id);
+    if (Object.hasOwn(headlines, edge.id)) {
+      featured.push({edge, source, target, headline: headlines[edge.id]});
+    }
   }
-  // A highly connected entity has the same chance of being a random start as any other.
-  const drawEntity=shuffledDraw([...connected],random),drawPair=shuffledDraw([...pairs.values()],random);
+  const deck = shuffled(featured, random);
+  let position = 0, remaining = [], lastEntity = null;
   return {
-    pairCount:pairs.size,
-    nextEntity:drawEntity,
-    nextSample(){
-      const pair=drawPair();
-      if(!pair)return null;
-      const edge=pair[Math.floor(random()*pair.length)];
-      return {edge,source:byId.get(edge.source),target:byId.get(edge.target)};
+    featuredCount: deck.length,
+    entityCount: connected.size,
+    current() { return deck[position] ?? null; },
+    move(direction) {
+      if (deck.length) position = (position + direction + deck.length) % deck.length;
+      return deck[position] ?? null;
+    },
+    nextEntity() {
+      if (!connected.size) return null;
+      if (!remaining.length) {
+        remaining = shuffled(connected, random);
+        const end = remaining.length - 1;
+        if (end > 0 && remaining[end] === lastEntity) {
+          const pick = Math.floor(random() * end);
+          [remaining[end], remaining[pick]] = [remaining[pick], remaining[end]];
+        }
+      }
+      lastEntity = remaining.pop();
+      return lastEntity;
     }
   };
 }

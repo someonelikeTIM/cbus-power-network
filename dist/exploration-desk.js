@@ -1,6 +1,5 @@
 import {evidenceStatuses} from './data.js';
 import {entrySampler} from './entry-samples.js';
-import {readerField} from './reader-copy.js';
 
 const $=id=>document.getElementById(id);
 const toolPages={filters:'filters',path:'path-dialog',research:'research-panel',settings:'dock-settings'};
@@ -32,43 +31,78 @@ function makeEntry(nodes,edges,sources,openEntity,openConnection){
   }
   const picker=entrySampler(nodes,edges),card=$('entry-sample'),content=$('sample-content');
   const motion=matchMedia('(prefers-reduced-motion: reduce)'),rotation=$('sample-rotation');
-  let sample=null,timer=null,intersecting=false,hovering=false,focusInside=false,paused=motion.matches;
+  const sourcesById=new Map(sources.map(source=>[source.id,source]));
+  let timer=null,intersecting=false,hovering=false,focusInside=false,paused=motion.matches;
 
-  function draw(){
-    sample=picker.nextSample();
-    if(!sample)return;
-    const {edge,source,target}=sample;
+  function draw(feature,announce=false){
+    if(!feature)return;
+    const {edge,source,target,headline}=feature;
     for(const [button,node] of [[$('sample-source'),source],[$('sample-target'),target]]){
       button.querySelector('.sample-name').textContent=node.name;
       button.setAttribute('aria-label','Explore '+node.name);button.title=node.name;
     }
-    const label=readerField(edge,'label');
     $('entry-diagram').dataset.directional=String(!!edge.directional);
-    $('sample-status').textContent=(edge.historical?'Past record · ':'')+evidenceStatuses[edge.status];
-    $('sample-label').textContent=label;
-    $('sample-evidence').title=[label,edge.period].filter(Boolean).join(' · ');
-    const endpoints=edge.directional?' from '+source.name+' to '+target.name:' between '+source.name+' and '+target.name;
-    $('sample-evidence').setAttribute('aria-label','Read evidence for '+label+endpoints);
+    const documentSource=sourcesById.get(edge.sourceIds[0]);
+    const status=evidenceStatuses[edge.status];
+    const sourceYear=documentSource?.date?.match(/^\d{4}/)?.[0];
+    $('sample-status').textContent=sourceYear?status+' · '+sourceYear+' source':status;
+    $('sample-status').title=edge.period||'';
+    $('sample-label').textContent=headline;
+    $('sample-evidence').setAttribute('aria-label','Read evidence for '+source.name+' and '+target.name);
+    const link=$('feature-document');
+    link.hidden=!documentSource?.url;
+    if(!link.hidden){
+      link.href=documentSource.url;
+      $('feature-publisher').textContent=documentSource.publisher;
+      link.setAttribute('aria-label','Open original source from '+documentSource.publisher+' (opens in a new tab)');
+      link.title=documentSource.title;
+    }
+    if(announce)$('feature-announcement').textContent=headline+' '+status+'.';
   }
   function canRotate(){
-    return picker.pairCount>1&&intersecting&&!$('entry').hidden&&!document.hidden&&
+    return picker.featuredCount>1&&intersecting&&!$('entry').hidden&&!document.hidden&&
       !paused&&!hovering&&!focusInside&&!$('search').value.trim();
   }
   function sync(){
     if(!canRotate()){clearTimeout(timer);timer=null;return;}
-    if(timer===null)timer=setTimeout(()=>{timer=null;if(canRotate())draw();sync();},12000);
+    if(timer===null)timer=setTimeout(()=>{timer=null;if(canRotate())draw(picker.move(1));sync();},12000);
   }
   function updateRotation(){
     rotation.textContent=paused?'Resume':'Pause';
-    rotation.setAttribute('aria-label',rotation.textContent+' sample rotation');
+    rotation.setAttribute('aria-label',rotation.textContent+' featured connections');
     sync();
   }
-  draw();card.hidden=!sample;rotation.hidden=picker.pairCount<2;
-  $('random-start').prepend(icon('random'));$('random-start').disabled=!sample;
+  function browse(direction){
+    paused=true;
+    updateRotation();
+    draw(picker.move(direction),true);
+  }
+  draw(picker.current());
+  card.hidden=!picker.featuredCount;
+  $('feature-controls').hidden=picker.featuredCount<2;
+  $('random-start').prepend(icon('random'));$('random-start').disabled=!picker.entityCount;
   $('random-start').addEventListener('click',()=>{const id=picker.nextEntity();if(id!==null)openEntity(id);});
-  $('sample-source').addEventListener('click',()=>openEntity(sample.source.id));
-  $('sample-target').addEventListener('click',()=>openEntity(sample.target.id));
-  $('sample-evidence').addEventListener('click',()=>openConnection(sample.edge.id));
+  $('sample-source').addEventListener('click',()=>openEntity(picker.current().source.id));
+  $('sample-target').addEventListener('click',()=>openEntity(picker.current().target.id));
+  $('sample-evidence').addEventListener('click',()=>openConnection(picker.current().edge.id));
+  $('feature-previous').addEventListener('click',()=>browse(-1));
+  $('feature-next').addEventListener('click',()=>browse(1));
+  card.addEventListener('keydown',event=>{
+    if(picker.featuredCount<2||event.altKey||event.ctrlKey||event.metaKey||event.shiftKey)return;
+    if(event.key!=='ArrowLeft'&&event.key!=='ArrowRight')return;
+    event.preventDefault();event.stopPropagation();browse(event.key==='ArrowLeft'?-1:1);
+  });
+  // Treat each sideways trackpad gesture as one turn. Vertical scrolling stays native.
+  let lastWheel=-Infinity,travel=0,turned=false;
+  card.addEventListener('wheel',event=>{
+    const horizontal=event.deltaX||(event.shiftKey?event.deltaY:0);
+    if(picker.featuredCount<2||event.ctrlKey||!horizontal||(!event.shiftKey&&Math.abs(horizontal)<=Math.abs(event.deltaY)))return;
+    event.preventDefault();
+    if(event.timeStamp-lastWheel>220){travel=0;turned=false;}
+    lastWheel=event.timeStamp;
+    travel+=horizontal*(event.deltaMode===1?16:event.deltaMode===2?card.clientWidth:1);
+    if(!turned&&Math.abs(travel)>=32){turned=true;browse(Math.sign(travel));}
+  },{passive:false});
   rotation.addEventListener('click',()=>{paused=!paused;updateRotation();});
   motion.addEventListener('change',event=>{paused=event.matches;updateRotation();});
   content.addEventListener('pointerenter',()=>{hovering=true;sync();});

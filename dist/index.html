@@ -12,7 +12,7 @@
   <meta property="og:description" content="Explore the people, organizations, money and public decisions that shape Columbus and Ohio.">
   <meta property="og:url" content="https://cbuspower.org/">
   <meta property="og:type" content="website">
-  <link rel="icon" href="./favicon.svg?v=eye" type="image/svg+xml">
+  <link rel="icon" href="./favicon.svg?v=spyglass" type="image/svg+xml">
   <link rel="stylesheet" href="./styles.css">
   <link rel="stylesheet" href="./explorer-workspace.css">
   <link rel="stylesheet" href="./semantic-explorer.css">
@@ -26,7 +26,7 @@
   <aside class="mobile-notice" role="note">Not optimized for mobile devices. Please visit <strong>cbuspower.org</strong> in a full-size browser for the best experience.</aside>
   <a class="skip-link" href="#explorer">Skip to the explorer</a>
   <header class="masthead">
-    <a class="brand" href="./" aria-label="CBUS Power home"><img class="brand-mark" src="./favicon.svg?v=eye" width="34" height="34" alt=""><span>CBUS <b>Power</b></span></a>
+    <a class="brand" href="./" aria-label="CBUS Power home"><img class="brand-mark" src="./favicon.svg?v=spyglass" width="34" height="34" alt=""><span>CBUS <b>Power</b></span></a>
     <nav class="view-nav" aria-label="Explorer views">
       <button class="active" data-view="network" aria-current="page">Network</button>
       <button data-view="relations">Links</button>
@@ -59,7 +59,14 @@
               <p id="entry-coverage"></p>
             </div>
             <figure id="entry-sample" class="entry-example" aria-labelledby="sample-caption" hidden>
-              <figcaption><span id="sample-caption">Sample connection</span><button id="sample-rotation" type="button" aria-controls="sample-content">Pause</button></figcaption>
+              <figcaption>
+                <span id="sample-caption">Featured connection</span>
+                <div id="feature-controls" role="group" aria-label="Browse featured connections">
+                  <button id="feature-previous" type="button" aria-label="Previous featured connection" title="Previous connection" aria-controls="sample-content"><span aria-hidden="true">←</span></button>
+                  <button id="sample-rotation" type="button" aria-controls="sample-content">Pause</button>
+                  <button id="feature-next" type="button" aria-label="Next featured connection" title="Next connection" aria-controls="sample-content"><span aria-hidden="true">→</span></button>
+                </div>
+              </figcaption>
               <div id="sample-content" aria-live="off">
                 <div id="entry-diagram" role="group" aria-label="Connected entities">
                   <div class="sample-pair"><span class="sample-wire" aria-hidden="true"></span>
@@ -67,8 +74,16 @@
                     <button class="diagram-entity" id="sample-target" type="button"><span class="sample-dot" aria-hidden="true"></span><span class="sample-name"></span></button>
                   </div>
                 </div>
-                <button id="sample-evidence" type="button" aria-describedby="sample-status"><span id="sample-status"></span><strong id="sample-label"></strong><span class="sample-evidence-link">Read evidence <span aria-hidden="true">›</span></span></button>
+                <div class="feature-detail">
+                  <span id="sample-status"></span>
+                  <strong id="sample-label"></strong>
+                  <div class="feature-links">
+                    <button id="sample-evidence" type="button" aria-describedby="sample-status">Read evidence <span aria-hidden="true">›</span></button>
+                    <a id="feature-document" target="_blank" rel="noopener noreferrer"><span id="feature-publisher"></span> <span aria-hidden="true">↗</span></a>
+                  </div>
+                </div>
               </div>
+              <span id="feature-announcement" class="desk-sr" role="status"></span>
             </figure>
           </div>
           <section id="start-guide" aria-labelledby="start-guide-title">
