@@ -1,7 +1,7 @@
 /* The record stays beside the canvas. Tools have a separate, named panel. */
 .desk-sr {position:absolute;width:1px;height:1px;clip-path:inset(50%);overflow:hidden;white-space:nowrap}
 .desk-icon {width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-body[data-workspace-host] {min-width:0;background:var(--paper);color:var(--ink)}
+body[data-workspace-host] {min-width:0;padding-inline:env(safe-area-inset-left) env(safe-area-inset-right);background:var(--paper);color:var(--ink)}
 body[data-workspace-host] .masthead {min-height:58px;height:auto;padding:0 clamp(18px,3vw,52px);gap:clamp(20px,4vw,68px);background:var(--scarlet);color:#fff;border:0}
 body[data-workspace-host] .brand {display:flex;align-items:center;gap:11px;color:inherit;font:750 1.18rem/1 var(--sans);letter-spacing:-.045em}
 body[data-workspace-host] .brand b {font-weight:450}
@@ -27,7 +27,7 @@ body[data-workspace-host] #explorer {border-radius:0;box-shadow:none}
 body[data-workspace-host] .page-footer {margin:0;padding:8px clamp(16px,2.4vw,42px);font:11px var(--sans);color:var(--muted);background:var(--paper);border-top:1px solid var(--line)}
 body[data-embedded] {background:var(--paper);color:var(--ink)}
 body[data-embedded] main {padding:0!important}
-body[data-embedded] #explorer {display:flex;flex-direction:column;position:relative;min-width:0;height:var(--desk-height,100dvh);min-height:440px;border:0;border-radius:0;box-shadow:none;background:var(--paper);overflow:visible}
+body[data-embedded] #explorer {display:flex;flex-direction:column;position:relative;min-width:0;height:var(--desk-height,100dvh);min-height:0;border:0;border-radius:0;box-shadow:none;background:var(--paper);overflow:visible}
 body[data-embedded][data-landing=true] #explorer {height:auto;min-height:var(--desk-height,100dvh)}
 body[data-embedded] #explorer [hidden],body[data-embedded] :is(#record-dock,#tools-panel) [hidden],body[data-embedded] #explorer #desk-body[hidden] {display:none!important}
 
@@ -172,10 +172,12 @@ body[data-embedded] #desk-body[data-dock=left] #graph-stage .graph-controls {ins
 #dock-placement :is(#dock-left,#dock-right) {min-width:34px;font-size:1.12rem;line-height:1}
 #tools-panel {grid-column:2;grid-row:1;display:flex;flex-direction:column;min-width:0;min-height:0;border-left:1px solid var(--line);background:var(--paper)}
 #tools-panel>.dock-header {background:var(--grey-panel)}
-@media(max-width:1000px) {
-  #desk-body:not([data-tools=""]) {grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1.65fr) minmax(145px,1fr)}
-  #tools-panel {grid-column:1;grid-row:2;border-left:0;border-top:1px solid var(--line)}
-}
+#desk-body[data-overlay=true]:not([data-tools=""]) {grid-template-columns:minmax(0,1fr)}
+#desk-body[data-overlay=true] #tools-panel {position:absolute;grid-area:auto;z-index:10;inset:0 0 0 auto;width:min(100%,365px);box-shadow:-5px 0 16px #24252826}
+#tools-panel #tool-context {margin:0;padding:6px 14px;border-bottom:1px solid var(--line);font:600 .82rem/1.35 var(--sans);overflow-wrap:anywhere}
+#dismiss-search {position:absolute;right:1px;top:50%;transform:translateY(-50%);width:44px;height:44px;color:var(--scarlet);font-size:1.35rem}
+#desk-search:has(#dismiss-search:not([hidden])) .search-wrap {padding-right:44px}
+#desk-search:has(#dismiss-search:not([hidden])) kbd {visibility:hidden}
 body[data-embedded] :is(#record-dock,#tools-panel) :is(#inspector,#entity-popover,#filters,#path-dialog,#research-panel,#connection-legend,#quick-menu) {position:static!important;inset:auto!important;transform:none!important;display:block;width:100%!important;max-width:none!important;min-width:0;max-height:none!important;min-height:0;height:auto!important;padding:0!important;margin:0!important;overflow:visible!important;border:0!important;border-radius:0;box-shadow:none!important;background:transparent}
 body[data-embedded] :is(#record-dock,#tools-panel) .floating-panel-header,body[data-embedded] :is(#record-dock,#tools-panel) .inspector-header {display:none!important}
 #record-switch {display:flex;gap:3px;margin-bottom:18px;padding:3px;border-radius:5px;background:var(--soft)}
@@ -361,3 +363,92 @@ body[data-embedded] #entry #search-show-all:hover {background:var(--scarlet-tint
 #graph[data-project-map=true] .graph-edge {opacity:.88;stroke-width:2px}
 #graph[data-project-map=true] .edge-label.project-edge-label {display:block!important;opacity:1!important;text-anchor:middle;paint-order:stroke;stroke:var(--white);stroke-width:5px;stroke-linejoin:round;fill:var(--ink)!important;font:600 11px var(--sans);cursor:pointer;pointer-events:visiblePainted}
 body[data-embedded] #record-dock #inspector .compact-record-actions [data-citation-target] {border-color:var(--scarlet-line);background:var(--scarlet-tint);color:var(--scarlet);}
+
+/* The host owns the navigation. Inside a tab, media widths are the usable iframe width. */
+body[data-narrow-host=true] .workspace-bar {padding-inline:8px;gap:4px}
+body[data-narrow-host=true] .explorer-panes {padding-bottom:env(safe-area-inset-bottom)}
+body[data-narrow-host=true] .explorer-tabs {flex:1;max-width:none;min-width:0}
+body[data-narrow-host=true] .explorer-tab [role=tab] {max-width:min(40vw,170px)}
+body[data-narrow-host=true] .explorer-tab {max-width:100%}
+body[data-narrow-host=true] .explorer-tab [role=tab] {min-width:0}
+body[data-narrow-host=true] .views-menu #compare-label:not([hidden]) {display:grid;padding:5px 10px}
+body[data-narrow-host=true] .views-menu select {max-width:100%}
+@media(width < 640px) {
+  body[data-workspace-host] .masthead {display:grid;grid-template-columns:1fr auto;gap:0;height:auto;min-height:0;padding:max(4px,env(safe-area-inset-top)) 10px 0}
+  body[data-workspace-host] .brand {min-height:42px;gap:8px}
+  body[data-workspace-host] .brand-mark {width:29px;height:29px}
+  body[data-workspace-host] .masthead>.text-button {grid-column:2;grid-row:1;min-height:44px}
+  body[data-workspace-host] .view-nav {grid-column:1/-1;grid-row:2;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin:0}
+  body[data-workspace-host] .view-nav button {justify-content:center;padding:0 2px;min-height:44px}
+  body[data-workspace-host] .nav-count {display:none}
+  .workspace-bar {min-height:44px}
+  .workspace-bar :is([role=tab],.workspace-button,.close-tab,summary) {min-height:44px}
+  .workspace-bar .close-tab {min-width:36px}
+  .views-menu summary {display:flex;align-items:center}
+  body[data-workspace-host] .page-footer {display:flex;flex-wrap:wrap;gap:4px 14px;padding:8px 12px max(8px,env(safe-area-inset-bottom))}
+  .page-footer nav {display:flex;align-items:center;flex-wrap:wrap;gap:0 12px}
+  body[data-workspace-host] .page-footer nav :is(a,button) {display:inline-flex;align-items:center;min-height:44px;margin:0}
+  .entry-inner {min-width:0;padding:20px 16px 28px}
+  .entry-inner .entry-hero,.start-cards {grid-template-columns:minmax(0,1fr)}
+  .entry-kicker {margin-bottom:9px}
+  #entry-title {font-size:clamp(2.45rem,10vw,3.2rem)}
+  .entry-deck {margin:9px 0 13px}
+  .entry-search-row {display:grid;grid-template-columns:minmax(0,1fr);gap:7px}
+  #desk-search kbd {display:none}
+  body[data-embedded] #desk-search #search {font-size:16px}
+  body[data-embedded] #desk-search .search-wrap {height:44px;padding-inline:10px;gap:8px}
+  body[data-embedded] #entry-search-slot #desk-search .search-wrap {height:50px}
+  #random-start {justify-self:start;min-height:44px}
+  #entry-coverage {margin-top:6px}
+  #sample-content {grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(105px,auto) auto}
+  .feature-detail {border-left:0;border-top:1px solid #55565a}
+  .start-cards .project-card {grid-template-columns:32px minmax(0,1fr);padding:14px;gap:4px 10px}
+  .project-card .start-symbol {display:grid}
+  .project-card .project-teaser,.project-card small {grid-column:2}
+  .entry-section {align-items:center}
+  body[data-embedded] #entry #search-show-all {min-height:44px}
+  body[data-embedded] #starting-results button {min-height:44px}
+  body[data-embedded] #starting-results button :is(strong,small) {white-space:normal;overflow-wrap:anywhere}
+  #desk-bar {padding:4px 8px 0;gap:0}
+  #desk-search-slot {min-width:0}
+  .desk-launchers {flex-wrap:nowrap}
+  .desk-launchers button {flex:1;justify-content:center;min-height:44px;padding:3px 2px;font-size:.8rem}
+  #desk-bar #record-open,.trail-label {display:none}
+  #trail-bar {min-height:36px}
+  #trail-empty {min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  #trail-bar #exploration-trail:not(:has(*)) {flex:0}
+  #scope-bar {max-height:56px;overflow:auto}
+  #desk-body[data-dock=stacked] #desk-main {--map-column:1;display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto}
+  #desk-body[data-dock=stacked][data-reading=true] #desk-main {grid-template-rows:auto minmax(96px,1fr) minmax(0,1.9fr)}
+  #desk-body[data-dock=stacked] #record-dock {grid-column:1;grid-row:3;border:0;border-top:2px solid var(--scarlet);padding-bottom:env(safe-area-inset-bottom)}
+  #desk-body[data-dock=stacked] :is(#dock-placement,#dock-resize) {display:none}
+  #desk-body[data-dock=stacked] .dock-header {min-width:0;padding:3px 8px 3px 12px}
+  #dock-title {overflow-wrap:anywhere;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+  #desk-body[data-reading=false] #dock-title {-webkit-line-clamp:unset}
+  #record-toggle {flex:none;min-height:44px}
+  #record-preview {display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:1;overflow:hidden;margin:4px 12px;font:.84rem/1.45 var(--sans);color:var(--muted)}
+  #desk-body[data-reading=false][data-dock=stacked] #dock-content {display:none}
+  #desk-body[data-dock=stacked] #tools-panel {width:100%;border-left:0}
+  #desk-body[data-dock=stacked] #tools-close {width:44px;height:44px}
+  body[data-embedded] #desk-main>.workspace {overflow:auto;overscroll-behavior:contain}
+  #list-search-row {display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 8px;padding:4px 10px}
+  #list-search-row label {grid-row:1;grid-column:1/-1}
+  #list-search {width:100%;min-width:0;height:44px;font-size:16px}
+  #list-search-row #export-visible {min-height:44px}
+  .directory-view,.sources-view,.relations-view {padding:10px 12px;overflow-wrap:anywhere}
+  .ledger-row {grid-template-columns:minmax(0,1fr);gap:4px}
+  .source-card {grid-template-columns:22px minmax(0,1fr);gap:6px}
+  #record-dock,#tools-panel {overflow-wrap:anywhere}
+  body[data-embedded] #record-dock :is(a[href],button:not(#dock-resize)),body[data-embedded] #sources-view :is(a[href],button),
+  body[data-embedded] #graph-stage .graph-controls button,body[data-embedded] #trail-bar :is(#show-all-pins,#return-map),body[data-embedded] #pins-banner #leave-pins {min-height:44px}
+  body[data-embedded] #record-dock a[href],body[data-embedded] #sources-view a[href] {display:inline-flex;align-items:center;max-width:100%;overflow-wrap:anywhere}
+  body[data-embedded] #record-dock #inspector :is(a[href],button),body[data-embedded] #record-dock #project-steps :is(a,button) {min-height:44px;white-space:normal}
+  body[data-embedded] #graph-stage .graph-controls button {width:44px;height:44px}
+  body[data-embedded] #graph-stage .graph-controls {inset:auto 6px 6px auto}
+  body[data-embedded] #graph-stage #map-status {inset:auto auto 6px 6px;width:auto;max-width:27%;padding:2px}
+  body[data-embedded] #graph-stage #map-status .graph-heading {display:none}
+  body[data-embedded] #graph-stage #map-status .overview-map {display:block;width:76px;height:44px}
+  dialog {box-sizing:border-box;padding:18px 14px;overflow-wrap:anywhere}
+  dialog h2 {padding-right:34px}
+  dialog .dialog-close {width:44px;height:44px;right:5px;top:4px}
+}

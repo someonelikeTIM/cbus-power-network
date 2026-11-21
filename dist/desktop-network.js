@@ -120,7 +120,13 @@ export function flyoutPlacement({width,height,size,preferred,obstacles=[],points
   for(const choice of choices){const value=score(choice);if(value<bestScore){best=choice;bestScore=value;}}
   return {...best,right:best.left+w,bottom:best.top+h};
 }
-export function explorationSpace(width,height,obstacles=[]){
+export function explorationSpace(width,height,obstacles=[],stacked=false){
+  // In the stacked pane the locator and zoom buttons share the bottom row.
+  if(stacked){
+    const top=6,left=6,right=Math.max(left+1,width-6);
+    const bottom=Math.max(top+1,Math.min(height-6,...obstacles.map(box=>box.top)));
+    return {left,top,right,bottom,width:right-left,height:bottom-top};
+  }
   let spaces=[{left:18,top:70,right:width-18,bottom:height-56}];
   for(const b of obstacles){const next=[];
     for(const r of spaces){if(r.right<=b.left||r.left>=b.right||r.bottom<=b.top||r.top>=b.bottom){next.push(r);continue;}

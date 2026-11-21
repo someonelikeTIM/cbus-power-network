@@ -77,6 +77,14 @@ export function validateView(value, entityIds, allowReturnMap=true) {
   return {query:value.query,...(projectPlace?{projectPlace}:{}),...(pinFrame?{pinFrame}:{}),...(desk?{desk}:{}),...(pathFinder?{pathFinder}:{}),...(returnMap?{returnMap}:{}),...(value.interaction?{interaction:mapInteraction}:{}), ...(['bubble-cloud-v1','bubble-cloud-v2','stable-network-v1'].includes(value.mapLayout)?{mapLayout:value.mapLayout}:{}),...(value.overviewIds?{overviewIds:[...value.overviewIds]}:{}), positions, camera, dimensions, scale:finite(value.scale)&&value.scale>=.3&&value.scale<=1?value.scale:1, details: {open: details.open !== false, docked: details.docked === true, width: finite(details.width) ? Math.max(240, Math.min(900, details.width)) : 380,...(finite(details.height)?{height:Math.max(180,Math.min(1200,details.height))}:{})},...(value.research?{research:validateResearch(value.research,entityIds,relationshipIds)}:{})};
 }
 
+export function recordDeskForView(view){
+  if(view.desk)return view.desk;
+  if(!view.positions.length)return null;
+  // Before independently positioned desks, saved Details always docked on the right.
+  const {open,docked,width,height}=view.details;
+  return {active:open?'record':'',floating:!docked,side:'right',width,height};
+}
+
 export function parseWorkspace(value, entityIds) {
   if (!value || value.format !== workspaceFormat || value.version !== workspaceVersion || !Array.isArray(value.views) || !value.views.length || value.views.length > maximumViews) throw Error('Choose an explorer views file exported by this website (up to 12 views).');
   const views = value.views.map((view, index) => {

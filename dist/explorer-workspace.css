@@ -19,7 +19,7 @@ body[data-workspace-host] #explorer{border:0;background:transparent}
 .explorer-panes[data-layout=split]{grid-template-columns:repeat(2,minmax(0,1fr))}
 .explorer-pane{min-width:0;border:1px solid var(--line);border-radius:8px;overflow:clip;background:var(--white)}
 .explorer-panes[data-layout=split] .active-pane{border-color:var(--rust);box-shadow:0 0 0 1px var(--rust)}
-.explorer-pane iframe{width:100%;display:block;border:0;min-height:480px}
+.explorer-pane iframe{width:100%;display:block;border:0}
 .workspace-status{font:12px/1.5 var(--sans);margin:8px}.workspace-status:empty{display:none}
 #view-name-dialog label{display:grid;gap:8px;font-size:13px}#view-name{padding:10px;border:1px solid var(--line);border-radius:5px;font:15px var(--sans);max-width:100%}
 .view-dialog-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:22px}.view-dialog-actions button,.saved-view-row button{min-height:44px;padding:10px 14px;border:1px solid var(--line);border-radius:5px}

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="description" content="Explore sourced connections among Columbus and Ohio people, organizations, campaign money, contracts and public decisions.">
   <meta name="theme-color" content="#bb0000">
   <title>CBUS Power · Columbus connections</title>
@@ -23,7 +23,6 @@
 </head>
 <body>
   <script>document.body.dataset[window.parent === window ? 'workspaceHost' : 'embedded'] = 'true';</script>
-  <aside class="mobile-notice" role="note">Not optimized for mobile devices. Please visit <strong>cbuspower.org</strong> in a full-size browser for the best experience.</aside>
   <a class="skip-link" href="#explorer">Skip to the explorer</a>
   <header class="masthead">
     <a class="brand" href="./" aria-label="CBUS Power home"><img class="brand-mark" src="./favicon.svg?v=spyglass" width="34" height="34" alt=""><span>CBUS <b>Power</b></span></a>
@@ -53,6 +52,7 @@
               <p class="entry-deck">Follow people, money and public decisions through the records that connect them.</p>
               <div class="entry-search-row"><div id="entry-search-slot"><div id="desk-search" role="search">
           <div class="search-wrap"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input id="search" type="text" role="combobox" aria-autocomplete="list" aria-controls="starting-results" aria-expanded="false" aria-label="Search the network and tools" placeholder="Search people, topics or tools…" autocomplete="off" spellcheck="false"><kbd aria-hidden="true">/</kbd></div>
+          <button id="dismiss-search" type="button" aria-label="Dismiss search results" hidden>×</button>
           <div id="starting-results" role="listbox" aria-label="Search results" hidden></div>
           <span id="search-status" class="desk-sr" role="status"></span>
         </div></div><button id="random-start" type="button" title="Explore a random connected entity" disabled>RANDOM</button></div>
@@ -113,12 +113,14 @@
       <aside id="record-dock" aria-labelledby="dock-title">
         <header class="dock-header" id="dock-header">
           <h2 id="dock-title" tabindex="-1">Record</h2>
+          <button id="record-toggle" type="button" aria-controls="dock-content" aria-expanded="false" hidden>Expand record</button>
           <span id="dock-placement" role="group" aria-label="Record panel position" tabindex="-1">
             <button id="dock-place" type="button" title="Float the record panel">Float</button>
             <button id="dock-left" type="button" aria-label="Dock left" title="Dock left" hidden><span class="control-chevron previous" aria-hidden="true"></span></button>
             <button id="dock-right" type="button" aria-label="Dock right" title="Dock right" hidden><span class="control-chevron" aria-hidden="true"></span></button>
           </span>
         </header>
+        <p id="record-preview" hidden></p>
         <div id="dock-content">
           <section id="dock-record" class="dock-page">
             <button id="project-return" type="button" hidden>Back to project overview</button>
@@ -188,6 +190,7 @@
       </div>
       <aside id="tools-panel" aria-labelledby="tools-title" hidden>
         <header class="dock-header"><h2 id="tools-title" tabindex="-1">Explorer tools</h2><button id="tools-close" type="button" aria-label="Close tool" title="Close tool">×</button></header>
+        <p id="tool-context" hidden></p>
         <div id="tools-content">
           <section id="dock-settings" class="dock-page" hidden>
             <div id="settings-display"><h3>Map display</h3></div>

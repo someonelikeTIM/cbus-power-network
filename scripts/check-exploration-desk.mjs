@@ -2,9 +2,9 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {nodes,edges,sources} from '../dist/data.js';
 import {searchDesk,deskCommands} from '../dist/desk-search.js';
-import {validateView} from '../dist/saved-views.js';
+import {validateView,recordDeskForView} from '../dist/saved-views.js';
 import {networkForPins,researchFile,researchSnapshot} from '../dist/research-paths.js';
-import {resizeCamera,walkConnection,appendWalk} from '../dist/desktop-network.js';
+import {resizeCamera,walkConnection,appendWalk,explorationSpace} from '../dist/desktop-network.js';
 import {entrySampler,featuredHeadlines} from '../dist/entry-samples.js';
 import {buildEntitySummaries} from '../dist/entity-summaries.js';
 import {starterProjects,isProjectMap,addProjectToResearch} from '../dist/starter-projects.js';
@@ -30,6 +30,9 @@ for(const project of projects.values()){
   }
 }
 const flockProject=projects.get('flock-plate-readers'),flockStep=flockProject.steps[0];
+const projectSearch=deskGraph=>searchDesk(deskGraph,sources,byId,'Flock',[],projects.values()).find(hit=>hit.kind==='project');
+assert.equal(projectSearch(graph).step,'policy-01');
+assert.equal(projectSearch({...graph,edges:[]}),undefined);
 assert.equal(flockStep.id,'policy-01');assert.equal(flockStep.follow,'flock');
 assert.deepEqual(flockProject.sources,['policy-flock-hb725']);
 assert.match(flockProject.finding,/ban on commercial sales/);assert.match(flockProject.finding,/penalties for misuse/);
@@ -157,6 +160,15 @@ assert.throws(()=>validateView({...map,desk:{...desk,side:'bottom'}},ids));
 assert.ok(domIds.includes('record-dock')&&domIds.includes('tools-panel'));
 assert.ok(domIds.includes('dock-left')&&domIds.includes('dock-right')&&!domIds.includes('dock-close'));
 assert.equal(validateView(oldView,ids).desk,undefined,'Existing view files still open');
+const older=validateView(oldView,ids);
+assert.equal(recordDeskForView(older).floating,true);
+assert.equal(recordDeskForView(older).width,380);
+const oldDock=recordDeskForView({...older,details:{...older.details,docked:true}});
+assert.equal(oldDock.floating,false);assert.equal(oldDock.side,'right');
+assert.equal(recordDeskForView({...older,positions:[]}),null,'A fresh tab still uses the default desk');
+assert.deepEqual(recordDeskForView(restored),list.desk);
+const shortMap=explorationSpace(320,163,[{top:104,left:6,right:87,bottom:157}],true);
+assert.ok(shortMap.height>=96&&shortMap.bottom<=104,'Fit can use the space above the phone map controls');
 assert.throws(()=>validateView({...list,returnMap:list},ids));
 assert.throws(()=>validateView({...map,desk:{...desk,active:'missing'}},ids));
 assert.throws(()=>validateView({...map,desk:{...desk,left:Infinity}},ids));

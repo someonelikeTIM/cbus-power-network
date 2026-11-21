@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-11-21 — Phone explorer
+
+Search and research projects use the full phone width. A record opens below the map with its sources and a control for changing the reading space. Readers can pan or pinch the map, use Zoom and Fit, and return from a tool or a library record to their place. A narrower workspace shows one tab at a time and remembers the desktop comparison and dock placement.
+
 ## 2026-11-20 — Research projects
 
 Four homepage projects open directly to arranged maps with findings and links to the evidence. They cover the Wexners’ reported Columbus campaign donations, Flock and Ohio license plate reader policy, data-center investment and lobbying, and tech industry advocacy on AI. Readers can open individual records, return to the project, or add its connections to their own research.

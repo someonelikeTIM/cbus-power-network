@@ -32,7 +32,7 @@ export const deskCommands = [
   {id:'new-view', label:'Start a new workspace tab', terms:'new tab start separate search branch'}
 ];
 
-export function searchDesk(graph, sources, byId, query, tags) {
+export function searchDesk(graph, sources, byId, query, tags, projects=[]) {
   const text=discoveryText(query);
   if(!text)return [];
   const words=text.split(' ');
@@ -53,11 +53,18 @@ export function searchDesk(graph, sources, byId, query, tags) {
   });
   const bestThree=list=>list.filter(hit=>Number.isFinite(hit.rank)).sort((a,b)=>a.rank-b.rank).slice(0,3);
   const visibleEdges=new Set(graph.edges.map(edge=>edge.id));
+  const findings=[];
+  for(const project of projects){
+    if(!project.route.edges.every(id=>visibleEdges.has(id)))continue;
+    const [best]=bestThree(project.steps.map(step=>({kind:'project',id:project.id,step:step.id,
+      label:step.title,description:project.title,rank:discoveryRank(words,step.title,project.title)})));
+    if(best)findings.push(best);
+  }
   const reports=investigations.filter(report=>report.records.some(id=>visibleEdges.has(id))).map(report=>({
     kind:'investigation',id:report.id,label:report.title,description:'CBUS Power investigation · opens in a new tab',
     rank:discoveryRank(words,report.title,report.terms)
   }));
-  const groups=[entities,topics,bestThree(reports),bestThree(links),bestThree(documents)].filter(group=>group.length);
+  const groups=[entities,topics,bestThree(reports),bestThree(findings),bestThree(links),bestThree(documents)].filter(group=>group.length);
   groups.sort((a,b)=>a[0].rank-b[0].rank);
   const records=groups.flat();
   if(entities.some(hit=>hit.rank===0))return [...records,...tools];

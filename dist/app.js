@@ -18,7 +18,7 @@ import {tagDefinitions,recordTags,tagForeground,taggedGraph,tagSelection} from '
 import {deskCommands,searchDesk} from './desk-search.js';
 import {mountDesk} from './exploration-desk.js';
 import {scopedConnections,connectionGroups} from './canvas-layout.js';
-import {validateView} from './saved-views.js';
+import {validateView,recordDeskForView} from './saved-views.js';
 import {overlaps,bubbleLabel} from './semantic-map.js';
 import {emptyResearch,validateResearch,researchConnections,networkForPins} from './research-paths.js';
 import {mountResearchUI} from './research-ui.js';
@@ -34,6 +34,7 @@ const campaignMoneyUI=mountCampaignMoney({openEntity:id=>{resetFilters(false);to
 const nodeById = new Map(nodes.map(n => [n.id, n]));
 const edgeById = new Map(edges.map(e => [e.id, e]));
 const sourceById = new Map(sources.map(s => [s.id, s]));
+const recordsByKind={node:nodeById,edge:edgeById,source:sourceById};
 const entitySummaries = buildEntitySummaries(nodes,edges,sources);
 const projects=starterProjects(nodes,edges,sources);
 const degrees = new Map(nodes.map(n => [n.id, edges.filter(e => e.source === n.id || e.target === n.id).length]));
@@ -68,14 +69,14 @@ let focusPorts=new Map(),compactFocusNames=false;
 let workspaceTimer=null,entityScale=1,entityTooltipId=null,cloudSceneIds=new Set(),cloudNeedsFit=false;
 const defaults={...state};
 state.tags=new Set();defaults.tags=new Set();
-let restoringURL=true,selectionOpener=null;
+let restoringURL=true,selectionOpener=null,listPlace=null;
 function syncURL(){if(!restoringURL){history.replaceState(null,'',encodeState(location.href,state,release.releaseId));if(state.requestedRelease&&state.requestedRelease!==release.releaseId){state.requestedRelease=release.releaseId;$('route-warning').hidden=true;}scheduleWorkspaceState();}}
 function downloadJSON(output,name){const url=URL.createObjectURL(new Blob([JSON.stringify(output,null,2)],{type:'application/json'}));const anchor=document.createElement('a');anchor.href=url;anchor.download=name;anchor.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
 function rememberOpener(){const element=document.activeElement;selectionOpener=element?.dataset?.edge?`[data-edge="${CSS.escape(element.dataset.edge)}"]`:element?.dataset?.source?`[data-source="${CSS.escape(element.dataset.source)}"]`:element?.dataset?.nodeDetail?`[data-node-detail="${CSS.escape(element.dataset.nodeDetail)}"]`:element?.dataset?.node?`.node-core[data-node="${CSS.escape(element.dataset.node)}"]`:'#search';}
 function restoreFocus(){const target=[...document.querySelectorAll(selectionOpener||'#search')].find(el=>!el.closest('[hidden]')&&el.getClientRects().length);(target||$('search')).focus({preventScroll:true});}
 let graph,hiddenByDistance=0;
 let camera = { x: 0, y: 0, z: 1 };
-let lastProjectFit=null;
+let lastScopeFit=null;
 let dimensions = { width: 800, height: 570 };
 let drag = null;
 let cameraMotion=null,miniSignature='',overviewTransform=null,walkSignature='',miniWalkSignature='';
@@ -91,9 +92,9 @@ let previewTag='',tagPreviewOwner=null,tagStatsCache=new Map();
 const connectionIcons=new Map();
 let hoveredEdge=null;
 const desk=mountDesk({
-  nodes,edges,sources,search:query=>searchDesk(baseGraph(),sources,nodeById,query,state.tags).filter(hit=>hit.id!=='show-pins'||state.research.steps.length),
+  nodes,edges,sources,search:query=>searchDesk(baseGraph(),sources,nodeById,query,state.tags,projects.values()).filter(hit=>hit.id!=='show-pins'||state.research.steps.length),
   choose:chooseSearchResult,start:id=>{toggleNode(id);focusRecordHeading();},launch:launchPanel,changed:scheduleWorkspaceState,
-  projects,openProject:openStarterProject
+  projects,openProject:openStarterProject,returnToList,beforeCompact:()=>rememberProjectPlace('',true)
 });
 function focusEntityId(){return state.focus&&!state.pinOverview?(state.focusEntity||(state.selected?.kind==='node'?state.selected.id:null)):null;}
 const explorationHistory=[];
@@ -101,7 +102,7 @@ function copyViewState(value){return {...value,orbitIds:new Set(value.orbitIds||
 function rememberView(reason='',edgeId=''){
   if(state.view!=='network'||restoringURL)return;
   rememberProjectPlace(edgeId);
-  explorationHistory.push({reason,state:copyViewState(state),desk:desk.snapshot(),positions:new Map([...positions].map(([id,p])=>[id,{...p}])),camera:{...camera},dimensions:{...dimensions},entityScale,overviewIds:[...cloudSceneIds],focusDensity,focusPorts:new Map(focusPorts),focusMenuRect:focusMenuRect?{...focusMenuRect}:null,compactFocusNames});
+  explorationHistory.push({reason,state:copyViewState(state),desk:desk.snapshot(),readingPlace:desk.readingPlace,positions:new Map([...positions].map(([id,p])=>[id,{...p}])),camera:{...camera},dimensions:{...dimensions},entityScale,overviewIds:[...cloudSceneIds],focusDensity,focusPorts:new Map(focusPorts),focusMenuRect:focusMenuRect?{...focusMenuRect}:null,compactFocusNames});
   if(explorationHistory.length>30)explorationHistory.shift();$('undo-map').disabled=false;document.body.dataset.canUndo='true';
 }
 function undoExploration(){
@@ -110,12 +111,16 @@ function undoExploration(){
 }
 function applyUndoSnapshot(previous,keepFrame=false){
   entityScale=previous.entityScale||1;$('graph').style.setProperty('--entity-label-size',Math.max(11,13*entityScale)+'px');
-  const currentPositions=keepFrame?new Map(positions):null,currentCamera={...camera};Object.assign(state,copyViewState(previous.state));focusDensity=previous.focusDensity||1;compactFocusNames=!!previous.compactFocusNames;focusPorts=new Map(previous.focusPorts||[]);focusMenuRect=previous.focusMenuRect;desk.restore(previous.desk,state.selected);positions.clear();previous.positions.forEach((p,id)=>positions.set(id,{...(currentPositions?.get(id)||p)}));hoveredNode=null;hoveredEdge=null;edgeEls.forEach(({group})=>group.classList.remove('hovered'));connectionIcons.forEach(({group})=>group.classList.remove('hovered'));
+  const currentPositions=keepFrame?new Map(positions):null,currentCamera={...camera};Object.assign(state,copyViewState(previous.state));focusDensity=previous.focusDensity||1;compactFocusNames=!!previous.compactFocusNames;focusPorts=new Map(previous.focusPorts||[]);focusMenuRect=previous.focusMenuRect;desk.restore(previous.desk,state.selected,previous.readingPlace);positions.clear();previous.positions.forEach((p,id)=>positions.set(id,{...(currentPositions?.get(id)||p)}));hoveredNode=null;hoveredEdge=null;edgeEls.forEach(({group})=>group.classList.remove('hovered'));connectionIcons.forEach(({group})=>group.classList.remove('hovered'));
   $('list-search').value=state.query;$('topic-select').value=state.caseId;syncReportingControls();$('history').checked=state.history;
   defaults.connectionDistance=state.connectionDistance;try{localStorage.setItem(distancePreferenceKey,String(state.connectionDistance));}catch{}
   defaults.colorMode=state.colorMode;try{localStorage.setItem(colorPreferenceKey,state.colorMode);}catch{}
   $('filters').querySelectorAll('[data-category]').forEach(input=>input.checked=state.categories.has(input.dataset.category));$('filters').querySelectorAll('[data-relationship]').forEach(input=>input.checked=state.relationships.has(input.dataset.relationship));
-  cloudSceneIds=new Set(previous.overviewIds||[]);desk.dismiss();render();const bounds=$('canvas-area').getBoundingClientRect();dimensions={width:bounds.width,height:bounds.height};camera=keepFrame?currentCamera:Math.abs(dimensions.width-previous.dimensions.width)<1&&Math.abs(dimensions.height-previous.dimensions.height)<1?previous.camera:fittedCamera();positionGraph();$('undo-map').disabled=!explorationHistory.length;document.body.dataset.canUndo=String(!!explorationHistory.length);syncURL();toast('Previous map restored');
+  cloudSceneIds=new Set(previous.overviewIds||[]);desk.dismiss();render();
+  const bounds=$('canvas-area').getBoundingClientRect();dimensions={width:bounds.width,height:bounds.height};
+  camera=keepFrame?currentCamera:resizeCamera(previous.camera,previous.dimensions,dimensions,positions.get(focusEntityId()));
+  positionGraph();$('undo-map').disabled=!explorationHistory.length;document.body.dataset.canUndo=String(!!explorationHistory.length);syncURL();toast('Previous map restored');
+  if(previous.readingPlace?.expanded)$('dock-content').scrollTop=previous.readingPlace.scroll;
   restoreProjectReading(true);
 }
 
@@ -169,16 +174,18 @@ function mappedProject(){
   const project=projects.get(state.projectId);
   return state.view==='network'&&!state.pinOverview&&isProjectMap(project,state.path)?project:null;
 }
-function atProjectFit(project){
-  return project&&lastProjectFit?.id===project.id&&Math.abs(camera.x-lastProjectFit.x)<1&&Math.abs(camera.y-lastProjectFit.y)<1&&Math.abs(camera.z-lastProjectFit.z)<.001;
+function atScopeFit(id){
+  return !!id&&lastScopeFit?.id===id&&Math.abs(camera.x-lastScopeFit.x)<1&&Math.abs(camera.y-lastScopeFit.y)<1&&Math.abs(camera.z-lastScopeFit.z)<.001;
 }
-function rememberProjectPlace(edgeId){
+function rememberProjectPlace(edgeId,keepStep=false){
   const project=mappedProject();
   if(!project||state.selected||$('project-report').hidden)return;
   const dock=$('dock-content'),bounds=dock.getBoundingClientRect();
+  const visible=bounds.height>0;
   const step=project.steps.find(item=>item.records.some(edge=>edge.id===edgeId));
   let row=step?$('project-step-'+step.id):null;
-  if(!row){
+  if(!row&&(!visible||keepStep))row=$('project-step-'+state.projectStep);
+  if(!row&&visible&&!keepStep){
     const rows=[...$('project-steps').children].filter(item=>{
       const rect=item.getBoundingClientRect();return rect.bottom>bounds.top+8&&rect.top<bounds.bottom-8;
     });
@@ -186,8 +193,9 @@ function rememberProjectPlace(edgeId){
   }
   state.projectStep=row?.dataset.projectStep||'';
   const top=row?.querySelector('h4').getBoundingClientRect().top;
-  const offset=top>=bounds.top&&top<bounds.bottom-24?top-bounds.top:8;
-  state.projectPlace={project:project.id,offset,scroll:Math.max(0,dock.scrollTop),fitted:!!atProjectFit(project),
+  const offset=visible?(top>=bounds.top&&top<bounds.bottom-24?top-bounds.top:8):(state.projectPlace?.offset??8);
+  const scroll=visible?Math.max(0,dock.scrollTop):(state.projectPlace?.scroll??0);
+  state.projectPlace={project:project.id,offset,scroll,fitted:atScopeFit(project.id),
     camera:{...camera},dimensions:{...dimensions},positions:project.route.nodes.map(id=>{const p=positions.get(id);return [id,p.x,p.y];})};
 }
 function restoreProjectReading(focus=false){
@@ -209,7 +217,7 @@ function arrangeProject(project){
   // Choose an orientation on opening, allowing room for the expanded reader.
   // Later divider changes frame these same world positions.
   const surfaceWidth=document.documentElement.clientWidth;
-  const vertical=surfaceWidth-Math.min(680,surfaceWidth*.55)<(innerHeight-120)*1.08;
+  const vertical=!desk.stacked&&surfaceWidth-Math.min(680,surfaceWidth*.55)<(innerHeight-120)*1.08;
   ids.forEach((id,index)=>{
     const x=coords[index][0]-offsetX,y=coords[index][1]-offsetY;
     positions.set(id,{x:center.x+(vertical?y*175:x*250),y:center.y+(vertical?x*195:y*155)});
@@ -227,10 +235,10 @@ function scopeProject(project,place=null){
     for(const [id,x,y] of place.positions)if(project.route.nodes.includes(id))positions.set(id,{x,y});
   }else arrangeProject(project);
 }
-function openStarterProject(id,resume=false){
+function openStarterProject(id,resume=false,finding=''){
   const project=projects.get(id);if(!project)return;
   const place=resume&&state.projectId===id?state.projectPlace:null;
-  const step=resume&&state.projectId===id?state.projectStep:'';
+  const step=resume&&state.projectId===id?state.projectStep:finding||(desk.stacked?project.steps[0].id:'');
   if(state.view!=='network')navigateSection('network');
   settleExpansion(false);rememberView();scopeProject(project,place);state.projectStep=step;
   desk.dismiss();desk.showRecord('evidence');render();
@@ -259,6 +267,7 @@ function networkGraph(){
 }
 function showAllPins(){
   if(!state.research.steps.length)return;
+  if(desk.tool&&$('desk-body').dataset.overlay==='true')desk.closeTool(false);
   if(state.view!=='network')navigateSection('network');
   settleExpansion(false);
   if(!state.pinOverview){
@@ -424,6 +433,7 @@ function inspectSource(id){
   desk.showRecord('evidence');render();revealInspector();
 }
 function chooseSearchResult(result){
+  if(result.kind==='project'){openStarterProject(result.id,false,result.step);return;}
   if(result.kind==='entity'){toggleNode(result.id);focusRecordHeading();return;}
   if(result.kind==='tag'){applyTag(result.id,{toggle:false});return;}
   if(result.kind==='source'){inspectSource(result.id);return;}
@@ -683,14 +693,14 @@ function buildGraph() {
     const pin=svgEl('g',{class:'node-pin-control',role:'button',tabindex:'0','data-pin':n.id,'aria-label':`Pin ${n.name} as anchor`});
     pin.append(svgEl('circle',{r:22,fill:'transparent'}),svgEl('circle',{r:10,class:'node-pin-disc'}),svgEl('path',{d:'M-3 -6h6l-1 5 3 3H-5l3-3zM0 2v6',class:'node-pin-glyph'}));
     group.append(title, hit,halo, core, letter, label,pin); $('node-layer').append(group); nodeEls.set(n.id, { group, hit,halo, core, letter, label,pin,normalLines:lines });
-    group.addEventListener('pointerenter',event=>{if(drag||cameraMotion)return;hoveredNode=n.id;renderGraph();if(state.selected?.kind!=='node'||state.selected.id!==n.id)showEntityTooltip(n.id,event);});
+    group.addEventListener('pointerenter',event=>{if(event.pointerType==='touch'||drag||cameraMotion)return;hoveredNode=n.id;renderGraph();if(state.selected?.kind!=='node'||state.selected.id!==n.id)showEntityTooltip(n.id,event);});
     group.addEventListener('pointermove',positionEntityTooltip);
     group.addEventListener('pointerleave',()=>{if(drag)return;if(group.contains(document.activeElement)){positionEntityTooltip();return;}hoveredNode=null;hideEntityTooltip();renderGraph();});
     group.addEventListener('focusin',()=>{hoveredNode=n.id;renderGraph();if(state.selected?.id!==n.id)showEntityTooltip(n.id);});
     group.addEventListener('focusout',event=>{if(group.contains(event.relatedTarget)||group.matches(':hover'))return;hoveredNode=null;hideEntityTooltip();renderGraph();});
   });
   $('graph').addEventListener('click', event => {
-    if (suppressClick) { suppressClick = false; return; }
+    if (suppressClick&&event.detail!==0) { suppressClick = false; return; }
     desk.focusWidth(false);
     const pin=event.target.closest('[data-pin]');if(pin){togglePin(pin.dataset.pin);return;}
     const target = event.target.closest('[data-node],[data-edge],[data-route]');
@@ -711,20 +721,47 @@ function buildGraph() {
       if(event.key==='0'){event.preventDefault();fitGraph();}
     }
   });
+  const touches=new Map();
+  let multiTouch=false,pinch=null;
+  function touchSpan(){
+    const [a,b]=touches.values(),rect=$('graph').getBoundingClientRect();
+    return {x:(a.x+b.x)/2-rect.left,y:(a.y+b.y)/2-rect.top,distance:Math.max(1,Math.hypot(a.x-b.x,a.y-b.y))};
+  }
   $('graph').addEventListener('pointerdown', event => {
     if (![0,1].includes(event.button)) return;
-    if(event.target.closest('[data-pin]'))return;
+    suppressClick=false;
+    const pin=event.target.closest('[data-pin]');
+    if(event.pointerType==='touch'){
+      touches.set(event.pointerId,{x:event.clientX,y:event.clientY});
+      $('graph').setPointerCapture(event.pointerId);
+      if(touches.size>1||multiTouch){
+        event.preventDefault();settleExpansion(false);drag=null;multiTouch=true;
+        pinch=touches.size===2?touchSpan():null;clearMarquee();hideEntityTooltip();$('graph').dataset.panning='true';return;
+      }
+    }else if(pin)return;
     stopCameraMotion();
     const target = event.target.closest('[data-node],[data-edge],[data-route]');
-    const pan=spaceToPan||event.button===1||(!boxSelectMode&&!event.shiftKey&&!event.altKey);
+    const pan=event.pointerType==='touch'||spaceToPan||event.button===1||(!boxSelectMode&&!event.shiftKey&&!event.altKey);
     drag = { pan,route:target?.dataset.route,id:target?.dataset.node,edge:target?.dataset.edge, box:!pan&&(event.shiftKey||!target?.dataset.node&&target?.dataset.route===undefined&&boxSelectMode),additive:event.ctrlKey||event.metaKey,pointer: event.pointerId, startX: event.clientX, startY: event.clientY, lastX: event.clientX, lastY: event.clientY, moved: false };
     drag.screenToCanvas=$('graph').getScreenCTM().inverse();
+    drag.pin=pin?.dataset.pin;
     hideEntityTooltip();
     $('graph').dataset.panning=String(pan||!boxSelectMode);
     event.preventDefault();
     $('graph').setPointerCapture(event.pointerId);
   });
   $('graph').addEventListener('pointermove', event => {
+    if(touches.has(event.pointerId)){
+      touches.set(event.pointerId,{x:event.clientX,y:event.clientY});
+      if(multiTouch){
+        if(pinch&&touches.size===2){
+          const next=touchSpan();
+          camera.x+=next.x-pinch.x;camera.y+=next.y-pinch.y;
+          zoom(next.distance/pinch.distance,next.x,next.y);pinch=next;
+        }
+        return;
+      }
+    }
     if (!drag || drag.pointer !== event.pointerId) return;
     const dx = event.clientX - drag.lastX, dy = event.clientY - drag.lastY;
     if (Math.hypot(event.clientX - drag.startX, event.clientY - drag.startY) > 4) drag.moved = true;
@@ -738,7 +775,12 @@ function buildGraph() {
     drag.lastX = event.clientX; drag.lastY = event.clientY;
   });
   $('graph').addEventListener('pointerup', event => {
-    if (!drag) return;
+    touches.delete(event.pointerId);
+    if(multiTouch){
+      pinch=null;multiTouch=touches.size>0;suppressClick=true;
+      $('graph').dataset.panning=String(multiTouch);scheduleWorkspaceState();return;
+    }
+    if (!drag||drag.pointer!==event.pointerId) return;
     if(drag.moved&&drag.box){
       const box=marqueeBounds(drag.startX,drag.startY,event.clientX,event.clientY),candidates=marqueeEntities(box);
       rememberView();if(!drag.additive){state.multiNodes.clear();state.multiEdges.clear();}
@@ -748,6 +790,7 @@ function buildGraph() {
     }
     if(drag.moved){suppressClick=true;if(drag.id&&!drag.pan)miniSignature='';if(!drag.box)positionGraph();scheduleWorkspaceState();}
     // Pointer capture retargets the click to the canvas; activate a stationary node here.
+    else if(drag.pin){togglePin(drag.pin);suppressClick=true;}
     else if(drag.route!==undefined){showExplorationPath(indirectRoutes[Number(drag.route)]);suppressClick=true;}
     else if (drag.id) { selectRecord('node',drag.id,drag.additive); suppressClick = true; }
     else if (drag.edge) { selectRecord('edge',drag.edge,drag.additive); suppressClick = true; }
@@ -756,7 +799,13 @@ function buildGraph() {
     $('graph').dataset.panning='false';
     if ($('graph').hasPointerCapture(event.pointerId)) $('graph').releasePointerCapture(event.pointerId);
   });
-  $('graph').addEventListener('pointercancel', () => { drag = null; suppressClick = false;clearMarquee();$('graph').dataset.panning='false'; });
+  function cancelPointer(event){
+    if(!touches.delete(event.pointerId)&&drag?.pointer!==event.pointerId)return;
+    drag=null;pinch=null;multiTouch=touches.size>0;suppressClick=true;
+    clearMarquee();$('graph').dataset.panning=String(multiTouch);
+  }
+  $('graph').addEventListener('pointercancel',cancelPointer);
+  $('graph').addEventListener('lostpointercapture',cancelPointer);
   $('graph').addEventListener('wheel', event => {
     event.preventDefault(); const rect = $('graph').getBoundingClientRect();
     zoom(Math.exp(-event.deltaY * .0015), event.clientX - rect.left, event.clientY - rect.top);
@@ -767,9 +816,8 @@ function buildGraph() {
     if(rect.width<1||rect.height<1||Math.abs(rect.width-dimensions.width)<1&&Math.abs(rect.height-dimensions.height)<1)return;
     settleExpansion(false);
     const next={width:rect.width,height:rect.height};
-    const project=mappedProject();
-    const stillFitted=atProjectFit(project);
-    camera=graph?.pinNetwork||stillFitted?fittedCamera():resizeCamera(camera,dimensions,next,positions.get(focusEntityId()));dimensions=next;
+    const stillFitted=atScopeFit(graph?.pinNetwork?'pins':mappedProject()?.id);
+    camera=stillFitted?fittedCamera():resizeCamera(camera,dimensions,next,positions.get(focusEntityId()));dimensions=next;
     positionGraph();if(graph)renderMapScope();
   }).observe($('canvas-area'));
 }
@@ -834,7 +882,7 @@ function fittedCamera(){
     const project=mappedProject(),space=explorationViewport(),padding=project?Math.max(20,Math.min(88,space.width/5,space.height/5)):Math.max(10,Math.min(44,space.width/7,space.height/7));
     const fit=frameNetwork(graph.nodes.map(node=>node.id),positions,{width:space.width,height:space.height,padding});
     const result={x:fit.x+space.left,y:fit.y+space.top,z:fit.z};
-    if(project)lastProjectFit={id:project.id,...result};
+    if(project||graph.pinNetwork)lastScopeFit={id:project?.id||'pins',...result};
     return result;
   }
   if(state.bucketMode)return fitBucketCamera();
@@ -856,7 +904,7 @@ function moveCamera(target){
     if(t<1)motion.frame=requestAnimationFrame(step);else{cameraMotion=null;scheduleWorkspaceState();}
   };motion.frame=requestAnimationFrame(step);
 }
-function explorationViewport(){return explorationSpace(dimensions.width,dimensions.height,mapObstacles());}
+function explorationViewport(){return explorationSpace(dimensions.width,dimensions.height,mapObstacles(),desk.stacked);}
 function focusExploration(id,direct=false){
   if(state.view!=='network')return;
   // Opening docked Details changes the canvas synchronously. Use its new size
@@ -1333,7 +1381,7 @@ function campaignFinanceHTML(id){
 function decorateInspector(){
   if(!state.selected)return;
   if(state.view==='network'&&selectionCount()>1){$('inspector').querySelector('h2')?.setAttribute('tabindex','-1');return;}
-  const {kind,id}=state.selected,panel=$('inspector'),record=kind==='node'?nodeById.get(id):kind==='edge'?edgeById.get(id):kind==='source'?sourceById.get(id):null;
+  const {kind,id}=state.selected,panel=$('inspector'),record=recordsByKind[kind]?.get(id);
   if(!record)return;panel.querySelector('h2')?.setAttribute('tabindex','-1');
   if(kind==='edge')panel.querySelector('.cited-claim')?.insertAdjacentHTML('afterend',contributionDates(record)+investigationLink(id));
   const details=document.createElement('div');details.className='record-tools';let evidence='';
@@ -1372,7 +1420,8 @@ function renderProjectReport(project){
       const via=step.follow&&step.records.find(edge=>edge.source===step.follow||edge.target===step.follow);
       const follow=via?`<button class="project-record" type="button" data-node-detail="${escape(step.follow)}" data-endpoint-of="${escape(via.id)}">Follow ${escape(nodeById.get(step.follow).name)}</button>`:'';
       const excerpt=step.excerpt?`<blockquote>“${escape(step.excerpt.text)}”<cite>${escape(step.excerpt.credit)}</cite></blockquote>`:'';
-      return `<li id="project-step-${escape(step.id)}" data-project-step="${escape(step.id)}"><h4 tabindex="-1">${escape(step.title)}</h4><p>${escape(step.text)}</p>${excerpt}<div class="intro-sources">${citationRefs(step.citations)}</div>${investigationLink(step.id)}<div class="project-records">${follow}${records}</div></li>`;
+      const testimony=step.citations.map(id=>hearingTestimony[id]).find(Boolean);
+      return `<li id="project-step-${escape(step.id)}" data-project-step="${escape(step.id)}"><h4 tabindex="-1">${escape(step.title)}</h4><p>${escape(step.text)}</p>${excerpt}<div class="intro-sources">${citationRefs(step.citations)}${testimony?hearingLink(testimony):''}</div>${investigationLink(step.id)}<div class="project-records">${follow}${records}</div></li>`;
     }).join('');
   }
   for(const row of $('project-steps').children){
@@ -1386,10 +1435,13 @@ function renderProjectReport(project){
 function syncDesk(){
   const project=projects.get(state.projectId);
   const overview=!!mappedProject()&&!state.selected;
-  desk.sync({empty:document.body.dataset.emptyStart==='true',selection:state.selected,
-    isSingleNode:state.selected?.kind==='node'&&selectionCount()<=1,currentView:state.view,showProject:overview});
-  $('project-return').hidden=!project||overview||state.view!=='network';
   const step=project?.steps.find(item=>item.id===state.projectStep);
+  const record=recordsByKind[state.selected?.kind]?.get(state.selected.id);
+  const title=overview?(step?.title||project.title):record?.name||record?.title||(state.selected?.kind==='edge'?readerField(record,'label'):'Choose a record');
+  const summary=overview?(step?.text||project.finding):record?.role||record?.note||record?.evidence||'';
+  desk.sync({empty:document.body.dataset.emptyStart==='true',selection:state.selected,
+    isSingleNode:state.selected?.kind==='node'&&selectionCount()<=1,currentView:state.view,showProject:overview,title,summary});
+  $('project-return').hidden=!project||overview||state.view!=='network';
   $('project-return').textContent=step?'Back to “'+step.title+'”':'Back to project overview';
   if(overview)renderProjectReport(project);
   const pins=state.research.steps.length,inPins=!!graph.pinNetwork;
@@ -1444,7 +1496,7 @@ function setView(view) {
   if(!['network','relations','directory','sources'].includes(view))view='network';
   const previousView=state.view;
   if(view!=='network'){state.pinOverview=false;state.pinFrame=null;}
-  if(previousView!==view){state.multiNodes.clear();state.multiEdges.clear();}
+  if(previousView!==view){state.multiNodes.clear();state.multiEdges.clear();listPlace=null;if(view!=='network'&&desk.stacked)desk.focusWidth(false);}
   if(view!=='network'){state.tags=new Set();hideTagPreview();}
   if(previousView!==view){state.query='';$('search').value='';$('starting-results').hidden=true;}
   const acceptedSelection={network:['node','edge'],relations:['edge'],directory:['node'],sources:['source']};
@@ -1496,6 +1548,12 @@ function revealNode(id,edgeId){
   if(state.walk.at(-1)?.id===id){toggleNode(id,{resume:true});return;}
   toggleNode(id,{from:other(edge,id),via:edge.id});
 }
+function returnToList(){
+  if(!listPlace||listPlace.view!==state.view){$('list-search').focus({preventScroll:true});return;}
+  const list=document.querySelector('.workspace');
+  list.scrollTop=listPlace.scroll;
+  list.querySelector(listPlace.selector)?.focus({preventScroll:true});
+}
 function clearFilterControls(){
   rememberView();
   Object.assign(state,{categories:new Set(Object.keys(categories)),relationships:new Set(Object.keys(relationships)),
@@ -1534,7 +1592,7 @@ function openPathFinder(focus=true) {
 }
 
 $('undo-map').addEventListener('click',undoExploration);
-$('graph-stage').addEventListener('click',event=>{if(event.target.closest('.graph-controls,.overview-map'))desk.focusWidth(false);});
+$('graph-stage').addEventListener('click',event=>{if(!desk.stacked&&event.target.closest('.graph-controls,.overview-map'))desk.focusWidth(false);});
 buildFilters(); buildGraph();
 researchUI=mountResearchUI({state,nodes,edges,relationships,release,snapshot:workspaceSnapshot,remember:rememberView,
   changed:(redraw=true)=>{if(redraw===false){syncURL();return;}syncResearchPins();if(state.pinOverview&&!state.research.steps.length){leavePins(false);return;}render();if(state.pinOverview)moveCamera(fittedCamera());},
@@ -1574,6 +1632,21 @@ $('project-add').addEventListener('click',()=>{
   syncResearchPins();render();toast('Project connections added to your research path.');
 });
 $('list-search').addEventListener('input',()=>{state.query=$('list-search').value.trim();if(state.view==='directory')renderDirectory();else if(state.view==='relations')renderRelations();else if(state.view==='sources')renderSources();syncURL();});
+document.querySelector('.workspace').addEventListener('click',event=>{
+  if(!desk.stacked||state.view==='network')return;
+  const row=event.target.closest('button[data-node-detail],button[data-edge],button[data-source]');
+  if(!row)return;
+  const attribute=['data-node-detail','data-edge','data-source'].find(name=>row.hasAttribute(name));
+  listPlace={view:state.view,scroll:event.currentTarget.scrollTop,selector:'button['+attribute+'="'+CSS.escape(row.getAttribute(attribute))+'"]'};
+  event.stopPropagation();
+  if(attribute==='data-node-detail'){
+    state.selected={kind:'node',id:row.dataset.nodeDetail};state.detailsOpen=true;
+    state.multiNodes=new Set([row.dataset.nodeDetail]);state.multiEdges.clear();
+    desk.showRecord('evidence');render();
+  }else if(attribute==='data-edge')selectEdge(row.dataset.edge);
+  else inspectSource(row.dataset.source);
+  focusRecordHeading();
+});
 $('return-map').addEventListener('click',()=>navigateSection('network'));
 $('show-all-pins').addEventListener('click',showAllPins);
 $('leave-pins').addEventListener('click',()=>leavePins());
@@ -1879,7 +1952,7 @@ function restoreWorkspaceView(input,{keepUndo=false}={}){
     }
   }
   if(saved.desk?.active==='research')researchUI.refreshLibrary();
-  desk.restore(saved.desk,state.selected);
+  desk.restore(recordDeskForView(saved),state.selected);
   render();
   const bounds=$('canvas-area').getBoundingClientRect();
   if(hasLayout){
@@ -1896,7 +1969,8 @@ function restoreWorkspaceView(input,{keepUndo=false}={}){
 }
 window.addEventListener('message',event=>{
   if(event.origin!==location.origin||event.source!==window.parent||event.data?.channel!=='columbus-explorer')return;
-  if(Number.isFinite(event.data.viewportHeight))document.documentElement.style.setProperty('--desk-height',Math.max(440,event.data.viewportHeight)+'px');
+  if(Number.isFinite(event.data.viewportHeight))document.documentElement.style.setProperty('--desk-height',Math.max(1,event.data.viewportHeight)+'px');
+  if(Number.isFinite(event.data.visibleBottom))desk.setVisibleBottom(event.data.visibleBottom);
   if(event.data.type==='restore'){try{restoreWorkspaceView(event.data.snapshot);if(event.data.focusEntry&&document.body.dataset.landing==='true')desk.focusSearch();}catch{toast('This view could not be restored.');}}
   if(event.data.type==='navigate'&&['network','relations','directory','sources'].includes(event.data.view)){navigateSection(event.data.view);measureWorkspace();publishWorkspaceState();}
   if(event.data.type==='focus-search')desk.focusSearch();

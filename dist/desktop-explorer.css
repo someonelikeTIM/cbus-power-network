@@ -1,5 +1,4 @@
-/* Desktop is the launch target. Small devices receive a notice, not a separate layout. */
-body[data-workspace-host]{min-width:1000px}
+/* Desktop canvas and dock controls. The workspace sizes each pane independently. */
 body[data-workspace-host] .masthead{height:58px;min-height:58px;padding:0 24px;gap:30px;flex-wrap:nowrap}
 body[data-workspace-host] .brand{font-size:12px;letter-spacing:2px}
 body[data-workspace-host] .brand-sub{font-size:8px}
@@ -8,9 +7,6 @@ body[data-workspace-host] main{padding:6px}
 .workspace-button,.explorer-tab [role=tab]{min-height:30px;padding:6px 10px;font-size:11px}
 body[data-workspace-host] .page-footer{padding:6px 3px;min-height:28px;align-items:center}
 body[data-workspace-host] .page-footer a,body[data-workspace-host] .page-footer button{min-height:22px;font-size:10px}
-body[data-embedded] .mobile-notice{display:none!important}
-.mobile-notice{display:none}
-@media(max-width:900px){body[data-workspace-host]>.mobile-notice{display:block;position:fixed;z-index:1000;left:12px;bottom:12px;width:calc(100vw - 24px);box-sizing:border-box;padding:14px 16px;border:1px solid #cfbca2;border-radius:8px;background:#fff8e8;box-shadow:0 3px 14px #25262920;font:13px/1.5 var(--sans);color:var(--ink)}}
 body[data-view=network] .graph-stage{min-height:400px}
 body[data-view=network] #search-window{left:14px;top:14px;width:310px;max-width:none;border-radius:7px}
 body[data-view=network] #search-window .search-wrap{min-height:44px}

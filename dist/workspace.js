@@ -43,9 +43,22 @@ if (repositoryURL) {
 }
 const status = message => { document.querySelector('.workspace-status').textContent = message; };
 const currentView = () => views.find(view => view.id === activeId);
-const baseHeight = () => Math.max(480, innerHeight - document.querySelector('.masthead').offsetHeight - document.querySelector('.workspace-bar').offsetHeight - (footer.offsetHeight||32) - 18);
+const panes = document.querySelector('.explorer-panes');
+const actions = document.querySelector('.workspace-actions');
+const menu = document.querySelector('.views-menu');
+const masthead = document.querySelector('.masthead');
+const bar = document.querySelector('.workspace-bar');
+const narrowHost = () => panes.clientWidth < 960;
+const visibleHeight = () => window.visualViewport?.height ?? innerHeight;
+function baseHeight() {
+  const below = narrowHost() ? parseFloat(getComputedStyle(panes).paddingBottom) : footer.offsetHeight + 18;
+  return Math.max(1, Math.floor(visibleHeight() - masthead.offsetHeight - bar.offsetHeight - below));
+}
 function send(id, type, payload = {}) {
-  frames.get(id)?.frame.contentWindow?.postMessage({channel: 'columbus-explorer', type, viewportHeight:baseHeight(), ...payload}, location.origin);
+  const frame = frames.get(id)?.frame;
+  if (!frame) return;
+  const visibleBottom = (window.visualViewport?.offsetTop || 0) + visibleHeight() - frame.getBoundingClientRect().top;
+  frame.contentWindow?.postMessage({channel: 'columbus-explorer', type, narrowHost:narrowHost(), viewportHeight:baseHeight(), visibleBottom, ...payload}, location.origin);
 }
 function capture(id) {
   return new Promise((resolve,reject)=>{
@@ -83,6 +96,15 @@ function syncNavigation(view){
   }
 }
 function renderTabs() {
+  const narrow = narrowHost();
+  document.body.dataset.narrowHost = String(narrow);
+  // Move the same comparison controls. The stored pair survives a narrow host.
+  const compareParent = narrow ? menu.querySelector('div') : actions;
+  if ($('split-views').parentElement !== compareParent) {
+    const before = narrow ? compareParent.firstChild : menu;
+    compareParent.insertBefore($('split-views'), before);
+    compareParent.insertBefore($('compare-label'), before);
+  }
   const list = document.querySelector('.explorer-tabs'); list.replaceChildren();
   for (const view of views) {
     const holder = document.createElement('div'); holder.className = 'explorer-tab';
@@ -97,13 +119,19 @@ function renderTabs() {
     holder.append(tab, close); list.append(holder); mount(view);
   }
   for (const view of views) {
-    const entry = frames.get(view.id); const visible = view.id === primaryId || view.id === secondaryId;
+    const entry = frames.get(view.id); const visible = narrow ? view.id === activeId : view.id === primaryId || view.id === secondaryId;
     entry.pane.hidden = !visible;entry.pane.style.order=view.id===primaryId?'0':'1'; entry.pane.classList.toggle('active-pane', view.id === activeId); entry.pane.setAttribute('aria-labelledby', 'tab-' + view.id); entry.frame.title = tabLabel(view) + ' explorer';
   }
-  document.querySelector('.explorer-panes').dataset.layout = secondaryId ? 'split' : 'single';
+  panes.dataset.layout = secondaryId && !narrow ? 'split' : 'single';
   $('split-views').textContent = secondaryId ? 'Single view' : 'Side by side'; $('split-views').setAttribute('aria-pressed', String(!!secondaryId));
   $('compare-label').hidden = !secondaryId; $('compare-view').replaceChildren();
   for (const view of views.filter(view => view.id !== primaryId)) { const option = new Option(tabLabel(view), view.id); option.selected = view.id === secondaryId; $('compare-view').append(option); }
+  const current = $('tab-' + activeId)?.parentElement;
+  if (current) {
+    const tabRect = current.getBoundingClientRect(), listRect = list.getBoundingClientRect();
+    if (tabRect.left < listRect.left) list.scrollLeft += tabRect.left - listRect.left;
+    else if (tabRect.right > listRect.right) list.scrollLeft += tabRect.right - listRect.right;
+  }
   persist();
 }
 function activate(id) {
@@ -139,7 +167,12 @@ $('split-views').addEventListener('click', () => {
   }
   renderTabs(); for (const id of [primaryId, secondaryId].filter(Boolean)) send(id, 'measure');
 });
-$('compare-view').addEventListener('change', () => { secondaryId = $('compare-view').value; renderTabs(); send(secondaryId, 'measure'); });
+$('compare-view').addEventListener('change', () => {
+  const wasSecondary = activeId === secondaryId;
+  secondaryId = $('compare-view').value;
+  if (wasSecondary) activate(secondaryId); else renderTabs();
+  send(secondaryId, 'measure');
+});
 
 let namingAction = 'save';
 function askName(action) {
@@ -215,9 +248,28 @@ window.addEventListener('message', event => {
   }
   if(event.data.type==='import-research'){$('view-file').click();return;}
   if(event.data.type==='open-research'){try{const snapshot=validateView(event.data.snapshot,ids);addView(snapshot,String(event.data.name||'Research path').slice(0,80));}catch(error){status(error.message);}return;}
-  if (event.data.type === 'ready') { frame.ready = true; send(id, 'restore', {snapshot: frame.pending||view.snapshot,focusEntry:id===activeId}); frame.pending = null; return; }
+  if (event.data.type === 'ready') { frame.ready = true; send(id, 'restore', {snapshot: frame.pending||view.snapshot,focusEntry:id===activeId&&!narrowHost()&&!matchMedia('(pointer: coarse)').matches}); frame.pending = null; return; }
   if (event.data.type === 'focus') { if (activeId !== id) activate(id); return; }
-  if (event.data.type === 'height') { const height = Number(event.data.height); if (Number.isFinite(height)) frame.frame.style.height = Math.max(baseHeight(), Math.min(150000, height)) + 'px'; return; }
+  if (event.data.type === 'height') {
+    const height = Number(event.data.height);
+    if (Number.isFinite(height)) {
+      const wasEntry = frame.entryHeight > 0;
+      frame.entryHeight = Math.max(0, Math.min(150000, height));
+      frame.frame.style.height = Math.max(baseHeight(), frame.entryHeight) + 'px';
+      if (wasEntry && !height && id === activeId && narrowHost()) window.scrollTo(0, 0);
+    }
+    return;
+  }
+  if (event.data.type === 'reveal-search' && id === activeId && Number.isFinite(event.data.bottom)) {
+    const bottom = frame.frame.getBoundingClientRect().top + event.data.bottom;
+    const overflow = bottom - ((window.visualViewport?.offsetTop || 0) + visibleHeight());
+    if (overflow > 1) {
+      const previous = window.scrollY;
+      window.scrollBy(0, Math.ceil(overflow));
+      if (window.scrollY !== previous) requestAnimationFrame(() => send(id, 'measure'));
+    }
+    return;
+  }
   if (event.data.type === 'state') {
     try { view.snapshot = validateView(event.data.snapshot, ids); } catch { return; }
     frame.pane.dataset.ready='true';
@@ -254,6 +306,23 @@ document.addEventListener('keydown',event=>{
     document.querySelector('.views-menu').open=false;document.querySelector('.views-menu summary').focus();
   }
 });
-window.addEventListener('resize', () => { for (const entry of frames.values()) entry.frame.style.height = baseHeight() + 'px'; for (const id of [primaryId, secondaryId].filter(Boolean)) send(id, 'measure'); });
+let pendingMeasure = 0;
+function measurePanes() {
+  cancelAnimationFrame(pendingMeasure);
+  pendingMeasure = requestAnimationFrame(() => {
+    if (String(narrowHost()) !== document.body.dataset.narrowHost) renderTabs();
+    for (const [id, entry] of frames) {
+      if (entry.pane.hidden) continue;
+      entry.frame.style.height = Math.max(baseHeight(), entry.entryHeight || 0) + 'px';
+      send(id, 'measure');
+    }
+  });
+}
+window.addEventListener('resize', measurePanes);
+window.visualViewport?.addEventListener('resize', measurePanes);
+window.visualViewport?.addEventListener('scroll', measurePanes);
+const chromeSize = new ResizeObserver(measurePanes);
+chromeSize.observe(bar);
+chromeSize.observe(masthead);
 window.addEventListener('popstate', () => { currentView().snapshot = {...emptySnapshot(), query: location.search}; send(activeId, 'restore', {snapshot: currentView().snapshot}); });
 renderTabs();
