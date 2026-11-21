@@ -354,6 +354,9 @@ body[data-embedded] #entry #search-show-all:hover {background:var(--scarlet-tint
 #record-dock .testimony-pages {color:var(--muted);font:.75rem/1.4 var(--sans)}
 #record-dock #project-steps p {margin:4px 0;color:var(--ink);font:.86rem/1.45 var(--sans)}
 .project-records {display:flex;flex-wrap:wrap;gap:4px;margin-top:7px}
+.related-investigation {margin:9px 0;padding:8px 12px;border-left:3px solid var(--scarlet);background:var(--scarlet-tint)}
+.related-investigation span {display:block;color:var(--muted);font:600 .72rem/1.5 var(--sans)}
+.related-investigation a {color:var(--scarlet-dark);font:650 .9rem/1.4 var(--sans);text-underline-offset:.16em}
 #graph[data-project-map=true] .connection-icon {display:none!important}
 #graph[data-project-map=true] .graph-edge {opacity:.88;stroke-width:2px}
 #graph[data-project-map=true] .edge-label.project-edge-label {display:block!important;opacity:1!important;text-anchor:middle;paint-order:stroke;stroke:var(--white);stroke-width:5px;stroke-linejoin:round;fill:var(--ink)!important;font:600 11px var(--sans);cursor:pointer;pointer-events:visiblePainted}

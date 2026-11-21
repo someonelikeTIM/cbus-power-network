@@ -1,6 +1,7 @@
 import {explorerSearch} from './explorer-search.js';
 import {discoveryText,discoveryRank} from './search.js';
 import {readerField} from './reader-copy.js';
+import {investigations} from './investigations.js';
 
 // A tool result opens its control. Search never applies a setting on its own.
 export const deskCommands = [
@@ -51,7 +52,12 @@ export function searchDesk(graph, sources, byId, query, tags) {
       rank:discoveryRank(words,label,[ends,edge.id,edge.label,readerField(edge,'evidence')])};
   });
   const bestThree=list=>list.filter(hit=>Number.isFinite(hit.rank)).sort((a,b)=>a.rank-b.rank).slice(0,3);
-  const groups=[entities,topics,bestThree(links),bestThree(documents)].filter(group=>group.length);
+  const visibleEdges=new Set(graph.edges.map(edge=>edge.id));
+  const reports=investigations.filter(report=>report.records.some(id=>visibleEdges.has(id))).map(report=>({
+    kind:'investigation',id:report.id,label:report.title,description:'CBUS Power investigation · opens in a new tab',
+    rank:discoveryRank(words,report.title,report.terms)
+  }));
+  const groups=[entities,topics,bestThree(reports),bestThree(links),bestThree(documents)].filter(group=>group.length);
   groups.sort((a,b)=>a[0].rank-b[0].rank);
   const records=groups.flat();
   if(entities.some(hit=>hit.rank===0))return [...records,...tools];

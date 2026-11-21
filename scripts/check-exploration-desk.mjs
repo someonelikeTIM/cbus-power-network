@@ -36,6 +36,12 @@ assert.match(flockProject.finding,/ban on commercial sales/);assert.match(flockP
 assert.notEqual(hearingTestimony['policy-flock-hb725'].download,hearingTestimony['policy-aclu-hb725'].download);
 assert.match(plateReaderHearing,/ohiohouse\.gov\/committees\/public-safety\/meetings\//);
 assert.match(readerField(flockStep.records[0],'locator'),/p\. 3/);
+const leaseReport=search('Flock emergency').find(hit=>hit.kind==='investigation');
+assert.equal(leaseReport?.id,'flock-emergency');
+assert.ok(search('public comment').some(hit=>hit.id===leaseReport.id));
+assert.ok(!searchDesk({nodes,edges:[]},sources,byId,'Flock emergency',[]).some(hit=>hit.id===leaseReport.id));
+const reportPage=await readFile('dist/investigations/flock-emergency.html','utf8');
+assert.ok(reportPage.includes('?project='+flockProject.id+'&amp;step=e179'));
 const technologyProject=projects.get('ai-tech-lobbying');
 assert.ok(!starterProjects(nodes,edges,sources.filter(source=>source.id!=='policy-technet-sb163')).has(technologyProject.id));
 const firstTechnologyPin=technologyProject.route.edges[0];

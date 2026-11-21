@@ -15,14 +15,14 @@ const definitions = [
   },
   {
     id:'flock-plate-readers', icon:'projectCamera', title:'Flock and Ohio’s license plate reader rules',
-    teaser:'Trace a Columbus camera lease, a lobbying registration and opposing testimony on a state bill.',
+    teaser:'See what Flock asked lawmakers to do and why Columbus declared an emergency to lease its cameras.',
     finding:'In written testimony on November 17, 2026, Flock asked Ohio lawmakers to pass HB 725. It wanted a ban on commercial sales of license plate reader data, a recorded reason and an audit log for each search, and oversight with clear penalties for misuse.',
     sources:['policy-flock-hb725'],
     positions:{city:[0,0],capobianco:[0,1.65],flock:[1,.8],'ohio-hb725-alpr':[2,.8],'aclu-ohio':[3,0]},
     steps:[
       {title:'What Flock asked for',text:'Vaughn Roland, Flock’s government affairs director, also backed the bill’s rules on how long agencies could keep plate records. He wanted police to retain access for specific investigations.',excerpt:{text:'… prohibits the sale of LPR data, requires documented justification and auditable logs for searches, and provides meaningful oversight with clear penalties for misuse.',credit:'Vaughn Roland on the legislation Flock supported · p. 3'},links:{'policy-01':'Supported HB 725'},follow:'flock'},
       {title:'Why the ACLU objected',text:'At the same hearing, Gary Daniels of the ACLU of Ohio opposed the proposal to exempt police search inquiries from public records. He argued that residents should be able to learn how often and why officials search plate data.',links:{'policy-02':'Opposed HB 725'},follow:'aclu-ohio'},
-      {title:'The local decision',text:'In December 2024, Columbus City Council waived bidding and authorized up to $228,000 for a two-year lease of 38 fixed license plate readers.',links:{e179:'Lease authorized'},follow:'city'},
+      {title:'Why did Columbus rush the lease?',text:'Police told Council a procurement delay had left too little time to seek formal bids. On December 9, 2024, Council waived bidding and authorized up to $228,000 to lease 38 fixed plate readers for two years. Residents had about 72 hours from the final agenda posting to the deadline to sign up to speak.',links:{e179:'Lease authorized'},follow:'city'},
       {title:'The registered representative',text:'Columbus listed Louis Capobianco as Flock’s city lobbyist in its November 2025 roster.',links:{e171:'Registered lobbyist'},follow:'capobianco'}
     ]
   },

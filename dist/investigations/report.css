@@ -1,0 +1,15 @@
+body {background:var(--white)}
+.report-masthead {display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:13px max(5vw, 24px);border-bottom:1px solid var(--line)}
+.report-masthead a,.report footer a {color:var(--scarlet-dark);font-weight:650;text-underline-offset:.18em}
+.report-masthead .report-brand {display:inline-flex;align-items:center;gap:9px;color:var(--ink);font:700 1.3rem var(--sans);text-decoration:none}
+.report {width:min(100%, 51rem);margin:0 auto;padding:clamp(30px,5vw,62px) 24px}
+.report h1,.report h2 {font-family:var(--serif);font-weight:500;line-height:1.13;text-wrap:balance}
+.report h1 {font-size:clamp(2.35rem,4.5vw,3.6rem);letter-spacing:-.035em;margin:.32em 0}
+.report h2 {font-size:clamp(1.65rem,2.7vw,2.05rem);margin:0 0 .65em;scroll-margin-top:1rem}
+.report p {font-size:1.045rem;line-height:1.65;margin:.72em 0}
+.report .report-date {font-size:.81rem;font-weight:650;color:var(--muted)}
+.report .report-lede {font-size:1.22rem;line-height:1.5}
+.report section,.report footer {border-top:1px solid var(--line);padding-top:1.45rem;margin-top:1.8rem}
+.report .report-cites {display:flex;flex-wrap:wrap;align-items:baseline;gap:.35rem 1rem;margin:.5rem 0 1.35rem;padding-left:.68rem;border-left:2px solid var(--scarlet-line)}
+.report-cites a {color:var(--scarlet-dark);font:650 .83rem/1.5 var(--sans);text-decoration:underline;text-underline-offset:.17em}
+.report a:hover,.report-masthead a:hover {color:var(--scarlet)}

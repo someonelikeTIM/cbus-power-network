@@ -8,6 +8,7 @@ import { mediaProfiles,mediaLeads } from './media.js';
 import { readerField,profileCopy,leadStories,overlapLabel,hearingTestimony,plateReaderHearing } from './reader-copy.js';
 import {buildEntitySummaries} from './entity-summaries.js';
 import {starterProjects,isProjectMap,addProjectToResearch} from './starter-projects.js';
+import {investigations} from './investigations.js';
 import { datasetFor, evidencePacket, publicSource, release } from './contract.js';
 import { validityFor, validityInRange, findPaths, validateRange } from './reporting.js';
 import { relationshipMatches, sourceMatches } from './search.js';
@@ -426,6 +427,11 @@ function chooseSearchResult(result){
   if(result.kind==='entity'){toggleNode(result.id);focusRecordHeading();return;}
   if(result.kind==='tag'){applyTag(result.id,{toggle:false});return;}
   if(result.kind==='source'){inspectSource(result.id);return;}
+  if(result.kind==='investigation'){
+    const report=investigations.find(item=>item.id===result.id);
+    if(report)window.open(report.href,'_blank','noopener,noreferrer');
+    return;
+  }
   if(result.kind==='edge'){
     if(document.body.dataset.landing==='true')showConnectionOnMap(result.id);
     else selectEdge(result.id);
@@ -467,6 +473,11 @@ const publisherShortNames={'U.S. Department of Justice':'DOJ','WOSU Public Media
 const shortSourceTitles={'flock-contract-2024':'Columbus camera lease ordinance','city-lobbyists-2025':'Columbus city bulletin (PDF)'};
 function hearingLink(testimony){
   return `<a class="claim-ref" href="${plateReaderHearing}#:~:text=${encodeURIComponent(testimony.witness)}" target="_blank" rel="noopener noreferrer">View the House hearing and witness list</a>`;
+}
+function investigationLink(recordId){
+  const report=investigations.find(item=>item.records.includes(recordId));
+  if(!report)return '';
+  return `<aside class="related-investigation" aria-label="Related investigation"><span>Investigation</span><a href="${escape(report.href)}" target="_blank" rel="noopener noreferrer" aria-label="${escape(report.title)} (opens in a new tab)">${escape(report.title)}</a></aside>`;
 }
 function citationRefs(ids,order=ids){
   const ordered=[...new Set(order)];
@@ -1324,7 +1335,7 @@ function decorateInspector(){
   if(state.view==='network'&&selectionCount()>1){$('inspector').querySelector('h2')?.setAttribute('tabindex','-1');return;}
   const {kind,id}=state.selected,panel=$('inspector'),record=kind==='node'?nodeById.get(id):kind==='edge'?edgeById.get(id):kind==='source'?sourceById.get(id):null;
   if(!record)return;panel.querySelector('h2')?.setAttribute('tabindex','-1');
-  if(kind==='edge')panel.querySelector('.cited-claim')?.insertAdjacentHTML('afterend',contributionDates(record));
+  if(kind==='edge')panel.querySelector('.cited-claim')?.insertAdjacentHTML('afterend',contributionDates(record)+investigationLink(id));
   const details=document.createElement('div');details.className='record-tools';let evidence='';
   if(kind==='edge'){
     const {start,end}=validityFor(record);
@@ -1361,7 +1372,7 @@ function renderProjectReport(project){
       const via=step.follow&&step.records.find(edge=>edge.source===step.follow||edge.target===step.follow);
       const follow=via?`<button class="project-record" type="button" data-node-detail="${escape(step.follow)}" data-endpoint-of="${escape(via.id)}">Follow ${escape(nodeById.get(step.follow).name)}</button>`:'';
       const excerpt=step.excerpt?`<blockquote>“${escape(step.excerpt.text)}”<cite>${escape(step.excerpt.credit)}</cite></blockquote>`:'';
-      return `<li id="project-step-${escape(step.id)}" data-project-step="${escape(step.id)}"><h4 tabindex="-1">${escape(step.title)}</h4><p>${escape(step.text)}</p>${excerpt}<div class="intro-sources">${citationRefs(step.citations)}</div><div class="project-records">${follow}${records}</div></li>`;
+      return `<li id="project-step-${escape(step.id)}" data-project-step="${escape(step.id)}"><h4 tabindex="-1">${escape(step.title)}</h4><p>${escape(step.text)}</p>${excerpt}<div class="intro-sources">${citationRefs(step.citations)}</div>${investigationLink(step.id)}<div class="project-records">${follow}${records}</div></li>`;
     }).join('');
   }
   for(const row of $('project-steps').children){
