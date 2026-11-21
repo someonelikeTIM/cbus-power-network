@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="./campaign-finance.css">
   <link rel="stylesheet" href="./desktop-explorer.css">
   <link rel="stylesheet" href="./exploration-desk.css">
+  <link rel="stylesheet" href="./phone-explorer.css">
   <script type="module" src="./bootstrap.js"></script>
 </head>
 <body>
@@ -106,6 +107,15 @@
         <span class="trail-label">Your trail</span><nav id="exploration-trail" aria-label="Exploration trail"></nav><span id="trail-empty">Network overview</span><button id="return-map" type="button" hidden>Return to map</button><button id="show-all-pins" type="button" hidden>SHOW PINNED</button></div>
       <div id="pins-banner" hidden><span id="pins-summary" role="status"></span><button id="leave-pins" type="button">Back to exploration</button></div>
       <div id="scope-bar" hidden><div id="active-tags" role="group" aria-label="Active tags" hidden></div><div id="active-filters" class="active-filters" aria-label="Active filters" hidden></div></div>
+      <div id="phone-controls" class="phone-only">
+        <button id="phone-menu" class="glass-control" type="button" aria-label="Explorer menu" aria-controls="phone-sheet" aria-expanded="false"><img src="./favicon.svg?v=spyglass" width="25" height="25" alt=""><span>CBUS Power</span><span data-phone-icon="menu"></span></button>
+        <button id="phone-search" class="glass-control round-control" type="button" aria-label="Search the network" aria-controls="phone-sheet" aria-expanded="false"><span data-phone-icon="search"></span></button>
+      </div>
+      <aside id="phone-notice" class="phone-only" aria-label="Display tip"><span data-phone-icon="desktop"></span><span>Best on desktop</span><button type="button" aria-label="Dismiss desktop tip"><span data-phone-icon="close"></span></button></aside>
+      <div id="phone-map-controls" class="phone-only">
+        <div id="phone-zoom" aria-label="Zoom and fit" hidden></div>
+        <button id="phone-map-button" class="glass-control round-control" type="button" aria-label="Map controls" aria-controls="phone-zoom" aria-expanded="false"><span data-phone-icon="controls"></span></button>
+      </div>
       <div id="desk-body" hidden>
       <div id="desk-main">
       <div id="list-search-row" hidden><label for="list-search">Filter these records</label><input id="list-search" type="search" autocomplete="off"><button id="export-visible" type="button">Download data</button></div>
@@ -199,6 +209,36 @@
           </section>
         </div>
       </aside>
+      <section id="phone-sheet" class="phone-only" aria-labelledby="phone-title">
+        <header class="phone-sheet-header">
+          <h2><button id="phone-handle" type="button" aria-controls="phone-sheet-body" aria-expanded="false" aria-keyshortcuts="ArrowUp ArrowDown Home End"><span class="sheet-grip" aria-hidden="true"></span><span id="phone-title">Research projects</span><span data-phone-icon="chevron"></span></button></h2>
+          <button id="phone-close" type="button" aria-label="Close panel" hidden><span data-phone-icon="close"></span></button>
+        </header>
+        <div id="phone-sheet-body" hidden>
+          <div id="phone-projects" class="phone-page" hidden></div>
+          <div id="phone-search-page" class="phone-page" hidden>
+            <div id="phone-search-slot"></div>
+            <div class="phone-view-grid" id="phone-search-shortcuts">
+              <button type="button" id="phone-search-projects"><span data-phone-icon="projects"></span>Research projects</button>
+              <button type="button" id="phone-random"><span data-phone-icon="network"></span>Random entity</button>
+            </div>
+          </div>
+          <div id="phone-menu-page" class="phone-page" hidden>
+            <nav class="phone-view-grid" aria-label="Explorer views">
+              <button type="button" data-phone-view="network"><span data-phone-icon="network"></span>Network</button>
+              <button type="button" data-phone-view="relations"><span data-phone-icon="links"></span>Links</button>
+              <button type="button" data-phone-view="directory"><span data-phone-icon="entities"></span>Entities</button>
+              <button type="button" data-phone-view="sources"><span data-phone-icon="sources"></span>Sources</button>
+            </nav>
+            <div id="phone-tool-buttons"></div>
+            <div class="phone-view-grid"><button type="button" id="phone-project-button"><span data-phone-icon="projects"></span>Research projects</button><button type="button" id="phone-tabs"><span data-phone-icon="workspace"></span>Workspace</button></div>
+            <div id="phone-trail"></div>
+          </div>
+          <div id="phone-library" class="phone-page" hidden></div>
+          <div id="phone-record" class="phone-page" hidden></div>
+          <div id="phone-tool" class="phone-page" hidden></div>
+        </div>
+      </section>
       </div>
     </section>
 

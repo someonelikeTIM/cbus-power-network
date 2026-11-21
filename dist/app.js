@@ -94,7 +94,8 @@ let hoveredEdge=null;
 const desk=mountDesk({
   nodes,edges,sources,search:query=>searchDesk(baseGraph(),sources,nodeById,query,state.tags,projects.values()).filter(hit=>hit.id!=='show-pins'||state.research.steps.length),
   choose:chooseSearchResult,start:id=>{toggleNode(id);focusRecordHeading();},launch:launchPanel,changed:scheduleWorkspaceState,
-  projects,openProject:openStarterProject,returnToList,beforeCompact:()=>rememberProjectPlace('',true)
+  projects,openProject:openStarterProject,returnToList,beforeCompact:()=>rememberProjectPlace('',true),navigate:navigateSection,
+  presentationChanged:()=>{if(graph){render(document.body.dataset.emptyStart==='true');measureWorkspace();}}
 });
 function focusEntityId(){return state.focus&&!state.pinOverview?(state.focusEntity||(state.selected?.kind==='node'?state.selected.id:null)):null;}
 const explorationHistory=[];
@@ -254,6 +255,17 @@ function networkGraph(){
     return {...networkForPins({nodes,edges},currentResearch().pinnedEntities,state.pinnedEdgeIds),pinNetwork:true,matches:[]};
   }
   const available=connectedCanvas(filterGraph(state));let result=available;
+  if(desk.phone&&isEmptyStart()&&state.mapMode==='explore'&&!state.bucketMode&&available.edges.length===edges.length){
+    // Use the first four distinct city connections in published order. Keep their world positions.
+    const ids=new Set(['city']);
+    for(const edge of available.edges){
+      if(edge.source==='city')ids.add(edge.target);
+      if(edge.target==='city')ids.add(edge.source);
+      if(ids.size===5)break;
+    }
+    hiddenByDistance=0;
+    return {...exploredGraph(available,ids),phoneIntro:true,totalEntities:available.nodes.length};
+  }
   if(state.path){const ids=new Set(state.path.nodes);result={...available,nodes:available.nodes.filter(node=>ids.has(node.id)),edges:available.edges.filter(edge=>state.path.edges.includes(edge.id))};}
   else if(state.tags.size)result=taggedGraph(available,state.tags);
   const roots=visibilityRoots(available);hiddenByDistance=0;
@@ -443,7 +455,7 @@ function chooseSearchResult(result){
     return;
   }
   if(result.kind==='edge'){
-    if(document.body.dataset.landing==='true')showConnectionOnMap(result.id);
+    if(document.body.dataset.landing==='true'||desk.phone&&isEmptyStart())showConnectionOnMap(result.id);
     else selectEdge(result.id);
     focusRecordHeading();return;
   }
@@ -701,9 +713,9 @@ function buildGraph() {
   });
   $('graph').addEventListener('click', event => {
     if (suppressClick&&event.detail!==0) { suppressClick = false; return; }
-    desk.focusWidth(false);
     const pin=event.target.closest('[data-pin]');if(pin){togglePin(pin.dataset.pin);return;}
     const target = event.target.closest('[data-node],[data-edge],[data-route]');
+    if(!target||!desk.phone)desk.focusWidth(false);
     if(target?.dataset.route!==undefined)showExplorationPath(indirectRoutes[Number(target.dataset.route)]);
     else if (target?.dataset.node) selectRecord('node',target.dataset.node,event.ctrlKey||event.metaKey);
     else if (target?.dataset.edge) selectRecord('edge',target.dataset.edge,event.ctrlKey||event.metaKey);
@@ -794,7 +806,7 @@ function buildGraph() {
     else if(drag.route!==undefined){showExplorationPath(indirectRoutes[Number(drag.route)]);suppressClick=true;}
     else if (drag.id) { selectRecord('node',drag.id,drag.additive); suppressClick = true; }
     else if (drag.edge) { selectRecord('edge',drag.edge,drag.additive); suppressClick = true; }
-    if(!drag.moved&&event.button===0)desk.focusWidth(false);
+    if(!drag.moved&&event.button===0&&(!desk.phone||!drag.pin&&!drag.id&&!drag.edge&&drag.route===undefined))desk.focusWidth(false);
     drag = null;
     $('graph').dataset.panning='false';
     if ($('graph').hasPointerCapture(event.pointerId)) $('graph').releasePointerCapture(event.pointerId);
@@ -824,7 +836,7 @@ function buildGraph() {
 
 function mapObstacles(){
   const canvas=$('canvas-area').getBoundingClientRect();
-  const panels=[$('map-status'),document.querySelector('.graph-controls')];
+  const panels=desk.phone?[...document.querySelectorAll('#phone-sheet,#phone-menu,#phone-search,#phone-notice,#phone-map-controls')]:[$('map-status'),document.querySelector('.graph-controls')];
   if($('desk-body').dataset.dock==='floating')panels.push($('record-dock'));
   return panels.filter(el=>el.getClientRects().length).map(el=>{
     const r=el.getBoundingClientRect();
@@ -878,8 +890,9 @@ function focusEdges(){
 function fittedCamera(){
   if(!graph?.nodes.length)return {...camera};
   const bounds=$('canvas-area').getBoundingClientRect();if(bounds.width<1||bounds.height<1)return {...camera};dimensions={width:bounds.width,height:bounds.height};
-  if(graph.pinNetwork||state.path){
-    const project=mappedProject(),space=explorationViewport(),padding=project?Math.max(20,Math.min(88,space.width/5,space.height/5)):Math.max(10,Math.min(44,space.width/7,space.height/7));
+  if(graph.phoneIntro||graph.pinNetwork||state.path){
+    const project=mappedProject(),space=explorationViewport();
+    const padding=graph.phoneIntro?Math.min(70,space.width*.2,space.height*.2):project?Math.max(20,Math.min(88,space.width/5,space.height/5)):Math.max(10,Math.min(44,space.width/7,space.height/7));
     const fit=frameNetwork(graph.nodes.map(node=>node.id),positions,{width:space.width,height:space.height,padding});
     const result={x:fit.x+space.left,y:fit.y+space.top,z:fit.z};
     if(project||graph.pinNetwork)lastScopeFit={id:project?.id||'pins',...result};
@@ -904,7 +917,15 @@ function moveCamera(target){
     if(t<1)motion.frame=requestAnimationFrame(step);else{cameraMotion=null;scheduleWorkspaceState();}
   };motion.frame=requestAnimationFrame(step);
 }
-function explorationViewport(){return explorationSpace(dimensions.width,dimensions.height,mapObstacles(),desk.stacked);}
+function explorationViewport(){
+  if(desk.phone){
+    const canvas=$('canvas-area').getBoundingClientRect(),sheet=$('phone-sheet').getBoundingClientRect();
+    const top=Math.max(8,$('phone-controls').getBoundingClientRect().bottom-canvas.top+8);
+    const bottom=Math.max(top+1,sheet.top-canvas.top-10),left=12,right=Math.max(left+1,canvas.width-12);
+    return {left,top,right,bottom,width:right-left,height:bottom-top};
+  }
+  return explorationSpace(dimensions.width,dimensions.height,mapObstacles(),desk.stacked);
+}
 function focusExploration(id,direct=false){
   if(state.view!=='network')return;
   // Opening docked Details changes the canvas synchronously. Use its new size
@@ -1031,7 +1052,7 @@ function positionGraph() {
 }
 
 function placeLabels(){
-  if(state.view!=='network'||!graph)return;
+  if(!graph||state.view!=='network'&&!desk.phone)return;
   semanticNodes=new Set(graph.nodes.map(n=>n.id));semanticEdges=new Set(graph.edges.map(e=>e.id));
   const center=focusEntityId(),neighbors=center?directConnections(graph,center,state.focusType).nodes:new Set(),pathIds=new Set(state.walk.map(step=>step.id));
   for(const id of state.multiEdges){const edge=edgeById.get(id);if(edge){neighbors.add(edge.source);neighbors.add(edge.target);}}
@@ -1040,11 +1061,12 @@ function placeLabels(){
   for(const node of graph.nodes){const entry=nodeEls.get(node.id),style=styleNode(node.id,camera.z);semanticStyles.set(node.id,style);
     entry.group.style.display='';entry.group.style.opacity='1';entry.group.setAttribute('aria-hidden','false');entry.core.setAttribute('tabindex','0');entry.group.dataset.semanticHidden='false';
     entry.group.classList.toggle('origin-node',state.walk[0]?.id===node.id);entry.letter.style.display=style.radius>=11?'':'none';
-    const selected=state.multiNodes.has(node.id)||graph.pinNetwork&&state.pinnedIds.has(node.id),neighbor=state.showDirect&&neighbors.has(node.id),show=state.labels!=='off'&&showNetworkLabel(degrees.get(node.id),camera.z,{selected:selected||hoveredNode===node.id||pathIds.has(node.id),neighbor,all:!!project||state.labels==='all'||state.bucketMode});
+    const selected=state.multiNodes.has(node.id)||graph.pinNetwork&&state.pinnedIds.has(node.id),neighbor=state.showDirect&&neighbors.has(node.id),show=state.labels!=='off'&&showNetworkLabel(degrees.get(node.id),camera.z,{selected:selected||hoveredNode===node.id||pathIds.has(node.id),neighbor,all:!!project||graph.phoneIntro||state.labels==='all'||state.bucketMode});
     if(!show){entry.label.style.display='none';continue;}
     const key=node.id+'|'+style.font;let measure=labelMeasurements.get(key);if(!measure){bubbleTextMeasure.font='700 '+style.font+'px '+getComputedStyle(document.documentElement).getPropertyValue('--sans');measure={w:Math.max(...entry.normalLines.map(line=>bubbleTextMeasure.measureText(line).width))+6,h:entry.normalLines.length*style.font*1.12+2};labelMeasurements.set(key,measure);}
     const p=positions.get(node.id);candidates.push({id:node.id,x:camera.x+p.x*camera.z,y:camera.y+p.y*camera.z,r:style.radius,...measure,priority:selected?10000:hoveredNode===node.id?9500:state.walk[0]?.id===node.id?9000:pathIds.has(node.id)?8000:neighbor?6000:degrees.get(node.id)*10});
   }
+  if(graph.phoneIntro)for(const point of candidates)obstacles.push({left:point.x-point.r,top:point.y-point.r,right:point.x+point.r,bottom:point.y+point.r});
   const labels=labelPlacements(candidates,{...dimensions,obstacles,gap:3});
   for(const item of candidates){const entry=nodeEls.get(item.id),box=labels.get(item.id);entry.label.style.display=box?'':'none';if(box){const style=semanticStyles.get(item.id);entry.label.setAttribute('transform',`translate(${(box.left+item.w/2-item.x)/camera.z} ${(box.top+style.font-item.y)/camera.z}) scale(${1/camera.z})`);}}
   for(const [id,entry]of edgeEls){const shown=semanticEdges.has(id);entry.group.style.display=shown?'':'none';entry.hit.setAttribute('tabindex',shown?'0':'-1');entry.hit.setAttribute('aria-hidden',String(!shown));entry.label.style.display='none';}
@@ -1114,6 +1136,9 @@ function renderWalk(){
 }
 
 
+function isEmptyStart(){
+  return !state.research.steps.length&&!state.pinOverview&&!state.tags.size&&state.customStart&&!state.startingIds.size&&!state.query&&!state.selected&&!state.path&&!state.walk.length;
+}
 function renderGraph(position=true) {
   $('graph').dataset.projectMap=String(!!mappedProject());
   document.body.dataset.grouped=String(state.bucketMode&&!graph.pinNetwork);
@@ -1180,9 +1205,9 @@ function renderGraph(position=true) {
   }
   raisePathForeground();
   if(tagFocus){tagFocus.edges.forEach(id=>bringForward(edgeEls.get(id)));tagFocus.nodes.forEach(id=>bringForward(nodeEls.get(id)));}
-  const emptyStart=!state.research.steps.length&&!graph.pinNetwork&&!state.tags.size&&state.customStart&&!state.startingIds.size&&!state.query&&!state.selected&&!state.path&&!state.walk.length;
+  const emptyStart=isEmptyStart();
   document.body.dataset.emptyStart=String(emptyStart);
-  $('graph-empty').hidden = graph.nodes.length > 0||emptyStart;
+  $('graph-empty').hidden = graph.nodes.length > 0||emptyStart&&!desk.phone;
   $('graph-empty').querySelector('h2').textContent=state.tags.size?'No records match these tags':'No entities found';$('graph-empty').querySelector('p').textContent=state.tags.size?'Remove a tag or change the filters to explore more. Combined entity and connection tags follow up to two recorded links.':'Try a different search or reset the filters.';
   $('visible-count').textContent = `${graph.nodes.length} ${graph.nodes.length===1?'entity':'entities'} · ${graph.edges.length} ${graph.edges.length===1?'connection':'connections'}`+(hiddenByDistance&&state.view==='network'?` · ${hiddenByDistance} hidden`:'');
   $('selection-chip').hidden = !state.focus && !state.path;
@@ -1345,7 +1370,8 @@ function renderMediaOverview(){
 function render(refit = false) {
   tagStatsCache=new Map();
   renderMediaOverview(); renderFilterChips();
-  graph = state.view==='network'?networkGraph():filterGraph(state);
+  if(state.view==='network')graph=networkGraph();
+  else if(!desk.phone||!graph)graph=filterGraph(state);
   if(state.view==='network'&&!graph.pinNetwork){
     state.multiNodes=new Set([...state.multiNodes].filter(id=>graph.nodes.some(node=>node.id===id)));
     state.multiEdges=new Set([...state.multiEdges].filter(id=>graph.edges.some(edge=>edge.id===id)));
@@ -1506,7 +1532,7 @@ function setView(view) {
   state.view = view;
   document.querySelectorAll('[data-view]').forEach(el => { const active = el.dataset.view === view; el.classList.toggle('active', active); active ? el.setAttribute('aria-current', 'page') : el.removeAttribute('aria-current'); });
   $('return-map').hidden=view==='network'||!networkReturn;
-  for (const name of ['network','relations','directory','sources']) $(`${name}-view`).hidden = name !== view;
+  for (const name of ['network','relations','directory','sources']) $(`${name}-view`).hidden = name !== view&&!(desk.phone&&name==='network');
   document.querySelector('.workspace').setAttribute('data-current-view', view);
   document.body.dataset.view=view;
   $('list-search').placeholder=view==='sources'?'Title or publisher…':view==='relations'?'Connection or entity…':'Name or role…';
@@ -1669,8 +1695,8 @@ document.addEventListener('click', event => {
   if(projectLink){event.preventDefault();document.querySelector('dialog[open]')?.close();$(projectLink.dataset.projectDialog).showModal();return;}
   const btn = event.target.closest('button'); if (!btn) return;
   if(btn.id==='project-return'){openStarterProject(state.projectId,true);return;}
-  if(btn.dataset.removeTag){applyTag(btn.dataset.removeTag);$('search').focus({preventScroll:true});return;}
-  if(btn.hasAttribute('data-add-tag')){$('search').focus({preventScroll:true});return;}
+  if(btn.dataset.removeTag){applyTag(btn.dataset.removeTag);desk.focusSearch();return;}
+  if(btn.hasAttribute('data-add-tag')){desk.focusSearch();return;}
   if(btn.dataset.tag){applyTag(btn.dataset.tag);return;}
   if(btn.dataset.closeFloating){desk.closeTool();return;}
   if (btn.dataset.openCase) { setCase(btn.dataset.openCase); setView('network'); }
@@ -1969,10 +1995,14 @@ function restoreWorkspaceView(input,{keepUndo=false}={}){
 window.addEventListener('message',event=>{
   if(event.origin!==location.origin||event.source!==window.parent||event.data?.channel!=='columbus-explorer')return;
   if(Number.isFinite(event.data.viewportHeight))document.documentElement.style.setProperty('--desk-height',Math.max(1,event.data.viewportHeight)+'px');
+  if(Array.isArray(event.data.safeArea))['top','right','bottom','left'].forEach((edge,i)=>{
+    const inset=event.data.safeArea[i];if(Number.isFinite(inset))document.documentElement.style.setProperty('--phone-safe-'+edge,inset+'px');
+  });
   if(Number.isFinite(event.data.visibleBottom))desk.setVisibleBottom(event.data.visibleBottom);
   if(event.data.type==='restore'){try{restoreWorkspaceView(event.data.snapshot);if(event.data.focusEntry&&document.body.dataset.landing==='true')desk.focusSearch();}catch{toast('This view could not be restored.');}}
   if(event.data.type==='navigate'&&['network','relations','directory','sources'].includes(event.data.view)){navigateSection(event.data.view);measureWorkspace();publishWorkspaceState();}
   if(event.data.type==='focus-search')desk.focusSearch();
+  if(event.data.type==='phone-focus'&&desk.phone)($('phone-tabs').getClientRects().length?$('phone-tabs'):$('phone-menu')).focus({preventScroll:true});
   if(event.data.type==='research-library')researchUI.openSaved();
   if(event.data.type==='capture')publishWorkspaceState(event.data.requestId);if(event.data.type==='measure')requestAnimationFrame(()=>{if(state.view==='network'&&graph&&$('canvas-area').getBoundingClientRect().width>0){positionGraph();}measureWorkspace();});
 });

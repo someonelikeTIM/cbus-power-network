@@ -4,6 +4,7 @@ import {repositoryURL} from './project-links.js';
 import {parseWorkspace, validateView, workspaceFile, maximumViews} from './saved-views.js';
 import {researchFormat,researchSnapshot} from './research-paths.js';
 import {starterProjects} from './starter-projects.js';
+import {phoneViewport} from './phone-explorer.js';
 
 const ids = new Set(nodes.map(node => node.id));
 const names = new Map(nodes.map(node => [node.id,node.name]));
@@ -11,6 +12,8 @@ const projects = starterProjects(nodes,edges,sources);
 const libraryKey = 'columbus-network:saved-views-v1';
 const sessionKey = 'columbus-network:workspace-v1';
 const frames = new Map();
+const phoneScreen=matchMedia(phoneViewport);
+document.body.toggleAttribute('data-phone-canvas',phoneScreen.matches);
 const captures = new Map();
 let captureSerial = 0;
 const emptySnapshot = () => ({query: '', positions: [], camera: {x: 0, y: 0, z: 1}, dimensions: {width: 800, height: 570}, details: {open: true, docked: false, width: 380}});
@@ -41,16 +44,38 @@ if (repositoryURL) {
   $('github-contribute').href = repositoryURL + '/blob/main/docs/CONTRIBUTING.md';
   $('github-contact').href = repositoryURL + '/issues'; $('github-contact').hidden = false;
 }
-const status = message => { document.querySelector('.workspace-status').textContent = message; };
+const statusLine=document.querySelector('.workspace-status');
+let statusTimer;
+const status = message => {
+  clearTimeout(statusTimer);statusLine.textContent=message;
+  if(message&&phoneScreen.matches)statusTimer=setTimeout(()=>{statusLine.textContent='';},4500);
+};
 const currentView = () => views.find(view => view.id === activeId);
 const panes = document.querySelector('.explorer-panes');
 const actions = document.querySelector('.workspace-actions');
 const menu = document.querySelector('.views-menu');
 const masthead = document.querySelector('.masthead');
 const bar = document.querySelector('.workspace-bar');
+const workspaceDialog=document.createElement('dialog');
+workspaceDialog.id='phone-workspace';workspaceDialog.setAttribute('aria-labelledby','phone-workspace-title');
+workspaceDialog.innerHTML='<header><h2 id="phone-workspace-title">Workspace</h2><form method="dialog"><button class="dialog-close" aria-label="Close workspace">×</button></form></header>';
+document.body.append(workspaceDialog);
+const information=footer.querySelector('nav');
+const edition=document.createElement('div');edition.className='phone-edition';
+function openPhoneWorkspace(){
+  if(!phoneScreen.matches||workspaceDialog.open)return;
+  edition.append($('review-date'),$('release-label'));
+  workspaceDialog.append(bar,statusLine,information,edition);menu.open=true;workspaceDialog.showModal();
+}
+workspaceDialog.addEventListener('close',()=>{
+  explorer.prepend(bar);panes.after(statusLine);footer.append($('review-date'),$('release-label'),information);menu.open=false;
+  if(phoneScreen.matches)send(activeId,'phone-focus');
+  measurePanes();
+});
 const narrowHost = () => panes.clientWidth < 960;
 const visibleHeight = () => window.visualViewport?.height ?? innerHeight;
 function baseHeight() {
+  if(phoneScreen.matches)return Math.max(1,Math.floor(visibleHeight()));
   const below = narrowHost() ? parseFloat(getComputedStyle(panes).paddingBottom) : footer.offsetHeight + 18;
   return Math.max(1, Math.floor(visibleHeight() - masthead.offsetHeight - bar.offsetHeight - below));
 }
@@ -58,7 +83,9 @@ function send(id, type, payload = {}) {
   const frame = frames.get(id)?.frame;
   if (!frame) return;
   const visibleBottom = (window.visualViewport?.offsetTop || 0) + visibleHeight() - frame.getBoundingClientRect().top;
-  frame.contentWindow?.postMessage({channel: 'columbus-explorer', type, narrowHost:narrowHost(), viewportHeight:baseHeight(), visibleBottom, ...payload}, location.origin);
+  const style=phoneScreen.matches?getComputedStyle(document.documentElement):null;
+  const safeArea=style?['top','right','bottom','left'].map(edge=>parseFloat(style.getPropertyValue('--host-safe-'+edge))||0):null;
+  frame.contentWindow?.postMessage({channel: 'columbus-explorer', type, narrowHost:narrowHost(), viewportHeight:baseHeight(), visibleBottom,safeArea, ...payload}, location.origin);
 }
 function capture(id) {
   return new Promise((resolve,reject)=>{
@@ -136,6 +163,7 @@ function renderTabs() {
 }
 function activate(id) {
   if (!views.some(view => view.id === id)) return;
+  if(workspaceDialog.open)workspaceDialog.close();
   status('');
   if (id !== primaryId && id !== secondaryId) {
     if (activeId === secondaryId) secondaryId = id; else primaryId = id;
@@ -202,7 +230,7 @@ function showLibrary() {
   });
 }
 $('load-view').addEventListener('click', () => { showLibrary(); $('view-library').showModal(); });
-$('load-research').addEventListener('click',()=>send(activeId,'research-library'));
+$('load-research').addEventListener('click',()=>{if(workspaceDialog.open)workspaceDialog.close();send(activeId,'research-library');});
 async function exportViews(all) {
   const chosen = all ? views : [currentView()];
   try{await Promise.all(chosen.map(view=>capture(view.id)));}catch(error){status(error.message);return;}
@@ -230,6 +258,7 @@ window.addEventListener('message', event => {
   if (event.origin !== location.origin || event.data?.channel !== 'columbus-explorer') return;
   const entry = [...frames.entries()].find(([, entry]) => entry.frame.contentWindow === event.source); if (!entry) return;
   const [id, frame] = entry, view = views.find(view => view.id === id);
+  if(event.data.type==='phone-workspace'){if(id===activeId)openPhoneWorkspace();return;}
   if(event.data.type==='workspace-action'){
     if(!['save-view','load-view','import-views','new-view','export-view','export-workspace','split-views','rename-view'].includes(event.data.action))return;
     if(id!==activeId)activate(id);
@@ -255,7 +284,7 @@ window.addEventListener('message', event => {
     if (Number.isFinite(height)) {
       const wasEntry = frame.entryHeight > 0;
       frame.entryHeight = Math.max(0, Math.min(150000, height));
-      frame.frame.style.height = Math.max(baseHeight(), frame.entryHeight) + 'px';
+      frame.frame.style.height = (phoneScreen.matches?baseHeight():Math.max(baseHeight(),frame.entryHeight)) + 'px';
       if (wasEntry && !height && id === activeId && narrowHost()) window.scrollTo(0, 0);
     }
     return;
@@ -294,8 +323,8 @@ document.querySelector('.view-nav').addEventListener('click', event => {
 });
 document.addEventListener('click', event => {
   const link = event.target.closest('[data-project-dialog]');
-  if (link) { event.preventDefault(); document.querySelector('dialog[open]')?.close(); $(link.dataset.projectDialog).showModal(); }
-  if (event.target.closest('.views-menu button')) document.querySelector('.views-menu').open = false;
+  if (link) { event.preventDefault(); if(!workspaceDialog.contains(link))document.querySelector('dialog[open]')?.close(); $(link.dataset.projectDialog).showModal(); }
+  if (!workspaceDialog.open&&event.target.closest('.views-menu button')) menu.open = false;
 });
 document.addEventListener('keydown',event=>{
   if(document.querySelector('dialog[open]')||event.target.closest('input,select,textarea,[contenteditable=true]'))return;
@@ -310,14 +339,20 @@ function measurePanes() {
   cancelAnimationFrame(pendingMeasure);
   pendingMeasure = requestAnimationFrame(() => {
     if (String(narrowHost()) !== document.body.dataset.narrowHost) renderTabs();
+    if(phoneScreen.matches)document.body.style.setProperty('--phone-viewport-top',(window.visualViewport?.offsetTop||0)+'px');
     for (const [id, entry] of frames) {
       if (entry.pane.hidden) continue;
-      entry.frame.style.height = Math.max(baseHeight(), entry.entryHeight || 0) + 'px';
+      entry.frame.style.height = (phoneScreen.matches?baseHeight():Math.max(baseHeight(),entry.entryHeight||0)) + 'px';
       send(id, 'measure');
     }
   });
 }
 window.addEventListener('resize', measurePanes);
+phoneScreen.addEventListener('change',()=>{
+  document.body.toggleAttribute('data-phone-canvas',phoneScreen.matches);
+  if(!phoneScreen.matches&&workspaceDialog.open)workspaceDialog.close();
+  measurePanes();
+});
 window.visualViewport?.addEventListener('resize', measurePanes);
 window.visualViewport?.addEventListener('scroll', measurePanes);
 const chromeSize = new ResizeObserver(measurePanes);

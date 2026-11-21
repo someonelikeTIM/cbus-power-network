@@ -1,0 +1,140 @@
+/* Phone chrome lives above a full-bleed canvas. Desktop and comparison panes keep their desk. */
+:root {
+  --host-safe-top:env(safe-area-inset-top,0px);
+  --host-safe-right:env(safe-area-inset-right,0px);
+  --host-safe-bottom:env(safe-area-inset-bottom,0px);
+  --host-safe-left:env(safe-area-inset-left,0px);
+}
+.phone-only {display:none}
+[data-phone-icon] {display:contents}
+@media(width < 640px), (pointer:coarse) and (orientation:landscape) and (height < 550px) and (width < 960px) {
+  body[data-workspace-host] :is(.masthead,.page-footer),body[data-workspace-host] #explorer:not(:has(.explorer-panes)) {display:none}
+}
+body[data-phone-canvas] {
+  --glass:rgba(252,253,253,.76);
+  --glass-border:rgba(255,255,255,.92);
+  --glass-shadow:inset 0 1px 1px white,0 2px 5px #24363d12,0 8px 24px #24363d19;
+}
+body[data-workspace-host][data-phone-canvas] {padding:0;overflow:hidden;overscroll-behavior:none}
+body[data-workspace-host][data-phone-canvas] :is(.masthead,.page-footer),
+body[data-workspace-host][data-phone-canvas] #explorer>.workspace-bar {display:none}
+body[data-workspace-host][data-phone-canvas] :is(main,#explorer,.explorer-panes,.explorer-pane) {margin:0;padding:0;border:0;min-width:0}
+body[data-workspace-host][data-phone-canvas] main>#explorer {position:fixed;inset:var(--phone-viewport-top,0px) 0 auto}
+body[data-workspace-host][data-phone-canvas] #explorer>.workspace-status:not(:empty) {position:fixed;z-index:4;left:12px;right:12px;top:calc(var(--host-safe-top) + 68px);margin:0;padding:8px 14px;border-radius:15px;background:var(--glass);box-shadow:var(--glass-shadow);pointer-events:none}
+body[data-embedded][data-phone-canvas] {overflow:hidden;overscroll-behavior:none}
+body[data-embedded][data-phone-canvas] #explorer {display:block;height:var(--desk-height,100dvh);min-height:0;overflow:hidden;isolation:isolate}
+body[data-phone-canvas] #explorer :is(#entry,#desk-bar) {display:none}
+body[data-phone-canvas] #desk-body[data-dock=phone],
+body[data-phone-canvas] #desk-body[data-dock=phone] #desk-main {position:absolute;inset:0;display:block;border:0;padding:0;margin:0}
+body[data-phone-canvas] #desk-main>#network-view,
+body[data-phone-canvas] #network-view #graph-stage,
+body[data-phone-canvas] #network-view #canvas-area {display:block;position:absolute;inset:0;width:100%;height:100%;min-height:0;max-height:none}
+body[data-phone-canvas] #network-view #canvas-area {
+  background:radial-gradient(circle,#71828740 .8px,transparent 1px) 0 0 / 22px 22px,linear-gradient(155deg,#f0f4f4,#f9f8f4 62%,#edf1f2);
+}
+body[data-phone-canvas] #network-view :is(#map-status,.selection-chip,.graph-footer) {display:none!important}
+body[data-phone-canvas][data-empty-start=true] #graph #edge-layer .graph-edge {opacity:.68;stroke-width:1.35}
+body[data-phone-canvas] #explorer :is(#phone-controls,#phone-map-controls,#phone-notice,#phone-sheet) {box-sizing:border-box}
+body[data-phone-canvas] #phone-controls {
+  position:absolute;z-index:24;top:calc(var(--phone-safe-top,0px) + 12px);
+  left:calc(var(--phone-safe-left,0px) + 14px);right:calc(var(--phone-safe-right,0px) + 14px);
+  display:flex;align-items:center;justify-content:space-between;pointer-events:none;
+}
+body[data-phone-canvas] :is(.glass-control,#phone-notice,#phone-zoom,#phone-sheet) {
+  border:1px solid var(--glass-border);background:var(--glass);color:var(--ink);box-shadow:var(--glass-shadow);
+  -webkit-backdrop-filter:blur(20px) saturate(145%);backdrop-filter:blur(20px) saturate(145%);
+}
+body[data-phone-canvas] .glass-control {display:inline-flex;align-items:center;justify-content:center;gap:8px;height:48px;min-width:48px;padding:0 13px;border-radius:24px;pointer-events:auto;touch-action:manipulation}
+body[data-phone-canvas] .round-control {width:48px;padding:0;border-radius:50%}
+body[data-phone-canvas] .glass-control[aria-expanded=true] {background:rgba(249,232,233,.94);color:var(--scarlet-dark)}
+body[data-phone-canvas] :is(#phone-controls,#phone-notice,#phone-sheet,#phone-map-button) svg:not(.desk-icon) {width:21px;height:21px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+body[data-phone-canvas] #phone-menu {padding-left:9px;gap:7px;font:700 .94rem/1 var(--sans);letter-spacing:-.04em}
+body[data-phone-canvas] #phone-menu svg {width:16px;height:16px;margin-left:2px}
+body[data-phone-canvas] #phone-menu img {display:block}
+body[data-phone-canvas] #phone-notice {display:flex;align-items:center;gap:7px;position:absolute;z-index:21;left:50%;top:calc(var(--phone-safe-top,0px) + 72px);transform:translateX(-50%);padding:0 0 0 12px;border-radius:24px;color:#41484d;font:550 .78rem/1 var(--sans);white-space:nowrap}
+body[data-phone-canvas] #phone-notice svg {width:16px;height:16px}
+body[data-phone-canvas] #phone-notice button,body[data-phone-canvas] #phone-close {display:grid;place-items:center;min-width:44px;min-height:44px;border:0;background:transparent;color:inherit;padding:0}
+body[data-phone-canvas] #phone-notice button svg {width:13px;height:13px}
+body[data-phone-canvas] #phone-map-controls {position:absolute;z-index:22;right:calc(var(--phone-safe-right,0px) + 14px);bottom:calc(var(--phone-sheet-height,64px) + 12px);display:flex;align-items:center;gap:8px}
+body[data-phone-canvas] #phone-zoom {border-radius:24px;overflow:hidden}
+body[data-embedded][data-phone-canvas] #phone-zoom .graph-controls {display:flex!important;position:static;inset:auto;transform:none;padding:1px 4px;gap:0;border:0;background:transparent;box-shadow:none}
+body[data-phone-canvas] #phone-zoom .graph-controls button {height:44px;width:44px;border-radius:50%}
+body[data-phone-canvas] #phone-sheet {
+  display:flex;flex-direction:column;position:absolute;inset:auto 0 0;z-index:11;height:var(--phone-sheet-height,64px);
+  padding:0 var(--phone-safe-right,0px) var(--phone-safe-bottom,0px) var(--phone-safe-left,0px);
+  min-width:0;overflow:hidden;border-radius:26px 26px 0 0;border-bottom:0;
+  background:rgba(253,253,252,.91);box-shadow:inset 0 1px 0 white,0 -3px 20px #26373b19;
+}
+body[data-phone-canvas] .phone-sheet-header {display:flex;align-items:stretch;flex:none;min-width:0;padding:0 10px 0 0}
+body[data-phone-canvas] .phone-sheet-header h2 {flex:1;min-width:0;margin:0;font:600 1.16rem/1.18 var(--serif);letter-spacing:-.025em}
+body[data-phone-canvas] #phone-handle {position:relative;display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;min-height:62px;padding:18px 10px 9px 18px;color:var(--ink);text-align:left;font:inherit;letter-spacing:inherit;background:transparent;border:none;touch-action:none;user-select:none;cursor:ns-resize}
+body[data-phone-canvas] .sheet-grip {position:absolute;top:7px;left:50%;width:34px;height:4px;transform:translateX(-50%);border-radius:3px;background:#7881899c}
+body[data-phone-canvas] #phone-title {overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow-wrap:anywhere}
+body[data-phone-canvas] #phone-handle svg {width:17px;height:17px;color:#525d61}
+body[data-phone-canvas] #phone-handle[aria-expanded=true] svg {transform:rotate(180deg)}
+/* An open record carries its own heading and source. Leave just the grip and collapse control above it. */
+body[data-phone-canvas] #phone-sheet[data-page=record] #phone-handle[aria-expanded=true] {min-height:44px;padding:4px 10px;justify-content:flex-end}
+body[data-phone-canvas] #phone-sheet[data-page=record] #phone-handle[aria-expanded=true] .sheet-grip {top:50%}
+body[data-phone-canvas] #phone-sheet[data-page=record] #phone-handle[aria-expanded=true] #phone-title {position:absolute;width:1px;height:1px;clip-path:inset(50%)}
+body[data-phone-canvas] #phone-close {margin:13px 0 3px;color:#465056;border-radius:50%}
+body[data-phone-canvas] #phone-close svg {width:16px;height:16px}
+body[data-phone-canvas] #phone-sheet-body {display:flex;flex:1;min-height:0;min-width:0;overflow:hidden;border-top:1px solid #7480892a}
+body[data-phone-canvas] .phone-page {flex:1;min-width:0;min-height:0;overflow:auto;overscroll-behavior:contain;padding:12px 16px 16px;scrollbar-width:thin}
+body[data-phone-canvas] #phone-sheet :is(#phone-library,#phone-record,#phone-tool) {display:flex;flex-direction:column;padding:0;overflow:hidden}
+body[data-phone-canvas] #phone-record #record-dock,body[data-phone-canvas] #desk-body #phone-tool #tools-panel {display:flex;flex-direction:column;position:static;flex:1;min-width:0;min-height:0;width:100%;height:auto;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none}
+body[data-phone-canvas] #phone-sheet :is(#dock-header,#dock-resize,#record-preview,#tools-panel>.dock-header) {display:none}
+body[data-phone-canvas] #phone-sheet :is(#dock-content,#tools-content) {display:block;overflow:auto;padding:12px 17px 20px}
+body[data-phone-canvas] #phone-tool #tool-context {padding:7px 17px;background:#f0f1f180}
+body[data-phone-canvas] #phone-library>.workspace {display:block;flex:1;min-width:0;min-height:0;overflow:auto;border:0;overscroll-behavior:contain}
+body[data-phone-canvas] #phone-library .list-heading h2,body[data-phone-canvas] #phone-library .list-heading:has(h2:only-child) {display:none}
+body[data-phone-canvas] #phone-library #list-search-row {flex:none;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 8px;background:transparent}
+body[data-phone-canvas] #phone-library #list-search {width:100%;min-width:0;height:44px}
+body[data-phone-canvas] #phone-menu-page {padding:8px 14px 16px}
+body[data-phone-canvas] :is(.phone-view-grid,#phone-tool-buttons .desk-launchers) {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;margin:0;padding:6px 0}
+body[data-phone-canvas] #phone-tool-buttons {border-block:1px solid #7480892a}
+body[data-phone-canvas] :is(.phone-view-grid,#phone-tool-buttons .desk-launchers) button {display:flex;align-items:center;justify-content:flex-start;gap:9px;min-height:45px;padding:6px 10px;border:0;border-radius:12px;background:transparent;font:580 .91rem/1.25 var(--sans);color:#2c3339;text-align:left;white-space:normal}
+body[data-phone-canvas] #phone-sheet .phone-view-grid button svg,body[data-phone-canvas] #phone-tool-buttons .desk-icon {display:block;width:18px;height:18px;color:#5b666a}
+body[data-phone-canvas] #phone-sheet .phone-view-grid [aria-current=page] {background:#e9e8e7;color:var(--scarlet-dark)}
+body[data-phone-canvas] #phone-tool-buttons #record-open {display:none}
+body[data-phone-canvas] #phone-trail :is(#trail-bar,#pins-banner,#scope-bar) {background:transparent}
+body[data-phone-canvas] #phone-trail #trail-bar {flex-wrap:wrap;gap:4px 8px;border:0;padding:0}
+body[data-phone-canvas] #phone-trail :is(.trail-label,#trail-empty,#undo-map:disabled) {display:none}
+body[data-phone-canvas] #phone-trail #exploration-trail {flex-basis:100%}
+body[data-phone-canvas] #phone-trail #trail-bar button {min-height:44px}
+body[data-phone-canvas] #phone-search-page {display:flex;flex-direction:column;padding:10px 14px 12px}
+body[data-phone-canvas] #phone-search-slot,body[data-phone-canvas] #phone-search-slot #desk-search {flex:1;min-height:0;display:flex;flex-direction:column}
+body[data-phone-canvas] #phone-search-slot #desk-search .search-wrap {height:46px;min-height:46px;border-radius:14px;background:#ffffffd9}
+body[data-phone-canvas] #phone-search-slot #search {font-size:16px}
+body[data-phone-canvas] #phone-search-slot #dismiss-search {top:1px;right:1px;transform:none}
+body[data-phone-canvas] #phone-search-slot #desk-search #starting-results {position:static;flex:1;min-height:0;max-height:none;margin:5px 0 0;padding:0;border:0;box-shadow:none;background:transparent;overflow:auto}
+body[data-phone-canvas] #phone-search-slot #starting-results button {min-height:44px}
+body[data-phone-canvas] #phone-search-slot #starting-results button :is(strong,small) {white-space:normal}
+body[data-phone-canvas] #phone-search-slot:has(#starting-results[hidden]) {flex:0 0 46px}
+body[data-phone-canvas] #phone-search-page:has(#starting-results:not([hidden])) #phone-search-shortcuts {display:none}
+body[data-phone-canvas] #phone-projects #starter-projects {display:grid;grid-template-columns:minmax(0,1fr);gap:7px}
+body[data-phone-canvas] #phone-projects .project-card {border-radius:13px}
+body[data-phone-canvas] #phone-projects :is(#random-start,#search-show-all) {display:inline-flex;align-items:center;justify-content:center;min-height:44px;width:auto;margin:10px 5px 10px 0;padding:5px 12px;border:1px solid var(--line);border-radius:20px;color:var(--scarlet-dark);background:#ffffffb9;font:600 .82rem var(--sans)}
+body[data-phone-canvas] #phone-projects #entry-sample {min-height:0;border-radius:14px}
+body[data-phone-canvas] #phone-sheet :is(#record-dock,#tools-panel,#sources-view) :is(a[href],button:not(#dock-resize)) {min-height:44px}
+body[data-phone-canvas] :is(#phone-controls,#phone-sheet,#phone-map-controls,#phone-notice) :focus-visible {outline:2px solid var(--scarlet);outline-offset:-3px}
+
+#phone-workspace {box-sizing:border-box;width:min(430px,calc(100% - 20px));max-height:85dvh;padding:14px 16px;border:1px solid white;border-radius:22px;box-shadow:0 14px 50px #20303930;background:#f9faf9}
+#phone-workspace>header {display:flex;justify-content:space-between;align-items:center}
+#phone-workspace h2 {margin:0;padding:0;font:600 1.3rem/1.3 var(--serif)}
+#phone-workspace .dialog-close {position:static;width:44px;height:44px}
+#phone-workspace .workspace-bar {display:flex;flex-wrap:wrap;align-items:stretch;padding:0;gap:4px;border:0;background:transparent}
+#phone-workspace .explorer-tabs {flex:1 1 100%;max-width:100%;min-width:0}
+#phone-workspace .workspace-actions,#phone-workspace .views-menu {display:block;width:100%;margin:0}
+#phone-workspace .views-menu summary {display:none}
+#phone-workspace .views-menu>div {position:static;min-width:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));padding:4px 0;border:0;border-radius:0;background:transparent;box-shadow:none}
+#phone-workspace .views-menu button,#phone-workspace #new-view {min-height:44px;white-space:normal;text-align:left}
+#phone-workspace nav {display:flex;flex-wrap:wrap;gap:0 14px;border-top:1px solid var(--line);margin-top:6px}
+#phone-workspace nav a {display:inline-flex;align-items:center;min-height:44px;color:var(--ink);text-underline-offset:3px;font:.85rem var(--sans)}
+#phone-workspace .phone-edition {display:grid;gap:3px;font:.72rem/1.4 var(--sans);color:var(--muted)}
+@media(prefers-reduced-transparency:reduce) {
+  body[data-phone-canvas] :is(.glass-control,#phone-notice,#phone-zoom,#phone-sheet) {background:#f9faf9;-webkit-backdrop-filter:none;backdrop-filter:none}
+}
+@media(forced-colors:active) {
+  body[data-phone-canvas] :is(.glass-control,#phone-notice,#phone-zoom,#phone-sheet) {background:Canvas;border-color:ButtonText}
+  body[data-phone-canvas] .sheet-grip {background:ButtonText}
+}

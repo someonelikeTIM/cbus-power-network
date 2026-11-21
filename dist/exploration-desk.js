@@ -1,5 +1,6 @@
 import {evidenceStatuses} from './data.js';
 import {entrySampler} from './entry-samples.js';
+import {mountPhoneExplorer} from './phone-explorer.js';
 
 const $=id=>document.getElementById(id);
 const toolPages={filters:'filters',path:'path-dialog',research:'research-panel',settings:'dock-settings'};
@@ -125,7 +126,7 @@ function makeEntry(nodes,edges,sources,openEntity,openConnection,projects,openPr
   return sync;
 }
 
-export function mountDesk({nodes,edges,sources,search,choose,start,launch,changed,projects,openProject,returnToList,beforeCompact}){
+export function mountDesk({nodes,edges,sources,search,choose,start,launch,changed,projects,openProject,returnToList,beforeCompact,navigate,presentationChanged}){
   let active='',section='connections',landing=true,selected=null,singleNode=false,view='network';
   let projectOverview=false,recordTitle='Record',preview='',reading=false,readingScroll=0;
   let toolOpener=null,beforeTool='',visibleBottom=innerHeight;
@@ -147,6 +148,10 @@ export function mountDesk({nodes,edges,sources,search,choose,start,launch,change
   $('legend-controls').prepend(document.querySelector('.distance-control'));
   $('settings-selection').append($('quick-menu'),$('map-full'),$('reset-layout'));
   $('connection-legend').hidden=false;
+  const phone=mountPhoneExplorer({navigate,closeTool,returnToList,
+    beforeCompact:()=>{beforeCompact();readingScroll=$('dock-content').scrollTop;},
+    layoutChanged:()=>{paint();presentationChanged();}
+  });
   $('dock-header').addEventListener('dblclick',event=>{if(!smallPane.matches&&!event.target.closest('button'))setFloating(!floating);});
   $('record-toggle').addEventListener('click',()=>{
     focusWidth(!reading);
@@ -163,6 +168,7 @@ export function mountDesk({nodes,edges,sources,search,choose,start,launch,change
     return {min,max:Math.max(min,Math.min(680,surface.clientWidth*(floating ? .94 : .55),floating?Infinity:surface.clientWidth-320))};
   }
   function focusWidth(expand){
+    if(phone.enabled){phone.setExpanded(expand);return;}
     if(smallPane.matches){
       if(reading!==expand){
         if(reading){beforeCompact();readingScroll=$('dock-content').scrollTop;}
@@ -177,13 +183,13 @@ export function mountDesk({nodes,edges,sources,search,choose,start,launch,change
     width=next;geometry();changed();
   }
   function geometry(){
-    const stacked=smallPane.matches,tool=Object.hasOwn(toolPages,active);
+    const stacked=smallPane.matches||phone.enabled,tool=Object.hasOwn(toolPages,active);
     const toolWidth=clamp(body.clientWidth*.23,260,350);
     const overlay=stacked||body.clientWidth-toolWidth-(floating?0:clamp(width,260,680))<320;
-    body.dataset.dock=stacked?'stacked':floating?'floating':side;
+    body.dataset.dock=phone.enabled?'phone':stacked?'stacked':floating?'floating':side;
     body.dataset.overlay=String(overlay);
     body.dataset.reading=String(reading);
-    surface.inert=tool&&overlay;
+    surface.inert=tool&&overlay&&!phone.enabled;
     $('dock-title').textContent=stacked?recordTitle:projectOverview?'Research project':selected?.kind==='edge'?'Connection evidence':selected?.kind==='source'?'Source record':'Record';
     const toggle=$('record-toggle');
     toggle.hidden=!stacked;
@@ -209,12 +215,12 @@ export function mountDesk({nodes,edges,sources,search,choose,start,launch,change
     $(floating?'dock-'+side:'dock-place').focus({preventScroll:true});
   }
   function paint(){
-    const isEntry=landing&&!active&&view==='network';
+    const isEntry=!phone.enabled&&landing&&!active&&view==='network';
     document.body.dataset.landing=String(isEntry);
     $('entry').hidden=!isEntry;$('desk-bar').hidden=isEntry;$('trail-bar').hidden=isEntry;
     $('scope-bar').hidden=isEntry;body.hidden=isEntry;
     syncEntry();
-    const slot=$(isEntry?'entry-search-slot':'desk-search-slot');
+    const slot=$(phone.enabled?'phone-search-slot':isEntry?'entry-search-slot':'desk-search-slot');
     if(input.closest('#desk-search').parentElement!==slot)slot.append($('desk-search'));
     const tool=Object.hasOwn(toolPages,active)?active:'';
     body.dataset.tools=tool;
@@ -234,6 +240,7 @@ export function mountDesk({nodes,edges,sources,search,choose,start,launch,change
     $('tab-evidence').setAttribute('aria-pressed',String(section==='evidence'));
     $('list-search-row').hidden=view==='network';
     $('trail-empty').hidden=!!$('exploration-trail').childElementCount;
+    phone.sync({view,tool,title:recordTitle,selected:!!selected,project:projectOverview});
     geometry();
   }
   function setPanel(name,{focus=true}={}){
@@ -241,7 +248,7 @@ export function mountDesk({nodes,edges,sources,search,choose,start,launch,change
       if(!active||focus)active='record';
       if(focus&&smallPane.matches)focusWidth(true);
       paint();
-      if(focus)$('dock-title').focus({preventScroll:true});
+      if(focus){if(phone.enabled){phone.record();phone.returnFocus();}else $('dock-title').focus({preventScroll:true});}
     }else if(Object.hasOwn(toolPages,name)){
       if(name!==active){
         if(!Object.hasOwn(toolPages,active))beforeTool=active;
@@ -250,7 +257,7 @@ export function mountDesk({nodes,edges,sources,search,choose,start,launch,change
         if(Object.hasOwn(toolPages,active))toolScroll.set(active,$('tools-content').scrollTop);
         active=name;paint();$('tools-content').scrollTop=toolScroll.get(name)||0;
       }else paint();
-      if(focus)$('tools-title').focus({preventScroll:true});
+      if(focus)(phone.enabled?phone.handle:$('tools-title')).focus({preventScroll:true});
     }
     changed();
   }
@@ -258,12 +265,13 @@ export function mountDesk({nodes,edges,sources,search,choose,start,launch,change
     if(!Object.hasOwn(toolPages,active))return;
     const last=active;toolScroll.set(last,$('tools-content').scrollTop);
     active=beforeTool||(!landing?'record':'');paint();
-    if(focus)(toolOpener?.getClientRects().length?toolOpener:document.querySelector('[data-desk-panel="'+last+'"]'))?.focus({preventScroll:true});
+    if(focus)(phone.enabled?$('phone-menu'):toolOpener?.getClientRects().length?toolOpener:document.querySelector('[data-desk-panel="'+last+'"]'))?.focus({preventScroll:true});
     changed();
   }
   function showRecord(next='connections',focus=false){
     if(Object.hasOwn(toolPages,active)&&body.dataset.overlay==='true')closeTool(false);
     reading=true;readingScroll=0;section=next;setPanel('record',{focus});$('dock-content').scrollTop=0;
+    phone.record();
   }
   const header=$('dock-header'),resize=$('dock-resize');
   // Resize after the actual click. Moving the panel at pointerdown would move a
@@ -272,7 +280,7 @@ export function mountDesk({nodes,edges,sources,search,choose,start,launch,change
   dock.addEventListener('pointerdown',()=>{movedHeader=false;},true);
   dock.addEventListener('click',event=>{if(!movedHeader&&!event.target.closest('#dock-resize,#record-toggle'))focusWidth(true);});
   function begin(event,mode){
-    if(smallPane.matches||event.button!==0||mode==='move'&&(!floating||event.target.closest('button')))return;
+    if(phone.enabled||smallPane.matches||event.button!==0||mode==='move'&&(!floating||event.target.closest('button')))return;
     const rect=dock.getBoundingClientRect(),outer=surface.getBoundingClientRect();
     drag={mode,id:event.pointerId,x:event.clientX,y:event.clientY,w:rect.width,h:rect.height,left:rect.left-outer.left,top:rect.top-outer.top};
     event.currentTarget.setPointerCapture(event.pointerId);event.preventDefault();
@@ -300,6 +308,7 @@ export function mountDesk({nodes,edges,sources,search,choose,start,launch,change
 
   function dismiss(){input.value='';hits=[];cursor=-1;results.hidden=true;$('dismiss-search').hidden=true;results.replaceChildren();input.setAttribute('aria-expanded','false');input.removeAttribute('aria-activedescendant');$('search-status').textContent='';syncEntry();}
   function sizeResults(){
+    if(phone.enabled)return;
     const top=results.getBoundingClientRect().top;
     results.style.setProperty('--results-room',Math.max(44,visibleBottom-top-4)+'px');
     const first=results.querySelector('[role=option],p');
@@ -319,7 +328,7 @@ export function mountDesk({nodes,edges,sources,search,choose,start,launch,change
   function chooseIndex(index){
     const hit=hits[index];if(!hit)return;
     if(hit.kind==='suggestion'){input.value=hit.label;suggest();input.focus({preventScroll:true});return;}
-    dismiss();if(smallPane.matches)input.blur();choose(hit);
+    dismiss();if(smallPane.matches||phone.enabled)input.blur();phone.closeSearch();choose(hit);
     if(hit.kind==='tool'&&Object.hasOwn(toolPages,active))toolOpener=input;
   }
   function suggest(){
@@ -365,13 +374,14 @@ export function mountDesk({nodes,edges,sources,search,choose,start,launch,change
     recordTitle=title;preview=summary;paint();
   }
   function restore(saved,selection,place){
+    phone.reset(place);
     active=saved?saved.active:(selection?'record':'');section=saved?.section||(selection?.kind==='node'?'connections':'evidence');
     reading=place?.expanded??(!!selection||new URLSearchParams(location.search).has('project'));readingScroll=place?.scroll??0;
     side=saved?.side==='right'?'right':'left';floating=saved?.floating||false;width=saved?.width||360;height=saved?.height||500;left=saved?.left??null;top=saved?.top??14;paint();
   }
-  return {sync,setPanel,closeTool,showRecord,dismiss,restore,focusWidth,focusSearch:()=>{input.focus({preventScroll:true});input.select();},
-    setVisibleBottom(value){visibleBottom=value;if(!results.hidden)sizeResults();},get stacked(){return smallPane.matches;},
-    get readingPlace(){return {expanded:reading,scroll:reading?$('dock-content').scrollTop:readingScroll};},
+  return {sync,setPanel,closeTool,showRecord,dismiss,restore,focusWidth,focusSearch:()=>{if(phone.enabled)phone.search();input.focus({preventScroll:true});input.select();},
+    setVisibleBottom(value){visibleBottom=value;if(!results.hidden)sizeResults();},get stacked(){return smallPane.matches||phone.enabled;},get phone(){return phone.enabled;},
+    get readingPlace(){const expanded=phone.enabled?phone.expanded:reading;return {expanded,scroll:expanded?$('dock-content').scrollTop:readingScroll,...(phone.enabled?{fraction:phone.fraction}:{})};},
     get tool(){return Object.hasOwn(toolPages,active)?active:'';},get section(){return section;},
     snapshot:()=>({active,section,floating,side,width,height,left,top})};
 }
