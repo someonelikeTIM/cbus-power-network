@@ -1673,7 +1673,6 @@ document.addEventListener('click', event => {
   if(btn.hasAttribute('data-add-tag')){$('search').focus({preventScroll:true});return;}
   if(btn.dataset.tag){applyTag(btn.dataset.tag);return;}
   if(btn.dataset.closeFloating){desk.closeTool();return;}
-  if (btn.classList.contains('methodology-open')) $('methodology').showModal();
   if (btn.dataset.openCase) { setCase(btn.dataset.openCase); setView('network'); }
   if(btn.hasAttribute('data-copy-citation')){const {kind,id}=state.selected;const citation=`CBUS Power, ${recordKind(kind)} ${id}, release ${release.releaseId}  ${recordURL(location.href,kind,id,release.releaseId)}`;navigator.clipboard.writeText(citation).then(()=>toast('Release-specific citation copied')).catch(()=>{downloadJSON({citation},'record-citation.json');toast('Citation downloaded');});}
   if(btn.hasAttribute('data-evidence-packet'))downloadJSON(evidencePacket(state.selected,baseGraph()),'evidence-'+state.selected.id+'-'+release.releaseId+'.json');

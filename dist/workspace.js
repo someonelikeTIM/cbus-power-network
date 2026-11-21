@@ -295,7 +295,6 @@ document.querySelector('.view-nav').addEventListener('click', event => {
 document.addEventListener('click', event => {
   const link = event.target.closest('[data-project-dialog]');
   if (link) { event.preventDefault(); document.querySelector('dialog[open]')?.close(); $(link.dataset.projectDialog).showModal(); }
-  if (event.target.closest('.methodology-open')) $('methodology').showModal();
   if (event.target.closest('.views-menu button')) document.querySelector('.views-menu').open = false;
 });
 document.addEventListener('keydown',event=>{

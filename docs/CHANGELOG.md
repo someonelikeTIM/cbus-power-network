@@ -4,7 +4,7 @@
 
 Search and research projects use the full phone width. A record opens below the map with its sources and a control for changing the reading space. Readers can pan or pinch the map, use Zoom and Fit, and return from a tool or a library record to their place. A narrower workspace shows one tab at a time and remembers the desktop comparison and dock placement.
 
-The footer’s “About the records” link opens the guide to reading evidence and citations.
+The explorer’s “About the records” link is now in the footer only. It opens the guide to reading evidence and citations.
 
 ## 2026-11-20 — Research projects
 

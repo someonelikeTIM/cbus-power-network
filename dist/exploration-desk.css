@@ -11,7 +11,6 @@ body[data-workspace-host] .view-nav button {height:auto;align-self:stretch;paddi
 body[data-workspace-host] .view-nav button.active {color:#fff;border-bottom-color:#fff;background:var(--scarlet-dark)}
 body[data-workspace-host] .view-nav button:hover {background:#ffffff10;color:white}
 body[data-workspace-host] .view-nav .nav-count {color:#f7f7f8;border-color:#ffffffad;background:transparent;font-size:.73rem}
-body[data-workspace-host] .masthead>.text-button {margin-left:auto;color:#f7f7f8;font-size:.84rem;white-space:nowrap}
 body[data-workspace-host] main {padding:0}
 body[data-workspace-host] #explorer {border-radius:0;box-shadow:none}
 .workspace-bar {padding:0 clamp(16px,2.4vw,42px);margin:0;min-height:41px;align-items:center;background:var(--soft);border-color:var(--line)}
@@ -374,11 +373,10 @@ body[data-narrow-host=true] .explorer-tab [role=tab] {min-width:0}
 body[data-narrow-host=true] .views-menu #compare-label:not([hidden]) {display:grid;padding:5px 10px}
 body[data-narrow-host=true] .views-menu select {max-width:100%}
 @media(width < 640px) {
-  body[data-workspace-host] .masthead {display:grid;grid-template-columns:1fr auto;gap:0;height:auto;min-height:0;padding:max(4px,env(safe-area-inset-top)) 10px 0}
-  body[data-workspace-host] .brand {min-height:42px;gap:8px}
+  body[data-workspace-host] .masthead {display:grid;grid-template-columns:minmax(0,1fr);gap:0;height:auto;min-height:0;padding:max(4px,env(safe-area-inset-top)) 10px 0}
+  body[data-workspace-host] .brand {justify-self:start;min-height:44px;gap:8px}
   body[data-workspace-host] .brand-mark {width:29px;height:29px}
-  body[data-workspace-host] .masthead>.text-button {grid-column:2;grid-row:1;min-height:44px}
-  body[data-workspace-host] .view-nav {grid-column:1/-1;grid-row:2;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin:0}
+  body[data-workspace-host] .view-nav {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin:0}
   body[data-workspace-host] .view-nav button {justify-content:center;padding:0 2px;min-height:44px}
   body[data-workspace-host] .nav-count {display:none}
   .workspace-bar {min-height:44px}
