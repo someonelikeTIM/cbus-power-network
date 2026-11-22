@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-11-21 — Time to speak on the Flock lease
+
+The Flock research project compares the speaker deadlines for two items on the December 9, 2024 agenda. Council approved the camera lease that evening and voted on the Lincoln Park improvements a week later. The finding links to the agenda, its posting time, the speaking and reading rules, and both voting records.
+
 ## 2026-11-21 — Featured investigation
 
 The homepage now leads with the Flock camera lease investigation. On a phone, the headline opens the article directly from the collapsed Research projects panel.

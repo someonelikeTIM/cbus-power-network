@@ -22,7 +22,20 @@ const definitions = [
     steps:[
       {title:'What Flock asked for',text:'Vaughn Roland, Flock’s government affairs director, also backed the bill’s rules on how long agencies could keep plate records. He wanted police to retain access for specific investigations.',excerpt:{text:'… prohibits the sale of LPR data, requires documented justification and auditable logs for searches, and provides meaningful oversight with clear penalties for misuse.',credit:'Vaughn Roland on the legislation Flock supported · p. 3'},links:{'policy-01':'Supported HB 725'},follow:'flock'},
       {title:'Why the ACLU objected',text:'At the same hearing, Gary Daniels of the ACLU of Ohio opposed the proposal to exempt police search inquiries from public records. He argued that residents should be able to learn how often and why officials search plate data.',links:{'policy-02':'Opposed HB 725'},follow:'aclu-ohio'},
-      {title:'Why did Columbus rush the lease?',text:'Police told Council a procurement delay had left too little time to seek formal bids. On December 9, 2024, Council waived bidding and authorized up to $228,000 to lease 38 fixed plate readers for two years. Residents had about 72 hours from the final agenda posting to the deadline to sign up to speak.',links:{e179:'Lease authorized'},follow:'city'},
+      {
+        title:'Why did Columbus rush the lease?',
+        text:'Police told Council a procurement delay had left too little time to seek formal bids. On December 9, 2024, Council waived bidding and authorized up to $228,000 to lease 38 fixed plate readers for two years.\n\n' +
+          'Residents who first learned about the Flock lease from Friday afternoon’s final agenda had only until 3 p.m. Monday to sign up to speak. That left just under 72 hours, mostly over a weekend. A Lincoln Park project on that same agenda followed the ordinary two-reading schedule, giving residents nearly 10 days from Friday’s posting to the speaker deadline for its final vote. Council approved the Flock lease as an emergency that first Monday.',
+        emphasis:['only until 3 p.m. Monday','10 days'],
+        references:[
+          {label:'December 9 agenda · Lincoln Park p. 7, Flock p. 36',url:'https://legistar3.granicus.com/Columbus/meetings/2024/12/6052_A_Columbus_City_Council_24-12-09_Agenda.pdf#page=7'},
+          {label:'Clerk’s final agenda timestamp · December 6',url:'https://webapi.legistar.com/v1/columbus/events/6052'},
+          {label:'Speaker signup · meeting day, 12:01 a.m.–3 p.m.',url:'https://www.columbus.gov/Government/City-Council/Council-Meeting-Resources/Speak-At-Council'},
+          {label:'City charter § 20 · ordinary readings at least a week apart',url:'https://columbus.legistar.com/View.ashx?M=F&ID=5867116&GUID=AC932BE0-2124-4064-8CCD-259D2BB00B7F#page=4'},
+          {label:'Lincoln Park · December 9 reading and December 16 vote',url:'https://columbus.legistar.com/LegislationDetail.aspx?ID=7043631&GUID=680D9FDC-7640-4F3F-BFC8-CBC69BA7C996'}
+        ],
+        links:{e179:'Lease authorized'},follow:'city'
+      },
       {title:'The registered representative',text:'Columbus listed Louis Capobianco as Flock’s city lobbyist in its November 2025 roster.',links:{e171:'Registered lobbyist'},follow:'capobianco'}
     ]
   },

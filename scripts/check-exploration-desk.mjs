@@ -31,6 +31,11 @@ for(const project of projects.values()){
   }
 }
 const flockProject=projects.get('flock-plate-readers'),flockStep=flockProject.steps[0];
+const leaseFinding=flockProject.steps.find(step=>step.id==='e179');
+assert.match(leaseFinding.text,/only until 3 p\.m\. Monday to sign up to speak/);
+assert.match(leaseFinding.text,/Lincoln Park[^.]+nearly 10 days/);
+assert.ok(leaseFinding.emphasis.every(phrase=>leaseFinding.text.includes(phrase)));
+assert.ok(leaseFinding.references.some(ref=>new URL(ref.url).searchParams.get('ID')==='7043631'),'Link the Lincoln Park voting record');
 const projectSearch=deskGraph=>searchDesk(deskGraph,sources,byId,'Flock',[],projects.values()).find(hit=>hit.kind==='project');
 assert.equal(projectSearch(graph).step,'policy-01');
 assert.equal(projectSearch({...graph,edges:[]}),undefined);

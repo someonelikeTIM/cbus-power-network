@@ -1447,7 +1447,16 @@ function renderProjectReport(project){
       const follow=via?`<button class="project-record" type="button" data-node-detail="${escape(step.follow)}" data-endpoint-of="${escape(via.id)}">Follow ${escape(nodeById.get(step.follow).name)}</button>`:'';
       const excerpt=step.excerpt?`<blockquote>“${escape(step.excerpt.text)}”<cite>${escape(step.excerpt.credit)}</cite></blockquote>`:'';
       const testimony=step.citations.map(id=>hearingTestimony[id]).find(Boolean);
-      return `<li id="project-step-${escape(step.id)}" data-project-step="${escape(step.id)}"><h4 tabindex="-1">${escape(step.title)}</h4><p>${escape(step.text)}</p>${excerpt}<div class="intro-sources">${citationRefs(step.citations)}${testimony?hearingLink(testimony):''}</div>${investigationLink(step.id)}<div class="project-records">${follow}${records}</div></li>`;
+      const paragraphs=step.text.split('\n\n').map(paragraph=>{
+        let copy=escape(paragraph);
+        for(const phrase of step.emphasis||[]){
+          const escaped=escape(phrase);
+          copy=copy.replace(escaped,()=>`<strong>${escaped}</strong>`);
+        }
+        return `<p>${copy}</p>`;
+      }).join('');
+      const references=(step.references||[]).map(ref=>`<a class="claim-ref" href="${escape(ref.url)}" target="_blank" rel="noopener noreferrer">${escape(ref.label)}</a>`).join(' ');
+      return `<li id="project-step-${escape(step.id)}" data-project-step="${escape(step.id)}"><h4 tabindex="-1">${escape(step.title)}</h4>${paragraphs}${excerpt}<div class="intro-sources">${citationRefs(step.citations)}${testimony?hearingLink(testimony):''}${references}</div>${investigationLink(step.id)}<div class="project-records">${follow}${records}</div></li>`;
     }).join('');
   }
   for(const row of $('project-steps').children){
