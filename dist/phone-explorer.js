@@ -26,12 +26,13 @@ export function mountPhoneExplorer({navigate,closeTool,returnToList,beforeCompac
   const explorer=$('explorer'),desk=$('desk-body'),surface=$('desk-main');
   for(const slot of explorer.querySelectorAll('[data-phone-icon]'))slot.innerHTML=icon(slot.dataset.phoneIcon);
   const sheet=$('phone-sheet'),handle=$('phone-handle'),mapButton=$('phone-map-button');
+  const featureSlot=$('phone-feature-slot');
   const pages={record:$('phone-record'),projects:$('phone-projects'),search:$('phone-search-page'),menu:$('phone-menu-page'),library:$('phone-library'),tool:$('phone-tool')};
   const moves=[
     [$('network-view'),surface],[$('record-dock'),pages.record],[$('tools-panel'),pages.tool],
     [$('list-search-row'),pages.library],[document.querySelector('.workspace'),pages.library],
     [document.querySelector('.desk-launchers'),$('phone-tool-buttons')],[$('trail-bar'),$('phone-trail')],[$('pins-banner'),$('phone-trail')],[$('scope-bar'),$('phone-trail')],
-    [$('starter-projects'),pages.projects],[$('random-start'),pages.projects],[$('search-show-all'),pages.projects],[$('entry-sample'),pages.projects],
+    [$('featured-investigation'),featureSlot],[$('starter-projects'),pages.projects],[$('random-start'),pages.projects],[$('search-show-all'),pages.projects],[$('entry-sample'),pages.projects],
     [document.querySelector('.graph-controls'),$('phone-zoom')]
   ].map(([element,parent])=>{
     const marker=document.createComment(element.id||element.className);
@@ -48,7 +49,8 @@ export function mountPhoneExplorer({navigate,closeTool,returnToList,beforeCompac
   function limits(){
     const height=desk.clientHeight||innerHeight;
     const safeBottom=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--phone-safe-bottom'))||0;
-    const min=Math.min(height,64+safeBottom);
+    const compact=page==='projects'?handle.closest('header').offsetHeight+featureSlot.offsetHeight+1:64;
+    const min=Math.min(height,compact+safeBottom);
     return {height,min,max:Math.max(min,height-Math.min(84,height*.21))};
   }
   function closeZoom(){mapButton.setAttribute('aria-expanded','false');$('phone-zoom').hidden=true;}
@@ -59,8 +61,8 @@ export function mountPhoneExplorer({navigate,closeTool,returnToList,beforeCompac
   }
   function paint(){
     if(!enabled)return;
-    applyHeight();
     sheet.dataset.page=page;
+    featureSlot.hidden=page!=='projects';
     const title={menu:'Explore',search:'Search',projects:'Research projects',library:viewNames[context.view],tool:$('tools-title').textContent,record:context.title}[page];
     $('phone-title').textContent=title;
     handle.setAttribute('aria-label',(expanded?'Collapse ':'Expand ')+title);
@@ -71,6 +73,7 @@ export function mountPhoneExplorer({navigate,closeTool,returnToList,beforeCompac
     const close=$('phone-close');
     close.hidden=!transientReturn&&context.view==='network'&&page!=='tool';
     close.setAttribute('aria-label',page==='record'&&context.view!=='network'?'Back to results':'Close '+title);
+    applyHeight();
     $('phone-menu').setAttribute('aria-expanded',String(page==='menu'&&expanded));
     $('phone-search').setAttribute('aria-expanded',String(page==='search'&&expanded));
     for(const button of $('phone-menu-page').querySelectorAll('[data-phone-view]')){
@@ -203,7 +206,8 @@ export function mountPhoneExplorer({navigate,closeTool,returnToList,beforeCompac
   }
   mode();
   media.addEventListener('change',()=>{mode();layoutChanged();});
-  new ResizeObserver(paint).observe(desk);
+  const sizeObserver=new ResizeObserver(paint);
+  sizeObserver.observe(desk);sizeObserver.observe(featureSlot);
   return {
     get enabled(){return enabled;},get expanded(){return expanded;},get fraction(){return fraction;},
     search,handle,setExpanded,

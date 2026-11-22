@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-11-21 — Featured investigation
+
+The homepage now leads with the Flock camera lease investigation. On a phone, the headline opens the article directly from the collapsed Research projects panel.
+
 ## 2026-11-21 — Phone explorer
 
 The phone explorer opens on a full-screen map with a small set of documented City of Columbus connections. Floating glass controls open search, navigation and zoom. Records, projects, lists and research tools share a bottom panel that can be dragged to a chosen height or collapsed with a tap. The “Best on desktop” tip remembers dismissal in this browser.

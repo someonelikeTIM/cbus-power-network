@@ -8,6 +8,7 @@ import {resizeCamera,walkConnection,appendWalk,explorationSpace} from '../dist/d
 import {entrySampler,featuredHeadlines} from '../dist/entry-samples.js';
 import {buildEntitySummaries} from '../dist/entity-summaries.js';
 import {starterProjects,isProjectMap,addProjectToResearch} from '../dist/starter-projects.js';
+import {investigations} from '../dist/investigations.js';
 import {encodeState,decodeState} from '../dist/routing.js';
 import {hearingTestimony,plateReaderHearing,readerField} from '../dist/reader-copy.js';
 
@@ -129,6 +130,10 @@ assert.deepEqual(walkConnection(traversed,conduit),traversed);
 assert.deepEqual(appendWalk(origin,conduit.target,{from:conduit.source,via:conduit.id,edges}),traversed);
 
 const html=await readFile('dist/index.html','utf8');
+const feature=html.match(/<a\b(?=[^>]*\bid="featured-investigation")[^>]*>[\s\S]*?<\/a>/)?.[0];
+const featuredReport=investigations.find(report=>feature?.includes('href="'+report.href+'"'));
+assert.ok(featuredReport,'The featured headline must link directly to a published investigation');
+assert.ok(feature.includes(featuredReport.title),'Use the published investigation headline');
 assert.ok(html.includes('Featured connection')&&!html.includes('Sample connection'));
 assert.match(html,/rel="icon" href="(\.\/favicon\.svg\?v=[\w-]+)"[\s\S]*?class="brand-mark" src="\1"/);
 const domIds=[...html.matchAll(/\bid="([^"]+)"/g)].map(match=>match[1]);
