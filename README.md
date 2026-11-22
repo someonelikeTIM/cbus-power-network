@@ -34,7 +34,7 @@ New tab opens another independent exploration. Side by side keeps two desktop vi
 
 Drag to pan and scroll to zoom. Shift-drag selects an area, Ctrl/Cmd-click adds or removes a record, and Alt-drag moves selected entities. New direct neighbors can be placed around an anchor once. Earlier placements stay fixed as you follow a branch. The overview locator and Fit control help you find the wider network.
 
-The **Record** panel stays open as you explore. It starts on the left, with the overview map in the lower-right corner. **Float** lets you move it over the map. Use **Dock left** or **Dock right** to move it to either edge. Each saved view remembers its panel position. **Connections** lets you follow a neighbor, and **Evidence & sources** opens its supporting records. The citation beside a statement opens the publisher’s original. The source card directly below includes the document title, publication date, and an archived copy when available.
+The **Record** panel stays open as you explore. It starts on the left, with the overview map in the lower-right corner. **Float** lets you move it over the map. Use **Dock left** or **Dock right** to move it to either edge. Each saved view remembers its panel position. In **Connections**, follow an underlined name to the next entity or choose **Evidence** beside it to read the relationship. Under **Sources**, the document title opens the publisher’s original. An archived copy is linked separately when available. **Record tools** holds pinning, map framing, topic filters, sharing and downloads.
 
 **Filters**, **Find path**, **Research** and **Map tools** open in a separate tools panel. You can inspect the current record while using a tool. Close the tool with its × button or Escape.
 

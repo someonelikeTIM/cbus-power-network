@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-11-22 — Reading a record
+
+Document titles now open original sources directly. Under Connections, a linked name follows the trail and its Evidence link opens the supporting record. Pinning, map actions, topic filters, sharing and record data are available under Record tools. The source library also links directly to originals and offers archived copies when available.
+
 ## 2026-11-21 — Time to speak on the Flock lease
 
 The Flock research project and the standalone investigation compare the speaker deadlines for two items on the December 9, 2024 agenda. Council approved the camera lease that evening and voted on the Lincoln Park improvements a week later. The report follows what residents could learn before the vote, the grant deadline police cited, the payment residents can trace and the records still outstanding. Both accounts link to the agenda, the speaking and reading rules, and the votes.

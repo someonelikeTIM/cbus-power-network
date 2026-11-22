@@ -143,7 +143,7 @@ export function mountDesk({nodes,edges,sources,search,choose,start,launch,change
     button.addEventListener('click',()=>{if(button.dataset.deskPanel!=='record'&&active===button.dataset.deskPanel)closeTool();else launch(button.dataset.deskPanel);});
   }
   $('tools-content').append($('filters'),$('path-dialog'),$('research-panel'));
-  $('dock-record').append($('entity-popover'),$('inspector'));
+  $('dock-record').append($('entity-popover'),$('inspector'),$('record-options'));
   $('settings-display').append($('connection-legend'),$('label-toggle'));
   $('legend-controls').prepend(document.querySelector('.distance-control'));
   $('settings-selection').append($('quick-menu'),$('map-full'),$('reset-layout'));
@@ -278,7 +278,10 @@ export function mountDesk({nodes,edges,sources,search,choose,start,launch,change
   // link or a button out from under the pointer before the browser activates it.
   let movedHeader=false;
   dock.addEventListener('pointerdown',()=>{movedHeader=false;},true);
-  dock.addEventListener('click',event=>{if(!movedHeader&&!event.target.closest('#dock-resize,#record-toggle'))focusWidth(true);});
+  dock.addEventListener('click',event=>{
+    if(event.target.closest('a')&&(event.ctrlKey||event.metaKey||event.altKey||event.shiftKey))return;
+    if(!movedHeader&&!event.target.closest('#dock-resize,#record-toggle'))focusWidth(true);
+  });
   function begin(event,mode){
     if(phone.enabled||smallPane.matches||event.button!==0||mode==='move'&&(!floating||event.target.closest('button')))return;
     const rect=dock.getBoundingClientRect(),outer=surface.getBoundingClientRect();

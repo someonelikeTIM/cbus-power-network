@@ -126,7 +126,11 @@ function applyUndoSnapshot(previous,keepFrame=false){
 }
 
 const escape = value => String(value).replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
-function tagButtons(kind,id){return '<div class="record-tags" aria-label="Record tags">'+recordTags(kind,id).map(tag=>'<button type="button" data-tag="'+tag+'" aria-pressed="'+String(state.view==='network'&&state.tags.has(tag))+'">'+escape(tagDefinitions[tag].label)+'</button>').join('')+'</div>';}
+function recordTopicTools(tags){
+  if(!tags.length)return '';
+  const choices=tags.map(tag=>`<button type="button" data-tag="${tag}" aria-pressed="${state.view==='network'&&state.tags.has(tag)}">${escape(tagDefinitions[tag].label)}</button>`);
+  return '<p class="source-caption">Explore by topic</p><div class="record-tags" aria-label="Record tags">'+choices.join('')+'</div>';
+}
 function tagCountText(matches){return [matches.nodes.size?matches.nodes.size+' '+(matches.nodes.size===1?'entity':'entities'):'',matches.edges.size?matches.edges.size+' '+(matches.edges.size===1?'connection':'connections'):''].filter(Boolean).join(' · ')||'No matching records';}
 function tagStats(id){const ids=state.view==='network'?[...state.tags,id]:[id],key=[...new Set(ids)].sort().join(',')+'|'+id;if(!tagStatsCache.has(key)){const match=tagSelection(baseGraph(),ids).byTag.find(tag=>tag.id===id);tagStatsCache.set(key,{nodes:new Set(match.entityIds),edges:new Set(match.relationshipIds)});}return tagStatsCache.get(key);}
 function showTagPreview(button){
@@ -479,59 +483,54 @@ function focusRecordHeading(){
   if(heading){heading.tabIndex=-1;heading.focus({preventScroll:true});}
 }
 
-function citationActions(source,showDetails=true){
-  const title=escape(source.title);
+function recordHref(kind,id){return escape(recordURL(location.href,kind,id,release.releaseId));}
+function plainLinkClick(event){return event.button===0&&!event.ctrlKey&&!event.metaKey&&!event.shiftKey&&!event.altKey&&!event.defaultPrevented;}
+function sourceTitleLink(source){
+  return `<a class="citation-title citation-original" href="${escape(source.url)}" target="_blank" rel="noopener noreferrer" aria-label="${escape(source.title)} (opens in a new tab)">${escape(source.title)}</a>`;
+}
+function alternateSourceLinks(source){
   const testimony=hearingTestimony[source.id];
   const archiveDate=source.archiveTimestamp?.slice(0,8);
   const date=archiveDate?friendlyDate(archiveDate.slice(0,4)+'-'+archiveDate.slice(4,6)+'-'+archiveDate.slice(6)):'';
-  return `<div class="citation-actions">
-    <a class="citation-original" href="${escape(source.url)}" target="_blank" rel="noopener noreferrer" aria-label="${testimony?escape(testimony.download):'Read original document, '+title}">${testimony?escape(testimony.download):'Read original'}</a>
-    ${testimony?hearingLink(testimony):''}
-    ${source.archiveUrl?`<a class="citation-archive" href="${escape(source.archiveUrl)}" target="_blank" rel="noopener noreferrer" aria-label="Archived copy of ${title}" title="Wayback snapshot ${escape(date)}">Archived copy</a>`:''}
-    ${showDetails?`<button type="button" data-source="${escape(source.id)}" aria-label="Source details for ${title}">Source details</button>`:''}
-  </div>`;
+  if(!testimony&&!source.archiveUrl)return '';
+  return `<div class="citation-actions">${testimony?hearingLink(testimony):''}
+    ${source.archiveUrl?`<a class="citation-archive" href="${escape(source.archiveUrl)}" target="_blank" rel="noopener noreferrer" aria-label="Archived copy of ${escape(source.title)}" title="Wayback snapshot ${escape(date)}">Archived copy</a>`:''}</div>`;
 }
-const publisherShortNames={'U.S. Department of Justice':'DOJ','WOSU Public Media':'WOSU','Federal Election Commission':'FEC','U.S. Securities and Exchange Commission':'SEC','Ohio House Public Safety Committee':'Ohio House','Ohio Senate Judiciary Committee':'Ohio Senate','Ohio Joint Legislative Ethics Committee / OLAC':'Ohio lobbying register','TiffinOhio.net / R.L. Porter':'TiffinOhio.net','Les Wexner / Wexner Foundation':'Les Wexner'};
-const shortSourceTitles={'flock-contract-2024':'Columbus camera lease ordinance','city-lobbyists-2025':'Columbus city bulletin (PDF)'};
+const shortSourceTitles={'flock-contract-2024':'Columbus camera lease ordinance','city-lobbyists-2025':'Columbus city bulletin (PDF)','nwsl-agreement-2026':'City’s soccer development agreement','nwsl-ownership':'Columbus women’s soccer franchise announcement'};
 function hearingLink(testimony){
   return `<a class="claim-ref" href="${plateReaderHearing}#:~:text=${encodeURIComponent(testimony.witness)}" target="_blank" rel="noopener noreferrer">View the House hearing and witness list</a>`;
 }
 function investigationLink(recordId){
   const report=investigations.find(item=>item.records.includes(recordId));
   if(!report)return '';
-  return `<aside class="related-investigation" aria-label="Related investigation"><span>Investigation</span><a href="${escape(report.href)}" target="_blank" rel="noopener noreferrer" aria-label="${escape(report.title)} (opens in a new tab)">${escape(report.title)}</a></aside>`;
+  return `<aside class="related-investigation" aria-label="Related investigation"><span>Related investigation</span><a href="${escape(report.href)}" target="_blank" rel="noopener noreferrer" aria-label="${escape(report.title)} (opens in a new tab)">${escape(report.title)}</a></aside>`;
 }
-function citationRefs(ids,order=ids){
-  const ordered=[...new Set(order)];
+function citationRefs(ids){
   return [...new Set(ids)].map(id=>{
-    const source=sourceById.get(id),publisher=publisherShortNames[source.publisher]||source.publisher;
-    const label=ordered.length===1?'Source':'Source '+(ordered.indexOf(id)+1);
-    const testimony=hearingTestimony[id];
-    const ambiguous=ordered.some(other=>other!==id&&sourceById.get(other)?.publisher===source.publisher);
-    const text=testimony?.download||shortSourceTitles[id]||(ambiguous?source.title:label+' · '+publisher);
-    const accessible=testimony?text+', '+source.publisher+', '+testimony.pages:label+', '+source.publisher+', '+source.title;
-    return `<a class="claim-ref" href="${escape(source.url)}" target="_blank" rel="noopener noreferrer" aria-label="${escape(accessible)}" title="${escape(source.title)}">${escape(text)}</a>${testimony?` <span class="testimony-pages">${escape(testimony.pages)}</span>`:''}`;
+    const source=sourceById.get(id),testimony=hearingTestimony[id];
+    const text=testimony?.download||shortSourceTitles[id]||source.title;
+    return `<a class="claim-ref" href="${escape(source.url)}" target="_blank" rel="noopener noreferrer" title="${escape(source.publisher+' · '+source.title)}">${escape(text)}</a>${testimony?` <span class="testimony-pages">${escape(testimony.pages)}</span>`:''}`;
   }).join(' ');
 }
-function entitySummaryHTML(node) {
+function entitySummaryHTML(node,includeSources=true) {
   const summary=entitySummaries.get(node.id);
   if(!summary)return '';
   const edge=summary.edge;
-  const context=edge?`<div class="summary-context">${statusBadge(edge)} <button type="button" data-edge="${escape(edge.id)}">${escape(nodeById.get(edge.source).name)} · ${escape(nodeById.get(edge.target).name)}</button></div>`:'';
+  const context=edge?`<div class="summary-context">${statusBadge(edge)} <a href="${recordHref('edge',edge.id)}" target="_top" data-edge="${escape(edge.id)}">${escape(nodeById.get(edge.source).name)} · ${escape(nodeById.get(edge.target).name)}</a></div>`:'';
   return `<section class="entity-intro" aria-label="About ${escape(node.name)}">
-    ${context}<p class="intro-statement">${escape(summary.text)}</p>
-    <div class="intro-sources">${citationRefs(summary.sourceIds)}</div>
+    <p class="intro-statement">${escape(summary.text)}</p>${context}
+    ${includeSources?`<div class="intro-sources"><span class="source-caption">${summary.sourceIds.length===1?'Source':'Sources'}</span>${citationRefs(summary.sourceIds)}</div>`:''}
   </section>`;
 }
 function sourceLinks(ids,owner='',entries=[],sharedLocator=''){
   const ordered=[...new Set(ids)];
-  return ordered.map((id,index)=>{
+  return ordered.map(id=>{
     const source=sourceById.get(id),target=owner?` id="${escape('cite-'+owner+'-'+id)}"`:'';
     const locators=[...new Set(entries.filter(entry=>entry.sourceId===id).map(entry=>entry.locator).filter(place=>place&&place!==sharedLocator))];
-    return `<article class="citation-card"${target}>
-      <div class="citation-publisher">${ordered.length>1?`<span class="citation-index">${index+1}</span> `:''}${escape(source.publisher)} <span>· ${escape(friendlyDate(source.date))}</span></div>
-      <a class="citation-title" href="${escape(source.archiveUrl||source.url)}" target="_blank" rel="noopener noreferrer">${escape(source.title)}</a>
-      ${citationActions(source)}
+    return `<article class="citation-card" data-cited-source="${escape(id)}"${target}>
+      ${sourceTitleLink(source)}
+      <div class="citation-publisher">${escape(source.publisher)} · ${escape(friendlyDate(source.date))}</div>
+      ${alternateSourceLinks(source)}
       ${locators.map(place=>`<p class="citation-locator">${escape(place)}</p>`).join('')}
     </article>`;
   }).join('');
@@ -540,12 +539,11 @@ function evidenceBlock(edge){
   const ids=edge.sourceIds,owner='edge-'+edge.id;
   const locator=readerField(edge,'locator');
   return `<section class="evidence-box cited-claim" aria-label="Evidence and cited sources">
-    <span class="eyebrow">Evidence</span>
-    <p class="claim-text">${escape(readerField(edge,'evidence'))} <span class="claim-refs">${citationRefs(ids)}</span></p>
+    <p class="claim-text">${escape(readerField(edge,'evidence'))}</p>
     ${edge.context?`<p class="record-context">${escape(readerField(edge,'context'))}</p>`:''}
-    <div class="claim-source-block"><h3 class="citation-heading">Sources</h3>
-      ${locator?`<p class="citation-locator"><strong>Where to look</strong> ${escape(locator)}</p>`:''}
+    <div class="claim-source-block"><h3 class="citation-heading">${ids.length===1?'Source':'Sources'}</h3>
       ${sourceLinks(ids,owner,edge.evidenceEntries||[],edge.locator)}
+      ${locator?`<p class="citation-locator">${escape(locator)}</p>`:''}
     </div>
   </section>`;
 }
@@ -553,7 +551,10 @@ function evidenceBlock(edge){
 const adjacent = (id, list = graph.edges) => list.filter(e => e.source === id || e.target === id);
 const other = (edge, id) => edge.source === id ? edge.target : edge.source;
 const statusBadge = e => `<span class="status-badge status-${e.status}">${escape(evidenceStatuses[e.status] || e.status)}</span>`;
-const connectionRow = (e, id) => `<button class="connection-row" data-edge="${e.id}"><strong>${escape(id ? nodeById.get(other(e, id)).name : `${nodeById.get(e.source).name} ${e.directional ? 'to' : 'and'} ${nodeById.get(e.target).name}`)}</strong><span><span class="relationship-swatch ${e.historical ? 'history' : ''}" style="--color:${relationships[e.type].color}"></span>${escape(readerField(e,'label'))}</span>${e.caseId ? `<small>${escape(evidenceStatuses[e.status])}</small>` : ''}</button>`;
+function connectionRow(edge,id){
+  const who=id?nodeById.get(other(edge,id)).name:`${nodeById.get(edge.source).name} ${edge.directional?'to':'and'} ${nodeById.get(edge.target).name}`;
+  return `<div class="connection-row"><a href="${recordHref('edge',edge.id)}" target="_top" data-edge="${edge.id}">${escape(readerField(edge,'label'))}</a><span>${escape(who)}</span>${edge.caseId?`<small>${escape(evidenceStatuses[edge.status])}</small>`:''}</div>`;
+}
 
 function applyCaseLayout(){settleExpansion(false);}
 function setCase(id,{keepRecord=false}={}) {
@@ -1086,17 +1087,20 @@ function updateRecordMenu(){
   popoverSignature=signature;
   $('popover-name').textContent=node.name;
   const intro=$('popover-summary');
-  if(intro.dataset.entity!==id){intro.innerHTML=entitySummaryHTML(node);intro.dataset.entity=id;}
+  if(intro.dataset.entity!==id){
+    intro.innerHTML=entitySummaryHTML(node);intro.dataset.entity=id;
+    $('record-filter').open=!!(term||state.focusType);
+  }
   $('popover-kind').textContent=categories[node.category]?.short||'Entity';
-  $('popover-stats').textContent=summary.neighbors.size+(summary.neighbors.size===1?' connected entity':' connected entities')+' · '+summary.links.length+(summary.links.length===1?' record':' records');
-  $('popover-collapse').textContent=state.showDirect?'Fit direct connections':'Show direct connections';
+  $('popover-stats').textContent=summary.neighbors.size===summary.links.length?summary.links.length+(summary.links.length===1?' connection':' connections'):summary.neighbors.size+' connected entities · '+summary.links.length+' records';
+  $('popover-collapse').textContent=state.showDirect?'Fit connections on map':'Show direct connections on map';
   $('popover-collapse').disabled=!summary.links.length;
   $('popover-pin').setAttribute('aria-pressed',String(pinned));$('popover-pin').textContent=pinned?'Unpin from research':'Pin to research';
-  $('record-types').innerHTML=[{type:'',count:summary.links.length},...summary.types].map(({type,count})=>'<button data-focus-type="'+type+'" aria-pressed="'+String((state.focusType||'')===type)+'"><span>'+escape(type?relationships[type].label:'All types')+'</span><b>'+count+'</b></button>').join('');
+  $('record-types').innerHTML=[{type:'',count:summary.links.length},...summary.types].map(({type,count})=>`<label><input type="radio" name="connection-type" value="${escape(type)}"${(state.focusType||'')===type?' checked':''}> ${escape(type?relationships[type].label:'All types')} (${count})</label>`).join('');
   const links=summary.links.filter(edge=>(!state.focusType||edge.type===state.focusType)&&normalize([nodeById.get(other(edge,id)).name,relationships[edge.type].label,readerField(edge,'label')].join(' ')).includes(term));
   $('record-neighbors').innerHTML=links.length?links.map(edge=>{
     const next=nodeById.get(other(edge,id)),label=readerField(edge,'label');
-    return '<article class="neighbor-row"><button class="neighbor-follow" data-follow-node="'+next.id+'" data-follow-edge="'+edge.id+'" aria-label="Follow '+escape(next.name)+' via '+escape(label)+'"><strong>'+escape(next.name)+'</strong><span>'+escape(label)+'</span></button><button class="neighbor-evidence" data-edge="'+edge.id+'" aria-label="Read evidence for '+escape(label)+'">Evidence</button></article>';
+    return `<article class="neighbor-row"><div><a class="neighbor-follow" href="${recordHref('node',next.id)}" target="_top" data-follow-node="${next.id}" data-follow-edge="${edge.id}" aria-label="Follow ${escape(next.name)} via ${escape(label)}">${escape(next.name)}</a><span class="neighbor-relation">${escape(label)}</span></div><a class="neighbor-evidence" href="${recordHref('edge',edge.id)}" target="_top" data-edge="${edge.id}" aria-label="Read evidence for ${escape(label)}">Evidence</a></article>`;
   }).join(''):'<p class="desk-empty">'+(term?'No matching direct connections.':'No connections in these filters.')+'</p>';
 }
 function renderOverview(){
@@ -1122,7 +1126,7 @@ function renderWalk(){
   walkSignature=signature;
   const arrival=$('arrival-record'),step=state.walk.findLast(item=>item.id===current),edge=step&&edgeById.get(step.via);
   arrival.hidden=!edge||state.selected?.kind!=='node';
-  arrival.innerHTML=arrival.hidden?'':'<span>Arrived from '+escape(nodeById.get(other(edge,current)).name)+'</span><button data-edge="'+edge.id+'">'+escape(readerField(edge,'label'))+'</button>';
+  arrival.innerHTML=arrival.hidden?'':`<span>Arrived from ${escape(nodeById.get(other(edge,current)).name)}</span><a href="${recordHref('edge',edge.id)}" target="_top" data-edge="${edge.id}">${escape(readerField(edge,'label'))}</a>`;
   const nav=$('exploration-trail'),lastCurrent=state.walk.findLastIndex(step=>step.id===current);
   nav.hidden=!state.walk.length;$('trail-empty').hidden=!!state.walk.length;
   nav.innerHTML=state.walk.map((step,index)=>{
@@ -1226,7 +1230,7 @@ function selectRecord(kind,id,additive=false){
     if(via){toggleNode(id,{from,via:via.id});return;}
     if(direct.length>1&&state.selected?.kind==='node'&&state.selected.id===from){
       desk.showRecord('connections');
-      $('neighbor-search').value=nodeById.get(id).name;updateRecordMenu();
+      $('record-filter').open=true;$('neighbor-search').value=nodeById.get(id).name;updateRecordMenu();
       const note=$('neighbor-choice');note.textContent=direct.length+' records connect these entities. Choose the record to follow.';note.hidden=false;
       $('record-neighbors').querySelector('[data-follow-node="'+CSS.escape(id)+'"]')?.focus();return;
     }
@@ -1291,7 +1295,7 @@ function renderInspector() {
     return;
   }
   if(state.view==='network'&&selectionCount()>1){
-    panel.innerHTML=`<div class="inspector-header"><span class="eyebrow">SELECTION</span></div><h2>${selectionCount()} records selected</h2><p class="selection-counts">${state.multiNodes.size} entities · ${state.multiEdges.size} connections</p><div class="subheading">ENTITIES</div>${[...state.multiNodes].map(id=>`<button class="connection-row" data-node-detail="${id}"><strong>${escape(nodeById.get(id).name)}</strong><span>${escape(nodeById.get(id).role)}</span></button>`).join('')}${state.multiEdges.size?'<div class="subheading">CONNECTIONS</div>'+[...state.multiEdges].map(id=>connectionRow(edgeById.get(id))).join(''):''}`;
+    panel.innerHTML=`<div class="inspector-header"><span class="eyebrow">SELECTION</span></div><h2>${selectionCount()} records selected</h2><p class="selection-counts">${state.multiNodes.size} entities · ${state.multiEdges.size} connections</p><div class="subheading">Entities</div>${[...state.multiNodes].map(id=>`<div class="connection-row"><a href="${recordHref('node',id)}" target="_top" data-node-detail="${id}">${escape(nodeById.get(id).name)}</a><span>${escape(nodeById.get(id).role)}</span></div>`).join('')}${state.multiEdges.size?'<div class="subheading">Connections</div>'+[...state.multiEdges].map(id=>connectionRow(edgeById.get(id))).join(''):''}`;
     return;
   }
   if (state.selected.kind === 'node') {
@@ -1299,35 +1303,28 @@ function renderInspector() {
     const summary=entitySummaries.get(n.id),sourceIds=[...new Set([...(summary?.sourceIds||[]),...n.sourceIds])];
     const notes=readerField(n,'description');
     panel.innerHTML=`<div class="inspector-header"><span class="eyebrow">Entity</span></div>
-      <h2>${escape(n.name)}</h2>${entitySummaryHTML(n)}<div class="entity-role">${escape(n.role)}</div>${partyDetails(n)}
-      <div class="compact-record-actions"><button data-toggle-pin="${n.id}">${currentResearch().pinnedEntities.has(n.id)?'Unpin':'Pin'}</button><button data-expand-node="${n.id}">Connections</button>
-        <button data-citation-target="${escape('cite-'+owner+'-'+sourceIds[0])}">Sources (${sourceIds.length})</button></div>
-      <div class="record-facts">${links.length===count?count+' connections':links.length+' shown / '+count+' connections'}</div>
+      <h2>${escape(n.name)}</h2>${entitySummaryHTML(n,false)}<div class="entity-role">${escape(n.role)}</div>${partyDetails(n)}
       ${notes&&notes!==summary?.text?`<details class="entity-record-notes"><summary>Record notes</summary><p class="entity-description">${escape(notes)}</p></details>`:''}
       <div class="claim-source-block"><h3 class="citation-heading">Sources</h3>${sourceLinks(sourceIds,owner)}</div>
-      ${tagButtons('entity',n.id)}${campaignFinanceHTML(n.id)}<div class="subheading">Connections</div>
+      ${campaignFinanceHTML(n.id)}<div class="subheading">Connections (${links.length===count?count:links.length+' of '+count})</div>
       ${links.length?links.map(e=>connectionRow(e,n.id)).join(''):'<p>No connections match the filters.</p>'}`;
   }else if(state.selected.kind==='edge'){
     const e=edgeById.get(state.selected.id);
-    const endpoint=id=>`<button data-node-detail="${id}" data-endpoint-of="${e.id}" title="Explore ${escape(nodeById.get(id).name)}">${escape(nodeById.get(id).name)}</button>`;
+    const endpoint=id=>`<a href="${recordHref('node',id)}" target="_top" data-node-detail="${id}" data-endpoint-of="${e.id}" title="Follow ${escape(nodeById.get(id).name)}">${escape(nodeById.get(id).name)}</a>`;
     panel.innerHTML=`<div class="inspector-header"><span class="eyebrow">Relationship</span></div>
       <h2>${escape(readerField(e,'label'))}</h2>${statusBadge(e)}
-      <div class="compact-record-actions"><button type="button" data-citation-target="${escape('cite-edge-'+e.id+'-'+e.sourceIds[0])}" aria-controls="${escape('cite-edge-'+e.id+'-'+e.sourceIds[0])}">Sources (${e.sourceIds.length})</button>
-        <button type="button" data-map-connection="${e.id}">Show this connection on map</button>
-        <button type="button" data-pin-connection="${e.id}" aria-pressed="${state.pinnedEdgeIds.has(e.id)}">${state.pinnedEdgeIds.has(e.id)?'Unpin connection':'Pin connection'}</button></div>
       <div class="edge-ends">${endpoint(e.source)}<span class="link-between" aria-hidden="true">${e.directional?'to':'and'}</span>${endpoint(e.target)}</div>
       <div class="period">${escape(e.period)}</div>${e.unit?`<div class="amount-unit">${escape(e.unit)}</div>`:''}
-      ${evidenceBlock(e)}${tagButtons('connection',e.id)}`;
+      ${evidenceBlock(e)}`;
     const others=pairedRelationships(baseGraph().edges,e).filter(other=>other.id!==e.id);
-    if(others.length)panel.insertAdjacentHTML('beforeend',`<div class="subheading">${others.length+1} connections between these entities</div>`+
-      others.map(other=>`<article class="paired-connection-card" data-paired-record="${other.id}">
-        <button data-edge="${other.id}">${escape(readerField(other,'label'))}</button>
-        <small>${escape(relationships[other.type].label)} · ${escape(other.period)}</small>${statusBadge(other)}
-        ${evidenceBlock(other)}${tagButtons('connection',other.id)}</article>`).join(''));
+    if(others.length)panel.insertAdjacentHTML('beforeend',`<details class="paired-records"><summary>Other connections between these entities (${others.length})</summary>`+
+      others.map(other=>`<p class="paired-connection-card" data-paired-record="${other.id}">
+        <a href="${recordHref('edge',other.id)}" target="_top" data-edge="${other.id}">${escape(readerField(other,'label'))}</a>
+        <small>${escape(evidenceStatuses[other.status])} · ${escape(relationships[other.type].label)} · ${escape(other.period)}</small></p>`).join('')+'</details>');
   }else{
     const source=sourceById.get(state.selected.id),links=baseGraph().edges.filter(e=>e.sourceIds.includes(source.id));
-    panel.innerHTML=`<div class="inspector-header"><span class="eyebrow">Source record</span></div><h2>${escape(source.title)}</h2>
-      <div class="citation-card source-access"><div class="citation-publisher">${escape(source.publisher)} · ${escape(friendlyDate(source.date))}</div>${citationActions(source,false)}</div>
+    panel.innerHTML=`<div class="inspector-header"><span class="eyebrow">Source record</span></div><h2>${sourceTitleLink(source)}</h2>
+      <div class="citation-card source-access"><div class="citation-publisher">${escape(source.publisher)} · ${escape(friendlyDate(source.date))}</div>${alternateSourceLinks(source)}</div>
       <p>${escape(readerField(source,'note'))}</p><div class="subheading">${links.length} relationships in selected filters</div>
       ${links.map(e=>connectionRow(e)).join('')}`;
   }
@@ -1355,7 +1352,7 @@ function renderSources() {
   $('archive-summary').textContent = `${sources.length} sources · ${pinned} archived copies · ${sources.length-pinned} original pages`;
   $('source-list').innerHTML = list.length ? list.map(s => {
     const count = base.edges.filter(e => e.sourceIds.includes(s.id)).length;
-    return `<article class="source-card"><span class="source-number">${String(sources.indexOf(s)+1).padStart(2,'0')}</span><div><h3><a href="${escape(s.archiveUrl||s.url)}" target="_blank" rel="noopener noreferrer">${escape(s.title)}</a></h3><p>${escape(readerField(s,'note'))}</p><small>${escape(s.publisher)} · ${friendlyDate(s.date)} · ${escape(s.kind)}<br>${s.archiveUrl?`Pinned Wayback snapshot: ${s.archiveTimestamp}`:'Original source · content checked'}<br>Source checked ${friendlyDate(s.contentCheckedAt?.slice(0,10)||s.reviewed)}</small>${citationActions(s,false)}<button class="source-connections" data-source="${s.id}">${count} relationship${count===1?'':'s'}</button></div></article>`;
+    return `<article class="source-card"><span class="source-number">${String(sources.indexOf(s)+1).padStart(2,'0')}</span><div><h3>${sourceTitleLink(s)}</h3><p>${escape(readerField(s,'note'))}</p><small>${escape(s.publisher)} · ${friendlyDate(s.date)} · ${escape(s.kind)}<br>${s.archiveUrl?`Pinned Wayback snapshot: ${s.archiveTimestamp}`:'Original source · content checked'}<br>Source checked ${friendlyDate(s.contentCheckedAt?.slice(0,10)||s.reviewed)}</small>${alternateSourceLinks(s)}<a class="source-connections" href="${recordHref('source',s.id)}" target="_top" data-source="${s.id}">View source record · ${count} relationship${count===1?'':'s'}</a></div></article>`;
   }).join('') : '<p class="empty-list">No sources match. Try another search or reset the filters.</p>';
 }
 
@@ -1405,12 +1402,27 @@ function campaignFinanceHTML(id){
   }).join('')).join('');
 }
 function decorateInspector(){
-  if(!state.selected)return;
-  if(state.view==='network'&&selectionCount()>1){$('inspector').querySelector('h2')?.setAttribute('tabindex','-1');return;}
+  const options=$('record-options');
+  options.hidden=!state.selected||state.view==='network'&&selectionCount()>1;
+  $('inspector').querySelector('h2')?.setAttribute('tabindex','-1');
+  if(options.hidden){options.open=false;delete options.dataset.record;return;}
   const {kind,id}=state.selected,panel=$('inspector'),record=recordsByKind[kind]?.get(id);
-  if(!record)return;panel.querySelector('h2')?.setAttribute('tabindex','-1');
+  if(!record){options.hidden=true;return;}
   if(kind==='edge')panel.querySelector('.cited-claim')?.insertAdjacentHTML('afterend',contributionDates(record)+investigationLink(id));
-  const details=document.createElement('div');details.className='record-tools';let evidence='';
+  $('popover-pin').hidden=$('popover-collapse').hidden=kind!=='node';
+  const pin=$('record-pin-edge'),map=$('record-map-edge');
+  pin.hidden=map.hidden=kind!=='edge';
+  if(kind==='edge'){
+    const pinned=state.pinnedEdgeIds.has(id);
+    pin.dataset.pinConnection=id;map.dataset.mapConnection=id;
+    pin.setAttribute('aria-pressed',String(pinned));pin.textContent=pinned?'Unpin from research':'Pin to research';
+  }
+  const tagKind=kind==='edge'?'connection':'entity';
+  $('record-topics').innerHTML=kind==='source'?'':recordTopicTools(recordTags(tagKind,id));
+  const identity=kind+'/'+id;
+  if(options.dataset.record===identity)return;
+  options.open=false;options.dataset.record=identity;
+  let evidence='';
   if(kind==='edge'){
     const {start,end}=validityFor(record);
     if(start&&end)evidence='<p>Documented from '+escape(friendlyDate(start))+' through '+escape(friendlyDate(end))+'.</p>';
@@ -1427,11 +1439,13 @@ function decorateInspector(){
   }
   if(kind==='node'){
     const entity=datasetFor({nodes:[record],edges:[]}).entities[0];
-    evidence=(record.aliases?.length?'<p>Also known as '+escape(record.aliases.join('; '))+'</p>':'')+entity.externalIdentifiers.map(i=>'<p>'+escape(i.scheme)+': <strong>'+escape(i.value)+'</strong></p>').join('');
+    evidence=(record.aliases?.length?'<p>Also known as '+escape(record.aliases.join('; '))+'</p>':'')+entity.externalIdentifiers.map(i=>'<p>'+escape(i.scheme)+' '+escape(i.value)+'</p>').join('');
   }
-  const url=recordURL(location.href,kind,id,release.releaseId);
-  details.innerHTML=evidence+'<p class="stable-record">Record <strong>'+escape(id)+'</strong> · edition '+release.releaseId+'</p><div class="record-actions"><a href="'+escape(url)+'">Record link</a><button class="small-link" data-copy-citation>Copy citation</button><details><summary>Data file</summary><button class="small-link" data-evidence-packet>Download record JSON</button></details></div>';
-  panel.append(details);
+  $('record-permalink').href=recordURL(location.href,kind,id,release.releaseId);
+  const sourceIds=new Set(record.sourceIds||[]);
+  for(const citation of panel.querySelectorAll('[data-cited-source]'))sourceIds.add(citation.dataset.citedSource);
+  $('record-source-notes').innerHTML=sourceIds.size?'<p class="source-caption">Source records</p>'+[...sourceIds].map(sourceId=>`<a href="${recordHref('source',sourceId)}" target="_top" data-source="${escape(sourceId)}">${escape(sourceById.get(sourceId).title)}</a>`).join(' '):'';
+  $('record-metadata').innerHTML=evidence+'<p class="stable-record">Record '+escape(id)+' · edition '+escape(release.releaseId)+'</p>';
 }
 function renderProjectReport(project){
   const panel=$('project-report');
@@ -1442,9 +1456,9 @@ function renderProjectReport(project){
     const hearing=project.sources.map(id=>hearingTestimony[id]).find(Boolean);
     $('project-sources').innerHTML=citationRefs(project.sources)+(hearing?hearingLink(hearing):'');
     $('project-steps').innerHTML=project.steps.map(step=>{
-      const records=step.records.map(edge=>`<button class="project-record" type="button" data-edge="${escape(edge.id)}" aria-label="Inspect ${escape(nodeById.get(edge.source).name)} and ${escape(nodeById.get(edge.target).name)}: ${escape(readerField(edge,'label'))}">${step.records.length===1?'Inspect record':escape(project.labels.get(edge.id))}</button>`).join(' ');
+      const records=step.records.map(edge=>`<a class="project-record" href="${recordHref('edge',edge.id)}" target="_top" data-edge="${escape(edge.id)}" aria-label="Inspect ${escape(nodeById.get(edge.source).name)} and ${escape(nodeById.get(edge.target).name)}: ${escape(readerField(edge,'label'))}">${step.records.length===1?'Inspect record':escape(project.labels.get(edge.id))}</a>`).join(' ');
       const via=step.follow&&step.records.find(edge=>edge.source===step.follow||edge.target===step.follow);
-      const follow=via?`<button class="project-record" type="button" data-node-detail="${escape(step.follow)}" data-endpoint-of="${escape(via.id)}">Follow ${escape(nodeById.get(step.follow).name)}</button>`:'';
+      const follow=via?`<a class="project-record" href="${recordHref('node',step.follow)}" target="_top" data-node-detail="${escape(step.follow)}" data-endpoint-of="${escape(via.id)}">Follow ${escape(nodeById.get(step.follow).name)}</a>`:'';
       const excerpt=step.excerpt?`<blockquote>“${escape(step.excerpt.text)}”<cite>${escape(step.excerpt.credit)}</cite></blockquote>`:'';
       const testimony=step.citations.map(id=>hearingTestimony[id]).find(Boolean);
       const paragraphs=step.text.split('\n\n').map(paragraph=>{
@@ -1638,11 +1652,18 @@ researchUI=mountResearchUI({state,nodes,edges,relationships,release,snapshot:wor
   notify:toast,records:()=>{const route=currentResearch();return datasetFor({nodes:nodes.filter(node=>route.nodeIds.has(node.id)),edges:edges.filter(edge=>route.edgeIds.has(edge.id))});}});
 $('popover-pin').addEventListener('click',()=>{if(state.selected?.kind==='node')researchUI.toggle('entity',state.selected.id);popoverSignature='';updateRecordMenu();});
 $('neighbor-search').addEventListener('input',()=>{$('neighbor-choice').hidden=true;updateRecordMenu();});
-$('record-types').addEventListener('click',event=>{const button=event.target.closest('[data-focus-type]');if(button)showDirectConnections(button.dataset.focusType);});
-$('popover-collapse').addEventListener('click',()=>showDirectConnections());
+$('record-types').addEventListener('change',event=>{
+  if(!event.target.matches('input[name=connection-type]'))return;
+  showDirectConnections(event.target.value);
+  $('record-types').querySelector('input:checked')?.focus({preventScroll:true});
+});
+$('popover-collapse').addEventListener('click',()=>{
+  const id=state.selected?.id;if(state.selected?.kind!=='node')return;
+  if(state.view!=='network')toggleNode(id);else showDirectConnections();
+});
 $('record-neighbors').addEventListener('click',event=>{
   const button=event.target.closest('[data-follow-node]');
-  if(button){toggleNode(button.dataset.followNode,{from:state.selected.id,via:button.dataset.followEdge});focusRecordHeading();}
+  if(button&&plainLinkClick(event)){event.preventDefault();toggleNode(button.dataset.followNode,{from:state.selected.id,via:button.dataset.followEdge});focusRecordHeading();}
 });
 $('entity-popover').addEventListener('pointerenter',hideEntityTooltip);
 $('exploration-trail').addEventListener('click',event=>{const button=event.target.closest('[data-walk-node]');if(button)toggleNode(button.dataset.walkNode,{resume:true});});
@@ -1669,10 +1690,11 @@ $('project-add').addEventListener('click',()=>{
 $('list-search').addEventListener('input',()=>{state.query=$('list-search').value.trim();if(state.view==='directory')renderDirectory();else if(state.view==='relations')renderRelations();else if(state.view==='sources')renderSources();syncURL();});
 document.querySelector('.workspace').addEventListener('click',event=>{
   if(!desk.stacked||state.view==='network')return;
-  const row=event.target.closest('button[data-node-detail],button[data-edge],button[data-source]');
+  const row=event.target.closest('button[data-node-detail],button[data-edge],a[data-source]');
   if(!row)return;
+  if(row.localName==='a'){if(!plainLinkClick(event))return;event.preventDefault();}
   const attribute=['data-node-detail','data-edge','data-source'].find(name=>row.hasAttribute(name));
-  listPlace={view:state.view,scroll:event.currentTarget.scrollTop,selector:'button['+attribute+'="'+CSS.escape(row.getAttribute(attribute))+'"]'};
+  listPlace={view:state.view,scroll:event.currentTarget.scrollTop,selector:row.localName+'['+attribute+'="'+CSS.escape(row.getAttribute(attribute))+'"]'};
   event.stopPropagation();
   if(attribute==='data-node-detail'){
     state.selected={kind:'node',id:row.dataset.nodeDetail};state.detailsOpen=true;
@@ -1697,12 +1719,12 @@ $('zoom-in').addEventListener('click', () => zoom(1.25)); $('zoom-out').addEvent
 $('reset-layout').addEventListener('click',()=>{rememberView();state.orbitIds=new Set();state.showDirect=false;state.bucketMode=false;state.bucketIds=null;naturalLayout.forEach((p,id)=>positions.set(id,{...p}));miniSignature='';render(true);toast('Original network positions restored');});
 $('label-toggle').addEventListener('click', () => { state.labels = state.labels === 'auto' ? 'all' : state.labels === 'all' ? 'off' : 'auto'; $('label-toggle').textContent = state.labels === 'auto' ? 'Labels auto' : state.labels === 'all' ? 'More labels' : 'Labels off'; renderGraph(); });
 document.addEventListener('click', event => {
-  const pinButton=event.target.closest('[data-toggle-pin]');if(pinButton){togglePin(pinButton.dataset.togglePin);return;}
   const anchorButton=event.target.closest('[data-anchor-focus]');if(anchorButton){toggleNode(anchorButton.dataset.anchorFocus);return;}
   const showType=event.target.closest('[data-show-type]');if(showType){animateFocusChange(()=>{state.focusType='';state.relationships.add(showType.dataset.showType);if(connectionModesForLegend()&&!connectionModesForLegend().includes(showType.dataset.showType))state.connectionMode='all';syncReportingControls();});return;}
   const projectLink=event.target.closest('[data-project-dialog]');
   if(projectLink){event.preventDefault();document.querySelector('dialog[open]')?.close();$(projectLink.dataset.projectDialog).showModal();return;}
-  const btn = event.target.closest('button'); if (!btn) return;
+  const btn=event.target.closest('button,a[data-node-detail],a[data-edge],a[data-source]');if(!btn)return;
+  if(btn.localName==='a'){if(!plainLinkClick(event))return;event.preventDefault();}
   if(btn.id==='project-return'){openStarterProject(state.projectId,true);return;}
   if(btn.dataset.removeTag){applyTag(btn.dataset.removeTag);desk.focusSearch();return;}
   if(btn.hasAttribute('data-add-tag')){desk.focusSearch();return;}
@@ -1712,17 +1734,11 @@ document.addEventListener('click', event => {
   if(btn.hasAttribute('data-copy-citation')){const {kind,id}=state.selected;const citation=`CBUS Power, ${recordKind(kind)} ${id}, release ${release.releaseId}  ${recordURL(location.href,kind,id,release.releaseId)}`;navigator.clipboard.writeText(citation).then(()=>toast('Release-specific citation copied')).catch(()=>{downloadJSON({citation},'record-citation.json');toast('Citation downloaded');});}
   if(btn.hasAttribute('data-evidence-packet'))downloadJSON(evidencePacket(state.selected,baseGraph()),'evidence-'+state.selected.id+'-'+release.releaseId+'.json');
   if (btn.dataset.start) revealNode(btn.dataset.start);
-  if(btn.dataset.citationTarget){
-    const card=$(btn.dataset.citationTarget);
-    if(card){const scroll=$('dock-content');scroll.scrollTop+=card.getBoundingClientRect().top-scroll.getBoundingClientRect().top-8;card.querySelector('.citation-original')?.focus({preventScroll:true});}
-    return;
-  }
   if(btn.dataset.mapConnection){showConnectionOnMap(btn.dataset.mapConnection);return;}
-  if(btn.dataset.nodeDetail){revealNode(btn.dataset.nodeDetail,btn.dataset.endpointOf);if(btn.dataset.endpointOf)focusRecordHeading();return;}
-  if (btn.dataset.edge && !btn.closest('#graph')) { selectEdge(btn.dataset.edge);if(btn.closest('#project-steps'))focusRecordHeading(); }
+  if(btn.dataset.nodeDetail){revealNode(btn.dataset.nodeDetail,btn.dataset.endpointOf);if(btn.dataset.endpointOf||btn.localName==='a')focusRecordHeading();return;}
+  if (btn.dataset.edge && !btn.closest('#graph')) { selectEdge(btn.dataset.edge);if(btn.localName==='a'||btn.closest('#project-steps'))focusRecordHeading();return; }
   if(btn.dataset.pinConnection){researchUI.toggle('connection',btn.dataset.pinConnection);return;}
   if(btn.dataset.source)inspectSource(btn.dataset.source);
-  if(btn.dataset.expandNode){if(state.selected?.id!==btn.dataset.expandNode)toggleNode(btn.dataset.expandNode);showDirectConnections();}
   if (btn.hasAttribute('data-focus')) { state.focus = !state.focus; renderGraph(); renderInspector();decorateInspector();fitGraph();syncURL(); }
   if (btn.hasAttribute('data-clear-highlight')) { settleExpansion(false);const refit=state.focus;state.focus = false; state.path = null; render(refit); }
 });

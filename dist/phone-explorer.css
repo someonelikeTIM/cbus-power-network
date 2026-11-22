@@ -123,6 +123,9 @@ body[data-phone-canvas] #phone-projects .project-card {border-radius:13px}
 body[data-phone-canvas] #phone-projects :is(#random-start,#search-show-all) {display:inline-flex;align-items:center;justify-content:center;min-height:44px;width:auto;margin:10px 5px 10px 0;padding:5px 12px;border:1px solid var(--line);border-radius:20px;color:var(--scarlet-dark);background:#ffffffb9;font:600 .82rem var(--sans)}
 body[data-phone-canvas] #phone-projects #entry-sample {min-height:0;border-radius:14px}
 body[data-phone-canvas] #phone-sheet :is(#record-dock,#tools-panel,#sources-view) :is(a[href],button:not(#dock-resize)) {min-height:44px}
+body[data-phone-canvas] #record-dock :is(#record-options,#record-filter,.paired-records)>summary,
+body[data-phone-canvas] #record-dock #record-types label {box-sizing:border-box;min-height:44px;padding-block:10px}
+body[data-phone-canvas] #record-dock #record-options :is(a[href],button) {min-height:44px}
 body[data-phone-canvas] :is(#phone-controls,#phone-sheet,#phone-map-controls,#phone-notice) :focus-visible {outline:2px solid var(--scarlet);outline-offset:-3px}
 
 #phone-workspace {box-sizing:border-box;width:min(430px,calc(100% - 20px));max-height:85dvh;padding:14px 16px;border:1px solid white;border-radius:22px;box-shadow:0 14px 50px #20303930;background:#f9faf9}
