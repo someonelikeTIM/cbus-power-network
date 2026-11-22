@@ -51,6 +51,8 @@ assert.ok(search('public comment').some(hit=>hit.id===leaseReport.id));
 assert.ok(!searchDesk({nodes,edges:[]},sources,byId,'Flock emergency',[]).some(hit=>hit.id===leaseReport.id));
 const reportPage=await readFile('dist/investigations/flock-emergency.html','utf8');
 assert.ok(reportPage.includes('?project='+flockProject.id+'&amp;step=e179'));
+const reportLinks=new Set([...reportPage.matchAll(/<a\b[^>]*\bhref="([^"]+)"/g)].map(match=>match[1].replaceAll('&amp;','&')));
+for(const reference of leaseFinding.references)assert.ok(reportLinks.has(reference.url),'Missing investigation source: '+reference.label);
 const technologyProject=projects.get('ai-tech-lobbying');
 assert.ok(!starterProjects(nodes,edges,sources.filter(source=>source.id!=='policy-technet-sb163')).has(technologyProject.id));
 const firstTechnologyPin=technologyProject.route.edges[0];
