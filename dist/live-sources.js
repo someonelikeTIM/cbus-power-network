@@ -2539,5 +2539,27 @@ export const sourceLiveEvidence = {
       "March 23, 2015"
     ],
     "missingChecks": []
+  },
+  "er26-franklin-official-20261119": {
+    "originalUrl": "https://vote.franklincountyohio.gov/getmedia/ffc90b30-02a8-47b3-99de-e020a0ff1220/Franklin-Only-Official-Group-Detail",
+    "finalUrl": "https://vote.franklincountyohio.gov/getmedia/ffc90b30-02a8-47b3-99de-e020a0ff1220/Franklin-Only-Official-Group-Detail",
+    "contentVerified": true,
+    "checkedAt": "2026-11-23T15:10:58.406610+00:00",
+    "sha256": "f017319e14e7d228198eff7265f443ee8d542d4edd522f566343ef8375397a85",
+    "contentCheckMethod": "Official county index and summary read; PDF page8 rendered and visually checked. Three candidate totals reconciled against mail, in-office, election-day and provisional components.",
+    "contentChecks": [
+      "OFFICIAL RESULTS",
+      "November 3, 2026",
+      "350,856",
+      "90,096",
+      "379,943",
+      "11/19/2026 03:55PM"
+    ],
+    "missingChecks": [],
+    "reviewer": {
+      "type": "unknown",
+      "identity": null
+    },
+    "contentCheckNote": "Official county-office results only; statewide/full-district outcomes and assumption of a new term are not inferred."
   }
 };

@@ -1,23 +1,17 @@
 {
   "release": {
     "schemaVersion": "1.0.0",
-    "releaseId": "2026-11-20-research-projects",
+    "releaseId": "2026-11-23-county-results",
     "status": "published",
-    "preparedOn": "2026-11-20",
-    "publishedAt": "2026-11-20T16:50:45Z",
-    "dataRevision": 24,
+    "preparedOn": "2026-11-23",
+    "publishedAt": "2026-11-23T15:10:58.410465+00:00",
+    "dataRevision": 25,
     "codeLicense": "MIT",
     "dataLicense": "CC-BY-4.0",
     "sourceCheckIds": [
-      "policy-dovilla-sb243",
-      "policy-flock-hb725",
-      "policy-aclu-hb725",
-      "policy-cisco-dues",
-      "policy-verizon-dues",
-      "policy-google-groups",
-      "policy-technet-sb163"
+      "er26-franklin-official-20261119"
     ]
   },
-  "inputFingerprint": "f1acfd95c140b3ab37acdbb97ef4637d1aa3f393a1720cf2d0934674e2d668a3",
-  "manifest": "downloads/2026-11-20-research-projects/manifest.json"
+  "inputFingerprint": "5d87c9abe16b16f24f2bb8991aebd681f3dedbfece4bd581a08a0a47443e5081",
+  "manifest": "downloads/2026-11-23-county-results/manifest.json"
 }

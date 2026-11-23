@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-11-23 — Official county election results
+
+The Franklin County Board of Elections now posts an OFFICIAL RESULTS summary generated November 19 at 3:55PM publisher local time. Page 8 lists 350,856 votes for Erica C. Crawley and 90,096 for Eric Terford in the commissioner race, and 379,943 for Michael Stinziano in the auditor race. Each total was checked on the rendered page and reconciled against its mail, in-office, election-day and provisional components. The current records identify the two county winners and the other county candidacy’s official outcome.
+
+The earlier unofficial counts (338,919, 88,274 and 367,794 respectively), source references and November 4 snapshot dates remain with the updated records and in prior editions. The same entity/relationship IDs and graph positions are retained. Official county status is separate from the report-generation time, an exact certification date and a new term’s start. No assumption of office is inferred.
+
+Eight statewide/full-district races retain their dated unofficial snapshot. The statewide feed is still marked UnofficialComplete and its covered counts are unchanged; the county’s revised subtotals are not used as statewide or full OH-15 results. Financial files, coverage gaps, public-records requests, existing investigations and the mobile/desktop interface are retained. This edition contains 396 entities, 584 relationships, 210 sources and 243 downloadable event records; no Timeline view or actions were added. New source-check scope is limited to the official county summary.
+
 ## 2026-11-22 — Reading a record
 
 Document titles now open original sources directly. Under Connections, a linked name follows the trail and its Evidence link opens the supporting record. Pinning, map actions, topic filters, sharing and record data are available under Record tools. The source library also links directly to originals and offers archived copies when available.

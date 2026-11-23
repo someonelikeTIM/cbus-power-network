@@ -53,3 +53,5 @@ Candidate entities can include `electionResult`: race ID, election date, unoffic
 ## Political party affiliation
 
 `party` is a documented party label, separate from the ballot's partisan/nonpartisan rules. `partyAffiliation` holds the party, source IDs, source locator, period, check date and scope qualification for supplemental affiliation records. These fields do not establish present officeholding or transfer an affiliation to an employer, donor or connected organization. Historical source periods remain visible. Libertarian, other-party and unlisted roster labels retain their meanings; red/blue coloring recognizes only documented Republican/Democratic affiliations.
+
+Result status is specific to a race and jurisdiction: an official county-office result does not certify a statewide or full-district contest. `previousSnapshot` retains the earlier source, date and vote count on updated county candidates. An official result can have an unknown exact `certificationDate`; the report-generation timestamp is distinct. `officeAssumed` remains false until a new term is independently supported.

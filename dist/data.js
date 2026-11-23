@@ -18,7 +18,7 @@ import { electionResultSources,applyElectionResults } from './election-results-2
 import { affiliationSources,applyPartyAffiliations } from './party-affiliations.js';
 import {policySources,policyRelease} from './policy-records.js';
 export const meta = {
-  title: 'CBUS Power', reviewed: '2026-11-20', version: 24,
+  title: 'CBUS Power', reviewed: '2026-11-23', version: 25,
   scope: 'Columbus and Ohio: money, control, public corruption, civic affiliations, and media ownership, governance, funding and information supply.',
   limitations: 'Selected records, not complete coverage. Evidence status, source date, and direction are attached to each case relationship. Assets, cash transfers, and penalties are identified separately.'
 };
@@ -282,7 +282,7 @@ const campaigns=campaignRelease(verifiedSourceIds,nodes.map(node=>node.id));
 if(verifiedSourceIds.has('trail-microsoft-oct2026')){const project=nodes.find(node=>node.id==='microsoft-new-albany');if(project)Object.assign(project,{role:'Early works completed · October 2026 update',description:'Microsoft says early construction works are complete and community engagement has returned to Microsoft. Limited fall/winter maintenance may continue; an operational start is not established. The earlier July status remains on its dated relationship.',sourceIds:[...new Set([...project.sourceIds,'trail-microsoft-oct2026'])],claimReview:{"status": "reviewed", "reviewedAt": "2026-11-09", "reviewer": {"type": "unknown", "identity": null}, "note": "Automated check of the company statement and the distinction between construction phase and operation."}});}
 nodes.push(...campaigns.nodes);edges.push(...campaigns.edges);applyCampaignUpdates(nodes,verifiedSourceIds);
 applyElectionResults(nodes,edges,verifiedSourceIds);
-meta.election2026Phase='Election held November 3; unofficial November 4 returns checked November 7; certification pending';
+meta.election2026Phase='Two county offices have official November 19 results; eight state/district races retain dated unofficial returns; no new term is inferred';
 meta.campaign2026State=campaigns.complete?'source-checked subset':'partially source-checked';
 meta.campaign2026Coverage='Official roster for selected statewide and Franklin County races; selected financial filings and campaign statements, with incomplete donor and outside-spending ledgers.';
 const epsteinIntake=epsteinRelease(verifiedSourceIds,nodes.map(node=>node.id));

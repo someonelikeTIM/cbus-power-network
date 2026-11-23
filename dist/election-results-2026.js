@@ -1,4 +1,4 @@
-// Checked election snapshot. Prior ballot, finance and officeholding records remain distinct.
+// Checked election snapshots. Prior ballot, finance and officeholding records remain distinct.
 import {campaignRoster,campaign2026EdgeIds,campaignCase} from './campaigns-2026.js';
 export const electionResultSources=[
   {
@@ -27,14 +27,23 @@ export const electionResultSources=[
     "date": null,
     "kind": "Official results qualification",
     "note": "Results remain unofficial until certification; outstanding eligible ballots can be included in the canvass. Election results do not themselves establish that a new officeholder has taken office."
+  },
+  {
+    "id": "er26-franklin-official-20261119",
+    "title": "2026 official Franklin County election summary, generated November 19",
+    "publisher": "Franklin County Board of Elections",
+    "url": "https://vote.franklincountyohio.gov/getmedia/ffc90b30-02a8-47b3-99de-e020a0ff1220/Franklin-Only-Official-Group-Detail",
+    "date": "2026-11-19",
+    "kind": "Official county election results",
+    "note": "Page 8 is labelled OFFICIAL RESULTS and covers the two county offices. The report was generated November 19 at 3:55PM publisher local time; this timestamp is not an independently established certification date or term-start date. County subtotals for statewide/congressional contests are not used as full-race totals."
   }
 ];
 export const electionResults={
   "electionDate": "2026-11-03",
-  "checkedOn": "2026-11-07",
-  "status": "unofficial",
+  "checkedOn": "2026-11-23",
+  "status": "mixed",
   "certified": false,
-  "note": "Election Day has passed. These are unofficial returns, not certified outcomes or authority to take office. The statewide feed is marked UnofficialPartial. Uncounted eligible ballots may change totals. Joint-ticket votes are one shared selection, not separate votes for each member. Missing selections remain unknown. County-only totals are used only for the two county offices.",
+  "note": "The two Franklin County offices use the November 19 OFFICIAL RESULTS summary. The eight statewide/full-district races retain the explicitly dated November 4 unofficial snapshot; county-only figures do not replace those full-race totals. Prior county snapshots remain with each updated race and in prior editions. Official results do not establish a new term of office. Shared-ticket votes are one count; absent rows remain unknown.",
   "races": [
     {
       "raceId": "ohio-governor-election",
@@ -100,7 +109,8 @@ export const electionResults={
           "sourceSelectionId": "_BS59F4F0CBC2B12408E0633390EE0A0E4A"
         }
       ],
-      "leaderId": "amy-acton"
+      "leaderId": "amy-acton",
+      "checkedOn": "2026-11-07"
     },
     {
       "raceId": "ohio-ag-election-2026",
@@ -128,7 +138,8 @@ export const electionResults={
           "sourceSelectionId": "_BS55A742EA5FD309A3E0633390EE0AE290"
         }
       ],
-      "leaderId": "john-kulewicz"
+      "leaderId": "john-kulewicz",
+      "checkedOn": "2026-11-07"
     },
     {
       "raceId": "ohio-auditor-election-2026",
@@ -156,7 +167,8 @@ export const electionResults={
           "sourceSelectionId": "_BS55A742EA54E109A3E0633390EE0AE290"
         }
       ],
-      "leaderId": "larose"
+      "leaderId": "larose",
+      "checkedOn": "2026-11-07"
     },
     {
       "raceId": "ohio-secretary-election-2026",
@@ -192,7 +204,8 @@ export const electionResults={
           "sourceSelectionId": "_BS55A742EA553C09A3E0633390EE0AE290"
         }
       ],
-      "leaderId": "allison-russo"
+      "leaderId": "allison-russo",
+      "checkedOn": "2026-11-07"
     },
     {
       "raceId": "ohio-treasurer-election-2026",
@@ -220,7 +233,8 @@ export const electionResults={
           "sourceSelectionId": "_BS55A742EA60E109A3E0633390EE0AE290"
         }
       ],
-      "leaderId": "seth-walsh"
+      "leaderId": "seth-walsh",
+      "checkedOn": "2026-11-07"
     },
     {
       "raceId": "ohio-senate-election-2026",
@@ -288,7 +302,8 @@ export const electionResults={
           "sourceSelectionId": "_BS576274EE440573A4E0633390EE0A591D"
         }
       ],
-      "leaderId": "sherrod-brown"
+      "leaderId": "sherrod-brown",
+      "checkedOn": "2026-11-07"
     },
     {
       "raceId": "oh03-election-2026",
@@ -316,7 +331,8 @@ export const electionResults={
           "sourceSelectionId": "_BS55A742EA570D09A3E0633390EE0AE290"
         }
       ],
-      "leaderId": "beatty"
+      "leaderId": "beatty",
+      "checkedOn": "2026-11-07"
     },
     {
       "raceId": "oh15-election-2026",
@@ -368,87 +384,147 @@ export const electionResults={
           "sourceSelectionId": "_BS5A1D285617CED7BEE0633390EE0A2FBB"
         }
       ],
-      "leaderId": "don-leonard"
+      "leaderId": "don-leonard",
+      "checkedOn": "2026-11-07"
     },
     {
       "raceId": "franklin-commissioner-election-2026",
       "title": "Franklin County commissioner",
-      "sourceId": "er26-franklin-results",
+      "sourceId": "er26-franklin-official-20261119",
       "sourceContestId": null,
       "scope": "Franklin County",
-      "sourceUpdatedAt": "2026-11-04T12:13:00",
-      "status": "unofficial",
-      "locator": "PDF page 8; summary generated November 4, 2026 at 12:13PM (publisher local time)",
+      "sourceUpdatedAt": "2026-11-19T15:55:00",
+      "status": "official",
+      "locator": "PDF page 8, county commissioner/auditor; OFFICIAL RESULTS; generated November 19, 2026 at 3:55PM publisher local time",
       "selections": [
         {
           "candidateIds": [
             "crawley"
           ],
-          "votes": 338919,
+          "votes": 350856,
           "writeIn": false
         },
         {
           "candidateIds": [
             "eric-terford"
           ],
-          "votes": 88274,
+          "votes": 90096,
           "writeIn": false
         }
       ],
-      "leaderId": "crawley"
+      "leaderId": "crawley",
+      "checkedOn": "2026-11-23",
+      "previousSnapshot": {
+        "raceId": "franklin-commissioner-election-2026",
+        "title": "Franklin County commissioner",
+        "sourceId": "er26-franklin-results",
+        "sourceContestId": null,
+        "scope": "Franklin County",
+        "sourceUpdatedAt": "2026-11-04T12:13:00",
+        "status": "unofficial",
+        "locator": "PDF page 8; summary generated November 4, 2026 at 12:13PM (publisher local time)",
+        "selections": [
+          {
+            "candidateIds": [
+              "crawley"
+            ],
+            "votes": 338919,
+            "writeIn": false
+          },
+          {
+            "candidateIds": [
+              "eric-terford"
+            ],
+            "votes": 88274,
+            "writeIn": false
+          }
+        ],
+        "leaderId": "crawley",
+        "checkedOn": "2026-11-07"
+      },
+      "certified": true,
+      "certificationDate": null
     },
     {
       "raceId": "franklin-auditor-election-2026",
       "title": "Franklin County auditor",
-      "sourceId": "er26-franklin-results",
+      "sourceId": "er26-franklin-official-20261119",
       "sourceContestId": null,
       "scope": "Franklin County",
-      "sourceUpdatedAt": "2026-11-04T12:13:00",
-      "status": "unofficial",
-      "locator": "PDF page 8; summary generated November 4, 2026 at 12:13PM (publisher local time)",
+      "sourceUpdatedAt": "2026-11-19T15:55:00",
+      "status": "official",
+      "locator": "PDF page 8, county commissioner/auditor; OFFICIAL RESULTS; generated November 19, 2026 at 3:55PM publisher local time",
       "selections": [
         {
           "candidateIds": [
             "michael-stinziano"
           ],
-          "votes": 367794,
+          "votes": 379943,
           "writeIn": false
         }
       ],
-      "leaderId": "michael-stinziano"
+      "leaderId": "michael-stinziano",
+      "checkedOn": "2026-11-23",
+      "previousSnapshot": {
+        "raceId": "franklin-auditor-election-2026",
+        "title": "Franklin County auditor",
+        "sourceId": "er26-franklin-results",
+        "sourceContestId": null,
+        "scope": "Franklin County",
+        "sourceUpdatedAt": "2026-11-04T12:13:00",
+        "status": "unofficial",
+        "locator": "PDF page 8; summary generated November 4, 2026 at 12:13PM (publisher local time)",
+        "selections": [
+          {
+            "candidateIds": [
+              "michael-stinziano"
+            ],
+            "votes": 367794,
+            "writeIn": false
+          }
+        ],
+        "leaderId": "michael-stinziano",
+        "checkedOn": "2026-11-07"
+      },
+      "certified": true,
+      "certificationDate": null
     }
   ]
 };
 
-const review=()=>({status:'reviewed',reviewedAt:'2026-11-07',reviewer:{type:'unknown',identity:null},note:'Automated check of the original results, jurisdiction and qualifications.'});
+const review=checkedOn=>({status:'reviewed',reviewedAt:checkedOn,reviewer:{type:'unknown',identity:null},note:'Automated check of the original results, jurisdiction and qualifications.'});
 const number=value=>value.toLocaleString('en-US');
+const dateLabel=value=>new Date(value.slice(0,10)+'T12:00:00Z').toLocaleDateString('en-US',{month:'long',day:'numeric',timeZone:'UTC'});
 export function applyElectionResults(nodes,edges,verified){
  if(!verified.has('er26-results-notice'))return;
  const available=electionResults.races.filter(race=>verified.has(race.sourceId));
  for(const race of available){
   const leader=nodes.find(node=>node.id===race.leaderId),leading=race.selections.find(item=>item.candidateIds.includes(race.leaderId));
   if(!leader||!leading)continue;
-  const sourceIds=[race.sourceId,'er26-results-notice'];
+  const official=race.status==='official',checkedOn=race.checkedOn||electionResults.checkedOn,prior=race.previousSnapshot;
+  const priorVerified=prior&&verified.has(prior.sourceId);
+  const sourceIds=[race.sourceId,'er26-results-notice',...(priorVerified?[prior.sourceId]:[])];
   const locator=race.locator||`XML Contest ${race.sourceContestId}; Total votes for ${race.scope}; generated ${race.sourceUpdatedAt}`;
-  const qualification=`Unofficial returns generated ${race.sourceUpdatedAt.replace('T',' ')}; checked November 7. Certification is pending, and outstanding eligible ballots may change totals. This result does not establish a new term of office.`;
+  const qualification=official?`Official county results generated ${race.sourceUpdatedAt.replace('T',' ')} (publisher local time); checked ${dateLabel(checkedOn)}. This status applies to the county office only. The report-generation timestamp is not an independently established certification date. A new term's start is not established by this result.`:`Unofficial returns generated ${race.sourceUpdatedAt.replace('T',' ')}; checked ${dateLabel(checkedOn)}. Certification is pending, and outstanding eligible ballots may change totals. This result does not establish a new term of office.`;
   for(const row of campaignRoster.filter(row=>row.race===race.raceId)){
    const node=nodes.find(node=>node.id===row.id);if(!node)continue;
    const selection=race.selections.find(item=>item.candidateIds.includes(row.id));
-   const standing=!selection?'not-reported':selection===leading?'leading':'trailing';
+   const standing=!selection?'not-reported':selection===leading?(official?'winner':'leading'):(official?'not-elected':'trailing');
    const votes=selection?.votes??null,ticket=selection?.candidateIds.length>1;
-   const standingText=standing==='leading'?'leads unofficial returns':standing==='trailing'?'trails unofficial returns':'no separate result reported';
+   const standingText=standing==='winner'?'winner in official county results':standing==='not-elected'?'not elected in official county results':standing==='leading'?'leads unofficial returns':standing==='trailing'?'trails unofficial returns':'no separate result reported';
    const voteText=selection?`${ticket?'Joint ticket':'Candidate'} received ${number(votes)} votes in ${race.scope}. ${ticket?'This is one shared ticket count, not separate votes for its members. ':''}`:'This candidate is not separately listed in the retrieved results; no zero vote total or outcome is assigned. ';
    node.role=`2026 ${row.office} · ${standingText}${selection?.writeIn?' · write-in':''}`;
    node.description=`The election was held November 3, 2026. ${voteText}${selection?.writeIn?'The results classify this selection as a write-in. ':''}${qualification} The September ballot record and earlier roles remain in their dated sources.`;
-   node.electionResult={raceId:race.raceId,electionDate:electionResults.electionDate,status:'unofficial',certified:false,standing,votes,selectionCandidateIds:selection?.candidateIds||[],writeIn:selection?.writeIn??row.writeIn,scope:race.scope,sourceId:race.sourceId,sourceUpdatedAt:race.sourceUpdatedAt,checkedOn:electionResults.checkedOn,locator,officeAssumed:false};
+   node.electionResult={raceId:race.raceId,electionDate:electionResults.electionDate,status:official?'official':'unofficial',certified:official,standing,votes,selectionCandidateIds:selection?.candidateIds||[],writeIn:selection?.writeIn??row.writeIn,scope:race.scope,sourceId:race.sourceId,sourceUpdatedAt:race.sourceUpdatedAt,checkedOn,locator,officeAssumed:false};
+   if(priorVerified){const previous=prior.selections.find(item=>item.candidateIds.includes(row.id));node.electionResult.previousSnapshot={sourceId:prior.sourceId,sourceUpdatedAt:prior.sourceUpdatedAt,checkedOn:prior.checkedOn,status:prior.status,votes:previous?.votes??null};node.electionResult.certificationDate=race.certificationDate??null;}
    if(selection)node.writeIn=selection.writeIn;
-   node.sourceIds=[...new Set([...node.sourceIds,...sourceIds])];node.claimReview=review();
+   node.sourceIds=[...new Set([...node.sourceIds,...sourceIds])];node.claimReview=review(checkedOn);
   }
   const contest=nodes.find(node=>node.id===race.raceId);
-  if(contest){contest.role='Election held Nov 3 · unofficial returns';contest.description=`${leader.name} leads the retrieved ${race.scope} returns with ${number(leading.votes)} votes${leading.candidateIds.length>1?' for the joint ticket':''}. ${qualification}`;contest.sourceIds=[...new Set([...contest.sourceIds,...sourceIds])];contest.claimReview=review();}
+  if(contest){contest.role=official?'Election held Nov 3 · official county results':'Election held Nov 3 · unofficial returns';contest.description=`${leader.name} ${official?'won the official county count':'leads the retrieved '+race.scope+' returns'} with ${number(leading.votes)} votes${leading.candidateIds.length>1?' for the joint ticket':''}. ${qualification}`;contest.sourceIds=[...new Set([...contest.sourceIds,...sourceIds])];contest.claimReview=review(checkedOn);}
   const id='er26-'+race.raceId;
-  if(!edges.some(edge=>edge.id===id))edges.push({id,source:race.leaderId,target:race.raceId,type:'candidacy',label:'Leads unofficial returns',evidence:`${leader.name}: ${number(leading.votes)} votes${leading.candidateIds.length>1?' for the joint ticket':''} in ${race.scope}.`,voteCount:leading.votes,sourceIds,locator,period:'Election November 3, 2026; unofficial snapshot November 4',caseId:'campaigns2026',electionCycle:2026,historical:false,directional:true,status:'documented',publicationState:'accepted',claimReview:review(),context:qualification+' Votes are counts, not financial amounts.',evidenceEntries:sourceIds.map(sourceId=>({sourceId,role:sourceId===race.sourceId?'support':'qualify',locator:sourceId===race.sourceId?locator:'Publisher notice: Understanding Unofficial Results',excerpt:null,note:'Certification and assumption of office are not established.'})),timeline:{lane:'elections',moneyKind:'none',date:{precision:'day',start:'2026-11-03',end:'2026-11-03',role:'Election date',observedOn:'2026-11-07',observationRole:'Unofficial results checked',note:'The election date is separate from the November 4 source snapshot, November 7 check and future certification.'}}});
+  if(!edges.some(edge=>edge.id===id))edges.push({id,source:race.leaderId,target:race.raceId,type:'candidacy',label:official?'Won · official county results':'Leads unofficial returns',evidence:`${leader.name}: ${number(leading.votes)} votes${leading.candidateIds.length>1?' for the joint ticket':''} in ${race.scope}.`,voteCount:leading.votes,sourceIds,locator,period:`Election November 3, 2026; ${official?'official county':'unofficial'} snapshot ${dateLabel(race.sourceUpdatedAt)}`,caseId:'campaigns2026',electionCycle:2026,historical:false,directional:true,status:'documented',publicationState:'accepted',claimReview:review(checkedOn),context:qualification+' Votes are counts, not financial amounts.',evidenceEntries:sourceIds.map(sourceId=>({sourceId,role:sourceId===race.sourceId?'support':'qualify',locator:sourceId===race.sourceId?locator:sourceId==='er26-results-notice'?'Publisher notice: Understanding Unofficial Results':'Prior November4 unofficial county summary, retained for comparison',excerpt:null,note:official?'County official status is established; statewide certification and a new term of office are not established.':'Certification and assumption of office are not established.'})),timeline:{lane:'elections',moneyKind:'none',date:{precision:'day',start:'2026-11-03',end:'2026-11-03',role:'Election date',observedOn:checkedOn,observationRole:official?'Official county results checked':'Unofficial results checked',note:official?`Election date is separate from the ${dateLabel(race.sourceUpdatedAt)} official report and ${dateLabel(checkedOn)} check. No term-start or exact certification date is asserted.`:`The election date is separate from the ${dateLabel(race.sourceUpdatedAt)} source snapshot, ${dateLabel(checkedOn)} check and future certification.`}}});
   campaign2026EdgeIds.add(id);if(!campaignCase.contextEdgeIds.includes(id))campaignCase.contextEdgeIds.push(id);
  }
- if(available.length){campaignCase.title='2026 Ohio election results and campaigns';campaignCase.summary='The November 3 election has been held. Unofficial returns, campaign committees, reported money and dated background roles; certification remains pending.';campaignCase.outcomes=[`Election held November 3. ${available.length} covered races have checked unofficial November 4 returns; certification is pending.`,'Leading vote counts are not certified victories or proof that a new term has begun. Missing result rows remain unknown.',...campaignCase.outcomes.filter(text=>!text.startsWith('Election held November 3.')&&!text.startsWith('Leading vote counts are not certified'))];}
+ if(available.length){const official=available.filter(race=>race.status==='official').length;campaignCase.title='2026 Ohio election results and campaigns';campaignCase.summary='The November 3 election has been held. Official county results and dated unofficial state/district returns are distinguished; certification remains pending for those other races.';campaignCase.outcomes=[`Election held November 3. ${official} covered county races have official November 19 results; ${available.length-official} state/district races retain the dated unofficial snapshot.`,'Official county results do not establish a new term of office. Missing result rows remain unknown.',...campaignCase.outcomes.filter(text=>!text.startsWith('Election held November 3.')&&!text.startsWith('Leading vote counts are not certified')&&!text.startsWith('Official county results do not establish'))];}
 }
