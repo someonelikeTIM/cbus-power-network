@@ -11,13 +11,13 @@ export const investigations = [
   },
   {
     id: 'hartman-farm',
-    title: 'Google’s tax break flips the ranking at Hartman Farm',
+    title: 'How Google got its tax break at Hartman Farm',
     href: './investigations/hartman-farm.html',
     publishedOn: '2026-11-23',
-    summary: 'Magellan paid $1.45 million on the campus’s 2025 property bill. We estimate $4.08 million without the exemption.',
+    summary: 'At full tax, the campus would bring in more property revenue than either housing model. Columbus approved the exemption in a 6–1 vote.',
     category: 'land-use analysis',
     records: ['hartman-farm-abatement', 'hartman-google-magellan'],
     relatedRecords: {e198: 'Separate Google agreement in Columbus'},
-    terms: 'Magellan Enterprises Google Hartman Farm South High Street Columbus data center property tax abatement ordinance 0520-2021 housing mixed use storefronts'
+    terms: 'Magellan Enterprises Google Hartman Farm South High Street Columbus data center property tax abatement ordinance 0520-2021 housing mixed use storefronts Department of Development Hamilton Local Schools Emmanuel Remy Elizabeth Brown Shayla Favor'
   }
 ];

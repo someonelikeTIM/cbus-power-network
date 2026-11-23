@@ -4,6 +4,8 @@
 
 The homepage lists the Hartman Farm and Flock stories in a dedicated Investigations section. The same headlines are directly accessible on phones in the collapsed Research projects panel.
 
+The Hartman Farm story identifies who asked for the exemption, who recommended and approved it, and the reasons officials gave. The chart shows the same campus at full tax would generate more property revenue than either modeled neighborhood. The parcel’s paid bill came in below both.
+
 ## 2026-11-23 — Hartman Farm
 
 The [Hartman Farm story](https://cbuspower.org/investigations/hartman-farm.html) compares the $1.45 million Magellan paid for tax year 2025 with two housing scenarios and a $4.08 million model for the same campus without its exemption. The network adds Magellan Enterprises LLC, Columbus Council’s March 22, 2021 abatement authorization and the state-documented link to Google. The New Albany–Montauk record links to the story as a separate Columbus agreement.
