@@ -1,6 +1,7 @@
 import { mkdir,readFile,writeFile } from 'node:fs/promises';
 import { datasetFor,validateDataset,evidencePacket,release } from '../dist/contract.js';
 import { nodes,edges } from '../dist/data.js';
+import { investigations } from '../dist/investigations.js';
 import { findPaths } from '../dist/reporting.js';
 import { toCSV } from './csv.mjs';
 import { filesUnder,hash,inputFingerprint } from './public-files.mjs';
@@ -29,6 +30,28 @@ if(!route)throw Error('Missing example route');
 await save('packet-anduril-city.json',evidencePacket({kind:'path',...route}));
 
 const escape=value=>value.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+// Publish ordinary homepage links from the same catalog used by network records and search.
+const publicationDate=new Intl.DateTimeFormat('en-US',{month:'short',day:'numeric',year:'numeric',timeZone:'UTC'});
+const storyItems=[...investigations].sort((a,b)=>b.publishedOn.localeCompare(a.publishedOn)).map(story=>{
+  const titleId='investigation-title-'+escape(story.id);
+  const anchor=escape(story.homepageAnchor||'investigation-'+story.id);
+  const date=publicationDate.format(new Date(story.publishedOn+'T00:00:00Z'));
+  return `              <li>
+                <a id="${anchor}" class="investigation-link" href="${escape(story.href)}" target="_blank" rel="noopener noreferrer" aria-labelledby="${titleId}" aria-describedby="investigation-link-target">
+                  <time datetime="${escape(story.publishedOn)}">${date}</time>
+                  <h3 id="${titleId}">${escape(story.title)}</h3>
+                  <p class="investigation-summary">${escape(story.summary)}</p>
+                  <span class="investigation-arrow" aria-hidden="true">↗</span>
+                </a>
+              </li>`;
+}).join('\n');
+const homepage='dist/index.html',originalHome=await readFile(homepage,'utf8');
+const listing=/<ul id="investigation-list">[\s\S]*?<\/ul>/;
+if(!listing.test(originalHome))throw Error('Homepage is missing the Investigations list');
+const publishedHome=originalHome.replace(listing,()=>`<ul id="investigation-list">\n${storyItems}\n            </ul>`);
+if(publishedHome!==originalHome)await writeFile(homepage,publishedHome);
+
 const inline=text=>escape(text).replace(/`([^`]+)`/g,'<code>$1</code>').replace(/\[([^\]]+)\]\((https:\/\/[^)]+)\)/g,'<a href="$2">$1</a>');
 function markdown(text){
   const rows=text.split(/\r?\n/);let html='',list=null,table=false;
