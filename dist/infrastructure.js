@@ -5,6 +5,8 @@ export const infrastructureSources = [
   {id:'vigilant-contract-2026',title:'1499-2026: Motorola / Vigilant subscriptions and bid waiver',publisher:'City of Columbus',url:'https://columbus.legistar.com/LegislationDetail.aspx?FullText=1&G=4F637594-17B0-4E92-8196-37F14328D337&GUID=A8F3E788-159E-4DE6-91FF-E78CA8517CE0&ID=8042678&Options=&Search=',date:'2026-06-04',note:'$103,990 authorization for Investigative Data Platform subscriptions; unbudgeted General Fund expense and interoperability rationale.'},
   {id:'flock-financing-2025',title:'Flock announces $275m financing and its backers',publisher:'Flock Safety',url:'https://www.flocksafety.com/blog/flock-safety-secures-major-funding',date:'2025-03-13',kind:'Company announcement',note:'Round led by Andreessen Horowitz; $7.5bn company valuation. Investor allocations and ownership shares are not given.'},
   {id:'google-incentive-2018',title:'New Albany R-50-2018: Montauk / Google incentive agreements',publisher:'City of New Albany',url:'https://newalbanyohio.org/wp-content/uploads/2016/04/Council-Minutes-12-10-18-Regular-Meeting.pdf',date:'2018-12-10',note:'Google subsidiary; 100% / 15-year real-property abatement, fee waiver, minimum city revenue and infrastructure agreements.'},
+  {id:'hartman-cra-2021',title:'Columbus ordinance 0520-2021 · Hartman Farm property-tax abatement',publisher:'Columbus City Council',url:'https://columbus.legistar.com/LegislationDetail.aspx?ID=4817794&GUID=84B4A58D-7AE5-4841-9BAE-22094DEA802B&FullText=1',date:'2021-03-25',kind:'City ordinance and action history',note:'Council approved the Magellan Enterprises agreement on March 22, 2021. Section 2 identifies the eligible improvements, parcel 510-180711, exemption percentage and term.'},
+  {id:'ohio-investment-survey-2023',title:'Ohio Private Investment Survey · Google’s Columbus data center',publisher:'Ohio Department of Development, Office of Research',url:'https://dam.assets.ohio.gov/image/upload/development.ohio.gov/research/economy/2023%20Ohio%20Private%20Investment%20Survey.pdf',date:'2023-06',kind:'State investment survey',note:'Page 37 lists Alphabet / Google and Magellan Enterprises LLC together in the parent/company entry for the 2021 Columbus data-center project.'},
   {id:'new-albany-budget-2024',title:'New Albany 2024 budget: data-center investments',publisher:'City of New Albany',url:'https://newalbanyohio.org/wp-content/uploads/2024/09/2024-Adopted-Annual-Budget_New-Albany-Ohio.pdf',date:'2024',note:'2023 announced projects: AWS $3.5bn, QTS $3.6bn and Edged $246m. Announced project costs are not municipal payments.'},
   {id:'aep-data-tariff',title:'Ohio Power data-center tariff requirements',publisher:'AEP Ohio / Ohio Power Company',url:'https://www.aepohio.com/company/about/rates/data-center-tariff/',date:null,note:'Adopted July 9, effective July 23, 2025; demand obligations, ramp period, term and study fees.'},
   {id:'aep-ohio-plan-2024',title:'AEP Ohio tariff filing and corporate relationship',publisher:'AEP Ohio',url:'https://www.aepohio.com/company/news/view?releaseID=9539',date:'2024-05-13',kind:'Company announcement',note:'AEP Ohio identifies itself as an AEP unit and Marc Reitter as president / COO. Its original 90% proposal is not the adopted tariff.'}
@@ -16,6 +18,8 @@ export const infrastructureChecks = {
   'vigilant-contract-2026':['1499-2026','passed','motorola','vigilant','103,990','not originally budgeted','share important information','competitive bidding'],
   'flock-financing-2025':['march 13, 2025','275 million','7.5 billion','andreessen horowitz','greenoaks','founders fund','garrett langley','ceo and founder'],
   'google-incentive-2018':['r-50-2018','montauk innovations','subsidiary of google','100%','15 years','250,000','750,000','six yes votes'],
+  'hartman-cra-2021':['0520-2021','3/22/2021','Magellan Enterprises LLC','5076 South High Street','510-180711','one hundred percent (100%)','fifteen (15) consecutive taxable years'],
+  'ohio-investment-survey-2023':['Ohio Private Investment Survey','June 2023','Alphabet / Google','Magellan Enterprises LLC','Columbus','Data center'],
   'new-albany-budget-2024':['qts','3.6 billion','amazon web services','3.5 billion','edged','246 million'],
   'aep-data-tariff':['july 9, 2025','july 23, 2025','85%','plus eight years','load study','100,000'],
   'aep-ohio-plan-2024':['may 13, 2024','unit of american electric power','marc reitter','president and chief operating officer']
@@ -24,6 +28,7 @@ export const infrastructureChecks = {
 export const municipalInfrastructureChecks=['louis capobianco','flock safety','verizon communications','stanley e. gates ii','google llc','jon lee','data centers','commercial rates','2027','cp hardin'];
 const n=(id,name,category,role,sourceIds,description='')=>({id,name,category,role,sourceIds,description,x:3000,y:2000,historical:false});
 const municipal=['city-lobbyists-2025'];
+const hartmanReview={status:'reviewed',reviewedAt:'2026-11-23',reviewer:{type:'unknown',identity:null},note:'Checked against the original source on November 23, 2026.'};
 export const infrastructureNodes = [
   n('flock','Flock Safety','corporation','Registered municipal lobbying client',municipal),
   n('capobianco','Louis Capobianco','person','Registered Columbus legislative agent',municipal),
@@ -43,6 +48,7 @@ export const infrastructureNodes = [
   ...[['a16z','Andreessen Horowitz'],['greenoaks','Greenoaks Capital'],['bedrock','Bedrock Capital'],['meritech','Meritech Capital'],['matrix','Matrix Partners'],['sands','Sands Capital'],['founders-fund','Founders Fund'],['kleiner','Kleiner Perkins'],['tiger-global','Tiger Global'],['y-combinator','Y Combinator']].map(([id,name])=>n(id,name,'corporation','Named Flock financing participant',['flock-financing-2025'])),
   n('new-albany-city','City of New Albany','institution','Municipal incentive-agreement party',['google-incentive-2018']),
   n('montauk','Montauk Innovations LLC','corporation','Google subsidiary named in 2018 minutes',['google-incentive-2018']),
+  {...n('magellan-enterprises','Magellan Enterprises LLC','corporation','Hartman Farm data-center project company',['hartman-cra-2021'],'Columbus named Magellan in the property-tax agreement for the South High Street campus.'),aliases:['Hartman Farm data center'],publicationState:'accepted',claimReview:hartmanReview},
   n('aws','Amazon Web Services','corporation','Data-center investor named in city budget',['new-albany-budget-2024']),
   n('qts','QTS','corporation','Data-center developer named in city budget',['new-albany-budget-2024']),
   n('edged','Edged','corporation','Data-center developer named in city budget',['new-albany-budget-2024']),
@@ -79,6 +85,21 @@ export const infrastructureEdges = [
   ...['a16z','greenoaks','bedrock','meritech','matrix','sands','founders-fund','kleiner','tiger-global','y-combinator'].map((id,i)=>e('e'+(187+i),id,'flock-round-2025','money',i===0?'Led financing round':'Participated in financing round','Company names this round participant.',['flock-financing-2025'],'Announced March 13, 2025',{caseId:'alpr',status:'acknowledged',context:'Individual investment amount and ownership share not supplied; do not repeat the entire round amount for each investor.'})),
   e('e197','google','montauk','control','Parent / subsidiary in city minutes','Minutes identify Montauk as a Google subsidiary.',['google-incentive-2018'],'December 10, 2018 minutes'),
   e('e198','new-albany-city','montauk','influence','100% / 15-year property abatement authorized','Council approved R-50-2018.',['google-incentive-2018'],'Approved December 10, 2018',{status:'authorized',ratePercent:100,termYears:15,context:'Agreement authorization; realized tax savings and present compliance are not established.'}),
+  e('hartman-farm-abatement','city','magellan-enterprises','influence','Columbus approved the Hartman Farm property-tax abatement',
+    'City Council authorized a 100% exemption for 15 consecutive tax years on qualifying new real-property improvements for Magellan’s data center on South High Street.',
+    ['hartman-cra-2021'],'Council approved March 22, 2021',{
+      status:'authorized',ratePercent:100,termYears:15,publicationState:'accepted',claimReview:hartmanReview,
+      locator:'Ordinance 0520-2021, §2, parcel 510-180711 and March 22 Council action',
+      context:'The exemption applies to qualifying improvements. The land and other taxable value can still generate a parcel bill.',
+      evidenceEntries:[{sourceId:'hartman-cra-2021',role:'support',locator:'§2 and Council action history, March 22, 2021',excerpt:null}],
+      timeline:{lane:'contracts',moneyKind:'none',date:{precision:'day',start:'2021-03-22',end:'2021-03-22',role:'Council approval'}}
+    }),
+  e('hartman-google-magellan','google','magellan-enterprises','affiliation','Magellan is the project company for Google’s Columbus campus',
+    'Ohio’s investment survey identifies Alphabet / Google and Magellan Enterprises LLC in the same company entry for the Columbus data center. It dates the project to 2021.',
+    ['ohio-investment-survey-2023'],'2021 project listed in the June 2023 survey',{
+      publicationState:'accepted',claimReview:hartmanReview,locator:'Ohio Private Investment Survey, p. 37, Alphabet / Google entry, Columbus, Franklin County',
+      evidenceEntries:[{sourceId:'ohio-investment-survey-2023',role:'support',locator:'PDF p. 37, parent/company row for the 2021 Columbus data center',excerpt:null}]
+    }),
   e('e199','new-albany-city','montauk','influence','Up to $250,000 permit-fee waiver','Minutes describe the building / permitting fee waiver.',['google-incentive-2018'],'December 2018 approval',{status:'authorized',amount:250000,amountIsUpperBound:true,amountLabel:'Up to $250k waived',unit:'USD authorized fee-waiver ceiling'}),
   e('e200','montauk','new-albany-city','money','$750,000 minimum annual city revenue required','Minutes describe the negotiated city revenue requirement.',['google-incentive-2018'],'Starting 2021 under 2018 agreement',{status:'authorized',amount:750000,amountLabel:'$750k annual minimum',unit:'USD minimum annual city-revenue requirement',context:'Agreement requirement across revenue sources; actual annual collections are not established.'}),
   e('e201','new-albany-city','montauk','contract','Infrastructure delivery agreement authorized','Minutes describe the development and supply agreement.',['google-incentive-2018'],'December 2018 approval',{status:'authorized',context:'Infrastructure timetable; expenditures and executed agreement not supplied.'}),

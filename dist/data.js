@@ -18,7 +18,7 @@ import { electionResultSources,applyElectionResults } from './election-results-2
 import { affiliationSources,applyPartyAffiliations } from './party-affiliations.js';
 import {policySources,policyRelease} from './policy-records.js';
 export const meta = {
-  title: 'CBUS Power', reviewed: '2026-11-23', version: 25,
+  title: 'CBUS Power', reviewed: '2026-11-23', version: 26,
   scope: 'Columbus and Ohio: money, control, public corruption, civic affiliations, and media ownership, governance, funding and information supply.',
   limitations: 'Selected records, not complete coverage. Evidence status, source date, and direction are attached to each case relationship. Assets, cash transfers, and penalties are identified separately.'
 };

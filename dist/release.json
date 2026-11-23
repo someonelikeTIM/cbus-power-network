@@ -1,17 +1,18 @@
 {
   "release": {
     "schemaVersion": "1.0.0",
-    "releaseId": "2026-11-23-county-results",
+    "releaseId": "2026-11-23-hartman-farm",
     "status": "published",
     "preparedOn": "2026-11-23",
-    "publishedAt": "2026-11-23T15:10:58.410465+00:00",
-    "dataRevision": 25,
+    "publishedAt": "2026-11-23T19:40:30Z",
+    "dataRevision": 26,
     "codeLicense": "MIT",
     "dataLicense": "CC-BY-4.0",
     "sourceCheckIds": [
-      "er26-franklin-official-20261119"
+      "hartman-cra-2021",
+      "ohio-investment-survey-2023"
     ]
   },
-  "inputFingerprint": "5d87c9abe16b16f24f2bb8991aebd681f3dedbfece4bd581a08a0a47443e5081",
-  "manifest": "downloads/2026-11-23-county-results/manifest.json"
+  "inputFingerprint": "d82d57882af74c2d5310f969553346e89b694565bdf2ef7674a0607eed524c44",
+  "manifest": "downloads/2026-11-23-hartman-farm/manifest.json"
 }

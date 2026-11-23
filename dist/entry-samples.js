@@ -7,6 +7,7 @@ export const featuredHeadlines = {
   e71: 'John Raphael pleaded guilty to extorting Redflex over red-light camera contracts.',
   j16: 'Ohio State found that Ted Carter used his office to seek resources for a personal associate.',
   e179: 'Columbus waived bidding for a license plate reader lease of up to $228,000.',
+  'hartman-farm-abatement': 'Columbus approved a 15-year exemption on qualifying new construction at Google’s Hartman Farm campus.',
   j29: 'JobsOhio signed a $310 million grant tied to Anduril’s hiring and investment commitments.',
   e45: 'Les Wexner said he gave Jeffrey Epstein power of attorney over his finances.'
 };

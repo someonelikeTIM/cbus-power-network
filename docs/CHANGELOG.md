@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-11-23 — Hartman Farm
+
+The [Hartman Farm story](https://cbuspower.org/investigations/hartman-farm.html) compares the $1.45 million Magellan paid for tax year 2025 with two housing scenarios and a $4.08 million model for the same campus without its exemption. The network adds Magellan Enterprises LLC, Columbus Council’s March 22, 2021 abatement authorization and the state-documented link to Google. The New Albany–Montauk record links to the story as a separate Columbus agreement.
+
+Edition `2026-11-23-hartman-farm` contains 397 entities, 586 relationships, 212 sources and 244 event records. The two new sources are Columbus ordinance 0520-2021 and the Ohio Department of Development’s June 2023 private investment survey. The preceding county-results edition remains available.
+
 ## 2026-11-23 — Official county election results
 
 The Franklin County Board of Elections now posts an OFFICIAL RESULTS summary generated November 19 at 3:55PM publisher local time. Page 8 lists 350,856 votes for Erica C. Crawley and 90,096 for Eric Terford in the commissioner race, and 379,943 for Michael Stinziano in the auditor race. Each total was checked on the rendered page and reconciled against its mail, in-office, election-day and provisional components. The current records identify the two county winners and the other county candidacy’s official outcome.

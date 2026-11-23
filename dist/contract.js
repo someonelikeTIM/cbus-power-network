@@ -10,7 +10,7 @@ import { inheritedEntityIds,inheritedRelationshipIds } from './inherited.js';
 import { validISO } from './timeline.js';
 import {policySources} from './policy-records.js';
 
-export const release = { schemaVersion:'1.0.0',releaseId:'2026-11-23-county-results',status:'published',preparedOn:'2026-11-23',publishedAt:'2026-11-23T15:10:58.410465+00:00',dataRevision:meta.version,codeLicense:'MIT',dataLicense:'CC-BY-4.0',sourceCheckIds:['er26-franklin-official-20261119'] };
+export const release = { schemaVersion:'1.0.0',releaseId:'2026-11-23-hartman-farm',status:'published',preparedOn:'2026-11-23',publishedAt:'2026-11-23T19:40:30Z',dataRevision:meta.version,codeLicense:'MIT',dataLicense:'CC-BY-4.0',sourceCheckIds:['hartman-cra-2021','ohio-investment-survey-2023'] };
 export const reviewFor = record => record.claimReview || { status:'legacy-unrecorded',reviewedAt:null,reviewer:{type:'unknown',identity:null},note:'The date of the check against the cited material is unknown.' };
 export function publicSource(source) {
   const {url,archiveUrl,archiveBrowseUrl,...record}=source;

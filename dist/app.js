@@ -501,9 +501,10 @@ function hearingLink(testimony){
   return `<a class="claim-ref" href="${plateReaderHearing}#:~:text=${encodeURIComponent(testimony.witness)}" target="_blank" rel="noopener noreferrer">View the House hearing and witness list</a>`;
 }
 function investigationLink(recordId){
-  const report=investigations.find(item=>item.records.includes(recordId));
+  const report=investigations.find(item=>item.records.includes(recordId)||item.relatedRecords?.[recordId]);
   if(!report)return '';
-  return `<aside class="related-investigation" aria-label="Related investigation"><span>Related investigation</span><a href="${escape(report.href)}" target="_blank" rel="noopener noreferrer" aria-label="${escape(report.title)} (opens in a new tab)">${escape(report.title)}</a></aside>`;
+  const label=escape(report.relatedRecords?.[recordId]||`Related ${report.category||'investigation'}`);
+  return `<aside class="related-investigation" aria-label="${label}"><span>${label}</span><a href="${escape(report.href)}" target="_blank" rel="noopener noreferrer" aria-label="${escape(report.title)} (opens in a new tab)">${escape(report.title)}</a></aside>`;
 }
 function citationRefs(ids){
   return [...new Set(ids)].map(id=>{

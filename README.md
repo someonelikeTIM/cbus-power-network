@@ -18,13 +18,13 @@ The four research projects on the homepage open a finished map and its evidence 
 
 The **Featured investigation** headline on the homepage opens our report on why Columbus rushed the Flock camera lease, how long residents had to sign up to speak and when the city placed its order. On phones the headline is visible in the collapsed Research projects panel. The report links directly to the award, waiver, meeting recording and auditor’s ledgers. [Read the Flock investigation](https://cbuspower.org/investigations/flock-emergency.html).
 
-The current edition, **2026-11-23-county-results**, contains **396 entities, 584 relationships, 210 sources and 243 event records**. The existing research projects and investigation are retained. The latest update adds official county results for the auditor and commissioner races, with the earlier unofficial snapshots preserved.
+The [Hartman Farm land-use story](https://cbuspower.org/investigations/hartman-farm.html) compares Magellan’s paid 2025 parcel bill with housing, mixed use and the same campus without its exemption. The [Columbus abatement record](https://cbuspower.org/?map=explore&anchor=magellan-enterprises&record=relationship:hartman-farm-abatement) links the story to Council’s 2021 agreement. The current edition, **2026-11-23-hartman-farm**, contains **397 entities, 586 relationships, 212 sources and 244 event records**.
 
 Evidence labels distinguish reporting, allegations, findings, registrations and authorizations. A connection alone establishes neither wrongdoing nor causation. Donation totals may summarize several reported receipts; spending ceilings are different from payments. Details preserve those distinctions and explain missing dates or records. See [methodology](docs/METHODOLOGY.md).
 
 ## Data and citations
 
-The explorer provides record links, current-view downloads and evidence packets. [Versioned JSON/CSV tables, schemas and checksums](https://cbuspower.org/downloads/2026-11-23-county-results/manifest.json) are in `dist/downloads/`. Join records using stable IDs and cite the edition. See the [data dictionary](docs/DATA-DICTIONARY.md).
+The explorer provides record links, current-view downloads and evidence packets. [Versioned JSON/CSV tables, schemas and checksums](https://cbuspower.org/downloads/2026-11-23-hartman-farm/manifest.json) are in `dist/downloads/`. Join records using stable IDs and cite the edition. See the [data dictionary](docs/DATA-DICTIONARY.md).
 
 ## Explorer views
 

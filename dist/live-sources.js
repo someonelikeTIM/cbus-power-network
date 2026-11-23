@@ -2561,5 +2561,40 @@ export const sourceLiveEvidence = {
       "identity": null
     },
     "contentCheckNote": "Official county-office results only; statewide/full-district outcomes and assumption of a new term are not inferred."
+  },
+  "hartman-cra-2021": {
+    "originalUrl": "https://columbus.legistar.com/LegislationDetail.aspx?ID=4817794&GUID=84B4A58D-7AE5-4841-9BAE-22094DEA802B&FullText=1",
+    "finalUrl": "https://columbus.legistar.com/LegislationDetail.aspx?ID=4817794&GUID=84B4A58D-7AE5-4841-9BAE-22094DEA802B&FullText=1",
+    "contentVerified": true,
+    "checkedAt": "2026-11-23T19:39:24.868Z",
+    "sha256": "730b31802569f2152f27088bec0541d6ab675a9285194e0e4e98ad9378cd594b",
+    "contentCheckMethod": "Original content fetch",
+    "contentChecks": [
+      "0520-2021",
+      "3/22/2021",
+      "Magellan Enterprises LLC",
+      "5076 South High Street",
+      "510-180711",
+      "one hundred percent (100%)",
+      "fifteen (15) consecutive taxable years"
+    ],
+    "missingChecks": []
+  },
+  "ohio-investment-survey-2023": {
+    "originalUrl": "https://dam.assets.ohio.gov/image/upload/development.ohio.gov/research/economy/2023%20Ohio%20Private%20Investment%20Survey.pdf",
+    "finalUrl": "https://dam.assets.ohio.gov/image/upload/development.ohio.gov/research/economy/2023%20Ohio%20Private%20Investment%20Survey.pdf",
+    "contentVerified": true,
+    "checkedAt": "2026-11-23T19:39:31.592Z",
+    "sha256": "a792062fc61f580e4bfddfad734533b0de31cd04e5ae738d2222f702330b8d23",
+    "contentCheckMethod": "Original content fetch",
+    "contentChecks": [
+      "Ohio Private Investment Survey",
+      "June 2023",
+      "Alphabet / Google",
+      "Magellan Enterprises LLC",
+      "Columbus",
+      "Data center"
+    ],
+    "missingChecks": []
   }
 };

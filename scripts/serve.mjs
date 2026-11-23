@@ -2,7 +2,7 @@ import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
 import { resolve, extname, sep } from 'node:path';
 const root = resolve(process.env.COLUMBUS_PREVIEW_ROOT || 'dist');
-const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.svg': 'image/svg+xml', '.json': 'application/json' };
+const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.svg': 'image/svg+xml', '.png': 'image/png', '.json': 'application/json' };
 const port = Number(process.env.COLUMBUS_PREVIEW_PORT || 4173);
 const prefix=process.env.COLUMBUS_PREVIEW_PREFIX||'/';
 if(!/^\/(?:[A-Za-z0-9_-]+\/)*$/.test(prefix))throw Error('Preview prefix must start/end with / and contain safe path segments.');

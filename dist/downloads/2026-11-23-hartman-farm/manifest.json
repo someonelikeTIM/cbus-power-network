@@ -1,0 +1,132 @@
+{
+  "release": {
+    "schemaVersion": "1.0.0",
+    "releaseId": "2026-11-23-hartman-farm",
+    "status": "published",
+    "preparedOn": "2026-11-23",
+    "publishedAt": "2026-11-23T19:40:30Z",
+    "dataRevision": 26,
+    "codeLicense": "MIT",
+    "dataLicense": "CC-BY-4.0",
+    "sourceCheckIds": [
+      "hartman-cra-2021",
+      "ohio-investment-survey-2023"
+    ]
+  },
+  "inputFingerprint": "d82d57882af74c2d5310f969553346e89b694565bdf2ef7674a0607eed524c44",
+  "counts": {
+    "entities": 397,
+    "relationships": 586,
+    "sources": 212,
+    "events": 244,
+    "leads": 7
+  },
+  "sourceChecksReperformed": true,
+  "sourceCheckScope": [
+    "hartman-cra-2021",
+    "ohio-investment-survey-2023"
+  ],
+  "thirdPartyDocumentsIncluded": false,
+  "files": [
+    {
+      "path": "dataset.json",
+      "bytes": 1837954,
+      "sha256": "1d210b79a8f34cc640f1b717aad76815a86803a0845ef78945a6fcf66fe3061d"
+    },
+    {
+      "path": "entities.csv",
+      "bytes": 235413,
+      "sha256": "1ff2c8bd2ef906221c053a8b2eb4816a3b1891b8ba249a5060bdc6f7cb4fbce0"
+    },
+    {
+      "path": "entities.json",
+      "bytes": 346528,
+      "sha256": "690225e5aad174cbba5c47e98bf5e66678e0e083e673b7ae94709df415bb2e0d"
+    },
+    {
+      "path": "entities.schema.json",
+      "bytes": 11452,
+      "sha256": "5261821c3fe483bcb93476bb5e817a9f42b7d5c08ee8cacd0dc87a5bfe79eb68"
+    },
+    {
+      "path": "events.csv",
+      "bytes": 107765,
+      "sha256": "4dd9fa9b61f553ad3c42aefaa149fec0853182895a6f32e30e954ee80e63de1b"
+    },
+    {
+      "path": "events.json",
+      "bytes": 199490,
+      "sha256": "d97e52a3b3e77b56035e2e584141e93d0cf42a87e551b0ba8d6784138d5b3885"
+    },
+    {
+      "path": "events.schema.json",
+      "bytes": 11447,
+      "sha256": "a91890a4b6d0239239338187224f8b1339c74ee1b0322868ecca3fca0a43dfaf"
+    },
+    {
+      "path": "leads.csv",
+      "bytes": 4830,
+      "sha256": "736a0f7102335477fa03262c708f7a8ce339b328caf5768016913e2a7c0b699a"
+    },
+    {
+      "path": "leads.json",
+      "bytes": 6840,
+      "sha256": "8a8b2fe295ae2cf21220ac9a736a9ce1bebee0c4bf1c38b05294e4fcc5701c35"
+    },
+    {
+      "path": "leads.schema.json",
+      "bytes": 11444,
+      "sha256": "7a12e42bbcaf464bd879e1b957f198a53e86b8535d105e442092cb319189ad2e"
+    },
+    {
+      "path": "packet-anduril-city.json",
+      "bytes": 20552,
+      "sha256": "5e933c647f181952564aa46b287d6e6447cc6aa3f328c2edd94e51cb2933ab26"
+    },
+    {
+      "path": "packet-flock.json",
+      "bytes": 13775,
+      "sha256": "f7445e93dc17eed9c97d6bedc6245bc486b8c8b5a86a296cdfa98b3d65109915"
+    },
+    {
+      "path": "packet-m63.json",
+      "bytes": 8314,
+      "sha256": "d0485196b4eb659604aeaa5712810f1adef738b9b3bcee9841beb4a2876da200"
+    },
+    {
+      "path": "relationships.csv",
+      "bytes": 757184,
+      "sha256": "45e735fe0404fae1e718f6f4c7956cfcef598f8332d77da6eee34924b2a07284"
+    },
+    {
+      "path": "relationships.json",
+      "bytes": 986308,
+      "sha256": "b04412249df713827c0d944440a60cc374947a5e1bd567615e2b2bbd0457b71e"
+    },
+    {
+      "path": "relationships.schema.json",
+      "bytes": 11468,
+      "sha256": "a97f2ab1a6dec680d58b04bf1ab5b09a63295594c256d46ebb58f03ddcb48a0f"
+    },
+    {
+      "path": "schema.json",
+      "bytes": 12018,
+      "sha256": "c7210d6f42a50d5b52cd10af52e2de4cdf3a623c69bb1646a3921c051db00926"
+    },
+    {
+      "path": "sources.csv",
+      "bytes": 202027,
+      "sha256": "75c2ae2b9fb03c18682d9b6c4931f4801872b38b2530e31fda13cbfdffb992ab"
+    },
+    {
+      "path": "sources.json",
+      "bytes": 298381,
+      "sha256": "205ced1d1091d22eba75f3dd0164822e27f7e23a1bc5c9f7394727f332b9fba8"
+    },
+    {
+      "path": "sources.schema.json",
+      "bytes": 11450,
+      "sha256": "57ca6d29edcfc048047fcbaa1aa9cc0865a91fe9fbbe94c756b6c8d2696257b2"
+    }
+  ]
+}

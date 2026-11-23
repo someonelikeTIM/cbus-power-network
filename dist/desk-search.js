@@ -61,7 +61,7 @@ export function searchDesk(graph, sources, byId, query, tags, projects=[]) {
     if(best)findings.push(best);
   }
   const reports=investigations.filter(report=>report.records.some(id=>visibleEdges.has(id))).map(report=>({
-    kind:'investigation',id:report.id,label:report.title,description:'CBUS Power investigation · opens in a new tab',
+    kind:'investigation',id:report.id,label:report.title,description:'CBUS Power '+(report.category||'investigation')+' · opens in a new tab',
     rank:discoveryRank(words,report.title,report.terms)
   }));
   const groups=[entities,topics,bestThree(reports),bestThree(findings),bestThree(links),bestThree(documents)].filter(group=>group.length);
